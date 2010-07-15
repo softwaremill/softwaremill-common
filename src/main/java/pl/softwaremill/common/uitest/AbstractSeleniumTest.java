@@ -22,16 +22,23 @@ public class AbstractSeleniumTest {
     private SeleniumServer server;
     
     protected Selenium selenium;
+    
+    private SeleniumBrowserProperties browserProperties;
 
-    private int seleniumServerPort;
-    
-    private String testServerPort;
-    
+    private String seleniumHost;
+    private int seleniumServerPort;    
 
     public AbstractSeleniumTest() throws Exception {
-        System.out.println("--- AbstractSeleniumTest()");
+        System.out.println("--- AbstractSeleniumTest() 123");
+        seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
         seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
-        testServerPort = System.getProperty("selenium.testserver.port", "8080");
+        String testServerPort = System.getProperty("selenium.testserver.port", "8080");
+        
+        browserProperties = new SeleniumBrowserProperties("*firefox", "http://localhost", testServerPort);
+    }
+    
+    public SeleniumBrowserProperties getBrowserProperties() {
+        return browserProperties;
     }
     
     @BeforeSuite
@@ -54,8 +61,6 @@ public class AbstractSeleniumTest {
         server.start();
         System.out.println("--- Started selenium server");
     }
-
-
     
     @AfterSuite(alwaysRun = true)
     public void stopSelenium() throws Exception, InterruptedException {
@@ -66,14 +71,17 @@ public class AbstractSeleniumTest {
 
     @BeforeTest
     public void setupBrowser() {
-        setupBrowser(testServerPort);    
-    }
-    
-    public void setupBrowser(String port) {
-        System.out.println("--- Starting browser");
-
+        String url = browserProperties.getBrowserURL();
+        if(browserProperties.getBrowserPort() != null) {
+            url += ":"+browserProperties.getBrowserPort();
+        }
+        System.out.println("--- Starting browser on url: "+url);
+        
         selenium = new DefaultSelenium(
-                "127.0.0.1", seleniumServerPort, "*firefox", "http://localhost:"+port);
+                seleniumHost,
+                seleniumServerPort,
+                browserProperties.getBrowserCommand(),
+                url);
         selenium.start();
 
         System.out.println("--- Started browser");
