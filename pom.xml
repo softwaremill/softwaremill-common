@@ -14,7 +14,7 @@
         <repository>
             <id>softwaremill-public</id>
             <name>SoftwareMill Public</name>
-            <url>scpexe://repository.softwaremill.pl:/var/www/repository/public</url>
+            <url>scpexe://ubuntu@repository.softwaremill.pl:/var/www/repository/public</url>
         </repository>
     </distributionManagement>
 
@@ -63,5 +63,13 @@
             </plugin>
 
         </plugins>
+
+	<extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
     </build>
 </project>
