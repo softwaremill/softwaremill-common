@@ -104,10 +104,6 @@ public class AbstractJBossRunner {
         }
     }
     
-//    public void undeploy(File file) throws Exception {
-//        undeploy(file, file.getName());
-//    }
-    
     public void undeploy(File... files) throws Exception {
         for (File file : files) {
             undeploy(file, file.getName());
@@ -119,7 +115,7 @@ public class AbstractJBossRunner {
             System.out.println("--- Starting JBoss server");
 
             jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/run.sh", "-c", configuration, "-Djboss.service.binding.set=ports-02"});
-            serverPort = ""+Integer.valueOf(serverPort) +200;
+            serverPort = String.valueOf(Integer.valueOf(serverPort) +200);
             
             System.out.println("--- Process started, waiting for input: ["+scannerDelimeter+"]");
             

@@ -25,13 +25,15 @@ public class AbstractSeleniumTest {
 
     private int seleniumServerPort;
     
+    private String testServerPort;
+    
 
     public AbstractSeleniumTest() throws Exception {
         System.out.println("--- AbstractSeleniumTest()");
         seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
-        
+        testServerPort = System.getProperty("selenium.testserver.port", "8080");
     }
-
+    
     @BeforeSuite
     public void setupSelenium() throws Exception {
         
@@ -49,7 +51,7 @@ public class AbstractSeleniumTest {
         server = new SeleniumServer(false, rcc);
         System.setOut(ps); // restore
 
-        server.start();        
+        server.start();
         System.out.println("--- Started selenium server");
     }
 
@@ -64,10 +66,14 @@ public class AbstractSeleniumTest {
 
     @BeforeTest
     public void setupBrowser() {
+        setupBrowser(testServerPort);    
+    }
+    
+    public void setupBrowser(String port) {
         System.out.println("--- Starting browser");
 
         selenium = new DefaultSelenium(
-                "127.0.0.1", seleniumServerPort, "*firefox", "http://localhost:"+"8280");
+                "127.0.0.1", seleniumServerPort, "*firefox", "http://localhost:"+port);
         selenium.start();
 
         System.out.println("--- Started browser");

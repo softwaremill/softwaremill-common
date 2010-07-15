@@ -58,6 +58,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <selenium.server.port>${selenium.server.port}</selenium.server.port>
+                        <selenium.testserver.port>${selenium.testserver.port}</selenium.testserver.port>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
