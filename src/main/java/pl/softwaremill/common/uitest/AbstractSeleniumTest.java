@@ -1,17 +1,17 @@
 package pl.softwaremill.common.uitest;
 
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
+import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import com.thoughtworks.selenium.DefaultSelenium;
-import com.thoughtworks.selenium.Selenium;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 /**
  *
@@ -77,11 +77,24 @@ public class AbstractSeleniumTest {
         }
         System.out.println("--- Starting browser on url: "+url);
         
-        selenium = new DefaultSelenium(
+        selenium = new SMLSelenium(
                 seleniumHost,
                 seleniumServerPort,
                 browserProperties.getBrowserCommand(),
-                url);
+                url,
+                new Screenshotter(){
+                    @Override
+                    public void doScreenshot() {
+                        try {
+                            // make a screenshot
+                            
+                            captureScreenshot();
+                        } catch (Exception e) {
+                            // shouldn't happen
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
         selenium.start();
 
         System.out.println("--- Started browser");
@@ -92,6 +105,38 @@ public class AbstractSeleniumTest {
         System.out.println("--- Stopping browser");
         selenium.stop();
         System.out.println("--- Stopped browser");
+    }
+
+
+
+    protected void assertTrue(boolean var) throws Exception {
+        if (!var) {
+            captureScreenshot();
+        }
+
+        Assert.assertTrue(var);
+    }
+
+    protected void assertEquals(Object o1, Object o2) throws Exception {
+        if (!o1.equals(o2)) {
+            captureScreenshot();
+        }
+
+        Assert.assertEquals(o1, o2);
+    }
+
+    protected void fail(String message) throws Exception {
+        captureScreenshot();
+
+        Assert.fail(message);
+    }
+
+    private void captureScreenshot() throws Exception {
+        File f = File.createTempFile("selenium_screenshot", "failed.png");
+
+        selenium.captureEntirePageScreenshot(f.getAbsolutePath(), "");
+
+        System.out.println("##teamcity[publishArtifacts '"+f.getAbsolutePath()+"']");
     }
     
 }

@@ -1,12 +1,6 @@
 package pl.softwaremill.common.uitest;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -19,28 +13,16 @@ public class AbstractJBossRunner {
     private String serverPort;
     private String configuration;
     private boolean running;
+    private int portset;
     
     Process jbossProcess;
     
-    /**
-     * Assumes 'default' configuration
-     * 
-     * @param serverHome
-     * @param serverPort
-     * @param running  Whether the server is running and should not be started/stopped 
-     */
-    public AbstractJBossRunner(String serverHome, String serverPort, boolean running) {
-        this.serverHome = serverHome;
-        this.serverPort = serverPort;
-        this.running = running;
-        this.configuration = "default";
-    }
-    
     public AbstractJBossRunner(ServerPoperties serverPoperties) {
         this.serverHome = serverPoperties.getServerHome();
-        this.serverPort = ""+serverPoperties.getPort();
+        this.serverPort = "8"+serverPoperties.getPortset()+"80";
         this.configuration = serverPoperties.getConfiguration();
         this.running =serverPoperties.isRunning();
+        this.portset = serverPoperties.getPortset();
     }
     
     
@@ -114,8 +96,7 @@ public class AbstractJBossRunner {
         if (!running) {
             System.out.println("--- Starting JBoss server");
 
-            jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/run.sh", "-c", configuration, "-Djboss.service.binding.set=ports-02"});
-            serverPort = String.valueOf(Integer.valueOf(serverPort) +200);
+            jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/run.sh", "-c", configuration, "-Djboss.service.binding.set=ports-0"+portset});
             
             System.out.println("--- Process started, waiting for input: ["+scannerDelimeter+"]");
             
@@ -145,7 +126,7 @@ public class AbstractJBossRunner {
     public void shutdown() throws Exception {
         if (!running) {
             System.out.println("--- Stopping JBoss server");
-            Process shutdownProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/shutdown.sh", "-s", "localhost:1299", "-S"});
+            Process shutdownProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/shutdown.sh", "-s", "localhost:1"+portset+"99", "-S"});
             // wait for shutdown to finish
             shutdownProcess.waitFor();
             System.out.println("--- JBoss Server stopped");

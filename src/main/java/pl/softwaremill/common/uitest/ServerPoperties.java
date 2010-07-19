@@ -10,20 +10,20 @@ public class ServerPoperties {
     
     private String configuration;
     
-    private int port;
+    private int portset;
     
     private boolean running;
 
     /**
      * @param serverHome
      * @param configuration
-     * @param port
+     * @param portset port set
      * @param running Whether the server is running and should not be started/stopped
      */
-    public ServerPoperties(String serverHome, String configuration, int port, boolean running) {
+    public ServerPoperties(String serverHome, String configuration, int portset, boolean running) {
         this.serverHome = serverHome;
         this.configuration = configuration;
-        this.port = port;
+        this.portset = portset;
         this.running = running;
     }
 
@@ -35,8 +35,8 @@ public class ServerPoperties {
         return configuration;
     }
 
-    public int getPort() {
-        return port;
+    public int getPortset() {
+        return portset;
     }
 
     public boolean isRunning() {
