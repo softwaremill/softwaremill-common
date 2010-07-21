@@ -17,7 +17,7 @@ import java.io.PrintStream;
  *
  * @author maciek
  */
-public class AbstractSeleniumTest {
+public abstract class AbstractSeleniumTest {
   
     private SeleniumServer server;
     
@@ -28,19 +28,15 @@ public class AbstractSeleniumTest {
     private String seleniumHost;
     private int seleniumServerPort;    
 
-    public AbstractSeleniumTest() throws Exception {
-        System.out.println("--- AbstractSeleniumTest() 123");
+    public AbstractSeleniumTest() {
+        System.out.println("--- AbstractSeleniumTest()");
         seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
         seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
         String testServerPort = System.getProperty("selenium.testserver.port", "8080");
         
         browserProperties = new SeleniumBrowserProperties("*firefox", "http://localhost", testServerPort);
     }
-    
-    public SeleniumBrowserProperties getBrowserProperties() {
-        return browserProperties;
-    }
-    
+
     @BeforeSuite
     public void setupSelenium() throws Exception {
         
@@ -106,8 +102,6 @@ public class AbstractSeleniumTest {
         selenium.stop();
         System.out.println("--- Stopped browser");
     }
-
-
 
     protected void assertTrue(boolean var) throws Exception {
         if (!var) {

@@ -1,13 +1,17 @@
 package pl.softwaremill.common.uitest;
 
-import java.io.*;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
  *
  * @author maciek
+ * @author Pawel Wrzeszcz
  */
-public class AbstractJBossRunner {
+public abstract class AbstractJBossRunner {
 
     private String serverHome;
     private String serverPort;
@@ -16,122 +20,90 @@ public class AbstractJBossRunner {
     private int portset;
     
     Process jbossProcess;
-    
-    public AbstractJBossRunner(ServerPoperties serverPoperties) {
-        this.serverHome = serverPoperties.getServerHome();
-        this.serverPort = "8"+serverPoperties.getPortset()+"80";
-        this.configuration = serverPoperties.getConfiguration();
-        this.running =serverPoperties.isRunning();
-        this.portset = serverPoperties.getPortset();
-    }
-    
-    
-    public String getServerHome() {
-        return serverHome;
+
+	private final static SysoutLog log = new SysoutLog();
+
+	private static final String STARTED_LOG_MESSAGE = "Started in";
+
+	protected abstract ServerPoperties getServerProperties();
+
+	protected abstract Deployment[] getDeployments();
+
+	@BeforeSuite
+    public void start() throws Exception {
+		loadProperties();
+		startServerIfNeeded();
+		deploy();
     }
 
-    public String getServerPort() {
-        return serverPort;
-    }
-    
-    public String getConfiguration() {
-        return configuration;
-    }
-    
-    public boolean isRunning() {
-        return running;
-    }
-
-    
-    public void deployFile(File from, File to, String message) {
-        try {
-            InputStream in = new FileInputStream(from);
-
-            //For Overwrite the file.
-            OutputStream out = new FileOutputStream(to);
-
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-            if (message != null) {
-                System.out.println(message);  
-            }            
-        }
-        catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage() + " in the specified directory.");
-            System.exit(0);
-        }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
-        }        
-    }
-    
-    public void deployFile(File from, File to) {
-        deployFile(from, to, null);
-    }    
-    
-    public void undeploy(File file, String name) throws Exception {
-        if (file.exists()) {
-            if (file.delete()) {
-                System.out.println("--- " + name + " deleted");
-            } else {
-                throw new Exception("Couldn't delete " + name + " !");
-            }
-        } else {
-            System.out.println("--- " + name + " was not present");
-        }
-    }
-    
-    public void undeploy(File... files) throws Exception {
-        for (File file : files) {
-            undeploy(file, file.getName());
-        }        
-    }   
-    
-    public Scanner start(Scanner scanner, String scannerDelimeter) throws Exception {
+	@AfterSuite(alwaysRun = true)
+	public void shutdown() throws Exception {
+    	undeploy();
         if (!running) {
-            System.out.println("--- Starting JBoss server");
-
-            jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/run.sh", "-c", configuration, "-Djboss.service.binding.set=ports-0"+portset});
-            
-            System.out.println("--- Process started, waiting for input: ["+scannerDelimeter+"]");
-            
-            scanner = new Scanner(jbossProcess.getInputStream()).useDelimiter(scannerDelimeter);
-            
-            scanner.next();
-
-            System.out.println("--- JBoss server started");
-        } else {
-            System.out.println("--- JBoss Already Started");
-            Process tailProcess = Runtime.getRuntime().exec(new String[]{"tail", "-f", serverHome + "/server/" + configuration + "/log/server.log"});
-
-            // in this case read the log
-            scanner = new Scanner(tailProcess.getInputStream());
+			log.info("Stopping JBoss server");
+			shutdownServer();
+			log.info("JBoss Server stopped");
         }
-        
-        return scanner;
     }
-    
-    /**
-     * New Scanner and waiting for "Started in"
-     */
-    public Scanner start() throws Exception {
-        return start(new Scanner(""), "Started in");
-    }
-    
-    public void shutdown() throws Exception {
+
+	private void loadProperties() {
+		ServerPoperties serverPoperties = getServerProperties();
+
+		this.serverHome = serverPoperties.getServerHome();
+		this.serverPort = "8"+serverPoperties.getPortset()+"80";
+		this.configuration = serverPoperties.getConfiguration();
+		this.running =serverPoperties.isRunning();
+		this.portset = serverPoperties.getPortset();
+	}
+
+	private void startServerIfNeeded() throws Exception {
         if (!running) {
-            System.out.println("--- Stopping JBoss server");
-            Process shutdownProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/shutdown.sh", "-s", "localhost:1"+portset+"99", "-S"});
-            // wait for shutdown to finish
-            shutdownProcess.waitFor();
-            System.out.println("--- JBoss Server stopped");
-        } else {
-            System.out.println("--- Not stopping JBoss");
-        }
+			log.info("Starting JBoss server");
+			startServer();
+			log.info("JBoss started");
+		}
     }
+
+    protected void startServer() throws Exception {
+        jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/run.sh", "-c", configuration, "-Djboss.service.binding.set=ports-0"+portset});
+		waitFor(jbossProcess, STARTED_LOG_MESSAGE);
+	}
+
+	private void waitFor(Process process, String message) {
+		log.info("Waiting for message: [" + message + "]");
+		Scanner scanner = new Scanner(process.getInputStream()).useDelimiter(message);
+		scanner.next();
+	}
+
+	private Process getTailProcess() throws IOException {
+		return Runtime.getRuntime().exec(new String[]{"tail", "-f", serverHome + "/server/" + configuration + "/log/server.log"});
+	}
+
+	private void shutdownServer() throws IOException, InterruptedException {
+		Process shutdownProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/shutdown.sh", "-s", "localhost:1"+portset+"99", "-S"});
+		shutdownProcess.waitFor();
+	}
+
+	private void deploy() throws Exception {
+		for (Deployment deployment : getDeployments()) {
+			deployment.deploy(getDeployDir());
+			waitFor(getTailProcess(), deployment.getWaitForMessage());
+		}
+	}
+
+	private void undeploy() throws Exception {
+		for (Deployment deployment : getDeployments()) {
+			deployment.undeploy(getDeployDir());
+		}
+	}
+
+	public String getDeployDir() {
+		return serverHome + "/server/" + configuration + "/deploy/";
+	}
+
+	private static class SysoutLog {
+		public void info(String msg) {
+			System.out.println("--- " + msg);
+		}
+	}
 }

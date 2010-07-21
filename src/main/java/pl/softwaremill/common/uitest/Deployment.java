@@ -1,0 +1,12 @@
+package pl.softwaremill.common.uitest;
+
+/**
+ * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)
+ */
+public interface Deployment {
+	void deploy(String deployDir) throws Exception;
+
+	void undeploy(String deployDir) throws Exception;
+
+	String getWaitForMessage();
+}
