@@ -27,7 +27,6 @@ public class StandardDeployment implements Deployment {
 
 	@Override
 	public void deploy(String deployDir) throws Exception {
-		undeploy(deployDir);
 		final File fromFile = new File(fromPath);
 		final File toFile = new File(deployDir + "/" + fromFile.getName());
 		deployFile(fromFile, toFile);

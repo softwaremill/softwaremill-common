@@ -32,6 +32,7 @@ public abstract class AbstractJBossRunner {
 	@BeforeSuite
     public void start() throws Exception {
 		loadProperties();
+		undeploy(); // Clean old deployments
 		startServerIfNeeded();
 		deploy();
     }
