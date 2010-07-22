@@ -26,6 +26,9 @@ public abstract class AbstractJBossRunner {
 
 	private static final String STARTED_LOG_MESSAGE = "Started in";
 
+	private static final int DEPLOYMENT_TIMEOUT = 5 * 60 * 1000; // 5 minutes
+	private boolean deploymentComplete = false;
+
 	protected abstract ServerPoperties getServerProperties();
 
 	protected abstract Deployment[] getDeployments();
@@ -33,6 +36,7 @@ public abstract class AbstractJBossRunner {
 	@BeforeSuite
     public void start() throws Exception {
 		loadProperties();
+		scheduleTimeout();
 		undeploy(); // Clean old deployments
 		startServerIfNeeded();
 		deploy();
@@ -91,6 +95,7 @@ public abstract class AbstractJBossRunner {
 			deployment.deploy(getDeployDir());
 			waitFor(getTailProcess(), deployment.getWaitForMessage());
 		}
+		deploymentComplete = true;
 	}
 
 	private void undeploy() throws Exception {
@@ -108,4 +113,28 @@ public abstract class AbstractJBossRunner {
 			System.out.println("--- " + msg);
 		}
 	}
+
+	private void scheduleTimeout() {
+		new Thread(
+			new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(DEPLOYMENT_TIMEOUT);
+						if (!deploymentComplete) {
+							System.out.println("Timeout, shutting down JBoss");
+							shutdown();
+							System.exit(1);
+						}
+					} catch (InterruptedException e) {
+						// do nothing
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		).start();
+	}
+
 }
