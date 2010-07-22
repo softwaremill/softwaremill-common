@@ -1,4 +1,4 @@
-package pl.softwaremill.common.uitest;
+package pl.softwaremill.common.uitest.selenium;
 
 /**
  * Properties for selenium browser

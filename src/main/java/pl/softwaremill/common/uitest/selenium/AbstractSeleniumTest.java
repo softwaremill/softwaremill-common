@@ -1,4 +1,4 @@
-package pl.softwaremill.common.uitest;
+package pl.softwaremill.common.uitest.selenium;
 
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.server.RemoteControlConfiguration;
@@ -8,6 +8,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import pl.softwaremill.common.uitest.selenium.screenshots.Screenshotter;
 
 import java.io.File;
 import java.io.FileOutputStream;

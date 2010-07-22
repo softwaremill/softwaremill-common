@@ -1,4 +1,4 @@
-package pl.softwaremill.common.uitest;
+package pl.softwaremill.common.uitest.jboss;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)

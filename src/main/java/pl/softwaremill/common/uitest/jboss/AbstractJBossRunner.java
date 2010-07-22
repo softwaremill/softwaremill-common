@@ -1,7 +1,8 @@
-package pl.softwaremill.common.uitest;
+package pl.softwaremill.common.uitest.jboss;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import pl.softwaremill.common.uitest.selenium.ServerPoperties;
 
 import java.io.IOException;
 import java.util.Scanner;

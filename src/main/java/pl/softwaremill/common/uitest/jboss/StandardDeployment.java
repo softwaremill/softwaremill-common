@@ -1,4 +1,6 @@
-package pl.softwaremill.common.uitest;
+package pl.softwaremill.common.uitest.jboss;
+
+import pl.softwaremill.common.uitest.jboss.Deployment;
 
 import java.io.File;
 import java.io.FileInputStream;

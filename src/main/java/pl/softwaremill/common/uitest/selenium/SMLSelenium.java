@@ -1,6 +1,8 @@
-package pl.softwaremill.common.uitest;
+package pl.softwaremill.common.uitest.selenium;
 
 import com.thoughtworks.selenium.DefaultSelenium;
+import pl.softwaremill.common.uitest.selenium.screenshots.ScreenshotHttpCommandProcessor;
+import pl.softwaremill.common.uitest.selenium.screenshots.Screenshotter;
 
 /**
  * Selenium capable of doing screenshots
@@ -14,7 +16,7 @@ public class SMLSelenium extends DefaultSelenium {
         super(serverHost, serverPort, browserStartCommand, browserURL);
 
         // use our command processor
-        this.commandProcessor = new SMLHttpCommandProcessor(serverHost, serverPort, browserStartCommand, browserURL,
+        this.commandProcessor = new ScreenshotHttpCommandProcessor(serverHost, serverPort, browserStartCommand, browserURL,
                 screenshotter);
     }
 }

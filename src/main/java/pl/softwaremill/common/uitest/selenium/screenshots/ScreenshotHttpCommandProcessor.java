@@ -1,4 +1,4 @@
-package pl.softwaremill.common.uitest;
+package pl.softwaremill.common.uitest.selenium.screenshots;
 
 import com.thoughtworks.selenium.HttpCommandProcessor;
 
@@ -7,11 +7,11 @@ import com.thoughtworks.selenium.HttpCommandProcessor;
  *
  * User: szimano
  */
-public class SMLHttpCommandProcessor extends HttpCommandProcessor{
+public class ScreenshotHttpCommandProcessor extends HttpCommandProcessor{
 
     private Screenshotter screenshotter;
 
-    public SMLHttpCommandProcessor(String serverHost, int serverPort, String browserStartCommand, String browserURL,
+    public ScreenshotHttpCommandProcessor(String serverHost, int serverPort, String browserStartCommand, String browserURL,
                                    Screenshotter screenshotter) {
         super(serverHost, serverPort, browserStartCommand, browserURL);
         this.screenshotter = screenshotter;
