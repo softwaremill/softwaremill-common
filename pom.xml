@@ -13,8 +13,8 @@
     <distributionManagement>
         <repository>
             <id>softwaremill-public</id>
-            <name>SoftwareMill Public</name>
-            <url>scpexe://ubuntu@repository.softwaremill.pl:/var/www/repository/public</url>
+            <name>SoftwareMill Public Releases</name>
+            <url>http://tools.softwaremill.pl/nexus/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 
