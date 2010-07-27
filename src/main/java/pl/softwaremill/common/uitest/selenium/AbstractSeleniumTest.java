@@ -38,6 +38,14 @@ public abstract class AbstractSeleniumTest {
         browserProperties = new SeleniumBrowserProperties("*firefox", "http://localhost", testServerPort);
     }
 
+    /**
+     * Returns object with properties for the browser started by selenium, including base url.
+     * This can be used to modify this properties, e.g. when using different test url.
+     */    
+    public SeleniumBrowserProperties getBrowserProperties() {
+        return browserProperties;
+    }
+    
     @BeforeSuite
     public void setupSelenium() throws Exception {
         
