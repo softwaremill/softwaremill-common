@@ -1,50 +1,80 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
-    <artifactId>softwaremill-ui-test</artifactId>
-    <version>1.0.8</version>
-    <name>softwaremill-ui-test</name>
+    <artifactId>softwaremill-common-parent</artifactId>
+    <version>1.0.3</version>
+    <name>Softwaremill Common Parent</name>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>softwaremill-public-releases</id>
-            <name>SoftwareMill Public Releases</name>
-            <url>http://tools.softwaremill.pl/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>softwaremill-public-snapshots</id>
-            <name>SoftwareMill Public Snapshots</name>
-            <url>http://tools.softwaremill.pl/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <modules>
+        <module>softwaremill-ui-test</module>
+    </modules>
 
     <dependencies>
+        <!-- Logging -->
         <dependency>
-            <groupId>org.seleniumhq.selenium.client-drivers</groupId>
-            <artifactId>selenium-java-client-driver</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>2.0a2</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.10</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Testing -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>5.10</version>
+            <scope>test</scope>
             <classifier>jdk15</classifier>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.8.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.10</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>5.10</version>
+                <classifier>jdk15</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>org.seleniumhq.selenium.client-drivers</groupId>
+                <artifactId>selenium-java-client-driver</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-server</artifactId>
+                <version>2.0a2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>softwaremill-public</id>
+            <name>SoftwareMill Public</name>
+            <url>scpexe://ubuntu@repository.softwaremill.pl:/var/www/repository/public</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -55,23 +85,16 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.5</version>
+                <artifactId>maven-ejb-plugin</artifactId>
                 <configuration>
-                    <systemPropertyVariables>
-                        <selenium.server>${selenium.server}</selenium.server>
-                        <selenium.server.port>${selenium.server.port}</selenium.server.port>
-                        <selenium.testserver.port>${selenium.testserver.port}</selenium.testserver.port>
-                    </systemPropertyVariables>
+                    <ejbVersion>3.0</ejbVersion>
                 </configuration>
             </plugin>
-
         </plugins>
 
-	<extensions>
+        <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
@@ -79,4 +102,10 @@
             </extension>
         </extensions>
     </build>
+
+    <repositories>
+    </repositories>
+
+    <pluginRepositories>
+    </pluginRepositories>
 </project>
