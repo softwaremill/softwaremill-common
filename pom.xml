@@ -9,10 +9,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <arquillian.version>1.0.0.Alpha3</arquillian.version>
+        <hibernate.version>3.5.3-Final</hibernate.version>
+        <cdiext.version>1.0.0-SNAPSHOT</cdiext.version>
     </properties>
 
     <modules>
         <module>softwaremill-ui-test</module>
+        <module>softwaremill-db-test</module>
     </modules>
 
     <dependencies>
@@ -23,24 +27,23 @@
             <version>1.5.10</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.10</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Testing -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>test</scope>
-            <classifier>jdk15</classifier>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.8.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.5.10</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -50,8 +53,7 @@
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>5.10</version>
-                <classifier>jdk15</classifier>
+                <version>5.12.1</version>
             </dependency>
 
             <dependency>
@@ -64,6 +66,88 @@
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-server</artifactId>
                 <version>2.0a2</version>
+            </dependency>
+
+            <!-- JEE -->
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-6.0</artifactId>
+                <version>1.0.0.Beta7</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>4.0.0.GA</version>
+            </dependency>
+            
+            <!-- Hibernate -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-annotations</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-testing</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+
+            <!-- Arquillian -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-testng</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.container</groupId>
+                <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+
+            <!-- Weld -->
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core-bom</artifactId>
+                <version>1.0.1-SP1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Databases -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.2.125</version>
+            </dependency>
+
+            <!-- CDI-ext -->
+            <dependency>
+                <groupId>pl.softwaremill.cdiext</groupId>
+                <artifactId>cdiext-common</artifactId>
+                <version>${cdiext.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.cdiext</groupId>
+                <artifactId>cdiext-cdi</artifactId>
+                <version>${cdiext.version}</version>
+            </dependency>
+
+            <!-- Guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>r06</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -104,6 +188,18 @@
     </build>
 
     <repositories>
+        <repository>
+            <id>smlcommon-repos</id>
+            <name>Softwaremill Common Repository Group</name>
+            <url>http://tools.softwaremill.pl/nexus/content/groups/smlcommon-repos/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <pluginRepositories>
