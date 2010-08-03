@@ -154,10 +154,15 @@
 
     <distributionManagement>
         <repository>
-            <id>softwaremill-public</id>
-            <name>SoftwareMill Public</name>
-            <url>scpexe://ubuntu@repository.softwaremill.pl:/var/www/repository/public</url>
+            <id>softwaremill-public-releases</id>
+            <name>SoftwareMill Public Releases</name>
+            <url>http://tools.softwaremill.pl/nexus/content/repositories/releases/</url>
         </repository>
+        <snapshotRepository>
+            <id>softwaremill-public-snapshots</id>
+            <name>SoftwareMill Public Snapshots</name>
+            <url>http://tools.softwaremill.pl/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <build>
