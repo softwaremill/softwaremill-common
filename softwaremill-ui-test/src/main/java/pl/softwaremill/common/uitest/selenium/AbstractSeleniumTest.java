@@ -75,7 +75,7 @@ public abstract class AbstractSeleniumTest {
     }
 
     @BeforeTest
-    public void setupBrowser() {
+    public void setupBrowser() throws Exception {
         String url = browserProperties.getBrowserURL();
         if(browserProperties.getBrowserPort() != null) {
             url += ":"+browserProperties.getBrowserPort();
@@ -103,10 +103,15 @@ public abstract class AbstractSeleniumTest {
         selenium.start();
 
         System.out.println("--- Started browser");
+
+        // perform optional logic
+        afterSeleniumStart();
     }
 
     @AfterTest
-    public void stopBrowser() {
+    public void stopBrowser() throws Exception{
+        beforeSeleniumStop();
+
         System.out.println("--- Stopping browser");
         selenium.stop();
         System.out.println("--- Stopped browser");
@@ -134,12 +139,20 @@ public abstract class AbstractSeleniumTest {
         Assert.fail(message);
     }
 
-    private void captureScreenshot() throws Exception {
+    protected void captureScreenshot() throws Exception {
         File f = File.createTempFile("selenium_screenshot", "failed.png");
 
         selenium.captureEntirePageScreenshot(f.getAbsolutePath(), "");
 
         System.out.println("##teamcity[publishArtifacts '"+f.getAbsolutePath()+"']");
+    }
+
+    protected void afterSeleniumStart() throws Exception {
+        // base implementation does nothing
+    }
+
+    protected void beforeSeleniumStop() throws Exception {
+        // base implementation does nothing
     }
     
 }
