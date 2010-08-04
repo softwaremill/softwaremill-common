@@ -71,7 +71,7 @@ public abstract class AbstractSeleniumTest {
     public void stopSelenium() throws Exception, InterruptedException {
         System.out.println("--- Stopping selenium server");
         server.stop();
-        System.out.println("--- Stopped selenium server");    
+        System.out.println("--- Stopped selenium server");
     }
 
     @BeforeTest

@@ -33,6 +33,8 @@ public abstract class AbstractJBossRunner {
 
 	protected abstract Deployment[] getDeployments();
 
+    private Process tailProcess;
+
 	@BeforeSuite
     public void start() throws Exception {
 		loadProperties();
@@ -71,8 +73,12 @@ public abstract class AbstractJBossRunner {
     }
 
     protected void startServer() throws Exception {
-        jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/run.sh", "-c", configuration, "-Djboss.service.binding.set=ports-0"+portset});
+        jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/run.sh", "-c", configuration,
+                "-Djboss.service.binding.set=ports-0"+portset});
+        
 		waitFor(jbossProcess, STARTED_LOG_MESSAGE);
+
+        tailProcess = jbossProcess;
 	}
 
 	private void waitFor(Process process, String message) {
@@ -82,11 +88,18 @@ public abstract class AbstractJBossRunner {
 	}
 
 	private Process getTailProcess() throws IOException {
-		return Runtime.getRuntime().exec(new String[]{"tail", "-f", serverHome + "/server/" + configuration + "/log/server.log"});
+        if (tailProcess == null) {
+            // this happens when jboss was already started
+            tailProcess = Runtime.getRuntime().exec(
+                    new String[]{"tail", "-f", serverHome + "/server/" + configuration + "/log/server.log"});
+        }
+
+        return tailProcess;
 	}
 
 	private void shutdownServer() throws IOException, InterruptedException {
-		Process shutdownProcess = Runtime.getRuntime().exec(new String[]{serverHome + "/bin/shutdown.sh", "-s", "localhost:1"+portset+"99", "-S"});
+		Process shutdownProcess = Runtime.getRuntime().exec(
+                new String[]{serverHome + "/bin/shutdown.sh", "-s", "localhost:1"+portset+"99", "-S"});
 		shutdownProcess.waitFor();
 	}
 
@@ -96,6 +109,9 @@ public abstract class AbstractJBossRunner {
 			waitFor(getTailProcess(), deployment.getWaitForMessage());
 		}
 		deploymentComplete = true;
+
+        // close the tail process so it doesn't overload
+        tailProcess.getInputStream().close();
 	}
 
 	private void undeploy() throws Exception {
