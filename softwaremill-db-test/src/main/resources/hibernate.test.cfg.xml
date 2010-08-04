@@ -16,11 +16,5 @@
         <property name="connection.username">sa</property>
         <property name="connection.password"></property>
         <!-- The connection URL is set in AbstractEntityTest -->
-
-        <!--<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>-->
-        <!--<property name="connection.url">jdbc:mysql:///smlcommon_tests?useUnicode=true&amp;characterEncoding=UTF-8</property>-->
-        <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
-        <!--<property name="connection.username">root</property>-->
-        <!--<property name="connection.password"></property>-->
     </session-factory>
 </hibernate-configuration>

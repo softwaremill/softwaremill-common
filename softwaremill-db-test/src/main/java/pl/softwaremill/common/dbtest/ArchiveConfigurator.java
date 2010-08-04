@@ -16,7 +16,7 @@ public abstract class ArchiveConfigurator {
                 .addPackage(EntityWriter.class.getPackage())
                 .addPackage(TransactionalInterceptor.class.getPackage());
 
-        // Creting beans.xml
+        // Creating beans.xml
         StringBuilder beansXmlBuilder = new StringBuilder();
         beansXmlBuilder.append("<beans>");
         fillBeansXml(beansXmlBuilder);
