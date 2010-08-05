@@ -19,4 +19,8 @@ public class SMLSelenium extends DefaultSelenium {
         this.commandProcessor = new ScreenshotHttpCommandProcessor(serverHost, serverPort, browserStartCommand, browserURL,
                 screenshotter);
     }
+
+	public void open(String url) {
+     	commandProcessor.doCommand("open", new String[] {url,"true"});
+    }
 }
