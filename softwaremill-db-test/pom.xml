@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-db-test</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <name>Softwaremill DB Test</name>
 
     <parent>
@@ -104,5 +104,19 @@
     <build>
         <plugins>
         </plugins>
+			<testResources>
+				<testResource>
+					<directory>src/test/resources</directory>
+					<includes>
+						<include>*</include>
+					</includes>
+				</testResource>
+				<testResource>
+					<directory>src/test/java</directory>
+					<includes>
+						<include>**/*.sql</include>
+					</includes>
+				</testResource>
+			</testResources>
     </build>
 </project>

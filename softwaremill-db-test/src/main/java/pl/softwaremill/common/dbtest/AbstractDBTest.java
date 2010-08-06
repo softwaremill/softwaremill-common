@@ -13,6 +13,7 @@ import org.hibernate.test.tm.TransactionManagerLookupImpl;
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.annotations.*;
 import pl.softwaremill.cdiext.persistence.EntityManagerFactoryProducer;
+import pl.softwaremill.common.dbtest.util.SqlFileResolver;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -65,7 +66,8 @@ public abstract class AbstractDBTest extends Arquillian {
      * @param em Entity manager which can be used to load data.
      */
     protected void loadTestData(EntityManager em) throws IOException {
-        loadURLContent(em, Resources.getResource(this.getClass().getSimpleName().toLowerCase() + ".sql"));
+		final String sqlFilePath = new SqlFileResolver(this.getClass()).getSqlFilePath();
+		loadURLContent(em, Resources.getResource(sqlFilePath));
     }
 
     /**
