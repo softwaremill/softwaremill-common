@@ -22,19 +22,18 @@ public abstract class AbstractSeleniumTest {
   
     private SeleniumServer server;
     
-    protected Selenium selenium;
+    protected static Selenium selenium;
     
     private SeleniumBrowserProperties browserProperties;
 
     private String seleniumHost;
-    private int seleniumServerPort;    
+    private int seleniumServerPort;
 
     public AbstractSeleniumTest() {
-        System.out.println("--- AbstractSeleniumTest()");
         seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
         seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
         String testServerPort = System.getProperty("selenium.testserver.port", "8280");
-        
+
         browserProperties = new SeleniumBrowserProperties("*firefox", "http://localhost", testServerPort);
     }
 
@@ -48,7 +47,7 @@ public abstract class AbstractSeleniumTest {
     
     @BeforeSuite
     public void setupSelenium() throws Exception {
-        
+
         System.out.println("--- Starting selenium server");
 
         RemoteControlConfiguration rcc = new RemoteControlConfiguration();
@@ -66,7 +65,7 @@ public abstract class AbstractSeleniumTest {
         server.start();
         System.out.println("--- Started selenium server");
     }
-    
+
     @AfterSuite(alwaysRun = true)
     public void stopSelenium() throws Exception, InterruptedException {
         System.out.println("--- Stopping selenium server");
