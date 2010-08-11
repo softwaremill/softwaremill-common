@@ -46,9 +46,14 @@ public class Configuration {
         propertyProviders.add(provider);
     }
 
-    // Registering default property providers. First JBoss, then classpath.
+    // Registering default property providers. First JBoss (if available), then classpath.
     static {
-        registerPropertiesProvider(new JBossDeployPropertiesProvider());
+        try {
+            Thread.currentThread().getContextClassLoader().loadClass("org.jboss.mx.util.MBeanServerLocator");
+            registerPropertiesProvider(new JBossDeployPropertiesProvider());
+        } catch (ClassNotFoundException e) {
+            // Class not found - not registering.
+        }
         registerPropertiesProvider(new ClasspathPropertiesProvider());
     }
 
