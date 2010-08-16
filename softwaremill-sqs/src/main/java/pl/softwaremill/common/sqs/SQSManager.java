@@ -1,0 +1,174 @@
+package pl.softwaremill.common.sqs;
+
+import com.xerox.amazonws.sqs2.Message;
+import com.xerox.amazonws.sqs2.MessageQueue;
+import com.xerox.amazonws.sqs2.SQSException;
+import com.xerox.amazonws.sqs2.SQSUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pl.softwaremill.common.conf.Configuration;
+import pl.softwaremill.common.sqs.util.Base64Coder;
+import pl.softwaremill.common.sqs.util.SQSAnswer;
+
+import java.io.*;
+import java.util.Map;
+
+/**
+ * Class for sending messages to Amazon's Simple Queue Service
+ *
+ * @author Jaroslaw Kijanowski - jarek@softwaremill.pl
+ *         Date: Aug 16, 2010
+ */
+public class SQSManager {
+
+
+
+    private static Map<String, String> props = Configuration.get("sqs");
+    private static final String AWSAccessKeyId = props.get("AWSAccessKeyId");
+    private static final String SecretAccessKey = props.get("SecretAccessKey");
+
+    private static final Logger log = LoggerFactory.getLogger(SQSManager.class);
+
+    private static final int REDELIVERY_LIMIT = 10;
+
+
+    /**
+     * @param queue   the name of the SQS queue to set up
+     * @param timeout timeout in seconds for the whole queue (default is 30) - value is limited to 43200 seconds (12 hours)
+     */
+    public static void setupSQSQueue(String queue, int timeout) {
+        try {
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+            msgQueue.setVisibilityTimeout(timeout);
+        } catch (SQSException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Sends a serializable message to an SQS queue using the Base64Coder util to encode it properly
+     *
+     * @param queue   the SQS queue the message is sent to
+     * @param message a Serializable object
+     */
+    public static void sendMessage(String queue, Serializable message) {
+
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(message);
+            oos.flush();
+            oos.close();
+            baos.close();
+
+            String encodedMessage = new String(Base64Coder.encode(baos.toByteArray()));
+
+            log.debug("Serialized Message: " + encodedMessage);
+
+            for (int i = 0; i < REDELIVERY_LIMIT; i++) {
+                try {
+                    MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+                    String msgId = msgQueue.sendMessage(encodedMessage);
+
+                    log.info("Sent message with id " + msgId + " to queue " + queue);
+                    i = REDELIVERY_LIMIT;
+
+                } catch (SQSException e) {
+                    log.error("Colud not sent message to SQS queue: " + queue);
+                    e.printStackTrace();
+                    log.info("Retrying in 10 seconds");
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Receives a message from a SQS queue and decodes it properly to an object using the Base64Coder util
+     *
+     * @param queue the SQS queue the message is received from
+     * @return SQSAnswer holding an Object and the receipt handle for further processing
+     *         or null if no message was available
+     */
+    public static SQSAnswer receiveMessage(String queue) {
+
+        try {
+
+            log.debug("Polling queue " + queue);
+
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+
+            Message msg = msgQueue.receiveMessage();
+
+            if (msg != null) {
+                String data = msg.getMessageBody();
+
+                ByteArrayInputStream bais = new ByteArrayInputStream(Base64Coder.decode(data));
+
+                ObjectInputStream ois = new ObjectInputStream(bais);
+
+                log.info("Got message from queue " + queue);
+
+                return new SQSAnswer(ois.readObject(), msg.getReceiptHandle());
+            } else {
+                return null;
+            }
+
+        } catch (SQSException e) {
+            log.error("Colud not receive message from SQS queue: " + queue);
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Deletes a message from a SQS queue
+     *
+     * @param receiptHandle handle of the message to be deleted
+     * @param queue         SQS queue the message is held
+     */
+    public static void deleteMessage(String queue, String receiptHandle) {
+        try {
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+            msgQueue.deleteMessage(receiptHandle);
+            log.debug("Deleted message in queue " + queue);
+        } catch (SQSException e) {
+            log.error("Could not delete message in queue " + queue + "! This will cause a redelivery.");
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Resets a messages timeout in a SQS queue
+     *
+     * @param receiptHandle handle of the message to be reset
+     * @param timeOut new timeout to be set
+     * @param queue SQS queue the message is held
+     */
+    public static void setMessageVisibilityTimeout(String queue, String receiptHandle, int timeOut) {
+        try {
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+            msgQueue.setMessageVisibilityTimeout(receiptHandle, timeOut);
+            log.debug("Set timeout to " + timeOut + " message in queue " + queue);
+        } catch (SQSException e) {
+            log.error("Could not reset timeout for message in queue " + queue + "! This will cause a delay in redelivery.");
+            e.printStackTrace();
+        }
+    }
+
+}
