@@ -15,7 +15,7 @@ public class SQSManagerTest {
     private static final String MESSAGE = "This is a simple String";
 
     @Test(enabled = false)
-    public void testSQSdelivery(){
+    public void testSQSDelivery(){
 
         //send a message to SQS
         SQSManager.sendMessage("test", MESSAGE);
