@@ -22,6 +22,14 @@ public class Configuration {
     private static List<PropertiesProvider> propertyProviders = new ArrayList<PropertiesProvider>();
 
     /**
+     * Reads configuration for the specified name.
+     *
+     * Will look for a {@code &lt;name&gt;.conf} file in two places:
+     * (1) the jboss conf directory: {@code jboss/server/<current jboss conf>/conf}, if jboss is available
+     * (2) the classpath
+     *
+     * The {@code &lt;name&gt;.conf} should be a simple key-value file.
+     *
      * @param name Name of the configuration.
      * @return The properties of the given configuration.
      */
