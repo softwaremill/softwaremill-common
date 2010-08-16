@@ -1,10 +1,10 @@
 package pl.softwaremill.common.conf;
 
-import java.util.Properties;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
 public interface PropertiesProvider {
-    Properties lookupProperties(String name);
+    ImmutableMap<String, String> lookupProperties(String name);
 }

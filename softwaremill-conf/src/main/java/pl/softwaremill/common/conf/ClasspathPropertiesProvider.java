@@ -1,16 +1,16 @@
 package pl.softwaremill.common.conf;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Resources;
 
 import java.net.URL;
-import java.util.Properties;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
 public class ClasspathPropertiesProvider implements PropertiesProvider {
     @Override
-    public Properties lookupProperties(String name) {
+    public ImmutableMap<String, String> lookupProperties(String name) {
         try {
             URL resource = Resources.getResource(name + ".conf");
             return Configuration.loadFromURL(resource);

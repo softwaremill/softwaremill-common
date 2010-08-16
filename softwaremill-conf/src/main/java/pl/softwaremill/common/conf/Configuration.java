@@ -1,5 +1,6 @@
 package pl.softwaremill.common.conf;
 
+import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    private static Map<String, Properties> configurations = new ConcurrentHashMap<String, Properties>();
+    private static Map<String, Map<String, String>> configurations = new ConcurrentHashMap<String, Map<String, String>>();
     private static List<PropertiesProvider> propertyProviders = new ArrayList<PropertiesProvider>();
 
     /**
@@ -33,13 +34,13 @@ public class Configuration {
      * @param name Name of the configuration.
      * @return The properties of the given configuration.
      */
-    public static Properties get(String name) {
+    public static Map<String, String> get(String name) {
         if (configurations.containsKey(name)) {
             return configurations.get(name);
         }
 
         for (PropertiesProvider propertyProvider : propertyProviders) {
-            Properties props = propertyProvider.lookupProperties(name);
+            Map<String, String> props = propertyProvider.lookupProperties(name);
             if (props != null) {
                 log.info("Loaded configuration for: " + name + " using " + propertyProvider.getClass().getName());
                 configurations.put(name, props);
@@ -65,7 +66,7 @@ public class Configuration {
         registerPropertiesProvider(new ClasspathPropertiesProvider());
     }
 
-    static Properties loadFromURL(URL url) {
+    static ImmutableMap<String, String> loadFromURL(URL url) {
         Properties props = new Properties();
         try {
             InputStream is = url.openStream();
@@ -75,7 +76,12 @@ public class Configuration {
                 is.close();
             }
 
-            return props;
+            ImmutableMap.Builder<String, String> propsAsImmMapBuilder = new ImmutableMap.Builder<String, String>();
+            for (String propName : props.stringPropertyNames()) {
+                propsAsImmMapBuilder = propsAsImmMapBuilder.put(propName, props.getProperty(propName));
+            }
+
+            return propsAsImmMapBuilder.build();
         } catch (IOException e) {
             log.error("Error while reading configuration from url: " + url.toString(), e);
             return null;

@@ -1,5 +1,6 @@
 package pl.softwaremill.common.conf;
 
+import com.google.common.collect.ImmutableMap;
 import org.jboss.mx.util.MBeanServerLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import javax.management.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
 
 /**
  * @author Adam Warski (adam at warski dot org)
@@ -16,8 +16,7 @@ public class JBossDeployPropertiesProvider implements PropertiesProvider {
     private static final Logger log = LoggerFactory.getLogger(JBossDeployPropertiesProvider.class);
 
     @Override
-    public Properties lookupProperties(String name) {
-
+    public ImmutableMap<String, String> lookupProperties(String name) {
         // Looking up the server's conf directory
         String serverConfDirectory;
         try {

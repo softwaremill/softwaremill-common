@@ -2,7 +2,7 @@ package pl.softwaremill.common.conf;
 
 import org.testng.annotations.Test;
 
-import java.util.Properties;
+import java.util.Map;
 
 import static org.fest.assertions.Assertions.*;
 
@@ -12,9 +12,10 @@ import static org.fest.assertions.Assertions.*;
 public class ConfigurationTest {
     @Test
     public void testTest1FromClasspath() {
-        Properties props = Configuration.get("test1");
-        assertThat(props.size()).isEqualTo(1);
+        Map<String, String> props = Configuration.get("test1");
+        assertThat(props.size()).isEqualTo(2);
         assertThat(props.get("a")).isEqualTo("b");
+        assertThat(props.get("c")).isEqualTo("d");
     }
 
     @Test(expectedExceptions = RuntimeException.class)
