@@ -19,6 +19,7 @@
         <module>softwaremill-db-test</module>
         <module>softwaremill-conf</module>
         <module>softwaremill-sqs</module>
+        <module>softwaremill-timer</module>
     </modules>
 
     <dependencies>
@@ -65,6 +66,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.jboss.javaee</groupId>
+                <artifactId>jboss-javaee</artifactId>
+                <version>5.2.0.Beta1</version>
+            </dependency>
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>

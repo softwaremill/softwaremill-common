@@ -7,6 +7,7 @@ import com.xerox.amazonws.sqs2.SQSUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.conf.Configuration;
+import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
 import pl.softwaremill.common.sqs.util.Base64Coder;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 
@@ -20,7 +21,6 @@ import java.util.Map;
  *         Date: Aug 16, 2010
  */
 public class SQSManager {
-
 
 
     private static Map<String, String> props = Configuration.get("sqs");
@@ -41,7 +41,7 @@ public class SQSManager {
             MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
             msgQueue.setVisibilityTimeout(timeout);
         } catch (SQSException e) {
-            e.printStackTrace();
+            throw new SQSRuntimeException("Could not setup SQS queue: " + queue, e);
         }
     }
 
@@ -54,39 +54,44 @@ public class SQSManager {
      */
     public static void sendMessage(String queue, Serializable message) {
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
             ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(message);
             oos.flush();
             oos.close();
             baos.close();
 
-            String encodedMessage = new String(Base64Coder.encode(baos.toByteArray()));
+        } catch (IOException e) {
+            throw new SQSRuntimeException("Could not create stream, SQS message not sent: ", e);
+        }
 
-            log.debug("Serialized Message: " + encodedMessage);
+        String encodedMessage = new String(Base64Coder.encode(baos.toByteArray()));
 
-            for (int i = 0; i < REDELIVERY_LIMIT; i++) {
+        log.debug("Serialized Message: " + encodedMessage);
+
+        for (int i = 0; i < REDELIVERY_LIMIT; i++) {
+            try {
+                MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+                String msgId = msgQueue.sendMessage(encodedMessage);
+
+                log.info("Sent message with id " + msgId + " to queue " + queue);
+                i = REDELIVERY_LIMIT;
+
+            } catch (SQSException e) {
+                log.error("Colud not sent message to SQS queue: " + queue, e);
+                if (i == REDELIVERY_LIMIT) {
+                    throw new SQSRuntimeException("Exceeded redelivery value: " + REDELIVERY_LIMIT + "; message not sent! ", e);
+                }
+                log.info("Retrying in 10 seconds");
                 try {
-                    MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
-                    String msgId = msgQueue.sendMessage(encodedMessage);
-
-                    log.info("Sent message with id " + msgId + " to queue " + queue);
-                    i = REDELIVERY_LIMIT;
-
-                } catch (SQSException e) {
-                    log.error("Colud not sent message to SQS queue: " + queue);
-                    e.printStackTrace();
-                    log.info("Retrying in 10 seconds");
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
+                    Thread.sleep(10000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -112,26 +117,27 @@ public class SQSManager {
                 String data = msg.getMessageBody();
 
                 ByteArrayInputStream bais = new ByteArrayInputStream(Base64Coder.decode(data));
+                Object answer;
 
-                ObjectInputStream ois = new ObjectInputStream(bais);
+                try {
+                    ObjectInputStream ois = new ObjectInputStream(bais);
+                    answer = ois.readObject();
+                } catch (IOException e) {
+                    throw new SQSRuntimeException("I/O exception.", e);
+                } catch (ClassNotFoundException e) {
+                    throw new SQSRuntimeException("Class of the serialized object cannot be found.", e);
+                }
 
                 log.info("Got message from queue " + queue);
 
-                return new SQSAnswer(ois.readObject(), msg.getReceiptHandle());
+                return new SQSAnswer(answer, msg.getReceiptHandle());
             } else {
                 return null;
             }
 
         } catch (SQSException e) {
-            log.error("Colud not receive message from SQS queue: " + queue);
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new SQSRuntimeException("Could not receive message from SQS queue: " + queue, e);
         }
-
-        return null;
     }
 
 
@@ -145,10 +151,9 @@ public class SQSManager {
         try {
             MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
             msgQueue.deleteMessage(receiptHandle);
-            log.debug("Deleted message in queue " + queue);
+            log.debug("Deleted message in queue: " + queue);
         } catch (SQSException e) {
-            log.error("Could not delete message in queue " + queue + "! This will cause a redelivery.");
-            e.printStackTrace();
+            throw new SQSRuntimeException("Could not delete message in queue " + queue + "! This will cause a redelivery.", e);
         }
     }
 
@@ -157,17 +162,16 @@ public class SQSManager {
      * Resets a messages timeout in a SQS queue
      *
      * @param receiptHandle handle of the message to be reset
-     * @param timeOut new timeout to be set
-     * @param queue SQS queue the message is held
+     * @param timeOut       new timeout to be set
+     * @param queue         SQS queue the message is held
      */
     public static void setMessageVisibilityTimeout(String queue, String receiptHandle, int timeOut) {
         try {
             MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
             msgQueue.setMessageVisibilityTimeout(receiptHandle, timeOut);
-            log.debug("Set timeout to " + timeOut + " message in queue " + queue);
+            log.debug("Set timeout to " + timeOut + " seconds in queue: " + queue);
         } catch (SQSException e) {
-            log.error("Could not reset timeout for message in queue " + queue + "! This will cause a delay in redelivery.");
-            e.printStackTrace();
+            throw new SQSRuntimeException("Could not reset timeout for message in queue " + queue + "! This will cause a delay in redelivery.", e);
         }
     }
 

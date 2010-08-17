@@ -14,7 +14,7 @@ public class SQSManagerTest {
 
     private static final String MESSAGE = "This is a simple String";
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testSQSDelivery(){
 
         //send a message to SQS
@@ -25,6 +25,9 @@ public class SQSManagerTest {
 
         //verify received message
         Assert.assertEquals(answer.getMessage().toString(), MESSAGE);
+
+        //delete message
+        SQSManager.deleteMessage("test", answer.getReceiptHandle());
 
     }
 }
