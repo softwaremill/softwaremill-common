@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -82,7 +83,10 @@ public class Configuration {
             }
 
             return propsAsImmMapBuilder.build();
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
+            // Configuration not found in this provider - trying the next one.
+            return null;
+        }catch (IOException e) {
             log.error("Error while reading configuration from url: " + url.toString(), e);
             return null;
         }
