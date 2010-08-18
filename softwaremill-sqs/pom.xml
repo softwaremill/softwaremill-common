@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-sqs</artifactId>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
     <name>Softwaremill SQS support</name>
 
     <parent>
@@ -21,6 +21,12 @@
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-conf</artifactId>
             <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.javaee</groupId>
+            <artifactId>jboss-javaee</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- typica -->
