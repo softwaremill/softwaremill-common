@@ -19,7 +19,6 @@
         <module>softwaremill-db-test</module>
         <module>softwaremill-conf</module>
         <module>softwaremill-sqs</module>
-        <module>softwaremill-timer</module>
     </modules>
 
     <dependencies>
