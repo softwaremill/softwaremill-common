@@ -9,8 +9,14 @@ import java.util.Random;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class StringUtil {
-    public static String generateRandomPassword(int length) {
+public class RichString {
+    private final String wrapped;
+
+    public RichString(String wrapped) {
+        this.wrapped = wrapped;
+    }
+
+    public static String generateRandom(int length) {
         StringBuffer sb = new StringBuffer();
 
         Random r = new Random();
@@ -26,7 +32,7 @@ public class StringUtil {
 
     // See: http://www.osix.net/modules/article/?id=42
 
-    private static String hexStringFromBytes(byte[] b) {
+    private String hexStringFromBytes(byte[] b) {
         String hex = "";
 
         int msb;
@@ -43,24 +49,24 @@ public class StringUtil {
         return (hex);
     }
 
-    public static String encodePassword(String password) {
-        if (password == null) {
+    public String encodeAsPassword() {
+        if (wrapped == null) {
             return null;
         }
 
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
 
-            md.update(password.getBytes());
+            md.update(wrapped.getBytes());
             return hexStringFromBytes(md.digest());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static String escapeForXml(String aText) {
+    public String escapeForXml() {
         final StringBuilder result = new StringBuilder();
-        final StringCharacterIterator iterator = new StringCharacterIterator(aText);
+        final StringCharacterIterator iterator = new StringCharacterIterator(wrapped);
         char character = iterator.current();
         while (character != CharacterIterator.DONE) {
             if (character == '<') {
