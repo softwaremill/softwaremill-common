@@ -15,8 +15,7 @@ import java.util.Scanner;
 public abstract class AbstractJBossRunner {
 
     private String serverHome;
-    private String serverPort;
-    private String configuration;
+	private String configuration;
     private boolean running;
     private int portset;
     
@@ -26,8 +25,9 @@ public abstract class AbstractJBossRunner {
 
 	private static final String STARTED_LOG_MESSAGE = "Started in";
 
-	private static final int DEPLOYMENT_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 	private boolean deploymentComplete = false;
+
+	private static final int MILLISECONDS_IN_MINUTE = 60 * 1000;
 
 	protected abstract ServerPoperties getServerProperties();
 
@@ -58,7 +58,6 @@ public abstract class AbstractJBossRunner {
 		ServerPoperties serverPoperties = getServerProperties();
 
 		this.serverHome = serverPoperties.getServerHome();
-		this.serverPort = "8"+serverPoperties.getPortset()+"80";
 		this.configuration = serverPoperties.getConfiguration();
 		this.running =serverPoperties.isRunning();
 		this.portset = serverPoperties.getPortset();
@@ -137,7 +136,7 @@ public abstract class AbstractJBossRunner {
 				@Override
 				public void run() {
 					try {
-						Thread.sleep(DEPLOYMENT_TIMEOUT);
+						Thread.sleep(getServerProperties().getDeploymentTimeoutMinutes() * MILLISECONDS_IN_MINUTE);
 						if (!deploymentComplete) {
 							System.out.println("Timeout, shutting down JBoss");
 							shutdown();
