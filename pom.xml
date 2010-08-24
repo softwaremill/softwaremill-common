@@ -12,6 +12,7 @@
         <arquillian.version>1.0.0.Alpha3</arquillian.version>
         <hibernate.version>3.5.3-Final</hibernate.version>
         <cdiext.version>1.0.0-SNAPSHOT</cdiext.version>
+		<findbugs.version>2.3.1</findbugs.version>
     </properties>
 
     <modules>
@@ -242,6 +243,18 @@
                     </execution>
                 </executions>
             </plugin>
+			 <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${findbugs.version}</version>
+                <configuration>
+                    <findbugsXmlOutput>true</findbugsXmlOutput>
+                    <findbugsXmlOutputDirectory>target/findbugs</findbugsXmlOutputDirectory>
+                    <!-- Default is 512 but that is too much to reserve on TC agent -->
+                    <maxHeap>256</maxHeap>
+                    <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
         </plugins>
 
         <extensions>
@@ -252,6 +265,16 @@
             </extension>
         </extensions>
     </build>
+
+	<reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${findbugs.version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <repositories>
         <repository>
