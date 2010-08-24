@@ -4,6 +4,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import pl.softwaremill.common.uitest.selenium.ServerPoperties;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -52,6 +53,7 @@ public abstract class AbstractJBossRunner {
 			shutdownServer();
 			log.info("JBoss Server stopped");
         }
+		publishLog();
     }
 
 	private void loadProperties() {
@@ -90,10 +92,14 @@ public abstract class AbstractJBossRunner {
         if (tailProcess == null) {
             // this happens when jboss was already started
             tailProcess = Runtime.getRuntime().exec(
-                    new String[]{"tail", "-f", serverHome + "/server/" + configuration + "/log/server.log"});
+                    new String[]{"tail", "-f", getServerLogPath()});
         }
 
         return tailProcess;
+	}
+
+	protected String getServerLogPath() {
+		return serverHome + "/server/" + configuration + "/log/server.log";
 	}
 
 	private void shutdownServer() throws IOException, InterruptedException {
@@ -152,4 +158,11 @@ public abstract class AbstractJBossRunner {
 		).start();
 	}
 
+	protected void publishLog() throws IOException {
+		File tmpLogFile = File.createTempFile("jboss_log", ".txt");
+		Runtime.getRuntime().exec(new String[] {
+				"cp", getServerLogPath(), tmpLogFile.getAbsolutePath()
+		});
+		System.out.println("##teamcity[publishArtifacts '"+ tmpLogFile.getAbsolutePath()+"']");
+	}
 }
