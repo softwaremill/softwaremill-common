@@ -35,7 +35,7 @@ import static pl.softwaremill.common.sqs.SQSConfiguration.*;
  *         Date: Aug 24, 2010
  * @author Adam Warski
  */
-public abstract class SQSEmailSenderBean extends TimerManager {
+public abstract class SQSEmailSenderBean extends TimerManager implements SQSEmailSender {
     private static final Logger log = LoggerFactory.getLogger(SQSEmailSenderBean.class);
 
     public void startTimer(int interval){
