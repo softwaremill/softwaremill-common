@@ -39,7 +39,7 @@ public class SQSManager {
             MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
             msgQueue.setVisibilityTimeout(timeout);
         } catch (SQSException e) {
-            throw new SQSRuntimeException("Could not setup SQS EMAIL_SQS_QUEUE: " + queue, e);
+            throw new SQSRuntimeException("Could not setup SQS queue: " + queue, e);
         }
     }
 
