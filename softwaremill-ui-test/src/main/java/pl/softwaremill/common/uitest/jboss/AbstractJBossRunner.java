@@ -146,7 +146,7 @@ public abstract class AbstractJBossRunner {
 						if (!deploymentComplete) {
 							System.out.println("Timeout, shutting down JBoss");
 							shutdown();
-							System.exit(1);
+							throw new RuntimeException("Timeout");
 						}
 					} catch (InterruptedException e) {
 						// do nothing
