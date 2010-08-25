@@ -9,4 +9,10 @@
        	<Bug code="ST"/>
     </Match>
 
+	<Match>
+       	<Class name="pl.softwaremill.common.uitest.selenium.AbstractSeleniumTest" />
+		<Field name="selenium"/>
+       	<Bug code="MS"/>
+    </Match>
+
 </FindBugsFilter>
