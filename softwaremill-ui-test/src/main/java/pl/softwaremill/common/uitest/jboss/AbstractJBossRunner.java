@@ -142,7 +142,7 @@ public abstract class AbstractJBossRunner {
 				@Override
 				public void run() {
 					try {
-						Thread.sleep(getServerProperties().getDeploymentTimeoutMinutes() * MILLISECONDS_IN_MINUTE);
+						Thread.sleep(((long) getServerProperties().getDeploymentTimeoutMinutes()) * MILLISECONDS_IN_MINUTE);
 						if (!deploymentComplete) {
 							System.out.println("Timeout, shutting down JBoss");
 							shutdown();
