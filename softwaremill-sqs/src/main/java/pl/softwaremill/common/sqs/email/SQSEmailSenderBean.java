@@ -2,6 +2,7 @@ package pl.softwaremill.common.sqs.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.softwaremill.common.conf.Configuration;
 import pl.softwaremill.common.sqs.SQSManager;
 import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
 import pl.softwaremill.common.sqs.timer.TimerManager;
@@ -9,11 +10,11 @@ import pl.softwaremill.common.sqs.util.EmailDescription;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 
 import javax.annotation.Resource;
-import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerService;
 import java.util.Date;
+import java.util.Map;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Session;
@@ -23,29 +24,36 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * Receiver polling Amazon's SQS queue and sending emails
- * Host and port are configured via ejb-jar.xml
- * queue name and reply address are configured via system properties
+ *
+ * Configured via sqs.conf in jboss/server/profile/conf or classpath
+ * smtpHost= mailing host
+ * smtpPort= mailing host's port
+ * queue= SQS queue, where the email data is coming from
+ * reply= reply address put into the eamil
+ *
+ * To use this bean write a @Stateless bean that extends SQSEmailSender
  *
  * @author Jaroslaw Kijanowski - jarek@softwaremill.pl
  *         Date: Aug 24, 2010
  */
-@Stateless
-public class SQSEmailSenderBean extends TimerManager implements SQSEmailSender {
+public abstract class SQSEmailSenderBean extends TimerManager {
 
     @Resource
     TimerService timerService;
 
-    @Resource(name = "smtpHost")
-    private String smtpHost;
+    private static Map<String, String> props = Configuration.get("sqs");
 
-    @Resource(name = "smtpPort")
-    private String smtpPort;
+    private final String smtpHost = props.get("smtpHost");
+
+    private final String smtpPort = props.get("smtpPort");
+
+    private final String queue = props.get("queue");
+
+    private final String reply = props.get("reply");
 
     private static final Logger log = LoggerFactory.getLogger(SQSEmailSenderBean.class);
 
-    private final String queue = System.getProperty("project.prefix", "test_") + "Email";
 
-    private final String reply = System.getProperty("project.reply", "do-not-reply@localhost.com");
 
     public void startTimer(int interval){
         startTimer(queue, interval);

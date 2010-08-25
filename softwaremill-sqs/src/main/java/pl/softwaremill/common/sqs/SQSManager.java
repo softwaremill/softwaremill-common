@@ -16,6 +16,9 @@ import java.util.Map;
 
 /**
  * Class for sending messages to Amazon's Simple Queue Service
+ * Configured via sqs.conf in jboss/server/profile/conf or classpath
+ * AWSAccessKeyId= aws access key
+ * SecretAccessKey= secret key
  *
  * @author Jaroslaw Kijanowski - jarek@softwaremill.pl
  *         Date: Aug 16, 2010
