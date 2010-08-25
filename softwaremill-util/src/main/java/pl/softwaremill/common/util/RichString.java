@@ -33,7 +33,7 @@ public class RichString {
     // See: http://www.osix.net/modules/article/?id=42
 
     private String hexStringFromBytes(byte[] b) {
-        String hex = "";
+        StringBuilder hex = new StringBuilder("");
 
         int msb;
         int lsb;
@@ -43,10 +43,10 @@ public class RichString {
         for (i = 0; i < b.length; i++) {
             msb = ((int) b[i] & 0x000000FF) / 16;
             lsb = ((int) b[i] & 0x000000FF) % 16;
-            hex = hex + hexChars[msb] + hexChars[lsb];
+            hex.append(hexChars[msb]).append(hexChars[lsb]);
         }
 
-        return (hex);
+        return hex.toString();
     }
 
     public String encodeAsPassword() {
