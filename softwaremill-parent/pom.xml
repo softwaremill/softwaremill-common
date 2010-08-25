@@ -1,0 +1,291 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>pl.softwaremill.common</groupId>
+    <artifactId>softwaremill-parent</artifactId>
+    <version>1</version>
+    <name>Softwaremill Parent</name>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hibernate.version>3.5.3-Final</hibernate.version>
+        <cdiext.version>1.0.0-SNAPSHOT</cdiext.version>
+        <arquillian.version>1.0.0.Alpha3</arquillian.version>
+		<findbugs.version>2.3.1</findbugs.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>r06</version>
+            </dependency>
+
+            <!-- Testing -->
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>5.12.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.8.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.easytesting</groupId>
+                <artifactId>fest-assert</artifactId>
+                <version>1.3</version>
+            </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.5.10</version>
+            </dependency>
+
+            <!-- Joda-time -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>1.6</version>
+            </dependency>
+
+            <!-- JEE -->
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-6.0</artifactId>
+                <version>1.0.0.Beta7</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee6-specs-bom</artifactId>
+                <version>1.0.0.Beta5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>4.0.0.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.4.3</version>
+            </dependency>
+
+            <!-- JBoss ejb3 ext -->
+            <dependency>
+                <groupId>org.jboss.ejb3</groupId>
+                <artifactId>jboss-ejb3-ext-api</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+
+            <!-- JBoss -->
+            <dependency>
+                <groupId>org.jboss.mx</groupId>
+                <artifactId>jboss-jmx</artifactId>
+                <version>6.0.0.Beta5</version>
+            </dependency>
+
+            <!-- Hibernate -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-annotations</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-testing</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+
+            <!-- Arquillian -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-testng</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.container</groupId>
+                <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+
+            <!-- CDI-ext -->
+            <dependency>
+                <groupId>pl.softwaremill.cdiext</groupId>
+                <artifactId>cdiext-common</artifactId>
+                <version>${cdiext.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.cdiext</groupId>
+                <artifactId>cdiext-cdi</artifactId>
+                <version>${cdiext.version}</version>
+            </dependency>
+
+            <!-- Weld -->
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core-bom</artifactId>
+                <version>1.0.1-SP1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-extensions-bom</artifactId>
+                <version>1.0.1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- AWS -->
+            <dependency>
+                <groupId>net.java.dev.jets3t</groupId>
+                <artifactId>jets3t</artifactId>
+                <version>0.7.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.typica</groupId>
+                <artifactId>typica</artifactId>
+                <!-- TODO: change after the patch is incorporated: http://groups.google.com/group/typica/browse_thread/thread/21b465f1b729f741 -->
+                <version>1.7-softwaremill</version>
+            </dependency>
+
+            <!-- Apache commons -->
+            <dependency>
+                <artifactId>commons-logging</artifactId>
+                <groupId>commons-logging</groupId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>4.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.0.1</version>
+            </dependency>
+
+            <!-- SML common -->
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-conf</artifactId>
+                <version>2</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-util</artifactId>
+                <version>2</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-sqs</artifactId>
+                <version>2</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-db-test</artifactId>
+                <version>2</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-ui-test</artifactId>
+                <version>2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>softwaremill-public-releases</id>
+            <name>SoftwareMill Public Releases</name>
+            <url>http://tools.softwaremill.pl/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>softwaremill-public-snapshots</id>
+            <name>SoftwareMill Public Snapshots</name>
+            <url>http://tools.softwaremill.pl/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <configuration>
+                    <ejbVersion>3.0</ejbVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>smlcommon-repos</id>
+            <name>Softwaremill Common Repository Group</name>
+            <url>http://tools.softwaremill.pl/nexus/content/groups/smlcommon-repos/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+    </pluginRepositories>
+</project>

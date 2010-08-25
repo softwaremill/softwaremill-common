@@ -6,26 +6,25 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-sqs</artifactId>
-    <version>1.0.13</version>
+    <version>2</version>
     <name>Softwaremill SQS support</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>1.0.10</version>
+        <version>2</version>
     </parent>
 
     <dependencies>
-
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-conf</artifactId>
-            <version>1.0.2</version>
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.javaee</groupId>
-            <artifactId>jboss-javaee</artifactId>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
@@ -46,14 +45,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
-
-        <!-- mail -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
