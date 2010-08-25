@@ -1,7 +1,5 @@
 package pl.softwaremill.common.uitest.jboss;
 
-import pl.softwaremill.common.uitest.jboss.Deployment;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -70,29 +68,41 @@ public class StandardDeployment implements Deployment {
 
 	public static void deployFile(File from, File to, String message) {
 		System.out.println("--- Deploy file " + from + " to " + to);
+		InputStream in = null;
+		OutputStream out = null;
 		try {
-			InputStream in = new FileInputStream(from);
+			in = new FileInputStream(from);
 
 			//For Overwrite the file.
-			OutputStream out = new FileOutputStream(to);
+			out = new FileOutputStream(to);
 
 			byte[] buf = new byte[1024];
 			int len;
 			while ((len = in.read(buf)) > 0) {
 				out.write(buf, 0, len);
 			}
-			in.close();
-			out.close();
 			if (message != null) {
 				System.out.println(message);
 			}
 		}
 		catch (FileNotFoundException ex) {
 			System.out.println(ex.getMessage() + " in the specified directory.");
-			System.exit(0);
+			throw new RuntimeException(ex);
 		}
 		catch (IOException e) {
-			System.out.println(e.getMessage());
+			throw new RuntimeException(e);
+		}
+		finally {
+			try {
+				if (in != null) {
+					in.close();
+				}
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException ex) {
+				throw new RuntimeException(ex);
+			}
 		}
 	}
 
