@@ -3,4 +3,10 @@
     <!-- Filter options: http://findbugs.sourceforge.net/manual/filter.html -->
     <!-- Bug codes and descriptions: http://findbugs.sourceforge.net/bugDescriptions.html-->
 
+	<Match>
+       	<Class name="pl.softwaremill.common.uitest.selenium.AbstractSeleniumTest" />
+		<Mehtod name="setupBrowser"/>
+       	<Bug code="ST"/>
+    </Match>
+
 </FindBugsFilter>
