@@ -14,5 +14,15 @@
 		<Field name="selenium"/>
        	<Bug code="MS"/>
     </Match>
+    <Match>
+       	<Class name="pl.softwaremill.common.sqs.util.EmailDescription" />
+		<Field name="emails"/>
+       	<Bug code="EI2"/>
+    </Match>
+    <Match>
+       	<Class name="pl.softwaremill.common.sqs.util.EmailDescription" />
+		<Method name="getEmails"/>
+       	<Bug code="EI"/>
+    </Match>
 
 </FindBugsFilter>

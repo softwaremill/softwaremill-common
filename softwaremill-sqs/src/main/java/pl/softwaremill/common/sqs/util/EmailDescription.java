@@ -10,9 +10,9 @@ import java.io.Serializable;
  */
 public class EmailDescription implements Serializable {
 
-    private String message;
-    private String[] emails;
-    private String subject;
+    private final String message;
+    private final String[] emails;
+    private final String subject;
 
     public EmailDescription(String email, String message, String subject) {
         this(new String[]{email}, message, subject);
