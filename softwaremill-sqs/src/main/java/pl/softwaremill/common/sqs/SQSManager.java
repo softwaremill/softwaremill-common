@@ -6,13 +6,13 @@ import com.xerox.amazonws.sqs2.SQSException;
 import com.xerox.amazonws.sqs2.SQSUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.conf.Configuration;
 import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
 import pl.softwaremill.common.sqs.util.Base64Coder;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 
 import java.io.*;
-import java.util.Map;
+
+import static pl.softwaremill.common.sqs.SQSConfiguration.*;
 
 /**
  * Class for sending messages to Amazon's Simple Queue Service
@@ -22,29 +22,24 @@ import java.util.Map;
  *
  * @author Jaroslaw Kijanowski - jarek@softwaremill.pl
  *         Date: Aug 16, 2010
+ * @author Adam Warski
  */
 public class SQSManager {
-
-
-    private static Map<String, String> props = Configuration.get("sqs");
-    private static final String AWSAccessKeyId = props.get("AWSAccessKeyId");
-    private static final String SecretAccessKey = props.get("SecretAccessKey");
-
     private static final Logger log = LoggerFactory.getLogger(SQSManager.class);
 
     private static final int REDELIVERY_LIMIT = 10;
 
 
     /**
-     * @param queue   the name of the SQS queue to set up
+     * @param queue   the name of the SQS queue for which to set the timeout
      * @param timeout timeout in seconds for the whole queue (default is 30) - value is limited to 43200 seconds (12 hours)
      */
-    public static void setupSQSQueue(String queue, int timeout) {
+    public static void setQueueVisibilityTimeout(String queue, int timeout) {
         try {
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
             msgQueue.setVisibilityTimeout(timeout);
         } catch (SQSException e) {
-            throw new SQSRuntimeException("Could not setup SQS queue: " + queue, e);
+            throw new SQSRuntimeException("Could not setup SQS EMAIL_SQS_QUEUE: " + queue, e);
         }
     }
 
@@ -56,7 +51,6 @@ public class SQSManager {
      * @param message a Serializable object
      */
     public static void sendMessage(String queue, Serializable message) {
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try {
@@ -77,7 +71,7 @@ public class SQSManager {
 
         for (int i = 0; i < REDELIVERY_LIMIT; i++) {
             try {
-                MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+                MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
                 String msgId = msgQueue.sendMessage(encodedMessage);
 
                 log.info("Sent message with id " + msgId + " to queue " + queue);
@@ -98,21 +92,19 @@ public class SQSManager {
         }
     }
 
-
     /**
      * Receives a message from a SQS queue and decodes it properly to an object using the Base64Coder util
      *
      * @param queue the SQS queue the message is received from
      * @return SQSAnswer holding an Object and the receipt handle for further processing
-     *         or null if no message was available
+     *         or {@code null} if no message was available
      */
     public static SQSAnswer receiveMessage(String queue) {
-
         try {
 
             log.debug("Polling queue " + queue);
 
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
             Message msg = msgQueue.receiveMessage();
 
@@ -152,7 +144,7 @@ public class SQSManager {
      */
     public static void deleteMessage(String queue, String receiptHandle) {
         try {
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
             msgQueue.deleteMessage(receiptHandle);
             log.debug("Deleted message in queue: " + queue);
         } catch (SQSException e) {
@@ -170,7 +162,7 @@ public class SQSManager {
      */
     public static void setMessageVisibilityTimeout(String queue, String receiptHandle, int timeOut) {
         try {
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWSAccessKeyId, SecretAccessKey);
+            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
             msgQueue.setMessageVisibilityTimeout(receiptHandle, timeOut);
             log.debug("Set timeout to " + timeOut + " seconds in queue: " + queue);
         } catch (SQSException e) {
