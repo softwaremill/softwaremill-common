@@ -33,7 +33,7 @@ public class RichString {
     // See: http://www.osix.net/modules/article/?id=42
 
     private String hexStringFromBytes(byte[] b) {
-        StringBuilder hex = new StringBuilder("");
+        StringBuffer hex = new StringBuffer("");
 
         int msb;
         int lsb;
