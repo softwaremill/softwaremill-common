@@ -49,4 +49,9 @@ public class TestOfDBTest extends AbstractDBTest {
                 manager.getCurrentData(),
                 Arrays.asList(new TestEntity1(0l, "data1"), new TestEntity1(1l, "data2"), new TestEntity1(2l, "data3")));
     }
+
+    @Test
+    public void testNoEntityManagerInteraction() {
+        // This is on purpose.
+    }
 }

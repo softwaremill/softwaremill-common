@@ -120,8 +120,14 @@ public abstract class AbstractDBTest extends Arquillian {
     }
 
     @BeforeMethod
-    public void beginTransaction() throws SystemException, NotSupportedException {
+    public void beginTransaction() throws SystemException, NotSupportedException, RollbackException {
         SimpleJtaTransactionManagerImpl.getInstance().begin();
+
+        // There must be at least one sync, otherwise an exception is thrown.
+        SimpleJtaTransactionManagerImpl.getInstance().getTransaction().registerSynchronization(new Synchronization() {
+            @Override public void beforeCompletion() { }
+            @Override public void afterCompletion(int status) { }
+        });
     }
 
     @AfterMethod
