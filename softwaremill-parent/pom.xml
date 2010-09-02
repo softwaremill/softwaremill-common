@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>4</version>
+    <version>5</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -144,6 +144,11 @@
                 <artifactId>cdiext-cdi</artifactId>
                 <version>${cdiext.version}</version>
             </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.cdiext</groupId>
+                <artifactId>cdiext-faces</artifactId>
+                <version>${cdiext.version}</version>
+            </dependency>
 
             <!-- Weld -->
             <dependency>
@@ -157,6 +162,28 @@
                 <groupId>org.jboss.weld</groupId>
                 <artifactId>weld-extensions-bom</artifactId>
                 <version>1.0.1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Seam 3 -->
+            <dependency>
+                <groupId>org.jboss.seam</groupId>
+                <artifactId>seam-faces</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <!-- JSF2 -->
+            <dependency>
+                <groupId>javax.faces</groupId>
+                <artifactId>jsf-api</artifactId>
+                <version>2.0.2-FCS</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.richfaces.ui</groupId>
+                <artifactId>richfaces-components-bom</artifactId>
+                <version>4.0.0.Alpha2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
