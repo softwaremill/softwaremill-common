@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>6</version>
+    <version>7</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -13,6 +13,7 @@
         <cdiext.version>1.0.0-SNAPSHOT</cdiext.version>
         <arquillian.version>1.0.0.Alpha3</arquillian.version>
 		<findbugs.version>2.3.1</findbugs.version>
+        <weld.version>1.0.1-SP1</weld.version>
     </properties>
 
     <dependencyManagement>
@@ -154,7 +155,7 @@
             <dependency>
                 <groupId>org.jboss.weld</groupId>
                 <artifactId>weld-core-bom</artifactId>
-                <version>1.0.1-SP1</version>
+                <version>${weld.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -164,6 +165,12 @@
                 <version>1.0.1-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld.servlet</groupId>
+                <artifactId>weld-servlet</artifactId>
+                <version>1.0.1-Final</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- Seam 3 -->
