@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>5</version>
+    <version>6</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -178,7 +178,6 @@
                 <groupId>javax.faces</groupId>
                 <artifactId>jsf-api</artifactId>
                 <version>2.0.2-FCS</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.richfaces.ui</groupId>
@@ -227,7 +226,7 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-util</artifactId>
-                <version>2</version>
+                <version>3</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
