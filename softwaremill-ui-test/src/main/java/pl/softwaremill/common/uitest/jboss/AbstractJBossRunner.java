@@ -22,7 +22,7 @@ public abstract class AbstractJBossRunner {
     
     Process jbossProcess;
 
-	private final static SysoutLog log = new SysoutLog();
+	protected final static SysoutLog log = new SysoutLog();
 
 	private static final String STARTED_LOG_MESSAGE = "Started in";
 
@@ -102,10 +102,13 @@ public abstract class AbstractJBossRunner {
 		return serverHome + "/server/" + configuration + "/log/server.log";
 	}
 
-	private void shutdownServer() throws IOException, InterruptedException {
+	protected void shutdownServer() throws IOException, InterruptedException {
 		Process shutdownProcess = Runtime.getRuntime().exec(
                 new String[]{serverHome + "/bin/shutdown.sh", "-s", "localhost:1"+portset+"99", "-S"});
 		shutdownProcess.waitFor();
+		if (shutdownProcess.exitValue() != 0) {
+			log.info("Failed to stop JBoss");
+		}
 	}
 
 	private void deploy() throws Exception {
@@ -129,7 +132,7 @@ public abstract class AbstractJBossRunner {
 		return serverHome + "/server/" + configuration + "/deploy/";
 	}
 
-	private static class SysoutLog {
+	protected static class SysoutLog {
 		public void info(String msg) {
 			System.out.println("--- " + msg);
 		}
