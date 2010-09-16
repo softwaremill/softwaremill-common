@@ -1,0 +1,10 @@
+# This is a comment line - begins with #
+#
+# Simple template: subject, no arguments
+#
+# Subject can be putted in a line prefixed with %subject% - rest of line is trimmed
+# Rest of file is email body
+
+%subject% Hello World!
+
+This is a sample email.

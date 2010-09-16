@@ -1,0 +1,19 @@
+# Advanced template: some parameters used
+#
+# {0} - username
+# {1} - email
+# {2} - organization name
+# {3} - organization subdomain
+
+
+%subject% Welcome to Company!
+
+Welcome {0},
+    You have registered in our service your organization: {2}.
+Your new e-service can be accessed on http://{3}.example.org
+Your account data:
+Username: {0}
+Email: {1}
+
+Best regards,
+Company Team
