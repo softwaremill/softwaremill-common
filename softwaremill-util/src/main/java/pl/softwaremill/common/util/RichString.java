@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -87,5 +89,20 @@ public class RichString {
             character = iterator.next();
         }
         return result.toString();
+    }
+
+    /**
+     * @return Splits the wrapped string using the comma and returns a list of non-empty strings that are the
+     * result of the split.
+     */
+    public List<String> splitByCommaGetNonEmpty() {
+        List<String> result = new ArrayList<String>();
+        for (String ignoredProperty : wrapped.split("[,]")) {
+            if (!"".equals(ignoredProperty)) {
+                result.add(ignoredProperty);
+            }
+        }
+
+        return result;
     }
 }

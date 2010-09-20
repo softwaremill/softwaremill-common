@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>10</version>
+    <version>11</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -204,7 +204,8 @@
                 <groupId>com.google.code.typica</groupId>
                 <artifactId>typica</artifactId>
                 <!-- TODO: change after the patch is incorporated: http://groups.google.com/group/typica/browse_thread/thread/21b465f1b729f741 -->
-                <version>1.7-softwaremill</version>
+                <!-- TODO: and this patch: http://groups.google.com/group/typica/browse_thread/thread/79ab8dc805280ffc -->
+                <version>1.7-softwaremill-2</version>
             </dependency>
 
             <!-- Apache commons -->
@@ -233,7 +234,7 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-util</artifactId>
-                <version>5</version>
+                <version>6</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
