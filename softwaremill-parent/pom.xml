@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>12</version>
+    <version>13</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -239,7 +239,7 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-sqs</artifactId>
-                <version>5</version>
+                <version>6</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>

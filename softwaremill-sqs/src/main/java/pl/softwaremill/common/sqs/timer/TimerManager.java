@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import java.util.Collection;
 
@@ -22,22 +23,15 @@ public abstract class TimerManager {
     private static final Logger log = LoggerFactory.getLogger(TimerManager.class);
 
     public void startTimer(String id, int interval) {
-
-        // need to make sure all timers are down, since they are persistent right now
-        // and start with every JBoss AS restart
+        // need to make sure all timers are down (e.g. after redeploy)
         destroyTimer(id);
 
-
-        //TODO
-        //This should work in JBossAS6 M4
-        /*
+        // Creating a non-persistent timer, so that it won't survive a restart
         TimerConfig timerConfig = new TimerConfig();
         timerConfig.setPersistent(false);
         timerConfig.setInfo(id);
         timerService.createIntervalTimer(interval, interval, timerConfig);
-        */
 
-        timerService.createTimer(interval, interval, id);
         log.info("Timer for " + id + " started.");
 
     }
