@@ -77,9 +77,9 @@ public abstract class SQSEmailSenderBean extends TimerManager implements SQSEmai
                     }
 
                     m.setRecipients(javax.mail.Message.RecipientType.TO, to);
-                    m.setSubject(emailDescription.getSubject());
+                    m.setSubject(emailDescription.getSubject(), ENCODING);
                     m.setSentDate(new Date());
-                    m.setContent(emailDescription.getMessage(), "text/plain");
+                    m.setText(emailDescription.getMessage(), ENCODING, "plain");
                     Transport.send(m);
 
                     SQSManager.deleteMessage(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle());

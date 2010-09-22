@@ -14,6 +14,7 @@ public class SQSConfiguration {
     public static final String EMAIL_FROM;
     public static final String AWS_ACCESS_KEY_ID;
     public static final String AWS_SECRET_ACCESS_KEY;
+    public static final String ENCODING;
 
     static {
         Map<String, String> props = Configuration.get("sqs");
@@ -23,5 +24,6 @@ public class SQSConfiguration {
         EMAIL_FROM = props.get("from");
         AWS_ACCESS_KEY_ID = props.get("AWSAccessKeyId");
         AWS_SECRET_ACCESS_KEY = props.get("SecretAccessKey");
+        ENCODING = props.get("encoding");
     }
 }
