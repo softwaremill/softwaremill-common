@@ -79,6 +79,14 @@
                 <artifactId>h2</artifactId>
                 <version>1.2.125</version>
             </dependency>
+
+            <!-- mock smtp -->
+            <dependency>
+                <groupId>dumbster</groupId>
+                <artifactId>dumbster</artifactId>
+                <version>1.6</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

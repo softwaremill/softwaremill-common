@@ -45,6 +45,13 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
+
+        <!-- mock smtp -->
+        <dependency>
+            <groupId>dumbster</groupId>
+            <artifactId>dumbster</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
