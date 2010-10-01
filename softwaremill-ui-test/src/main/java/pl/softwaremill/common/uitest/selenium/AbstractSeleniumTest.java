@@ -33,8 +33,9 @@ public abstract class AbstractSeleniumTest {
         seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
         seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
         String testServerPort = System.getProperty("selenium.testserver.port", "8280");
+        String testServerUrl = System.getProperty("selenium.testserver.url", "http://localhost");
 
-        browserProperties = new SeleniumBrowserProperties("*firefox", "http://localhost", testServerPort);
+        browserProperties = new SeleniumBrowserProperties("*firefox", testServerUrl, testServerPort);
     }
 
     /**

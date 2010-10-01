@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-ui-test</artifactId>
-    <version>4</version>
+    <version>5</version>
     <name>Softwaremill UI Test</name>
 
     <parent>
@@ -40,6 +40,7 @@
                         <selenium.server>${selenium.server}</selenium.server>
                         <selenium.server.port>${selenium.server.port}</selenium.server.port>
                         <selenium.testserver.port>${selenium.testserver.port}</selenium.testserver.port>
+                        <selenium.testserver.url>${selenium.testserver.url}</selenium.testserver.url>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
