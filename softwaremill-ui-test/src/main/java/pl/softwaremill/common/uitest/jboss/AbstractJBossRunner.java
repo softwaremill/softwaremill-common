@@ -114,13 +114,13 @@ public abstract class AbstractJBossRunner {
     }
 
     protected void shutdownServer() throws IOException, InterruptedException {
-        Process shutdownProcess = Runtime.getRuntime().exec(
-                new String[]{serverHome + createShutdownScript(), "-s", "localhost:1" + portset + "99", "-S"});
-        shutdownProcess.waitFor();
-        if (shutdownProcess.exitValue() != 0) {
-            log.info("Failed to stop JBoss");
-        }
-    }
+		Process shutdownProcess = Runtime.getRuntime().exec(
+                new String[]{getServerProperties().getServerHome() + "/bin/shutdown.sh", "--host=localhost", "--port=1"+getServerProperties().getPortset()+"90", "-S"});
+		shutdownProcess.waitFor();
+		if (shutdownProcess.exitValue() != 0) {
+			log.info("Failed to stop JBoss");
+		}
+	}
 
     private String createShutdownScript() {
         if (winSystem()) {
