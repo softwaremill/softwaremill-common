@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-util</artifactId>
-    <version>7</version>
+    <version>8</version>
     <name>Softwaremill Utils</name>
 
     <parent>
