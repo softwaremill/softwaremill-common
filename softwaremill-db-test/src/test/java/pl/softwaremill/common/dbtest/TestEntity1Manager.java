@@ -1,7 +1,7 @@
 package pl.softwaremill.common.dbtest;
 
-import pl.softwaremill.cdiext.persistence.EntityWriter;
-import pl.softwaremill.cdiext.transaction.Transactional;
+import pl.softwaremill.common.cdi.persistence.EntityWriter;
+import pl.softwaremill.common.cdi.transaction.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;

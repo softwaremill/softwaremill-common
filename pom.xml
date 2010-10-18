@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-common-parent</artifactId>
-    <version>2</version>
+    <version>3</version>
     <name>Softwaremill Common Parent</name>
     <packaging>pom</packaging>
 
@@ -20,6 +20,8 @@
         <module>softwaremill-db-test</module>
         <module>softwaremill-conf</module>
         <module>softwaremill-sqs</module>
+        <module>softwaremill-cdi</module>
+        <module>softwaremill-faces</module>
     </modules>
 
     <dependencies>

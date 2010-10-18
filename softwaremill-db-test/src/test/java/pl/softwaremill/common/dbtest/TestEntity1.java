@@ -1,8 +1,11 @@
 package pl.softwaremill.common.dbtest;
 
-import pl.softwaremill.cdiext.persistence.Identifiable;
+import pl.softwaremill.common.util.persistance.Identifiable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * A simple test entity.

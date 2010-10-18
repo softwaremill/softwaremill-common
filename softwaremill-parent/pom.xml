@@ -9,20 +9,24 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hibernate.version>3.5.3-Final</hibernate.version>
-        <cdiext.version>1.0.0-SNAPSHOT</cdiext.version>
-        <arquillian.version>1.0.0.Alpha3</arquillian.version>
+        <hibernate.version>3.5.5-Final</hibernate.version>
+        <arquillian.version>1.0.0.Alpha4</arquillian.version>
 		<findbugs.version>2.3.1</findbugs.version>
-        <weld.version>1.0.1-SP1</weld.version>
+        <weld.version>1.1.0.Beta1</weld.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Guava -->
+            <!-- Google: Guava & Gson -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>r06</version>
+                <version>r07</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>1.5</version>
             </dependency>
 
             <!-- Testing -->
@@ -71,7 +75,7 @@
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee6-specs-bom</artifactId>
-                <version>1.0.0.Beta5</version>
+                <version>1.0.0.Beta6</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -98,6 +102,11 @@
                 <groupId>org.jboss.mx</groupId>
                 <artifactId>jboss-jmx</artifactId>
                 <version>6.0.0.Beta5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>3.0.0.Beta4</version>
             </dependency>
 
             <!-- Hibernate -->
@@ -134,23 +143,6 @@
                 <version>${arquillian.version}</version>
             </dependency>
 
-            <!-- CDI-ext -->
-            <dependency>
-                <groupId>pl.softwaremill.cdiext</groupId>
-                <artifactId>cdiext-common</artifactId>
-                <version>${cdiext.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>pl.softwaremill.cdiext</groupId>
-                <artifactId>cdiext-cdi</artifactId>
-                <version>${cdiext.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>pl.softwaremill.cdiext</groupId>
-                <artifactId>cdiext-faces</artifactId>
-                <version>${cdiext.version}</version>
-            </dependency>
-
             <!-- Weld -->
             <dependency>
                 <groupId>org.jboss.weld</groupId>
@@ -161,10 +153,8 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-extensions-bom</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <artifactId>weld-extensions</artifactId>
+                <version>1.0.0.Beta1</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
@@ -187,9 +177,9 @@
                 <version>2.0.2-FCS</version>
             </dependency>
             <dependency>
-                <groupId>org.richfaces.ui</groupId>
-                <artifactId>richfaces-components-bom</artifactId>
-                <version>4.0.0.Alpha2</version>
+                <groupId>org.richfaces</groupId>
+                <artifactId>richfaces-bom</artifactId>
+                <version>4.0.0.20101004-M3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -224,6 +214,12 @@
                 <artifactId>httpclient</artifactId>
                 <version>4.0.1</version>
             </dependency>
+                        
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>el-ri</artifactId>
+                <version>1.2</version>
+            </dependency>
 
             <!-- SML common -->
             <dependency>
@@ -251,11 +247,15 @@
                 <artifactId>softwaremill-ui-test</artifactId>
                 <version>5</version>
             </dependency>
-
             <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>1.5</version>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-cdi</artifactId>
+                <version>1</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-faces</artifactId>
+                <version>1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

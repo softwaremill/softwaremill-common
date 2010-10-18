@@ -12,7 +12,7 @@ import org.hibernate.test.tm.SimpleJtaTransactionManagerImpl;
 import org.hibernate.test.tm.TransactionManagerLookupImpl;
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.annotations.*;
-import pl.softwaremill.cdiext.persistence.EntityManagerFactoryProducer;
+import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
 import pl.softwaremill.common.dbtest.util.SqlFileResolver;
 
 import javax.persistence.EntityManager;

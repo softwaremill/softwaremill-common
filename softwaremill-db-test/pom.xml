@@ -9,10 +9,20 @@
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>2</version>
+        <version>3</version>
     </parent>
 
     <dependencies>
+        <!-- Inter-modules dependencies -->
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-cdi</artifactId>
+        </dependency>
+        
         <!-- JEE and Hibernate -->
         <dependency>
             <groupId>org.jboss.spec</groupId>
@@ -44,15 +54,11 @@
             <artifactId>hibernate-testing</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <!-- CDI-ext -->
+        
         <dependency>
-            <groupId>pl.softwaremill.cdiext</groupId>
-            <artifactId>cdiext-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>pl.softwaremill.cdiext</groupId>
-            <artifactId>cdiext-cdi</artifactId>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
