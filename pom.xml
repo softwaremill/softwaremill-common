@@ -10,7 +10,7 @@
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-parent</artifactId>
-        <version>1</version>
+        <version>16</version>
     </parent>
 
     <modules>
