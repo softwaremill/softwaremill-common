@@ -9,7 +9,7 @@
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>3</version>
+        <version>4</version>
     </parent>
 
     <dependencies>

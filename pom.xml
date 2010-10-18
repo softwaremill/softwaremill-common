@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-common-parent</artifactId>
-    <version>3</version>
+    <version>4</version>
     <name>Softwaremill Common Parent</name>
     <packaging>pom</packaging>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-parent</artifactId>
-        <version>16</version>
+        <version>17</version>
     </parent>
 
     <modules>
