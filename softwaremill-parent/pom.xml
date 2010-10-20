@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>18</version>
+    <version>19</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -237,6 +237,11 @@
                 <artifactId>softwaremill-sqs</artifactId>
                 <version>7</version>
             </dependency>
+			<dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-testing</artifactId>
+                <version>1</version>
+            </dependency>			
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-db-test</artifactId>
@@ -257,7 +262,7 @@
                 <artifactId>softwaremill-faces</artifactId>
                 <version>3</version>
             </dependency>
-        </dependencies>
+		</dependencies>
     </dependencyManagement>
 
     <distributionManagement>
