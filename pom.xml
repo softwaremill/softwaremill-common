@@ -16,6 +16,7 @@
     <modules>
         <module>softwaremill-parent</module>
         <module>softwaremill-util</module>
+        <module>softwaremill-testing</module>
         <module>softwaremill-ui-test</module>
         <module>softwaremill-db-test</module>
         <module>softwaremill-conf</module>
