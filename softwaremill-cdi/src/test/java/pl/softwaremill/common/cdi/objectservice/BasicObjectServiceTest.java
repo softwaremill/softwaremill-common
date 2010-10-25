@@ -23,7 +23,6 @@ public class BasicObjectServiceTest extends Arquillian {
                 .addPackage(ObjectServiceExtension.class.getPackage());
 
         ar = ArquillianUtil.addEmptyBeansXml(ar);
-        ar = ArquillianUtil.addExtensionsFromApp(ar);
 
         return ar;
     }

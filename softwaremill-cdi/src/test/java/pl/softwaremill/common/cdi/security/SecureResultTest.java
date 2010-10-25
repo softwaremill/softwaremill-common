@@ -22,7 +22,6 @@ public class SecureResultTest extends Arquillian {
                 .addPackage(ELEvaluator.class.getPackage());
 
         ar = ArquillianUtil.addTestBeansXml(ar);
-        ar = ArquillianUtil.addExtensionsFromApp(ar);
 
         return ar;
     }

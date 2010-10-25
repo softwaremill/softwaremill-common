@@ -4,6 +4,8 @@ import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.Set;
 
 /**
@@ -11,24 +13,35 @@ import java.util.Set;
  */
 public class BeanInject {
     @SuppressWarnings({"unchecked"})
-    public static <T> T lookup(BeanManager manager, Class<T> beanClass) {
-        Set<?> beans = manager.getBeans(beanClass);
+    public static <T> T lookup(BeanManager manager, Class<T> beanClass, Annotation... qualifiers) {
+        return (T) lookup(manager, (Type) beanClass, qualifiers);
+    }
+
+
+    @SuppressWarnings({"unchecked"})
+    public static Object lookup(BeanManager manager, Type beanType, Annotation... qualifiers) {
+        Set<?> beans = manager.getBeans(beanType, qualifiers);
         if (beans.size() != 1) {
             if (beans.size() == 0) {
-                throw new RuntimeException("No beans of class " + beanClass + " found.");
+                throw new RuntimeException("No beans of class " + beanType + " found.");
             } else {
-                throw new RuntimeException("Multiple beans of class " + beanClass + " found: " + beans + ".");
+                throw new RuntimeException("Multiple beans of class " + beanType + " found: " + beans + ".");
             }
         }
 
-        Bean<T> myBean = (Bean<T>) beans.iterator().next();
+        Bean myBean = (Bean) beans.iterator().next();
 
-        return (T) manager.getReference(myBean, beanClass, manager.createCreationalContext(myBean));
+        return manager.getReference(myBean, beanType, manager.createCreationalContext(myBean));
     }
 
     @SuppressWarnings({"unchecked"})
-    public static <T> T lookup(Class<T> beanClass) {
-        return lookup(getBeanManager(), beanClass);
+    public static <T> T lookup(Class<T> beanClass, Annotation... qualifiers) {
+        return (T) lookup((Type) beanClass, qualifiers);
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public static Object lookup(Type beanType, Annotation... qualifiers) {
+        return lookup(getBeanManager(), beanType, qualifiers);
     }
 
     @SuppressWarnings({"unchecked"})

@@ -29,15 +29,4 @@ public class ArquillianUtil {
                 new ByteArrayAsset(beansXmlBuilder.toString().getBytes()),
                 ArchivePaths.create("META-INF/beans.xml"));
     }
-
-    public static <T extends Archive<T> & ResourceContainer<T>> T addExtensionsFromApp(T archive) {
-        StringBuilder extensionsBuilder = new StringBuilder();
-        extensionsBuilder.append("pl.softwaremill.common.cdi.security.SecurityExtension");
-        extensionsBuilder.append("pl.softwaremill.common.cdi.config.ConfigExtension");
-        extensionsBuilder.append("pl.softwaremill.common.cdi.objectservice.extension.ObjectServiceExtension");
-
-        return archive.addResource(
-                new ByteArrayAsset(extensionsBuilder.toString().getBytes()),
-                ArchivePaths.create("META-INF/services/javax.enterprise.inject.spi.Extension"));
-    }
 }
