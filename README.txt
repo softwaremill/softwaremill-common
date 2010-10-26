@@ -332,7 +332,7 @@ public class PriceCalculatorImpl implements PriceCalculator {
     }
 }
 
-Not the usage of the annotations:
+Note the usage of the annotations:
 - @CreatedWith specifies the factory interface, for which an implementation will be created. The interface
 should have only one method (later referred to as the factory method)
 - @FactoryParameter specifies that the annotated constructor parameter corresponds to a parameter of the same class
