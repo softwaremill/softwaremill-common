@@ -21,6 +21,8 @@ import javax.transaction.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Extend this class to create tests which have a private database. The persistence classes from cdi-ext are available.
@@ -31,7 +33,7 @@ import java.nio.charset.Charset;
  *  public void configureEntities(Ejb3Configuration cfg) {
  *      cfg.addAnnotatedClass(MyEntity.class);
  * }
- *
+ * <p/>
  *  @Deployment
  *  public static JavaArchive createTestArchive() {
  *      return new ArchiveConfigurator() {
@@ -40,15 +42,19 @@ import java.nio.charset.Charset;
  *              return ar.addPackage(MyBean.class.getPackage());
  *      }.createTestArchive();
  *  }
- *
+ * <p/>
  *  @Test
  *  public void mytest() { }
  *  }
  * </pre>
+ *
  * @author Adam Warski (adam at warski dot org)
  */
 public abstract class AbstractDBTest extends Arquillian {
+
     private EntityManagerFactory emf;
+
+    private static final Logger log = Logger.getLogger(AbstractDBTest.class);
 
     /**
      * Additional Hibernate configuration.
@@ -59,23 +65,41 @@ public abstract class AbstractDBTest extends Arquillian {
     /**
      * Loads test data. By default reads the content of an sql file that is named the same as the test class.
      * Override if you want to add additional test data, or suppress default test data loading.
-     *
+     * <p/>
      * You can use {@link #loadURLContent(javax.persistence.EntityManager, java.net.URL)} to load the specified
      * file.
      *
      * @param em Entity manager which can be used to load data.
      */
     protected void loadTestData(EntityManager em) throws IOException {
-		final String sqlFilePath = new SqlFileResolver(this.getClass()).getSqlFilePath();
-		loadURLContent(em, Resources.getResource(sqlFilePath));
+        final String sqlFilePath = new SqlFileResolver(this.getClass()).getSqlFilePath();
+        loadURLContent(em, Resources.getResource(sqlFilePath));
     }
 
     /**
      * Executes the SQL statements contained in the content of the given URL.
      */
     protected void loadURLContent(EntityManager em, URL url) throws IOException {
-        String query = Resources.toString(url, Charset.defaultCharset());
-        em.createNativeQuery(query).executeUpdate();
+        String queries = Resources.toString(url, Charset.defaultCharset());
+
+        for (String query : divideQueries(queries)) {
+            try {
+                em.createNativeQuery(query).executeUpdate();
+            }
+            catch (Exception e) {
+                log.error("Problem running query:\n" + query + "\n", e);      
+            }
+        }
+    }
+
+    private List<String> divideQueries(String queries) {
+        List<String> queryList = new ArrayList<String>();
+
+        for (String q : queries.split(";")) {
+            queryList.add(q + ";");
+        }
+
+        return queryList;
     }
 
     @BeforeSuite
@@ -125,8 +149,13 @@ public abstract class AbstractDBTest extends Arquillian {
 
         // There must be at least one sync, otherwise an exception is thrown.
         SimpleJtaTransactionManagerImpl.getInstance().getTransaction().registerSynchronization(new Synchronization() {
-            @Override public void beforeCompletion() { }
-            @Override public void afterCompletion(int status) { }
+            @Override
+            public void beforeCompletion() {
+            }
+
+            @Override
+            public void afterCompletion(int status) {
+            }
         });
     }
 
