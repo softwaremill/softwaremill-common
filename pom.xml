@@ -25,6 +25,10 @@
         <module>softwaremill-faces</module>
     </modules>
 
+	<properties>
+		<softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
+	</properties>
+
     <dependencies>
         <!-- Logging -->
         <dependency>
@@ -183,4 +187,16 @@
 
     <pluginRepositories>
     </pluginRepositories>
+
+	 <profiles>
+        <profile>
+            <id>integrationTests</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <softwaremill.common.skipIntegrationTests>false</softwaremill.common.skipIntegrationTests>
+            </properties>
+        </profile>
+	</profiles>
 </project>

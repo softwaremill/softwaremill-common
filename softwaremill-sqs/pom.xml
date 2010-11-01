@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>pl.softwaremill.common</groupId>
-    <artifactId>softwaremill-sqs</artifactId>
-    <version>7</version>
-    <name>Softwaremill SQS support</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pl.softwaremill.common</groupId>
+	<artifactId>softwaremill-sqs</artifactId>
+	<version>7</version>
+	<name>Softwaremill SQS support</name>
 
-    <parent>
-        <groupId>pl.softwaremill.common</groupId>
-        <artifactId>softwaremill-common-parent</artifactId>
-        <version>4</version>
-    </parent>
+	<parent>
+		<groupId>pl.softwaremill.common</groupId>
+		<artifactId>softwaremill-common-parent</artifactId>
+		<version>4</version>
+	</parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>pl.softwaremill.common</groupId>
-            <artifactId>softwaremill-conf</artifactId>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>pl.softwaremill.common</groupId>
+			<artifactId>softwaremill-conf</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
-            <type>pom</type>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
 
-        <!-- typica -->
-        <dependency>
-            <groupId>com.google.code.typica</groupId>
-            <artifactId>typica</artifactId>
-        </dependency>
-        <dependency>
-            <artifactId>commons-logging</artifactId>
-            <groupId>commons-logging</groupId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
+		<!-- typica -->
+		<dependency>
+			<groupId>com.google.code.typica</groupId>
+			<artifactId>typica</artifactId>
+		</dependency>
+		<dependency>
+			<artifactId>commons-logging</artifactId>
+			<groupId>commons-logging</groupId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
 
-        <!-- mock smtp -->
-        <dependency>
-            <groupId>dumbster</groupId>
-            <artifactId>dumbster</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+		<!-- mock smtp -->
+		<dependency>
+			<groupId>dumbster</groupId>
+			<artifactId>dumbster</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-    <build>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </testResource>
-        </testResources>
-    </build>
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>${softwaremill.common.skipIntegrationTests}</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
