@@ -66,8 +66,6 @@ public class RichHexString {
         sb.append(")+");
 
         hexStringPattern = sb.toString();
-
-        System.out.println(hexStringPattern);
     }
 
     // See: http://www.osix.net/modules/article/?id=42
