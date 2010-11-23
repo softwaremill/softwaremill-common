@@ -10,13 +10,14 @@ import pl.softwaremill.common.sqs.util.SQSAnswer;
 
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
-import java.util.Date;
-import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Properties;
 
 import static pl.softwaremill.common.sqs.SQSConfiguration.*;
 
@@ -60,10 +61,21 @@ public abstract class SQSEmailSenderBean extends TimerManager implements SQSEmai
 
                     EmailDescription emailDescription = (EmailDescription) message;
 
+                    boolean secured = EMAIL_SMTP_USERNAME != null;
+
                     // Setup mail server
                     Properties props = System.getProperties();
-                    props.put("mail.smtp.host", EMAIL_SMTP_HOST);
-                    props.put("mail.smtp.port", EMAIL_SMTP_PORT);
+                    if (secured) {
+                        props.put("mail.smtps.host", EMAIL_SMTP_HOST);
+                        props.put("mail.smtps.port", EMAIL_SMTP_PORT);
+                        props.put("mail.smtps.starttls.enable", "true");
+                        props.put("mail.smtps.auth", "true");
+                        props.put("mail.smtps.user", EMAIL_SMTP_USERNAME);
+                        props.put("mail.smtps.password", EMAIL_SMTP_PASSWORD);
+                    } else {
+                        props.put("mail.smtp.host", EMAIL_SMTP_HOST);
+                        props.put("mail.smtp.port", EMAIL_SMTP_PORT);
+                    }
 
                     // Get a mail session
                     Session session = Session.getDefaultInstance(props, null);
@@ -80,14 +92,25 @@ public abstract class SQSEmailSenderBean extends TimerManager implements SQSEmai
                     m.setSubject(emailDescription.getSubject(), ENCODING);
                     m.setSentDate(new Date());
                     m.setText(emailDescription.getMessage(), ENCODING, "plain");
-                    Transport.send(m);
+                    if (secured) {
+                        Transport transport = session.getTransport("smtps");
+                        try {
+                            transport.connect(EMAIL_SMTP_USERNAME, EMAIL_SMTP_PASSWORD);
+                            transport.sendMessage(m, m.getAllRecipients());
+                        } finally {
+                            transport.close();
+                        }
+                    } else {
+                        Transport.send(m);
+                    }
 
                     SQSManager.deleteMessage(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle());
 
+                    log.debug("Mail sent to: " + Arrays.toString(to));
                 }
                 catch (javax.mail.MessagingException e) {
                     log.warn("Something went wrong and e-mail has not been sent. Redelivery will occur.");
-                    SQSManager.setMessageVisibilityTimeout(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle(), 0);
+                    SQSManager.setMessageVisibilityTimeout(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle(), 10);
                     throw new SQSRuntimeException(e);
                 }
             } else {

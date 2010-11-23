@@ -123,7 +123,7 @@ public class SQSManager {
                     throw new SQSRuntimeException("Class of the serialized object cannot be found.", e);
                 }
 
-                log.info("Got message from queue " + queue);
+                log.debug("Got message from queue " + queue);
 
                 return new SQSAnswer(answer, msg.getReceiptHandle());
             } else {
