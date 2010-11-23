@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>25</version>
+    <version>26</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -230,9 +230,9 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-sqs</artifactId>
-                <version>8</version>
+                <version>9</version>
             </dependency>
-	    <dependency>
+            <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-testing</artifactId>
                 <version>3</version>
