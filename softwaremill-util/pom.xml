@@ -6,13 +6,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-util</artifactId>
-    <version>9</version>
+    <version>10</version>
     <name>Softwaremill Utils</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>4</version>
+        <version>5</version>
     </parent>
 
     <dependencies>

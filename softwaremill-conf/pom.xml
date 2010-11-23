@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-conf</artifactId>
-    <version>3</version>
+    <version>4</version>
     <name>Softwaremill Configuration</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>4</version>
+        <version>5</version>
     </parent>
 
     <dependencies>
