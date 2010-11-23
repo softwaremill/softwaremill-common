@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>23</version>
+    <version>24</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -136,7 +136,7 @@
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-testng</artifactId>
                 <version>${arquillian.version}</version>
-            </dependency>
+            </dependency>  
             <dependency>
                 <groupId>org.jboss.arquillian.container</groupId>
                 <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
@@ -159,7 +159,7 @@
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
                 <artifactId>weld-servlet</artifactId>
-                <version>1.0.1-Final</version>
+                <version>${weld.version}</version>
                 <scope>provided</scope>
             </dependency>
 
