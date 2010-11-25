@@ -134,7 +134,11 @@ public abstract class AbstractJBossRunner {
     private void deploy() throws Exception {
         for (Deployment deployment : getDeployments()) {
             deployment.deploy(getDeployDir());
-            waitFor(getTailProcess(), deployment.getWaitForMessage());
+            if (deployment.getWaitForMessage() != null) {
+                waitFor(getTailProcess(), deployment.getWaitForMessage());
+            } else {
+                Thread.sleep(deployment.getWaitMillis());
+            }
         }
         deploymentComplete = true;
 
