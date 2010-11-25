@@ -117,7 +117,7 @@ public abstract class AbstractJBossRunner {
 
     protected void shutdownServer() throws IOException, InterruptedException {
 		Process shutdownProcess = Runtime.getRuntime().exec(
-                new String[]{getServerProperties().getServerHome() + "/bin/shutdown.sh", "--host=localhost", "--port=1"+getServerProperties().getPortset()+"90", "-S"});
+                new String[]{getServerProperties().getServerHome() + createShutdownScript(), "--host=localhost", "--port=1"+getServerProperties().getPortset()+"90", "-S"});
 		shutdownProcess.waitFor();
 		if (shutdownProcess.exitValue() != 0) {
 			log.info("Failed to stop JBoss");
