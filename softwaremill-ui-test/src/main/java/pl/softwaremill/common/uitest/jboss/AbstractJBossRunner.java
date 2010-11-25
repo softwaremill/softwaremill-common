@@ -2,7 +2,7 @@ package pl.softwaremill.common.uitest.jboss;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import pl.softwaremill.common.uitest.selenium.ServerPoperties;
+import pl.softwaremill.common.uitest.selenium.ServerProperties;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,7 @@ public abstract class AbstractJBossRunner {
     private String configuration;
     private boolean running;
     private int portset;
+    private String additionalSystemProperties;
 
     Process jbossProcess;
 
@@ -29,7 +30,7 @@ public abstract class AbstractJBossRunner {
 
     private static final int MILLISECONDS_IN_MINUTE = 60 * 1000;
 
-    protected abstract ServerPoperties getServerProperties();
+    protected abstract ServerProperties getServerProperties();
 
     protected abstract Deployment[] getDeployments();
 
@@ -56,12 +57,13 @@ public abstract class AbstractJBossRunner {
     }
 
     private void loadProperties() {
-        ServerPoperties serverPoperties = getServerProperties();
+        ServerProperties serverProperties = getServerProperties();
 
-        this.serverHome = serverPoperties.getServerHome();
-        this.configuration = serverPoperties.getConfiguration();
-        this.running = serverPoperties.isRunning();
-        this.portset = serverPoperties.getPortset();
+        this.serverHome = serverProperties.getServerHome();
+        this.configuration = serverProperties.getConfiguration();
+        this.running = serverProperties.isRunning();
+        this.portset = serverProperties.getPortset();
+        this.additionalSystemProperties = serverProperties.getAdditionalSystemProperties();
     }
 
     private void startServerIfNeeded() throws Exception {
@@ -74,7 +76,7 @@ public abstract class AbstractJBossRunner {
 
     protected void startServer() throws Exception {
         jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + createRunScript(), "-c", configuration,
-                "-Djboss.service.binding.set=ports-0" + portset});
+                "-Djboss.service.binding.set=ports-0" + portset, additionalSystemProperties});
 
         waitFor(jbossProcess, STARTED_LOG_MESSAGE);
 

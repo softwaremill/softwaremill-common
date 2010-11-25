@@ -4,8 +4,9 @@ package pl.softwaremill.common.uitest.selenium;
  *
  * @author maciek
  * @author Pawel Wrzeszcz
+ * @author Jaroslaw Kijanowski
  */
-public class ServerPoperties {
+public class ServerProperties {
 
 	private String serverHome;
 
@@ -14,21 +15,9 @@ public class ServerPoperties {
     private int portset = 2;
     private boolean running = false;
 	private int deploymentTimeoutMinutes = 5;
+    private String additionalSystemProperties;
 
-    /**
-     * @param serverHome server home directory
-     * @param configuration configuration name
-     * @param portset port set
-     * @param running Whether the server is running and should not be started/stopped
-     */
-    public ServerPoperties(String serverHome, String configuration, int portset, boolean running) {
-        this.serverHome = serverHome;
-        this.configuration = configuration;
-        this.portset = portset;
-        this.running = running;
-    }
-
-	public ServerPoperties(String serverHome) {
+	public ServerProperties(String serverHome) {
 		this.serverHome = serverHome;
 	}
 
@@ -52,24 +41,32 @@ public class ServerPoperties {
 		return deploymentTimeoutMinutes;
 	}
 
+    public String getAdditionalSystemProperties() {
+        return additionalSystemProperties;
+    }
 
-	public ServerPoperties configuration(String configuration) {
+    public ServerProperties configuration(String configuration) {
 		this.configuration = configuration;
 		return this;
 	}
 
-	public ServerPoperties portset(int portset) {
+	public ServerProperties portset(int portset) {
 		this.portset = portset;
 		return this;
 	}
 
-	public ServerPoperties running(boolean running) {
+	public ServerProperties running(boolean running) {
 		this.running = running;
 		return this;
 	}
 
-	public ServerPoperties deploymentTimeoutMinutes(int deploymentTimeoutMinutes) {
+	public ServerProperties deploymentTimeoutMinutes(int deploymentTimeoutMinutes) {
 		this.deploymentTimeoutMinutes = deploymentTimeoutMinutes;
 		return this;
 	}
+
+    public ServerProperties additionalSystemProperties(String additionalSystemProperties) {
+        this.additionalSystemProperties = additionalSystemProperties;
+        return this;
+    }
 }

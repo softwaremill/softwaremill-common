@@ -154,5 +154,10 @@ public abstract class AbstractSeleniumTest {
     protected void beforeSeleniumStop() throws Exception {
         // base implementation does nothing
     }
+
+    protected void clickAndWait(String locator, String timeout){
+        selenium.click(locator);
+        selenium.waitForPageToLoad(timeout);
+    }
     
 }
