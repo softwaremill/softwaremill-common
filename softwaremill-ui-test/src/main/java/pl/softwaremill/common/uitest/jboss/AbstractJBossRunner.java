@@ -187,5 +187,8 @@ public abstract class AbstractJBossRunner {
                 "cp", getServerLogPath(), tmpLogFile.getAbsolutePath()
         });
         System.out.println("##teamcity[publishArtifacts '" + tmpLogFile.getAbsolutePath() + "']");
+
+        // deleting log
+        new File(getServerLogPath()).delete();
     }
 }
