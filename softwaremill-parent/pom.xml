@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>31</version>
+    <version>32</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
@@ -256,12 +256,12 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-cdi</artifactId>
-                <version>6</version>
+                <version>7</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-faces</artifactId>
-                <version>6</version>
+                <version>7</version>
             </dependency>
 		</dependencies>
     </dependencyManagement>
