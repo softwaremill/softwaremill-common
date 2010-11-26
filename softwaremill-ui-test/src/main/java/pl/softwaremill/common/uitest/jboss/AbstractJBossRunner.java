@@ -76,11 +76,19 @@ public abstract class AbstractJBossRunner {
 
     protected void startServer() throws Exception {
         jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + createRunScript(), "-c", configuration,
-                "-Djboss.service.binding.set=ports-0" + portset, additionalSystemProperties});
+                createPortSetCommand(), additionalSystemProperties});
 
         waitFor(jbossProcess, STARTED_LOG_MESSAGE);
 
         tailProcess = jbossProcess;
+    }
+
+    private String createPortSetCommand() {
+        if (portset <= 0) {
+            return "";
+        }
+
+        return "-Djboss.service.binding.set=ports-0" + portset;
     }
 
     private String createRunScript() {
