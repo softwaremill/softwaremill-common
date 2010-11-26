@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-ui-test</artifactId>
-    <version>13</version>
+    <version>14</version>
     <name>Softwaremill UI Test</name>
 
     <parent>
@@ -16,6 +16,11 @@
         <dependency>
             <groupId>org.seleniumhq.selenium.client-drivers</groupId>
             <artifactId>selenium-java-client-driver</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-util</artifactId>
         </dependency>
 
         <dependency>

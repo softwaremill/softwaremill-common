@@ -1,11 +1,12 @@
 package pl.softwaremill.common.uitest.jboss;
 
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import pl.softwaremill.common.uitest.selenium.ServerProperties;
+import pl.softwaremill.common.util.io.RichStream;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -124,8 +125,20 @@ public abstract class AbstractJBossRunner {
     }
 
     protected void shutdownServer() throws IOException, InterruptedException {
-		Process shutdownProcess = Runtime.getRuntime().exec(
+		final Process shutdownProcess = Runtime.getRuntime().exec(
                 new String[]{getServerProperties().getServerHome() + createShutdownScript(), "--host=localhost", "--port=1"+getServerProperties().getPortset()+"90", "-S"});
+        if (winSystem()) {
+            PrintWriter writer = new PrintWriter(shutdownProcess.getOutputStream());
+            try {
+                //On windows, user needs to press any key on the console
+                //for the process to exit. Wait a bit for message "Press any key"
+                waitFor(shutdownProcess, "Press any key to continue");
+                writer.write("y");
+                writer.flush();
+            } finally {
+                writer.close();
+            }
+        }
 		shutdownProcess.waitFor();
 		if (shutdownProcess.exitValue() != 0) {
 			log.info("Failed to stop JBoss");
@@ -143,6 +156,7 @@ public abstract class AbstractJBossRunner {
         for (Deployment deployment : getDeployments()) {
             deployment.deploy(getDeployDir());
             if (deployment.getWaitForMessage() != null) {
+//                waitFor(jbossProcess, deployment.getWaitForMessage());
                 waitFor(getTailProcess(), deployment.getWaitForMessage());
             } else {
                 Thread.sleep(deployment.getWaitMillis());
@@ -195,9 +209,9 @@ public abstract class AbstractJBossRunner {
 
     protected void publishLog() throws IOException {
         File tmpLogFile = File.createTempFile("jboss_log", ".txt");
-        Runtime.getRuntime().exec(new String[]{
-                "cp", getServerLogPath(), tmpLogFile.getAbsolutePath()
-        });
+        File log = new File(getServerLogPath());
+        FileUtils.copyFile(log, tmpLogFile);
+
         System.out.println("##teamcity[publishArtifacts '" + tmpLogFile.getAbsolutePath() + "']");
 
         // deleting log
