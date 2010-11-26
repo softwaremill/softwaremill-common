@@ -9,4 +9,6 @@ public interface Deployment {
 	void undeploy(String deployDir) throws Exception;
 
 	String getWaitForMessage();
+
+    long getWaitMillis();
 }

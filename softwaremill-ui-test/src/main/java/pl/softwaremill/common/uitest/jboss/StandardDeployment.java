@@ -1,12 +1,6 @@
 package pl.softwaremill.common.uitest.jboss;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)
@@ -15,8 +9,9 @@ public class StandardDeployment implements Deployment {
 
 	private String fromPath;
 	private String waitForMessage;
+    private long waitMillis;
 
-	public StandardDeployment(String fromPath) {
+    public StandardDeployment(String fromPath) {
 		this(fromPath, null);
 	}
 
@@ -24,6 +19,11 @@ public class StandardDeployment implements Deployment {
 		this.fromPath = fromPath;
 		this.waitForMessage = waitForMessage;
 	}
+
+    public StandardDeployment(String fromPath, long waitMillis) {
+		this.fromPath = fromPath;
+        this.waitMillis = waitMillis;
+    }
 
 	@Override
 	public void deploy(String deployDir) throws Exception {
@@ -44,7 +44,12 @@ public class StandardDeployment implements Deployment {
 		return waitForMessage;
 	}
 
-	protected void deployFile(File from, File to) {
+    @Override
+    public long getWaitMillis() {
+        return waitMillis;
+    }
+
+    protected void deployFile(File from, File to) {
 		deployFile(from, to, null);
 	}
 

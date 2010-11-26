@@ -2,7 +2,7 @@ package pl.softwaremill.common.uitest.jboss;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import pl.softwaremill.common.uitest.selenium.ServerPoperties;
+import pl.softwaremill.common.uitest.selenium.ServerProperties;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,7 @@ public abstract class AbstractJBossRunner {
     private String configuration;
     private boolean running;
     private int portset;
+    private String additionalSystemProperties;
 
     Process jbossProcess;
 
@@ -29,7 +30,7 @@ public abstract class AbstractJBossRunner {
 
     private static final int MILLISECONDS_IN_MINUTE = 60 * 1000;
 
-    protected abstract ServerPoperties getServerProperties();
+    protected abstract ServerProperties getServerProperties();
 
     protected abstract Deployment[] getDeployments();
 
@@ -56,12 +57,13 @@ public abstract class AbstractJBossRunner {
     }
 
     private void loadProperties() {
-        ServerPoperties serverPoperties = getServerProperties();
+        ServerProperties serverProperties = getServerProperties();
 
-        this.serverHome = serverPoperties.getServerHome();
-        this.configuration = serverPoperties.getConfiguration();
-        this.running = serverPoperties.isRunning();
-        this.portset = serverPoperties.getPortset();
+        this.serverHome = serverProperties.getServerHome();
+        this.configuration = serverProperties.getConfiguration();
+        this.running = serverProperties.isRunning();
+        this.portset = serverProperties.getPortset();
+        this.additionalSystemProperties = serverProperties.getAdditionalSystemProperties();
     }
 
     private void startServerIfNeeded() throws Exception {
@@ -74,11 +76,19 @@ public abstract class AbstractJBossRunner {
 
     protected void startServer() throws Exception {
         jbossProcess = Runtime.getRuntime().exec(new String[]{serverHome + createRunScript(), "-c", configuration,
-                "-Djboss.service.binding.set=ports-0" + portset});
+                createPortSetCommand(), additionalSystemProperties});
 
         waitFor(jbossProcess, STARTED_LOG_MESSAGE);
 
         tailProcess = jbossProcess;
+    }
+
+    private String createPortSetCommand() {
+        if (portset <= 0) {
+            return "";
+        }
+
+        return "-Djboss.service.binding.set=ports-0" + portset;
     }
 
     private String createRunScript() {
@@ -115,7 +125,7 @@ public abstract class AbstractJBossRunner {
 
     protected void shutdownServer() throws IOException, InterruptedException {
 		Process shutdownProcess = Runtime.getRuntime().exec(
-                new String[]{getServerProperties().getServerHome() + "/bin/shutdown.sh", "--host=localhost", "--port=1"+getServerProperties().getPortset()+"90", "-S"});
+                new String[]{getServerProperties().getServerHome() + createShutdownScript(), "--host=localhost", "--port=1"+getServerProperties().getPortset()+"90", "-S"});
 		shutdownProcess.waitFor();
 		if (shutdownProcess.exitValue() != 0) {
 			log.info("Failed to stop JBoss");
@@ -132,7 +142,11 @@ public abstract class AbstractJBossRunner {
     private void deploy() throws Exception {
         for (Deployment deployment : getDeployments()) {
             deployment.deploy(getDeployDir());
-            waitFor(getTailProcess(), deployment.getWaitForMessage());
+            if (deployment.getWaitForMessage() != null) {
+                waitFor(getTailProcess(), deployment.getWaitForMessage());
+            } else {
+                Thread.sleep(deployment.getWaitMillis());
+            }
         }
         deploymentComplete = true;
 
@@ -185,5 +199,8 @@ public abstract class AbstractJBossRunner {
                 "cp", getServerLogPath(), tmpLogFile.getAbsolutePath()
         });
         System.out.println("##teamcity[publishArtifacts '" + tmpLogFile.getAbsolutePath() + "']");
+
+        // deleting log
+        new File(getServerLogPath()).delete();
     }
 }
