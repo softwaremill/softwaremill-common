@@ -32,7 +32,9 @@ Jars and sources are available in our Maven repository:
 
 ## [Test-with-DB framework using Arquillian](/softwaremill/softwaremill-common/tree/master/softwaremill-db-test/)
 
-## [Configuration file reader](/softwaremill/softwaremill-common/tree/master/softwaremill-conf/)
+## [Configuration reader](/softwaremill/softwaremill-common/tree/master/softwaremill-conf/)
+
+Reads key-value configuration files either from JBoss's conf directory (which have priority) or from the classpath. 
 
 ## [Amazon AWS Utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-sqs/)
 
@@ -43,10 +45,6 @@ Our BOM.
 ## [Testing utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-testing/)
 
 ## [Java utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-util/)
-
----
-
-And others, not yet documented :)
 
 ---
 
