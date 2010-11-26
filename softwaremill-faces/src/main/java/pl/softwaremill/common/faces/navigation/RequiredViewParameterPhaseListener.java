@@ -1,6 +1,5 @@
 package pl.softwaremill.common.faces.navigation;
 
-import pl.softwaremill.common.cdi.navigation.NavBase;
 import pl.softwaremill.common.cdi.util.BeanInject;
 import pl.softwaremill.common.faces.messages.FacesMessages;
 

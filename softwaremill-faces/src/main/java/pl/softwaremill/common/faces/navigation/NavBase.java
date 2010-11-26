@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.navigation;
+package pl.softwaremill.common.faces.navigation;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

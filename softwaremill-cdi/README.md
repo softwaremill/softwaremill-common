@@ -206,39 +206,3 @@ You can then use the factory as any other bean:
         }
     }
 
-## Navigation
-
-Extend the `NavBase` to create a "nav" component and define any pages that you use the following way, using the PageBuilder:
-
-    private final Page page1 = new ViewIdPageBuilder("/page1.xhtml").setRequiresLogin(true).b();
-    private final Page page1 = new ViewIdPageBuilder("/admin.xhtml").setRequiresLogin(true).setSecurityEL("#{currentUser.isAdmin)").b();
-    private final Page login = new ViewIdPageBuilder("/login.xhtml").b();
-    ...
-
-And define a getter for each page.
-
-You can then use the component either to return results of action methods or to create links:
-
-    <h:link outcome="#{nav.page1.s}">Page 1</h:link>
-
-    public String someAction() {
-        ...
-        return nav.getPage1().includeViewParams().redirect().s();
-    }
-
-You must define a login page. This works in conjuction with restricting pages to logged in users only.
-
-If you want to add extra security on the page, set the security EL using the page builder. It has to resolve to Boolean.class.
-If the expression returns false user will get 403 Forbidden.
-
-## Restricting pages to logged in users only
-
-There must be a bean implementing the LoginBean interface; the bean controls if there's a logged in user.
-Any pages, defined in the navigation (see above) by the page builder to require login, will be redirected to the
-login page if a user isn't logged in.
-
-To enable, add to `faces-config.xml`:
-
-    <lifecycle>
-        <phase-listener>pl.softwaremill.common.cdi.security.SecurityPhaseListener</phase-listener>
-    </lifecycle>

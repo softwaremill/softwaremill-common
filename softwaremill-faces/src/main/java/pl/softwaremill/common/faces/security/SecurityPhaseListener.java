@@ -1,9 +1,10 @@
-package pl.softwaremill.common.cdi.security;
+package pl.softwaremill.common.faces.security;
 
 import pl.softwaremill.common.cdi.el.ELEvaluator;
-import pl.softwaremill.common.cdi.navigation.NavBase;
-import pl.softwaremill.common.cdi.navigation.Page;
+import pl.softwaremill.common.cdi.security.LoginBean;
 import pl.softwaremill.common.cdi.util.BeanInject;
+import pl.softwaremill.common.faces.navigation.NavBase;
+import pl.softwaremill.common.faces.navigation.Page;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;

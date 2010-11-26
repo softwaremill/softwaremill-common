@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.navigation;
+package pl.softwaremill.common.faces.navigation;
 
 import javax.faces.context.FacesContext;
 import java.util.Collections;
