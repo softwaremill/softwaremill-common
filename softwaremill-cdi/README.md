@@ -5,7 +5,7 @@ Maven dependency:
     <dependency>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-cdi</artifactId>
-        <version>4</version>
+        <version>7</version>
     </dependency>
 
 ## Stackable security interceptors

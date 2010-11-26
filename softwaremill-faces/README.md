@@ -5,7 +5,7 @@ Maven dependency:
     <dependency>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-faces</artifactId>
-        <version>3</version>
+        <version>7</version>
     </dependency>
 
 ## Current locale holder
