@@ -15,7 +15,7 @@ public class ServerProperties {
     private int portset = 2;
     private boolean running = false;
 	private int deploymentTimeoutMinutes = 5;
-    private String additionalSystemProperties;
+    private String additionalSystemProperties = "";
 
 	public ServerProperties(String serverHome) {
 		this.serverHome = serverHome;
