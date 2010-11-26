@@ -32,6 +32,8 @@ Jars and sources are available in our Maven repository:
 
 ## [Test-with-DB framework using Arquillian](/softwaremill/softwaremill-common/tree/master/softwaremill-db-test/)
 
+Lets you run tests that use a database.
+
 ## [Configuration reader](/softwaremill/softwaremill-common/tree/master/softwaremill-conf/)
 
 Reads key-value configuration files either from JBoss's conf directory (which have priority) or from the classpath. 
