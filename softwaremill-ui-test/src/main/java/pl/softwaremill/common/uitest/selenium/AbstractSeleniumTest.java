@@ -15,150 +15,149 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 /**
- *
  * @author maciek
  */
 public abstract class AbstractSeleniumTest {
-  
-    private SeleniumServer server;
-    
-    public static Selenium selenium;
-    
-    private SeleniumBrowserProperties browserProperties;
 
-    private String seleniumHost;
-    private int seleniumServerPort;
+	private SeleniumServer server;
 
-    public AbstractSeleniumTest() {
-        seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
-        seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
-        String testServerPort = System.getProperty("selenium.testserver.port", "8280");
-        String testServerUrl = System.getProperty("selenium.testserver.url", "http://localhost");
+	public static Selenium selenium;
+
+	private SeleniumBrowserProperties browserProperties;
+
+	private String seleniumHost;
+	private int seleniumServerPort;
+
+	public AbstractSeleniumTest() {
+		seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
+		seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
+		String testServerPort = System.getProperty("selenium.testserver.port", "8280");
+		String testServerUrl = System.getProperty("selenium.testserver.url", "http://localhost");
 		String browserCommand = System.getProperty("selenium.browser.command", "*firefox");
 
-        browserProperties = new SeleniumBrowserProperties(browserCommand, testServerUrl, testServerPort);
-    }
+		browserProperties = new SeleniumBrowserProperties(browserCommand, testServerUrl, testServerPort);
+	}
 
-    /**
-     * Returns object with properties for the browser started by selenium, including base url.
-     * This can be used to modify this properties, e.g. when using different test url.
-     */    
-    public SeleniumBrowserProperties getBrowserProperties() {
-        return browserProperties;
-    }
-    
-    @BeforeSuite
-    public void setupSelenium() throws Exception {
+	/**
+	 * Returns object with properties for the browser started by selenium, including base url.
+	 * This can be used to modify this properties, e.g. when using different test url.
+	 */
+	public SeleniumBrowserProperties getBrowserProperties() {
+		return browserProperties;
+	}
 
-        System.out.println("--- Starting selenium server");
+	@BeforeSuite
+	public void setupSelenium() throws Exception {
 
-        RemoteControlConfiguration rcc = new RemoteControlConfiguration();
-        rcc.setTimeoutInSeconds(60);
-        rcc.setPort(seleniumServerPort);
-        //rcc.setMultiWindow(true);
-        rcc.setSingleWindow(false);
-        PrintStream ps = System.out; // backup
-        System.setOut(new PrintStream(new FileOutputStream("logfile")));
-        //SeleniumServer.setDebugMode(true);
-        rcc.setDebugMode(true);
-        server = new SeleniumServer(false, rcc);
-        System.setOut(ps); // restore
+		System.out.println("--- Starting selenium server");
 
-        server.start();
-        System.out.println("--- Started selenium server");
-    }
+		RemoteControlConfiguration rcc = new RemoteControlConfiguration();
+		rcc.setTimeoutInSeconds(60);
+		rcc.setPort(seleniumServerPort);
+		//rcc.setMultiWindow(true);
+		rcc.setSingleWindow(false);
+		PrintStream ps = System.out; // backup
+		System.setOut(new PrintStream(new FileOutputStream("logfile")));
+		//SeleniumServer.setDebugMode(true);
+		rcc.setDebugMode(true);
+		server = new SeleniumServer(false, rcc);
+		System.setOut(ps); // restore
 
-    @AfterSuite(alwaysRun = true)
-    public void stopSelenium() throws Exception, InterruptedException {
-        System.out.println("--- Stopping selenium server");
-        server.stop();
-        System.out.println("--- Stopped selenium server");
-    }
+		server.start();
+		System.out.println("--- Started selenium server");
+	}
 
-    @BeforeTest
-    public void setupBrowser() throws Exception {
-        String url = browserProperties.getBrowserURL();
-        if(browserProperties.getBrowserPort() != null) {
-            url += ":"+browserProperties.getBrowserPort();
-        }
-        System.out.println("--- Starting browser on url: "+url);
-        
-        selenium = new SMLSelenium(
-                seleniumHost,
-                seleniumServerPort,
-                browserProperties.getBrowserCommand(),
-                url,
-                new Screenshotter(){
-                    @Override
-                    public void doScreenshot() {
-                        try {
-                            // make a screenshot
-                            
-                            captureScreenshot();
-                        } catch (Exception e) {
-                            // shouldn't happen
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-        selenium.start();
+	@AfterSuite(alwaysRun = true)
+	public void stopSelenium() throws Exception, InterruptedException {
+		System.out.println("--- Stopping selenium server");
+		server.stop();
+		System.out.println("--- Stopped selenium server");
+	}
 
-        System.out.println("--- Started browser");
+	@BeforeTest
+	public void setupBrowser() throws Exception {
+		String url = browserProperties.getBrowserURL();
+		if (browserProperties.getBrowserPort() != null) {
+			url += ":" + browserProperties.getBrowserPort();
+		}
+		System.out.println("--- Starting browser on url: " + url);
 
-        // perform optional logic
-        afterSeleniumStart();
-    }
+		selenium = new SMLSelenium(
+				seleniumHost,
+				seleniumServerPort,
+				browserProperties.getBrowserCommand(),
+				url,
+				new Screenshotter() {
+					@Override
+					public void doScreenshot() {
+						try {
+							// make a screenshot
 
-    @AfterTest
-    public void stopBrowser() throws Exception{
-        beforeSeleniumStop();
+							captureScreenshot();
+						} catch (Exception e) {
+							// shouldn't happen
+							throw new RuntimeException(e);
+						}
+					}
+				});
+		selenium.start();
 
-        System.out.println("--- Stopping browser");
-        selenium.stop();
-        System.out.println("--- Stopped browser");
-    }
+		System.out.println("--- Started browser");
 
-    protected void assertTrue(boolean var) throws Exception {
-        if (!var) {
-            captureScreenshot();
-        }
+		// perform optional logic
+		afterSeleniumStart();
+	}
 
-        Assert.assertTrue(var);
-    }
+	@AfterTest
+	public void stopBrowser() throws Exception {
+		beforeSeleniumStop();
 
-    protected void assertEquals(Object o1, Object o2) throws Exception {
-        if (!o1.equals(o2)) {
-            captureScreenshot();
-        }
+		System.out.println("--- Stopping browser");
+		selenium.stop();
+		System.out.println("--- Stopped browser");
+	}
 
-        Assert.assertEquals(o1, o2);
-    }
+	public static void assertTrue(boolean var) throws Exception {
+		if (!var) {
+			captureScreenshot();
+		}
 
-    protected void fail(String message) throws Exception {
-        captureScreenshot();
+		Assert.assertTrue(var);
+	}
 
-        Assert.fail(message);
-    }
+	public static void assertEquals(Object o1, Object o2) throws Exception {
+		if (!o1.equals(o2)) {
+			captureScreenshot();
+		}
 
-    protected void captureScreenshot() throws Exception {
-        File f = File.createTempFile("selenium_screenshot", "failed.png");
+		Assert.assertEquals(o1, o2);
+	}
 
-        selenium.captureEntirePageScreenshot(f.getAbsolutePath(), "");
+	public static void fail(String message) throws Exception {
+		captureScreenshot();
 
-        System.out.println("##teamcity[publishArtifacts '"+f.getAbsolutePath()+"']");
-    }
+		Assert.fail(message);
+	}
 
-    protected void afterSeleniumStart() throws Exception {
-        // base implementation does nothing
-    }
+	public static void captureScreenshot() throws Exception {
+		File f = File.createTempFile("selenium_screenshot", "failed.png");
 
-    protected void beforeSeleniumStop() throws Exception {
-        // base implementation does nothing
-    }
+		selenium.captureEntirePageScreenshot(f.getAbsolutePath(), "");
 
-    protected void clickAndWait(String locator, String timeout){
-        selenium.click(locator);
-        selenium.waitForPageToLoad(timeout);
-    }
-    
+		System.out.println("##teamcity[publishArtifacts '" + f.getAbsolutePath() + "']");
+	}
+
+	protected void afterSeleniumStart() throws Exception {
+		// base implementation does nothing
+	}
+
+	protected void beforeSeleniumStop() throws Exception {
+		// base implementation does nothing
+	}
+
+	public static void clickAndWait(String locator, String timeout) {
+		selenium.click(locator);
+		selenium.waitForPageToLoad(timeout);
+	}
+
 }
