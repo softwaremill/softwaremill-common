@@ -22,7 +22,7 @@ public abstract class AbstractSeleniumTest {
   
     private SeleniumServer server;
     
-    protected static Selenium selenium;
+    public static Selenium selenium;
     
     private SeleniumBrowserProperties browserProperties;
 
