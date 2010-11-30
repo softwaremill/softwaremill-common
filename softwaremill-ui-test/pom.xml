@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-ui-test</artifactId>
-    <version>17</version>
+    <version>18</version>
     <name>Softwaremill UI Test</name>
 
     <parent>
