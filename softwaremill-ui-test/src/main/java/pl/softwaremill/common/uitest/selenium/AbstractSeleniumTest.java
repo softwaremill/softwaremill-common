@@ -155,9 +155,9 @@ public abstract class AbstractSeleniumTest {
 		// base implementation does nothing
 	}
 
+	@Deprecated // Use SeleniumCommands.clickAndWait instead
 	public static void clickAndWait(String locator, String timeout) {
-		selenium.click(locator);
-		selenium.waitForPageToLoad(timeout);
+		SeleniumCommands.clickAndWait(locator, timeout);
 	}
 
 }
