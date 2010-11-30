@@ -3,16 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>32</version>
+    <version>33</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>3.6.0.Final</hibernate.version>
-        <arquillian.version>1.0.0.Alpha4.SP1</arquillian.version>
+        <arquillian.version>1.0.0.Alpha3</arquillian.version>
 		<findbugs.version>2.3.1</findbugs.version>
-        <weld.version>1.1.0.Beta1</weld.version>
+        <weld.version>1.1.0.Beta2</weld.version>
         <seam.version>3.0.0-SNAPSHOT</seam.version>
     </properties>
 
@@ -70,13 +70,13 @@
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-6.0</artifactId>
-                <version>1.0.0.Beta7</version>
+                <version>1.0.0.CR1</version>
                 <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee6-specs-bom</artifactId>
-                <version>1.0.0.Beta6</version>
+                <version>1.0.0.CR1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -132,20 +132,18 @@
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-testng</artifactId>
                 <version>${arquillian.version}</version>
-            </dependency>  
+            </dependency>
             <dependency>
-                <groupId>org.jboss.arquillian.container</groupId>
+                <groupId>org.jboss.weld.arquillian.container</groupId>
                 <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-                <version>${arquillian.version}</version>
+                <version>${weld.version}</version>
             </dependency>
 
             <!-- Weld -->
             <dependency>
                 <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-core-bom</artifactId>
+                <artifactId>weld-core</artifactId>
                 <version>${weld.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld</groupId>
@@ -156,7 +154,6 @@
                 <groupId>org.jboss.weld.servlet</groupId>
                 <artifactId>weld-servlet</artifactId>
                 <version>${weld.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- Seam 3 -->
@@ -226,42 +223,42 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-conf</artifactId>
-                <version>4</version>
+                <version>5</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-util</artifactId>
-                <version>10</version>
+                <version>11</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-sqs</artifactId>
-                <version>9</version>
+                <version>10</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-testing</artifactId>
-                <version>3</version>
+                <version>4</version>
             </dependency>			
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-db-test</artifactId>
-                <version>6</version>
+                <version>7</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-ui-test</artifactId>
-                <version>12</version>
+                <version>18</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-cdi</artifactId>
-                <version>7</version>
+                <version>8</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-faces</artifactId>
-                <version>7</version>
+                <version>8</version>
             </dependency>
 		</dependencies>
     </dependencyManagement>

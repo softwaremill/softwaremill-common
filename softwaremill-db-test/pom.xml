@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-db-test</artifactId>
-    <version>6</version>
+    <version>7</version>
     <name>Softwaremill DB Test</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>5</version>
+        <version>6</version>
     </parent>
 
     <dependencies>
@@ -81,16 +81,12 @@
                     <artifactId>arquillian-testng</artifactId>
                 </dependency>
                 <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
+                    <groupId>org.jboss.weld.arquillian.container</groupId>
                     <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.weld</groupId>
                     <artifactId>weld-core</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.weld</groupId>
-                    <artifactId>weld-api</artifactId>
                 </dependency>
             </dependencies>
         </profile>

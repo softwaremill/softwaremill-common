@@ -6,13 +6,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pl.softwaremill.common</groupId>
 	<artifactId>softwaremill-sqs</artifactId>
-	<version>9</version>
+	<version>10</version>
 	<name>Softwaremill SQS support</name>
 
 	<parent>
 		<groupId>pl.softwaremill.common</groupId>
 		<artifactId>softwaremill-common-parent</artifactId>
-		<version>5</version>
+		<version>6</version>
 	</parent>
 
 	<dependencies>

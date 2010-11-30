@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-cdi</artifactId>
-    <version>7</version>
+    <version>8</version>
     <name>Softwaremill CDI Extensions</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>5</version>
+        <version>6</version>
     </parent>
 
     <dependencies>
@@ -91,7 +91,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
+            <groupId>org.jboss.weld.arquillian.container</groupId>
             <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
             <scope>test</scope>
         </dependency>

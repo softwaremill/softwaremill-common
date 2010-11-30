@@ -5,7 +5,7 @@ Maven dependency:
     <dependency>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-db-test</artifactId>
-        <version>6</version>
+        <version>7</version>
     </dependency>
 
 Lets you run tests that use a database. Great for:

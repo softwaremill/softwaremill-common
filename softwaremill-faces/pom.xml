@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-faces</artifactId>
-    <version>7</version>
+    <version>8</version>
     <name>Softwaremill JSF Extensions</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>5</version>
+        <version>6</version>
     </parent>
 
     <dependencies>

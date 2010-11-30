@@ -1,7 +1,7 @@
 package pl.softwaremill.common.cdi.objectservice.extension;
 
-import org.jboss.weld.introspector.jlr.WeldClassImpl;
 import org.jboss.weld.literal.NewLiteral;
+import org.jboss.weld.util.reflection.HierarchyDiscovery;
 import org.jboss.weld.util.reflection.ParameterizedTypeImpl;
 import pl.softwaremill.common.cdi.objectservice.OS;
 
@@ -49,13 +49,22 @@ public class ObjectServiceExtension implements Extension {
         return null;
     }
 
+    public Set<Type> getInterfaceClosure(Class<?> rawType) {
+        Set<Type> types = new HashSet<Type>();
+        for (Type t : rawType.getGenericInterfaces()) {
+            types.addAll(new HierarchyDiscovery(t).getTypeClosure());
+        }
+        
+        return types;
+    }
+
     /**
      * Looks for the type parameter of the given annotated type, which has a raw type {@link pl.softwaremill.common.cdi.objectservice.OS}.
      * @param at The class on which to look for the type parameter.
      * @return The type parameter or {@code null}, if no type parameter is specified.
      */
-    private Type getObjectServiceTypeParameter(WeldClassImpl<?> at) {
-        Type typeParameter = getObjectServiceTypeParameter(at.getInterfaceClosure());
+    private Type getObjectServiceTypeParameter(AnnotatedType<?> at) {
+        Type typeParameter = getObjectServiceTypeParameter(getInterfaceClosure(at.getJavaClass()));
         if (typeParameter != null)  {
             return typeParameter;
         } else {
@@ -76,9 +85,9 @@ public class ObjectServiceExtension implements Extension {
         AnnotatedType<X> at = event.getAnnotatedType();
 
         // Checking if the class implements the OS interface
-        if (OS.class.isAssignableFrom(at.getJavaClass()) && at instanceof WeldClassImpl) {
+        if (OS.class.isAssignableFrom(at.getJavaClass())) {
             // Getting the type parameter type parameter for the OS implementation
-            Type osTypeParameter = getObjectServiceTypeParameter((WeldClassImpl) at);
+            Type osTypeParameter = getObjectServiceTypeParameter(at);
 
             // If the type parameter is a type variable, searching for that type variable in the main class declaration.
             if (osTypeParameter instanceof TypeVariable) {
