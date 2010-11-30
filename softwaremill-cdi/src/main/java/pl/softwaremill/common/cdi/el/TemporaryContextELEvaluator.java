@@ -83,7 +83,7 @@ public class TemporaryContextELEvaluator extends AbstractELEvaluator {
         };
     }
 
-    private class ConstantResolver extends ELResolver {
+    private static class ConstantResolver extends ELResolver {
         private final Map<String, Object> constants = new HashMap<String, Object>();
 
         public void addConstant(String name, Object value) {
