@@ -38,12 +38,12 @@ public class D {
      * dependencies.
      */
     public static void register(DependencyProvider provider) {
-        log.info("Registering " + provider);
+        log.debug("Registering " + provider);
         providers.addFirst(provider);
     }
 
     public static void unregister(DependencyProvider provider) {
-        log.info("Unregistering " + provider);
+        log.debug("Unregistering " + provider);
         providers.remove(provider);
     }
 

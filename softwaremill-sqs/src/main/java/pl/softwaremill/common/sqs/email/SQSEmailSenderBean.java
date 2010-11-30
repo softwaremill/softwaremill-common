@@ -106,7 +106,7 @@ public abstract class SQSEmailSenderBean extends TimerManager implements SQSEmai
 
                     SQSManager.deleteMessage(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle());
 
-                    log.debug("Mail sent to: " + Arrays.toString(to));
+                    log.debug("Mail '" + emailDescription.getSubject() + "' sent to: " + Arrays.toString(to));
                 }
                 catch (javax.mail.MessagingException e) {
                     log.warn("Something went wrong and e-mail has not been sent. Redelivery will occur.");

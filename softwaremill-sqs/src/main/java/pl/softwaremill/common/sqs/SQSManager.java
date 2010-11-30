@@ -74,7 +74,7 @@ public class SQSManager {
                 MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
                 String msgId = msgQueue.sendMessage(encodedMessage);
 
-                log.info("Sent message with id " + msgId + " to queue " + queue);
+                log.debug("Sent message with id " + msgId + " to queue " + queue);
                 i = REDELIVERY_LIMIT;
 
             } catch (SQSException e) {
@@ -86,7 +86,7 @@ public class SQSManager {
                 try {
                     Thread.sleep(10000);
                 } catch (InterruptedException e1) {
-                    e1.printStackTrace();
+                    // Ignore
                 }
             }
         }
