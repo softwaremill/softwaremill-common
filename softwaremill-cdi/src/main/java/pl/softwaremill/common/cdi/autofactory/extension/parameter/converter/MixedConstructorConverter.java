@@ -1,8 +1,11 @@
-package pl.softwaremill.common.cdi.autofactory.extension.parameter;
+package pl.softwaremill.common.cdi.autofactory.extension.parameter.converter;
 
 import pl.softwaremill.common.cdi.autofactory.FactoryParameter;
 import pl.softwaremill.common.cdi.autofactory.extension.MethodParameterIndexer;
 import pl.softwaremill.common.cdi.autofactory.extension.QualifierAnnotationsFilter;
+import pl.softwaremill.common.cdi.autofactory.extension.parameter.BeanManagerParameterValue;
+import pl.softwaremill.common.cdi.autofactory.extension.parameter.FactoryParameterParameterValue;
+import pl.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
 
 import javax.enterprise.inject.spi.AnnotatedConstructor;
 import javax.enterprise.inject.spi.AnnotatedParameter;
@@ -11,12 +14,12 @@ import java.util.List;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class ConstructorToParameterValuesConverter {
+public class MixedConstructorConverter implements ConstructorToParameterValuesConverter {
     private final QualifierAnnotationsFilter qualifierAnnotationsFilter;
     private final AnnotatedConstructor<?> constructor;
     private final MethodParameterIndexer methodParameterIndexer;
 
-    public ConstructorToParameterValuesConverter(QualifierAnnotationsFilter qualifierAnnotationsFilter,
+    public MixedConstructorConverter(QualifierAnnotationsFilter qualifierAnnotationsFilter,
                                                  AnnotatedConstructor<?> constructor,
                                                  MethodParameterIndexer methodParameterIndexer) {
         this.qualifierAnnotationsFilter = qualifierAnnotationsFilter;

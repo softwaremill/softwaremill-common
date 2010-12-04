@@ -1,10 +1,13 @@
 package pl.softwaremill.common.cdi.autofactory.extension;
 
 import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.ConstructorToParameterValuesConverter;
 import pl.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
+import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.ConstructorToParameterValuesConverter;
+import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.FactoryParameterOnlyConstructorConverter;
+import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.MixedConstructorConverter;
 
 import javax.enterprise.inject.spi.*;
+import javax.inject.Inject;
 import java.lang.reflect.Method;
 import java.util.Set;
 
@@ -30,8 +33,8 @@ public class AutoFactoryFromCreatedWithCreator {
         AnnotatedConstructor<?> soleCreatedTypeConstructor = getSoleConstructorOfCreatedType();
 
         MethodParameterIndexer methodParameterIndexer = new MethodParameterIndexer(soleFactoryMethod);
-        ParameterValue[] createdTypeConstructorParameterValues = new ConstructorToParameterValuesConverter(
-                new QualifierAnnotationsFilter(beanManager), soleCreatedTypeConstructor, methodParameterIndexer).convert();
+        ConstructorToParameterValuesConverter converter = getConverter(soleCreatedTypeConstructor, methodParameterIndexer);
+        ParameterValue[] createdTypeConstructorParameterValues = converter.convert();
 
         return new AutoFactoryBean(beanManager, factoryClass, createdTypeConstructorParameterValues,
                 soleCreatedTypeConstructor.getJavaMember());
@@ -61,5 +64,17 @@ public class AutoFactoryFromCreatedWithCreator {
         }
 
         return constructors.iterator().next();
+    }
+
+    private ConstructorToParameterValuesConverter getConverter(AnnotatedConstructor<?> soleCreatedTypeConstructor,
+                                                               MethodParameterIndexer methodParameterIndexer) {
+        if (soleCreatedTypeConstructor.getAnnotation(Inject.class) != null) {
+            return new MixedConstructorConverter(new QualifierAnnotationsFilter(beanManager),
+                    soleCreatedTypeConstructor, methodParameterIndexer);
+        } else {
+            // If the constructor isn't annotated with @Inject, the no dependencies are injected, all parameters
+            // are taken from the factory method.
+            return new FactoryParameterOnlyConstructorConverter(soleCreatedTypeConstructor, methodParameterIndexer);
+        }
     }
 }
