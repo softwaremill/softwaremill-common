@@ -1,4 +1,6 @@
-package pl.softwaremill.common.cdi.autofactory;
+package pl.softwaremill.common.cdi.autofactory.mixed;
+
+import pl.softwaremill.common.cdi.autofactory.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -7,15 +9,17 @@ import java.util.List;
  * @author Adam Warski (adam at warski dot org)
  */
 @CreatedWith(TotalPriceCalculator.Factory.class)
-public class TotalPriceCalculatorImpl implements TotalPriceCalculator {
+public class TotalPriceCalculatorMixedConstructorImpl implements TotalPriceCalculator {
     private final List<Product> products;
     private final int specialDiscount;
     private final PriceCalculator.Factory priceCalculatorFactory;
     private final BulkOrderDiscounts bulkOrderDiscounts;
 
     @Inject
-    public TotalPriceCalculatorImpl(@FactoryParameter List<Product> products, @FactoryParameter int specialDiscount,
-                                    PriceCalculator.Factory priceCalculatorFactory, BulkOrderDiscounts bulkOrderDiscounts) {
+    public TotalPriceCalculatorMixedConstructorImpl(@FactoryParameter List<Product> products,
+                                                    @FactoryParameter int specialDiscount,
+                                                    PriceCalculator.Factory priceCalculatorFactory,
+                                                    BulkOrderDiscounts bulkOrderDiscounts) {
         this.products = products;
         this.specialDiscount = specialDiscount;
         this.priceCalculatorFactory = priceCalculatorFactory;
