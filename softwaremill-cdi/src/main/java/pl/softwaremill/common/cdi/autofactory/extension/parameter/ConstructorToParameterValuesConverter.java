@@ -1,7 +1,7 @@
 package pl.softwaremill.common.cdi.autofactory.extension.parameter;
 
 import pl.softwaremill.common.cdi.autofactory.FactoryParameter;
-import pl.softwaremill.common.cdi.autofactory.extension.FactoryMethodParameterIndexer;
+import pl.softwaremill.common.cdi.autofactory.extension.MethodParameterIndexer;
 import pl.softwaremill.common.cdi.autofactory.extension.QualifierAnnotationsFilter;
 
 import javax.enterprise.inject.spi.AnnotatedConstructor;
@@ -14,14 +14,14 @@ import java.util.List;
 public class ConstructorToParameterValuesConverter {
     private final QualifierAnnotationsFilter qualifierAnnotationsFilter;
     private final AnnotatedConstructor<?> constructor;
-    private final FactoryMethodParameterIndexer factoryMethodParameterIndexer;
+    private final MethodParameterIndexer methodParameterIndexer;
 
     public ConstructorToParameterValuesConverter(QualifierAnnotationsFilter qualifierAnnotationsFilter,
                                                  AnnotatedConstructor<?> constructor,
-                                                 FactoryMethodParameterIndexer factoryMethodParameterIndexer) {
+                                                 MethodParameterIndexer methodParameterIndexer) {
         this.qualifierAnnotationsFilter = qualifierAnnotationsFilter;
         this.constructor = constructor;
-        this.factoryMethodParameterIndexer = factoryMethodParameterIndexer;
+        this.methodParameterIndexer = methodParameterIndexer;
     }
 
     public ParameterValue[] convert() {
@@ -38,7 +38,7 @@ public class ConstructorToParameterValuesConverter {
 
     private ParameterValue createParameterValue(AnnotatedParameter parameter) {
         if (parameter.getAnnotation(FactoryParameter.class) != null) {
-            return new FactoryParameterParameterValue(factoryMethodParameterIndexer.getIndexForArgument(parameter.getBaseType()));
+            return new FactoryParameterParameterValue(methodParameterIndexer.getIndexForArgument(parameter.getBaseType()));
         } else {
             return new BeanManagerParameterValue(parameter.getBaseType(), qualifierAnnotationsFilter.filter(parameter.getAnnotations()));
         }

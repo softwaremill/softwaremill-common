@@ -9,11 +9,11 @@ import static com.google.common.collect.Maps.*;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class FactoryMethodParameterIndexer {
+public class MethodParameterIndexer {
     private final Method factoryMethod;
     private final Map<Type, Integer> parameterTypeToIndex;
 
-    public FactoryMethodParameterIndexer(Method factoryMethod) {
+    public MethodParameterIndexer(Method factoryMethod) {
         this.factoryMethod = factoryMethod;
 
         parameterTypeToIndex = newHashMap();

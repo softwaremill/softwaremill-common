@@ -29,9 +29,9 @@ public class AutoFactoryFromCreatedWithCreator {
         Method soleFactoryMethod = getSoleFactoryMethod();
         AnnotatedConstructor<?> soleCreatedTypeConstructor = getSoleConstructorOfCreatedType();
 
-        FactoryMethodParameterIndexer factoryMethodParameterIndexer = new FactoryMethodParameterIndexer(soleFactoryMethod);
+        MethodParameterIndexer methodParameterIndexer = new MethodParameterIndexer(soleFactoryMethod);
         ParameterValue[] createdTypeConstructorParameterValues = new ConstructorToParameterValuesConverter(
-                new QualifierAnnotationsFilter(beanManager), soleCreatedTypeConstructor, factoryMethodParameterIndexer).convert();
+                new QualifierAnnotationsFilter(beanManager), soleCreatedTypeConstructor, methodParameterIndexer).convert();
 
         return new AutoFactoryBean(beanManager, factoryClass, createdTypeConstructorParameterValues,
                 soleCreatedTypeConstructor.getJavaMember());
