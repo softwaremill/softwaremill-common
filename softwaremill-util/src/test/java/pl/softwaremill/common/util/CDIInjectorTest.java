@@ -94,6 +94,20 @@ public class CDIInjectorTest {
         into(target).inject(new Dep1(), new Dep1());
     }
 
+    @Test
+    public void testOnlyInjectableFieldsAreSet() {
+        // Given
+        InjectInto3 target = new InjectInto3();
+        Dep1 dep1 = new Dep1();
+
+        // When
+        into(target).inject(dep1);
+
+        // Then
+        assertThat(target.getDep1()).isSameAs(dep1);
+        assertThat(target.getDep1bis()).isNull();
+    }
+
     public static class InjectInto1 {
         @Inject
         private Dep1 dep1;
@@ -120,6 +134,16 @@ public class CDIInjectorTest {
 
         public String getStr1() { return str1; }
         public String getStr2() { return str2; }
+    }
+
+    public static class InjectInto3 {
+        @Inject
+        private Dep1 dep1;
+
+        private Dep1 dep1bis;
+
+        public Dep1 getDep1() { return dep1; }
+        public Dep1 getDep1bis() { return dep1bis; }
     }
 
     public static class Dep1 {}

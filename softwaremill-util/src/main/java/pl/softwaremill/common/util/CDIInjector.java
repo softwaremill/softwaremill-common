@@ -1,5 +1,6 @@
 package pl.softwaremill.common.util;
 
+import javax.inject.Inject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
@@ -28,7 +29,9 @@ public class CDIInjector<T> {
 
     private void doInject(Class<? extends Annotation> qualifier, Object obj) {
         for (Field field : target.getClass().getDeclaredFields()) {
-            if (fieldTypeAssignableFrom(field, obj.getClass()) && fieldHasQualifier(field, qualifier)) {
+            if (fieldIsInjectable(field) &&
+                    fieldTypeAssignableFrom(field, obj.getClass()) && 
+                    fieldHasQualifier(field, qualifier)) {
                 checkFieldNotYetAssigned(field);
                 new RichObject(target).set(field.getName(), obj);
                 return;
@@ -44,6 +47,10 @@ public class CDIInjector<T> {
             throw new IllegalStateException("Field " + field.getName() + " in object " + target +
                     " already has a value: " + currentValue);
         }
+    }
+
+    private boolean fieldIsInjectable(Field field) {
+        return field.getAnnotation(Inject.class) != null;
     }
 
     private boolean fieldHasQualifier(Field field, Class<? extends Annotation> qualifier) {
