@@ -16,7 +16,7 @@ public class AutoFactoryExtension implements Extension {
     public <X> void processAnnotatedType(@Observes ProcessAnnotatedType<X> event, BeanManager beanManager) {
         CreatedWith createdWithAnnotation = event.getAnnotatedType().getAnnotation(CreatedWith.class);
         if (createdWithAnnotation != null) {
-            factoryBeansToAdd.add(new AutoFactoryFromCreatedWithCreator(beanManager, createdWithAnnotation, event)
+            factoryBeansToAdd.add(new AutoFactoryFromCreatedWithCreator<X>(beanManager, createdWithAnnotation, event)
                     .create());
 
             // This class shouldn't be treated normally, as it contains a constructor with @Inject, where

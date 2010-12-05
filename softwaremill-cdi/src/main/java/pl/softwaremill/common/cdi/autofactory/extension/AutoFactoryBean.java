@@ -8,6 +8,7 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.enterprise.inject.spi.InjectionTarget;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Proxy;
@@ -18,21 +19,24 @@ import java.util.Set;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class AutoFactoryBean implements Bean {
+public class AutoFactoryBean<T> implements Bean<T> {
     private final BeanManager beanManager;
     private final Class<?> factoryClass;
     private final ParameterValue[] createdTypeConstructorParameterValues;
     private final Constructor<?> createdTypeConstructor;
+    private final InjectionTarget<?> createdTypeInjectionTarget;
 
     private final Class<?>[] factoryClassInArray;
 
     public AutoFactoryBean(BeanManager beanManager, Class<?> factoryClass,
                            ParameterValue[] createdTypeConstructorParameterValues,
-                           Constructor<?> createdTypeConstructor) {
+                           Constructor<T> createdTypeConstructor,
+                           InjectionTarget<T> createdTypeInjectionTarget) {
         this.beanManager = beanManager;
         this.factoryClass = factoryClass;
         this.createdTypeConstructorParameterValues = createdTypeConstructorParameterValues;
         this.createdTypeConstructor = createdTypeConstructor;
+        this.createdTypeInjectionTarget = createdTypeInjectionTarget;
 
         this.factoryClassInArray = new Class<?>[] { this.factoryClass };
     }
@@ -42,11 +46,13 @@ public class AutoFactoryBean implements Bean {
         return Collections.<Type>singleton(factoryClass);
     }
 
+    @SuppressWarnings({"unchecked"})
     @Override
-    public Object create(CreationalContext creationalContext) {
-        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
+    public T create(CreationalContext<T> creationalContext) {
+        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                 factoryClassInArray,
-                new FactoryInvocationHandler(beanManager, createdTypeConstructor, createdTypeConstructorParameterValues));
+                new FactoryInvocationHandler(beanManager, createdTypeConstructor,
+                        createdTypeConstructorParameterValues, createdTypeInjectionTarget, creationalContext));
     }
 
     @Override

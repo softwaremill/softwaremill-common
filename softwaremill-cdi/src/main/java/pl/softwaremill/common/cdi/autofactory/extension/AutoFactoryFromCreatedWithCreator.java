@@ -14,30 +14,30 @@ import java.util.Set;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class AutoFactoryFromCreatedWithCreator {
+public class AutoFactoryFromCreatedWithCreator<T> {
     private final BeanManager beanManager;
-    private final AnnotatedType<?> createdType;
+    private final AnnotatedType<T> createdType;
     private final Class<?> factoryClass;
 
     public AutoFactoryFromCreatedWithCreator(BeanManager beanManager, CreatedWith createdWithAnnotation,
-                                             ProcessAnnotatedType<?> event) {
+                                             ProcessAnnotatedType<T> event) {
         this.beanManager = beanManager;
         this.createdType = event.getAnnotatedType();
         this.factoryClass = createdWithAnnotation.value();
     }
 
-    public Bean create() {
+    public Bean<T> create() {
         checkFactoryClassIsAnInterface();
 
         Method soleFactoryMethod = getSoleFactoryMethod();
-        AnnotatedConstructor<?> soleCreatedTypeConstructor = getSoleConstructorOfCreatedType();
+        AnnotatedConstructor<T> soleCreatedTypeConstructor = getSoleConstructorOfCreatedType();
 
         MethodParameterIndexer methodParameterIndexer = new MethodParameterIndexer(soleFactoryMethod);
         ConstructorToParameterValuesConverter converter = getConverter(soleCreatedTypeConstructor, methodParameterIndexer);
         ParameterValue[] createdTypeConstructorParameterValues = converter.convert();
 
-        return new AutoFactoryBean(beanManager, factoryClass, createdTypeConstructorParameterValues,
-                soleCreatedTypeConstructor.getJavaMember());
+        return new AutoFactoryBean<T>(beanManager, factoryClass, createdTypeConstructorParameterValues,
+                soleCreatedTypeConstructor.getJavaMember(), beanManager.createInjectionTarget(createdType));
     }
 
     private void checkFactoryClassIsAnInterface() {
@@ -56,8 +56,8 @@ public class AutoFactoryFromCreatedWithCreator {
         return factoryClass.getMethods()[0];
     }
 
-    private AnnotatedConstructor<?> getSoleConstructorOfCreatedType() {
-        Set<? extends AnnotatedConstructor<?>> constructors = createdType.getConstructors();
+    private AnnotatedConstructor<T> getSoleConstructorOfCreatedType() {
+        Set<? extends AnnotatedConstructor<T>> constructors = createdType.getConstructors();
         if (constructors.size() != 1) {
             throw new RuntimeException("A bean created with an auto-factory can have only one constructor: " +
                     createdType);
