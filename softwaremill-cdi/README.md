@@ -206,3 +206,23 @@ You can then use the factory as any other bean:
         }
     }
 
+Alternatively, if you don't want to mix dependencies and factory parameters in the constructor, you can use field
+or setter injection:
+
+    @CreatedWith(PriceCalculator.Factory.class)
+    public class PriceCalculatorImpl implements PriceCalculator {
+        @Inject
+        private Discounts discounts;
+        
+        private final Product product;
+
+        public PriceCalculatorImpl(Product product) {
+            this.product = product;
+        }
+
+        int getPriceAfterDiscounts() {
+            return product.getPrice() - discounts.getNormalDiscount();
+        }
+    }
+
+The `@Inject` annotation on the constructor and the `@FactoryParameter` annotations aren't needed in this case.
