@@ -1,5 +1,7 @@
 package pl.softwaremill.common.util;
 
+import org.testng.annotations.Test;
+
 import javax.inject.Inject;
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;
@@ -14,6 +16,7 @@ import static pl.softwaremill.common.util.CDIInjector.*;
  * @author Adam Warski (adam at warski dot org)
  */
 public class CDIInjectorTest {
+    @Test
     public void testBasicInject() {
         // Given
         InjectInto1 target = new InjectInto1();
@@ -30,6 +33,20 @@ public class CDIInjectorTest {
         assertThat(target.getDep3()).isSameAs(dep3);
     }
 
+    @Test
+    public void testInjectSubclass() {
+        // Given
+        InjectInto1 target = new InjectInto1();
+        Dep1 dep1 = new Dep1Sub();
+
+        // When
+        into(target).inject(dep1);
+
+        // Then
+        assertThat(target.getDep1()).isSameAs(dep1);
+    }
+
+    @Test
     public void testMultipleInject() {
         // Given
         InjectInto1 target = new InjectInto1();
@@ -46,6 +63,7 @@ public class CDIInjectorTest {
         assertThat(target.getDep3()).isSameAs(dep3);
     }
 
+    @Test
     public void testInjectWithQualifier() {
         // Given
         InjectInto2 target = new InjectInto2();
@@ -56,6 +74,24 @@ public class CDIInjectorTest {
         // Then
         assertThat(target.getStr1()).isEqualTo("a");
         assertThat(target.getStr2()).isEqualTo("b");
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class)
+    public void testDoubleInjectThrowsException() {
+        // Given
+        InjectInto1 target = new InjectInto1();
+
+        // When
+        into(target).inject(new InjectInto2());
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class)
+    public void testInjectingUnknownDepThrowsException() {
+        // Given
+        InjectInto1 target = new InjectInto1();
+
+        // When
+        into(target).inject(new Dep1(), new Dep1());
     }
 
     public static class InjectInto1 {
@@ -87,6 +123,7 @@ public class CDIInjectorTest {
     }
 
     public static class Dep1 {}
+    public static class Dep1Sub extends Dep1 {}
     public static class Dep2 {}
     public static class Dep3 {}
 
