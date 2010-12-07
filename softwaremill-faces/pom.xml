@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-faces</artifactId>
-    <version>8</version>
+    <version>9</version>
     <name>Softwaremill JSF Extensions</name>
 
     <parent>
