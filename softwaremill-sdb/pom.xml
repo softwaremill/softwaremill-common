@@ -47,12 +47,10 @@
         <dependency>
 			<groupId>pl.softwaremill.common</groupId>
 			<artifactId>softwaremill-util</artifactId>
-            <scope>test</scope>
 		</dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <scope>test</scope>
         </dependency>
 	</dependencies>
 
@@ -71,6 +69,28 @@
 					<skipTests>${softwaremill.common.skipIntegrationTests}</skipTests>
 				</configuration>
 			</plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>pl.softwaremill.common.sdb.backup.RunBackup</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 </project>
