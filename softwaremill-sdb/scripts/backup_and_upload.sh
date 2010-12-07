@@ -34,3 +34,6 @@ rm simpledb_backup*${CURRENT_DATE}*.txt
 
 # Uploading to S3
 java -cp $SDB_BACKUP_PATH pl.softwaremill.common.sdb.backup.S3Upload $S3_ACCESS_KEY_ID $S3_SECRET_ACCESS_KEY $S3_BUCKET $TAR_FILE_NAME
+
+# Cleaning up
+rm $TAR_FILE_NAME
