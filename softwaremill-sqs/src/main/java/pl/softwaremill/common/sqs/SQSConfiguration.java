@@ -16,6 +16,7 @@ public class SQSConfiguration {
     public static final String EMAIL_FROM;
     public static final String AWS_ACCESS_KEY_ID;
     public static final String AWS_SECRET_ACCESS_KEY;
+    public static final String SQS_SERVER;
     public static final String ENCODING;
 
     static {
@@ -29,5 +30,9 @@ public class SQSConfiguration {
         AWS_ACCESS_KEY_ID = props.get("AWSAccessKeyId");
         AWS_SECRET_ACCESS_KEY = props.get("SecretAccessKey");
         ENCODING = props.get("encoding");
+
+        // read sqs server, use sqs. when no given
+        String server = props.get("sqsServer");
+        SQS_SERVER = (server == null) ? "sqs.amazonaws.com" : server;
     }
 }

@@ -36,7 +36,7 @@ public class SQSManager {
      */
     public static void setQueueVisibilityTimeout(String queue, int timeout) {
         try {
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+            MessageQueue msgQueue = connectToQueue(queue);
             msgQueue.setVisibilityTimeout(timeout);
         } catch (SQSException e) {
             throw new SQSRuntimeException("Could not setup SQS queue: " + queue, e);
@@ -71,7 +71,7 @@ public class SQSManager {
 
         for (int i = 0; i < REDELIVERY_LIMIT; i++) {
             try {
-                MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+                MessageQueue msgQueue = connectToQueue(queue);
                 String msgId = msgQueue.sendMessage(encodedMessage);
 
                 log.debug("Sent message with id " + msgId + " to queue " + queue);
@@ -104,7 +104,7 @@ public class SQSManager {
 
             log.debug("Polling queue " + queue);
 
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+            MessageQueue msgQueue = connectToQueue(queue);
 
             Message msg = msgQueue.receiveMessage();
 
@@ -144,7 +144,7 @@ public class SQSManager {
      */
     public static void deleteMessage(String queue, String receiptHandle) {
         try {
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+            MessageQueue msgQueue = connectToQueue(queue);
             msgQueue.deleteMessage(receiptHandle);
             log.debug("Deleted message in queue: " + queue);
         } catch (SQSException e) {
@@ -162,12 +162,16 @@ public class SQSManager {
      */
     public static void setMessageVisibilityTimeout(String queue, String receiptHandle, int timeOut) {
         try {
-            MessageQueue msgQueue = SQSUtils.connectToQueue(queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+            MessageQueue msgQueue = connectToQueue(queue);
             msgQueue.setMessageVisibilityTimeout(receiptHandle, timeOut);
             log.debug("Set timeout to " + timeOut + " seconds in queue: " + queue);
         } catch (SQSException e) {
             throw new SQSRuntimeException("Could not reset timeout for message in queue " + queue + "! This will cause a delay in redelivery.", e);
         }
+    }
+
+    private static MessageQueue connectToQueue(String queue) throws SQSException {
+        return SQSUtils.connectToQueue(SQS_SERVER, queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
     }
 
 }
