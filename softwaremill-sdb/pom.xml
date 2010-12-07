@@ -16,11 +16,15 @@
 	</parent>
 
 	<dependencies>
-		<!-- typica -->
-		<dependency>
-			<groupId>com.google.code.typica</groupId>
-			<artifactId>typica</artifactId>
-		</dependency>
+		<!-- AWS -->
+        <dependency>
+            <groupId>net.java.dev.jets3t</groupId>
+            <artifactId>jets3t</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.typica</groupId>
+            <artifactId>typica</artifactId>
+        </dependency>
 		<dependency>
 			<artifactId>commons-logging</artifactId>
 			<groupId>commons-logging</groupId>
