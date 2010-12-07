@@ -43,6 +43,8 @@ public abstract class AbstractBackupAndRestoreTest {
     }
 
     protected void assertDomainHasData(Domain domain, Map<String, Map<String, Set<String>>> data) throws SDBException {
+        makeConsistent(domain);
+        
         for (Map.Entry<String, Map<String, Set<String>>> dataEntry : data.entrySet()) {
             Item item = domain.getItem(dataEntry.getKey(), true).getResult();
             assertThat(item).isNotNull();
