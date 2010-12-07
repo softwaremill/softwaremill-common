@@ -33,9 +33,36 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
+
+		<dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>pl.softwaremill.common</groupId>
+			<artifactId>softwaremill-conf</artifactId>
+            <scope>test</scope>
+		</dependency>
+        <dependency>
+			<groupId>pl.softwaremill.common</groupId>
+			<artifactId>softwaremill-util</artifactId>
+            <scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
