@@ -33,6 +33,6 @@ public class SQSConfiguration {
 
         // read sqs server, use sqs. when no given
         String server = props.get("sqsServer");
-        SQS_SERVER = (server == null) ? "sqs.amazonaws.com" : server;
+        SQS_SERVER = (server == null) ? "queue.amazonaws.com" : server;
     }
 }
