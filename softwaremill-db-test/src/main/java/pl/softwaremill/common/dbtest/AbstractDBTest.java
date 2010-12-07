@@ -24,6 +24,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
+
 /**
  * Extend this class to create tests which have a private database. The persistence classes from cdi-ext are available.
  * A template for a test is:
@@ -73,7 +75,11 @@ public abstract class AbstractDBTest extends Arquillian {
      */
     protected void loadTestData(EntityManager em) throws IOException {
         final String sqlFilePath = new SqlFileResolver(this.getClass()).getSqlFilePath();
-        loadURLContent(em, Resources.getResource(sqlFilePath));
+        try {
+            loadURLContent(em, Resources.getResource(sqlFilePath));
+        } catch (IllegalArgumentException e) {
+            log.info("File for initializing database (" + sqlFilePath + ") not found.");
+        }
     }
 
     /**
@@ -96,7 +102,9 @@ public abstract class AbstractDBTest extends Arquillian {
         List<String> queryList = new ArrayList<String>();
 
         for (String q : queries.split(";")) {
-            queryList.add(q + ";");
+            if (! isBlank(q)) {
+                queryList.add(q + ";");
+            }
         }
 
         return queryList;

@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-db-test</artifactId>
-    <version>7</version>
+    <version>8</version>
     <name>Softwaremill DB Test</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>6</version>
+        <version>7</version>
     </parent>
 
     <dependencies>
@@ -65,9 +65,15 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
+
+        <!-- Utils -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
     </dependencies>
 
-    <profiles>
+  <profiles>
         <profile>
             <activation>
                 <activeByDefault>true</activeByDefault>
