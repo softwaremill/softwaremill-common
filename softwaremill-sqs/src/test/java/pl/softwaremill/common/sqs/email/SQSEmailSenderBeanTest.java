@@ -43,7 +43,8 @@ public class SQSEmailSenderBeanTest {
             emailServer.stop();
         }
         // Make sure the sqs queue is empty - if not next test run by anyone-anywhere could fail
-        MessageQueue msgQueue = SQSUtils.connectToQueue(EMAIL_SQS_QUEUE, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+        MessageQueue msgQueue = SQSUtils.connectToQueue(SQS_SERVER, EMAIL_SQS_QUEUE, AWS_ACCESS_KEY_ID,
+                AWS_SECRET_ACCESS_KEY);
         Message msg;
         while((msg = msgQueue.receiveMessage()) != null){
             msgQueue.deleteMessage(msg);
