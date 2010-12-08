@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sdb.backup;
+package pl.softwaremill.common.backup;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sdb.backup;
+package pl.softwaremill.common.backup;
 
 import org.jets3t.service.S3ServiceException;
 import org.jets3t.service.impl.rest.httpclient.RestS3Service;

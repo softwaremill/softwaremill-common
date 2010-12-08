@@ -5,9 +5,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pl.softwaremill.common</groupId>
-	<artifactId>softwaremill-sdb</artifactId>
+	<artifactId>softwaremill-backup</artifactId>
 	<version>1</version>
-	<name>Softwaremill SimpleDB utilities</name>
+	<name>Softwaremill backup utilities</name>
 
 	<parent>
 		<groupId>pl.softwaremill.common</groupId>
@@ -78,7 +78,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>pl.softwaremill.common.sdb.backup.RunBackup</mainClass>
+                            <mainClass>pl.softwaremill.common.backup.RunBackup</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

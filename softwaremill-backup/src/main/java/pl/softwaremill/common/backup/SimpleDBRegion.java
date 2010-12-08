@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sdb.backup;
+package pl.softwaremill.common.backup;
 
 /**
  * @author Adam Warski (adam at warski dot org)

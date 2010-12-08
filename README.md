@@ -48,6 +48,10 @@ Our BOM.
 
 ## [Java utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-util/)
 
+## [Backup utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-backup/)
+
+Scripts and java classes to backup SimpleDB domains and upload them to S3.
+
 ---
 
 Licensed under the Apache2 license. [Softwaremill 2010](http://softwaremill.eu/).

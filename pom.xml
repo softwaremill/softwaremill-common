@@ -21,7 +21,7 @@
         <module>softwaremill-db-test</module>
         <module>softwaremill-conf</module>
         <module>softwaremill-sqs</module>
-        <module>softwaremill-sdb</module>
+        <module>softwaremill-backup</module>
         <module>softwaremill-cdi</module>
         <module>softwaremill-faces</module>
     </modules>

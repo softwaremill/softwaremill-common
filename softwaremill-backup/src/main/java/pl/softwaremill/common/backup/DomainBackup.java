@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sdb.backup;
+package pl.softwaremill.common.backup;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
