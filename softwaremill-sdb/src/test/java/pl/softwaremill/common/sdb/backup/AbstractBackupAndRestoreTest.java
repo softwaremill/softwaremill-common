@@ -1,9 +1,6 @@
 package pl.softwaremill.common.sdb.backup;
 
-import com.xerox.amazonws.simpledb.Domain;
-import com.xerox.amazonws.simpledb.Item;
-import com.xerox.amazonws.simpledb.SDBException;
-import com.xerox.amazonws.simpledb.SimpleDB;
+import com.xerox.amazonws.simpledb.*;
 import org.testng.annotations.BeforeClass;
 import pl.softwaremill.common.conf.Configuration;
 
@@ -27,8 +24,16 @@ public abstract class AbstractBackupAndRestoreTest {
     }
 
     protected void clearDomain(Domain domain) throws SDBException {
-        simpleDB.deleteDomain(domain);
-        simpleDB.createDomain(domain.getName());
+        String nextToken = null;
+        do {
+            SDBListResult<Item> result = domain.selectItems("select * from " + domain.getName(), nextToken, false);
+            nextToken = result.getNextToken();
+
+            for (Item item : result.getItems()) {
+                domain.deleteItem(item.getIdentifier());
+            }
+        } while (nextToken != null);
+        
         makeConsistent(domain);
     }
 
@@ -43,14 +48,13 @@ public abstract class AbstractBackupAndRestoreTest {
     }
 
     protected void assertDomainHasData(Domain domain, Map<String, Map<String, Set<String>>> data) throws SDBException {
-        makeConsistent(domain);
-        
         for (Map.Entry<String, Map<String, Set<String>>> dataEntry : data.entrySet()) {
             Item item = domain.getItem(dataEntry.getKey(), true).getResult();
             assertThat(item).isNotNull();
 
             for (Map.Entry<String, Set<String>> attributeDataEntry : dataEntry.getValue().entrySet()) {
                 Set<String> attributeDataValues = item.getAttributeValues(attributeDataEntry.getKey());
+                assertThat(attributeDataValues).isNotNull();
                 assertThat(attributeDataValues.containsAll(attributeDataEntry.getValue())).isTrue();
             }
         }
