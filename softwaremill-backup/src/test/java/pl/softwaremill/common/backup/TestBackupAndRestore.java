@@ -46,6 +46,7 @@ public class TestBackupAndRestore extends AbstractBackupAndRestoreTest {
                 .build();
 
         populateDomainWithData(simpleDataDomain, simpleData);
+        makeConsistent(simpleDataDomain);
     }
 
     @Test
