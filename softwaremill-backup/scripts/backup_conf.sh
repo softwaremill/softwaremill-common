@@ -21,6 +21,6 @@ MYSQL_HOST=
 MYSQL_DB=
 
 # path to the backup jar
-SDB_BACKUP_PATH=softwaremill-sdb-1-jar-with-dependencies.jar
+SDB_BACKUP_PATH=softwaremill-backup-1-jar-with-dependencies.jar
 
 #########
