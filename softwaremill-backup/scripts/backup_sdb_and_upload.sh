@@ -3,19 +3,7 @@
 # Configuration
 ###############
 
-# where the backups will be uploaded
-S3_ACCESS_KEY_ID=
-S3_SECRET_ACCESS_KEY=
-S3_BUCKET=
-
-# what to backup
-SIMPLEDB_ACCESS_KEY_ID=
-SIMPLEDB_SECRET_ACCESS_KEY=
-SIMPLEDB_REGION=US_EAST
-SIMPLEDB_DOMAINS=
-
-# path to the backup jar
-SDB_BACKUP_PATH=softwaremill-sdb-1-jar-with-dependencies.jar
+source backup_conf.sh
 
 #########
 
