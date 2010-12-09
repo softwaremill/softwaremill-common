@@ -6,9 +6,10 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @author Adam Warski (adam at warski dot org)
@@ -16,9 +17,7 @@ import java.util.concurrent.Callable;
 public class D {
     private final static Logger log = LoggerFactory.getLogger(D.class);
 
-    private static ThreadLocalDependencyProvider threadLocalDependencyProvider = new ThreadLocalDependencyProvider();
-
-    private static LinkedList<DependencyProvider> providers = new LinkedList<DependencyProvider>() {{ add(threadLocalDependencyProvider); }};
+    private static Deque<DependencyProvider> providers = new LinkedBlockingDeque<DependencyProvider>();
 
     /**
      * Try to find the given dependency in the registered providers.
@@ -64,16 +63,13 @@ public class D {
     }
 
     public static <T> T withDependencies(List<Object> deps, Callable<T> what) throws Exception {
-        for (Object dep : deps) {
-            threadLocalDependencyProvider.register(dep);
-        }
+        ThreadLocalDependencyProvider dependencyProvider = new ThreadLocalDependencyProvider(deps);
+        register(dependencyProvider);
 
         try {
             return what.call();
         } finally {
-            for (Object dep : deps) {
-                threadLocalDependencyProvider.unregister(dep);
-            }
+            unregister(dependencyProvider);
         }
     }
 }

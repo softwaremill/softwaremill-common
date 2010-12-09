@@ -10,13 +10,15 @@ import java.util.List;
 public class ThreadLocalDependencyProvider implements DependencyProvider {
     private final ThreadLocal<List<Object>> dependencies;
 
-    public ThreadLocalDependencyProvider() {
+    public ThreadLocalDependencyProvider(List<Object> deps) {
         dependencies = new ThreadLocal<List<Object>>() {
             @Override
             protected List<Object> initialValue() {
                 return new ArrayList<Object>();
             }
         };
+
+        dependencies.set(deps);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -34,14 +36,6 @@ public class ThreadLocalDependencyProvider implements DependencyProvider {
         }
 
         return null;
-    }
-
-    public void register(Object dependency) {
-        dependencies.get().add(dependency);
-    }
-
-    public void unregister(Object dependency) {
-        dependencies.get().remove(dependency);
     }
 
     @Override
