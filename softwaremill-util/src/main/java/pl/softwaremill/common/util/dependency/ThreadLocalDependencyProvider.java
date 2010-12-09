@@ -7,11 +7,16 @@ import java.util.List;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class StaticDependencyProvider implements DependencyProvider {
-    private final List<Object> dependencies;
+public class ThreadLocalDependencyProvider implements DependencyProvider {
+    private final ThreadLocal<List<Object>> dependencies;
 
-    public StaticDependencyProvider() {
-        dependencies = new ArrayList<Object>();
+    public ThreadLocalDependencyProvider() {
+        dependencies = new ThreadLocal<List<Object>>() {
+            @Override
+            protected List<Object> initialValue() {
+                return new ArrayList<Object>();
+            }
+        };
     }
 
     @SuppressWarnings({"unchecked"})
@@ -22,7 +27,7 @@ public class StaticDependencyProvider implements DependencyProvider {
             return null;
         }
 
-        for (Object dependency : dependencies) {
+        for (Object dependency : dependencies.get()) {
             if (cls.isAssignableFrom(dependency.getClass())) {
                 return (T) dependency;
             }
@@ -32,15 +37,15 @@ public class StaticDependencyProvider implements DependencyProvider {
     }
 
     public void register(Object dependency) {
-        dependencies.add(dependency);
+        dependencies.get().add(dependency);
     }
 
     public void unregister(Object dependency) {
-        dependencies.remove(dependency);
+        dependencies.get().remove(dependency);
     }
 
     @Override
     public String toString() {
-        return "StaticDependencyProvider{dependencies=" + dependencies + "}";
+        return "ThreadLocalDependencyProvider{dependencies=" + dependencies.get() + "}";
     }
 }

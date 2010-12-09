@@ -16,7 +16,9 @@ import java.util.concurrent.Callable;
 public class D {
     private final static Logger log = LoggerFactory.getLogger(D.class);
 
-    private static LinkedList<DependencyProvider> providers = new LinkedList<DependencyProvider>();
+    private static ThreadLocalDependencyProvider threadLocalDependencyProvider = new ThreadLocalDependencyProvider();
+
+    private static LinkedList<DependencyProvider> providers = new LinkedList<DependencyProvider>() {{ add(threadLocalDependencyProvider); }};
 
     /**
      * Try to find the given dependency in the registered providers.
@@ -62,24 +64,16 @@ public class D {
     }
 
     public static <T> T withDependencies(List<Object> deps, Callable<T> what) throws Exception {
-        StaticDependencyProvider sdp = registerStaticWithDeps(deps.toArray());
+        for (Object dep : deps) {
+            threadLocalDependencyProvider.register(dep);
+        }
 
         try {
             return what.call();
         } finally {
-            unregister(sdp);
+            for (Object dep : deps) {
+                threadLocalDependencyProvider.unregister(dep);
+            }
         }
-    }
-
-    public static StaticDependencyProvider registerStaticWithDeps(Object... deps) {
-        StaticDependencyProvider sdp = new StaticDependencyProvider();
-
-        for (Object dep : deps) {
-            sdp.register(dep);
-        }
-
-        register(sdp);
-
-        return sdp;
     }
 }
