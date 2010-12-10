@@ -3,7 +3,6 @@ package pl.softwaremill.common.sqs;
 import com.xerox.amazonws.sqs2.Message;
 import com.xerox.amazonws.sqs2.MessageQueue;
 import com.xerox.amazonws.sqs2.SQSException;
-import com.xerox.amazonws.sqs2.SQSUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,25 +12,27 @@ import java.io.InputStreamReader;
  * @author Adam Warski (adam at warski dot org)
  */
 public class SQSEmptor {
+    private final String serverName;
     private final String accessKeyId;
     private final String secretAccessKey;
     private final String queueName;
 
-    public SQSEmptor(String accessKeyId, String secretAccessKey, String queueName) {
+    public SQSEmptor(String serverName, String accessKeyId, String secretAccessKey, String queueName) {
+        this.serverName = serverName;
         this.accessKeyId = accessKeyId;
         this.secretAccessKey = secretAccessKey;
         this.queueName = queueName;
     }
 
-    private void emptyQueue() throws SQSException {
-        MessageQueue msgQueue = SQSUtils.connectToQueue(queueName, accessKeyId, secretAccessKey);
+    public void emptyQueue() throws SQSException {
+        MessageQueue msgQueue = SQSManager.connectToQueue(serverName, accessKeyId, secretAccessKey, queueName, -1);
 
         Message[] msgs;
 
         do {
             msgs = msgQueue.receiveMessages(10);
             for (Message msg : msgs) {
-                System.out.println("Deleting message: " + msg.getMessageId());
+                System.out.println("Deleting message: " + msg.getMessageId() + " (" + msg.getReceiptHandle() + ")");
                 msgQueue.deleteMessage(msg);
             }
         } while (msgs.length > 0);
@@ -41,6 +42,12 @@ public class SQSEmptor {
 
     public static void main(String[] args) throws IOException, SQSException {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Server name (return for queue.amazonaws.com):");
+        String serverName = rdr.readLine().trim();
+        if ("".equals(serverName)) {
+            serverName = "queue.amazonaws.com";
+        }
 
         System.out.println("Access key id:");
         String accessKeyId = rdr.readLine().trim();
@@ -61,7 +68,7 @@ public class SQSEmptor {
                 return;
             }
 
-            new SQSEmptor(accessKeyId, secretAccessKey, queueName).emptyQueue();
+            new SQSEmptor(serverName, accessKeyId, secretAccessKey, queueName).emptyQueue();
         }
     }
 }

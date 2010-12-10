@@ -1,9 +1,6 @@
 package pl.softwaremill.common.sqs;
 
-import com.xerox.amazonws.sqs2.Message;
-import com.xerox.amazonws.sqs2.MessageQueue;
-import com.xerox.amazonws.sqs2.SQSException;
-import com.xerox.amazonws.sqs2.SQSUtils;
+import com.xerox.amazonws.sqs2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
@@ -11,6 +8,8 @@ import pl.softwaremill.common.sqs.util.Base64Coder;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 
 import java.io.*;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static pl.softwaremill.common.sqs.SQSConfiguration.*;
 
@@ -29,6 +28,7 @@ public class SQSManager {
 
     private static final int REDELIVERY_LIMIT = 10;
 
+    private static final Map<String, String> queueUrlCache = new ConcurrentHashMap<String, String>();
 
     /**
      * @param queue   the name of the SQS queue for which to set the timeout
@@ -36,7 +36,7 @@ public class SQSManager {
      */
     public static void setQueueVisibilityTimeout(String queue, int timeout) {
         try {
-            MessageQueue msgQueue = connectToQueue(queue);
+            MessageQueue msgQueue = connectToQueue(queue, timeout);
             msgQueue.setVisibilityTimeout(timeout);
         } catch (SQSException e) {
             throw new SQSRuntimeException("Could not setup SQS queue: " + queue, e);
@@ -71,7 +71,7 @@ public class SQSManager {
 
         for (int i = 0; i < REDELIVERY_LIMIT; i++) {
             try {
-                MessageQueue msgQueue = connectToQueue(queue);
+                MessageQueue msgQueue = connectToQueue(queue, -1);
                 String msgId = msgQueue.sendMessage(encodedMessage);
 
                 log.debug("Sent message with id " + msgId + " to queue " + queue);
@@ -82,9 +82,9 @@ public class SQSManager {
                 if (i == REDELIVERY_LIMIT) {
                     throw new SQSRuntimeException("Exceeded redelivery value: " + REDELIVERY_LIMIT + "; message not sent! ", e);
                 }
-                log.info("Retrying in 10 seconds");
+                log.info("Retrying in 1 second");
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e1) {
                     // Ignore
                 }
@@ -104,7 +104,7 @@ public class SQSManager {
 
             log.debug("Polling queue " + queue);
 
-            MessageQueue msgQueue = connectToQueue(queue);
+            MessageQueue msgQueue = connectToQueue(queue, -1);
 
             Message msg = msgQueue.receiveMessage();
 
@@ -144,7 +144,7 @@ public class SQSManager {
      */
     public static void deleteMessage(String queue, String receiptHandle) {
         try {
-            MessageQueue msgQueue = connectToQueue(queue);
+            MessageQueue msgQueue = connectToQueue(queue, -1);
             msgQueue.deleteMessage(receiptHandle);
             log.debug("Deleted message in queue: " + queue);
         } catch (SQSException e) {
@@ -162,7 +162,7 @@ public class SQSManager {
      */
     public static void setMessageVisibilityTimeout(String queue, String receiptHandle, int timeOut) {
         try {
-            MessageQueue msgQueue = connectToQueue(queue);
+            MessageQueue msgQueue = connectToQueue(queue, -1);
             msgQueue.setMessageVisibilityTimeout(receiptHandle, timeOut);
             log.debug("Set timeout to " + timeOut + " seconds in queue: " + queue);
         } catch (SQSException e) {
@@ -170,8 +170,22 @@ public class SQSManager {
         }
     }
 
-    private static MessageQueue connectToQueue(String queue) throws SQSException {
-        return SQSUtils.connectToQueue(SQS_SERVER, queue, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+    private static MessageQueue connectToQueue(String queue, int visibilityTimeout) throws SQSException {
+        return connectToQueue(SQS_SERVER, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, queue, visibilityTimeout);
+    }
+
+    public static MessageQueue connectToQueue(String serverName, String accessKeyId, String secretAccessKey,
+                                              String queue, int visibilityTimeout) throws SQSException {
+        QueueService queueService = SQSUtils.getQueueService(accessKeyId, secretAccessKey, serverName);
+
+        String queueUrl = queueUrlCache.get(queue);
+        if (queueUrl == null) {
+            MessageQueue messageQueue = queueService.getOrCreateMessageQueue(queue, visibilityTimeout);
+            queueUrlCache.put(queue, messageQueue.getUrl().toString());
+            return messageQueue;
+        } else {
+            return queueService.getMessageQueue(queueUrl);
+        }
     }
 
 }
