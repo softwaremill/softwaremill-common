@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-common-parent</artifactId>
-    <version>43-SNAPSHOT</version>
+    <version>43</version>
     <name>Softwaremill Common Parent</name>
     <packaging>pom</packaging>
 
@@ -321,6 +320,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -329,12 +329,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.3</version>
                 <configuration>
                     <ejbVersion>3.0</ejbVersion>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
