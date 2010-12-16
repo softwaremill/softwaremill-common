@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-db-test</artifactId>
-    <version>8</version>
+    <version>43-SNAPSHOT</version>
     <name>Softwaremill DB Test</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>7</version>
+        <version>43-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -17,10 +17,12 @@
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
+            <version>${version}</version>
         </dependency>
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-cdi</artifactId>
+            <version>${version}</version>
         </dependency>
         
         <!-- JEE and Hibernate -->

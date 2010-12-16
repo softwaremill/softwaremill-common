@@ -6,14 +6,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pl.softwaremill.common</groupId>
 	<artifactId>softwaremill-backup</artifactId>
-	<version>1</version>
+	<version>43-SNAPSHOT</version>
 	<name>Softwaremill backup utilities</name>
 
 	<parent>
-		<groupId>pl.softwaremill.common</groupId>
-		<artifactId>softwaremill-common-parent</artifactId>
-		<version>6</version>
-	</parent>
+        <groupId>pl.softwaremill.common</groupId>
+        <artifactId>softwaremill-common-parent</artifactId>
+        <version>43-SNAPSHOT</version>
+    </parent>
 
 	<dependencies>
 		<!-- AWS -->
@@ -47,10 +47,12 @@
 			<groupId>pl.softwaremill.common</groupId>
 			<artifactId>softwaremill-conf</artifactId>
             <scope>test</scope>
+            <version>${version}</version>
 		</dependency>
         <dependency>
 			<groupId>pl.softwaremill.common</groupId>
 			<artifactId>softwaremill-util</artifactId>
+            <version>${version}</version>
 		</dependency>
         <dependency>
             <groupId>joda-time</groupId>

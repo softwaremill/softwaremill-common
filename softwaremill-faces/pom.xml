@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-faces</artifactId>
-    <version>9</version>
+    <version>43-SNAPSHOT</version>
     <name>Softwaremill JSF Extensions</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>6</version>
+        <version>43-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -18,10 +18,12 @@
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
+            <version>${version}</version>
         </dependency>
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-cdi</artifactId>
+            <version>${version}</version>
         </dependency>
         
         <!-- CDI (JSR-299) -->

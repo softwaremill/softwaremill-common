@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-testing</artifactId>
-    <version>5</version>
+    <version>43-SNAPSHOT</version>
     <name>Softwaremill Testing</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>6</version>
+        <version>43-SNAPSHOT</version>
     </parent>
 
     <dependencies>
