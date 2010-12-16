@@ -370,9 +370,10 @@
         </extensions>
     </build>
 
-    <scm>
-        <developerConnection>scm:git:https://github.com/szimano/softwaremill-common</developerConnection>
-    </scm>
+    <!--Fix this to have mvn release working-->
+    <!--<scm>-->
+        <!--<developerConnection>//TOFIX</developerConnection>-->
+    <!--</scm>-->
 
 	<reporting>
         <plugins>
