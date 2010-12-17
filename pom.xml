@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-common-parent</artifactId>
@@ -9,16 +9,14 @@
 
     <modules>
         <module>softwaremill-util</module>
-        <module>softwaremill-testing</module>
-        <module>softwaremill-ui-test</module>
-        <module>softwaremill-db-test</module>
         <module>softwaremill-conf</module>
         <module>softwaremill-sqs</module>
         <module>softwaremill-backup</module>
         <module>softwaremill-cdi</module>
         <module>softwaremill-faces</module>
         <module>softwaremill-parent</module>
-    </modules>
+        <module>softwaremill-test</module>
+  </modules>
 
 	<properties>
 		<softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
@@ -96,6 +94,18 @@
                 <groupId>org.easytesting</groupId>
                 <artifactId>fest-assert</artifactId>
                 <version>1.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.easytesting</groupId>
+                <artifactId>fest-swing-testng</artifactId>
+                <version>1.2.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.testng</groupId>
+                        <artifactId>testng</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- Logging -->

@@ -13,6 +13,10 @@
         <version>43-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <softwaremill.common.version>43-SNAPSHOT</softwaremill.common.version>
+    </properties>
+
     <distributionManagement>
         <repository>
             <id>softwaremill-public-releases</id>
@@ -32,47 +36,52 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-conf</artifactId>
-                <version>${version}</version>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-util</artifactId>
-                <version>${version}</version>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-sqs</artifactId>
-                <version>${version}</version>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
-                <artifactId>softwaremill-testing</artifactId>
-                <version>${version}</version>
+                <artifactId>softwaremill-test-util</artifactId>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
-                <artifactId>softwaremill-db-test</artifactId>
-                <version>${version}</version>
+                <artifactId>softwaremill-test-db</artifactId>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
-                <artifactId>softwaremill-ui-test</artifactId>
-                <version>${version}</version>
+                <artifactId>softwaremill-test-ui-swing</artifactId>
+                <version>${softwaremill.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-test-ui-web</artifactId>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-cdi</artifactId>
-                <version>${version}</version>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-faces</artifactId>
-                <version>${version}</version>
+                <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-backup</artifactId>
-                <version>${version}</version>
+                <version>${softwaremill.common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

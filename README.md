@@ -11,6 +11,16 @@ Jars and sources are available in our Maven repository:
         <url>http://tools.softwaremill.pl/nexus/content/repositories/releases</url>
     </repository>
 
+To use SoftwareMill Common in a project define a parent section in the main pom of the project:
+
+    <parent>
+        <groupId>pl.softwaremill.common</groupId>
+        <artifactId>softwaremill-parent</artifactId>
+        <version>**<VERSION>**</version>
+    </parent>
+
+where **<VERSION>** is the version you want to use in your project.
+
 # Modules overview
 
 ## [CDI extensions](/softwaremill/softwaremill-common/tree/master/softwaremill-cdi/)

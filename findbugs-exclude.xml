@@ -4,13 +4,13 @@
     <!-- Bug codes and descriptions: http://findbugs.sourceforge.net/bugDescriptions.html-->
 
 	<Match>
-       	<Class name="pl.softwaremill.common.uitest.selenium.AbstractSeleniumTest" />
+       	<Class name="pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest" />
 		<Mehtod name="setupBrowser"/>
        	<Bug code="ST"/>
     </Match>
 
 	<Match>
-       	<Class name="pl.softwaremill.common.uitest.selenium.AbstractSeleniumTest" />
+       	<Class name="pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest" />
 		<Field name="selenium"/>
        	<Bug code="MS"/>
     </Match>
