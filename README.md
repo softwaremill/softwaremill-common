@@ -16,10 +16,10 @@ To use SoftwareMill Common in a project define a parent section in the main pom 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-parent</artifactId>
-        <version>**<VERSION>**</version>
+        <version>[VERSION]</version>
     </parent>
 
-where **<VERSION>** is the version you want to use in your project.
+where [VERSION] is the version you want to use in your project.
 
 # Modules overview
 
