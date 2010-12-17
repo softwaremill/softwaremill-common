@@ -242,9 +242,11 @@
             <dependency>
                 <groupId>com.google.code.typica</groupId>
                 <artifactId>typica</artifactId>
+                <!-- source available https://github.com/softwaremill/typica-softwaremill -->
                 <!-- TODO: change after the patch is incorporated: http://groups.google.com/group/typica/browse_thread/thread/21b465f1b729f741 -->
                 <!-- TODO: and this patch: http://groups.google.com/group/typica/browse_thread/thread/79ab8dc805280ffc -->
-                <version>1.7-softwaremill-2</version>
+                <!-- TODO: changed AWSQuery* to close the connection -->
+                <version>1.7-softwaremill-3</version>
             </dependency>
 
             <!-- Apache commons -->
