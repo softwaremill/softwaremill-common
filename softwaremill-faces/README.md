@@ -119,14 +119,7 @@ If the expression returns false user will get 403 Forbidden.
 
 ## Cross-field validation
 
-There is `multiValidator` component in `http://pl.softwaremill.common.faces/components` namespace. It validates values of all enclosed `UIInput` components. If validator is added to `multiValidator` component, value that goes to validator is `List<Object>` of all values of enclosed `UIInput` components.
-
-To use it, just add namespace `http://pl.softwaremill.common.faces/components` to your page:
-
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:v="http://pl.softwaremill.common.faces/components">
-
-Then enclose fields you want to cross-validate in `multiValidator` component. E.g. to validate two checkboxes, when at least one has to be checked, regardless which one.
+Enclose `UIInput` components for cross-field validation in `multiValidator` tag. Attach validator to this tag.
 
     <html xmlns="http://www.w3.org/1999/xhtml"
           xmlns:h="http://java.sun.com/jsf/html"
@@ -138,9 +131,10 @@ Then enclose fields you want to cross-validate in `multiValidator` component. E.
       </v:multiValidator>
       <h:message for="atLeastOne" />
 
-Validation method:
+Value that goes to validator is `List` of submitted values of every `UIInput` component enclosed in `multiValidator`.
     
     public void validateAtLeastOne(FacesContext context, UIComponent component, Object value) {
+        //value is List of two Booleans
         List<Object> values = (List<Object>) value;
         boolean one = (Boolean) values.get(0);
         boolean two = (Boolean) values.get(1);
