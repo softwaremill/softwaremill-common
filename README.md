@@ -38,12 +38,6 @@ where [VERSION] is the version you want to use in your project.
 * Navigation handlers
 * i18n, messaging, validation utilities
 
-## [Selenium+JBoss UI testing utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-ui-test/)
-
-## [Test-with-DB framework using Arquillian](/softwaremill/softwaremill-common/tree/master/softwaremill-db-test/)
-
-Lets you run tests that use a database.
-
 ## [Configuration reader](/softwaremill/softwaremill-common/tree/master/softwaremill-conf/)
 
 Reads key-value configuration files either from JBoss's conf directory (which have priority) or from the classpath. 
@@ -54,7 +48,13 @@ Reads key-value configuration files either from JBoss's conf directory (which ha
 
 Our BOM.
 
-## [Testing utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-testing/)
+## [Testing utilities]
+
+### [Test-with-DB framework using Arquillian](/softwaremill/softwaremill-common/tree/master/softwaremill-test/siftwaremill-test-db)
+
+Lets you run tests that use a database.
+
+### [Selenium+JBoss UI testing utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-test/softwaremill-test-ui-web/)
 
 ## [Java utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-util/)
 
