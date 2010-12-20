@@ -4,8 +4,8 @@ Maven dependency:
 
     <dependency>
         <groupId>pl.softwaremill.common</groupId>
-        <artifactId>softwaremill-db-test</artifactId>
-        <version>7</version>
+        <artifactId>softwaremill-test-db</artifactId>
+        <version>[VERSION]</version>
     </dependency>
 
 Lets you run tests that use a database. Great for:
@@ -21,4 +21,4 @@ method.
 Moreover, before each test an sql is executed, which can be used to populate the DB with test data. The name of the
 sql file is the same as of the test class.
 
-See an example test: [TestOfDBTest](/softwaremill/softwaremill-common/tree/master/softwaremill-db-test/src/test/java/pl/softwaremill/common/dbtest/).
+See an example test: [TestOfDBTest](/softwaremill/softwaremill-common/tree/master/softwaremill-test/softwaremill-test-db/src/test/java/pl/softwaremill/common/dbtest/).
