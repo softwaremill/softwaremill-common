@@ -16,17 +16,17 @@
         <module>softwaremill-faces</module>
         <module>softwaremill-parent</module>
         <module>softwaremill-test</module>
-  </modules>
+    </modules>
 
-	<properties>
-		<softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
+    <properties>
+        <softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>3.6.0.Final</hibernate.version>
         <arquillian.version>1.0.0.Alpha3</arquillian.version>
-		<findbugs.version>2.3.1</findbugs.version>
+        <findbugs.version>2.3.1</findbugs.version>
         <weld.version>1.1.0.Beta2</weld.version>
         <seam.version>3.0.0-SNAPSHOT</seam.version>
-	</properties>
+    </properties>
 
     <dependencies>
         <!-- Logging -->
@@ -313,7 +313,7 @@
                 <version>1.6</version>
                 <scope>test</scope>
             </dependency>
-		</dependencies>
+        </dependencies>
     </dependencyManagement>
 
     <distributionManagement>
@@ -359,7 +359,7 @@
                     </execution>
                 </executions>
             </plugin>
-			 <plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>${findbugs.version}</version>
@@ -384,10 +384,10 @@
 
     <!--Fix this to have mvn release working-->
     <!--<scm>-->
-        <!--<developerConnection>//TOFIX</developerConnection>-->
+    <!--<developerConnection>//TOFIX</developerConnection>-->
     <!--</scm>-->
 
-	<reporting>
+    <reporting>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -415,7 +415,7 @@
     <pluginRepositories>
     </pluginRepositories>
 
-	 <profiles>
+    <profiles>
         <profile>
             <id>integrationTests</id>
             <activation>
@@ -425,5 +425,5 @@
                 <softwaremill.common.skipIntegrationTests>false</softwaremill.common.skipIntegrationTests>
             </properties>
         </profile>
-	</profiles>
+    </profiles>
 </project>

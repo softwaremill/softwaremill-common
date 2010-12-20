@@ -17,19 +17,6 @@
         <softwaremill.common.version>43-SNAPSHOT</softwaremill.common.version>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>softwaremill-public-releases</id>
-            <name>SoftwareMill Public Releases</name>
-            <url>http://tools.softwaremill.pl/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>softwaremill-public-snapshots</id>
-            <name>SoftwareMill Public Snapshots</name>
-            <url>http://tools.softwaremill.pl/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <dependencyManagement>
         <dependencies>
             <!-- SML common -->
