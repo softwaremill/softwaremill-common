@@ -145,4 +145,4 @@ Value that goes to validator is `List` of submitted values of every `UIInput` co
         }
     }
 
-If none checkbox is checked, message appears in `<h:message for="atLeastOne" />`
+If validation doesn't pass, message appears in `<h:message for="atLeastOne" />`
