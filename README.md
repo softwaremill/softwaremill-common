@@ -48,9 +48,9 @@ Reads key-value configuration files either from JBoss's conf directory (which ha
 
 Our BOM.
 
-## [Testing utilities]
+## Testing utilities
 
-### [Test-with-DB framework using Arquillian](/softwaremill/softwaremill-common/tree/master/softwaremill-test/siftwaremill-test-db)
+### [Test-with-DB framework using Arquillian](/softwaremill/softwaremill-common/tree/master/softwaremill-test/softwaremill-test-db)
 
 Lets you run tests that use a database.
 
