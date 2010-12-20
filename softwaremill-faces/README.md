@@ -116,3 +116,39 @@ You must define a login page. This works in conjuction with restricting pages to
 
 If you want to add extra security on the page, set the security EL using the page builder. It has to resolve to Boolean.class.
 If the expression returns false user will get 403 Forbidden.
+
+## Cross-field validation
+
+There is `multiValidator` component in `http://pl.softwaremill.common.faces/components` namespace. It validates values of all enclosed `UIInput` components. If validator is added to `multiValidator` component, value that goes to validator is `List<Object>` of all values of enclosed `UIInput` components.
+
+To use it, just add namespace `http://pl.softwaremill.common.faces/components` to your page:
+
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:v="http://pl.softwaremill.common.faces/components">
+
+Then enclose fields you want to cross-validate in `multiValidator` component. E.g. to validate two checkboxes, when at least one has to be checked, regardless which one.
+
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:v="http://pl.softwaremill.common.faces/components">
+
+      <v:multiValidator id="atLeastOne" validator="#{bean.validateAtLeastOne}">
+        <h:selectBooleanCheckbox value="#{debtorBean.check1}"/>
+        <h:selectBooleanCheckbox value="#{debtorBean.check2}"/>
+      </v:multiValidator>
+      <h:message for="atLeastOne" />
+
+Validation method:
+    
+    public void validateAtLeastOne(FacesContext context, UIComponent component, Object value) {
+        List<Object> values = (List<Object>) value;
+        boolean one = (Boolean) values.get(0);
+        boolean two = (Boolean) values.get(0);
+
+        if (! (one || two)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "At least one has to be checked", null);
+            throw new ValidatorException(msg);
+        }
+    }
+
+If none checkbox is checked, message appears in `<h:message for="atLeastOne" />`
