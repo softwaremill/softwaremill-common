@@ -143,7 +143,7 @@ Validation method:
     public void validateAtLeastOne(FacesContext context, UIComponent component, Object value) {
         List<Object> values = (List<Object>) value;
         boolean one = (Boolean) values.get(0);
-        boolean two = (Boolean) values.get(0);
+        boolean two = (Boolean) values.get(1);
 
         if (! (one || two)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "At least one has to be checked", null);
