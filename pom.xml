@@ -384,7 +384,7 @@
 
     <scm>
       <!--<connection>scm:git:file://localhost/path_to_repository</connection>-->
-      <developerConnection>scm:git:file://localhost/home/amorfis/home/amorfis/workspace/idea/softwaremill-common</developerConnection>
+      <developerConnection>scm:git:git://git@github.com/softwaremill/softwaremill-common.git</developerConnection>
       <tag>HEAD</tag>
     </scm>
 
