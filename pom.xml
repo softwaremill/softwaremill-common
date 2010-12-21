@@ -382,10 +382,11 @@
         </extensions>
     </build>
 
-    <!--Fix this to have mvn release working-->
-    <!--<scm>-->
-    <!--<developerConnection>//TOFIX</developerConnection>-->
-    <!--</scm>-->
+    <scm>
+      <!--<connection>scm:git:file://localhost/path_to_repository</connection>-->
+      <developerConnection>scm:git:file://localhost/home/amorfis/home/amorfis/workspace/idea/softwaremill-common</developerConnection>
+      <tag>HEAD</tag>
+    </scm>
 
     <reporting>
         <plugins>
