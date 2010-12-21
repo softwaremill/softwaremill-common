@@ -10,7 +10,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -33,8 +32,11 @@ public class SecurityPhaseListener implements PhaseListener {
 
     private final static String PREVIOUS_VIEW = "previous:viewId:redirect";
 
-    @Inject
     private NavBase nav;
+
+    public SecurityPhaseListener() {
+        this.nav = BeanInject.lookup(NavBase.class);
+    }
 
     public void beforePhase(PhaseEvent event) {
         FacesContext ctx = event.getFacesContext();
