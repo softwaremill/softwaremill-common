@@ -24,5 +24,10 @@
 		<Method name="getEmails"/>
        	<Bug code="EI"/>
     </Match>
+    <Match>
+       	<Class name="pl.softwaremill.common.sqs.SQSEmptor" />
+		<Method name="main"/>
+       	<Bug code="NP"/>
+    </Match>
 
 </FindBugsFilter>
