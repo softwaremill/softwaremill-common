@@ -366,6 +366,7 @@
                 <configuration>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <findbugsXmlOutputDirectory>target/findbugs</findbugsXmlOutputDirectory>
+					<failOnError>true</failOnError>
                     <!-- Default is 512 but that is too much to reserve on TC agent -->
                     <maxHeap>256</maxHeap>
                     <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
