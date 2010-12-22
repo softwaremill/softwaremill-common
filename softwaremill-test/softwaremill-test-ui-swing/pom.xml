@@ -4,12 +4,12 @@
     <parent>
         <artifactId>softwaremill-test</artifactId>
         <groupId>pl.softwaremill.common</groupId>
-        <version>43</version>
+        <version>44-SNAPSHOT</version>
     </parent>
 
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-test-ui-swing</artifactId>
-    <version>43</version>
+    <version>44-SNAPSHOT</version>
     <name>Softwaremill Swing UI Test</name>
 
     <properties>
