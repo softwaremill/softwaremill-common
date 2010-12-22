@@ -54,7 +54,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
         return builder.matches();
     }
 
-    private class ConstraintsMatcher {
+    private static class ConstraintsMatcher {
 
         private String password;
         private ConstraintValidatorContext context;
