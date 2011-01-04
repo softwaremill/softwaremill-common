@@ -1,16 +1,13 @@
 package pl.softwaremill.common.cdi.autofactory.extension;
 
 import org.jboss.weld.literal.DefaultLiteral;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
 
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
-import javax.enterprise.inject.spi.InjectionTarget;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -22,24 +19,15 @@ import java.util.Set;
 public class AutoFactoryBean<T> implements Bean<T> {
     private final BeanManager beanManager;
     private final Class<?> factoryClass;
-    private final ParameterValue[] createdTypeConstructorParameterValues;
-    private final Constructor<?> createdTypeConstructor;
-    private final InjectionTarget<?> createdTypeInjectionTarget;
-    private final boolean constructorInjection;
+    private final CreatedTypeData createdTypeData;
 
     private final Class<?>[] factoryClassInArray;
 
     public AutoFactoryBean(BeanManager beanManager, Class<?> factoryClass,
-                           ParameterValue[] createdTypeConstructorParameterValues,
-                           Constructor<T> createdTypeConstructor,
-                           InjectionTarget<T> createdTypeInjectionTarget,
-                           boolean constructorInjection) {
+                           CreatedTypeData<T> createdTypeData) {
         this.beanManager = beanManager;
         this.factoryClass = factoryClass;
-        this.createdTypeConstructorParameterValues = createdTypeConstructorParameterValues;
-        this.createdTypeConstructor = createdTypeConstructor;
-        this.createdTypeInjectionTarget = createdTypeInjectionTarget;
-        this.constructorInjection = constructorInjection;
+        this.createdTypeData = createdTypeData;
 
         this.factoryClassInArray = new Class<?>[] { this.factoryClass };
     }
@@ -54,9 +42,7 @@ public class AutoFactoryBean<T> implements Bean<T> {
     public T create(CreationalContext<T> creationalContext) {
         return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                 factoryClassInArray,
-                new FactoryInvocationHandler(beanManager, createdTypeConstructor,
-                        createdTypeConstructorParameterValues, createdTypeInjectionTarget, creationalContext,
-                        constructorInjection));
+                new FactoryInvocationHandler(beanManager, createdTypeData, creationalContext));
     }
 
     @Override

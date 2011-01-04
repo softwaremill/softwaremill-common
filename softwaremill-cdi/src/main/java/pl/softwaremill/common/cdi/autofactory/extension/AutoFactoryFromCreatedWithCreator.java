@@ -39,9 +39,10 @@ public class AutoFactoryFromCreatedWithCreator<T> {
                 methodParameterIndexer, constructorInjection);
         ParameterValue[] createdTypeConstructorParameterValues = converter.convert();
 
-        return new AutoFactoryBean<T>(beanManager, factoryClass, createdTypeConstructorParameterValues,
+        return new AutoFactoryBean<T>(beanManager, factoryClass,
+                new CreatedTypeData<T>(createdTypeConstructorParameterValues,
                 soleCreatedTypeConstructor.getJavaMember(), beanManager.createInjectionTarget(createdType),
-                constructorInjection);
+                constructorInjection));
     }
 
     private void checkFactoryClassIsAnInterface() {
