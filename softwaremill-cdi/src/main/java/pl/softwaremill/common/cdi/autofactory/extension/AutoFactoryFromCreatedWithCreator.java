@@ -32,12 +32,16 @@ public class AutoFactoryFromCreatedWithCreator<T> {
         Method soleFactoryMethod = getSoleFactoryMethod();
         AnnotatedConstructor<T> soleCreatedTypeConstructor = getSoleConstructorOfCreatedType();
 
+        boolean constructorInjection = isConstructorInjection(soleCreatedTypeConstructor);
+
         MethodParameterIndexer methodParameterIndexer = new MethodParameterIndexer(soleFactoryMethod);
-        ConstructorToParameterValuesConverter converter = getConverter(soleCreatedTypeConstructor, methodParameterIndexer);
+        ConstructorToParameterValuesConverter converter = getConverter(soleCreatedTypeConstructor,
+                methodParameterIndexer, constructorInjection);
         ParameterValue[] createdTypeConstructorParameterValues = converter.convert();
 
         return new AutoFactoryBean<T>(beanManager, factoryClass, createdTypeConstructorParameterValues,
-                soleCreatedTypeConstructor.getJavaMember(), beanManager.createInjectionTarget(createdType));
+                soleCreatedTypeConstructor.getJavaMember(), beanManager.createInjectionTarget(createdType),
+                constructorInjection);
     }
 
     private void checkFactoryClassIsAnInterface() {
@@ -67,8 +71,9 @@ public class AutoFactoryFromCreatedWithCreator<T> {
     }
 
     private ConstructorToParameterValuesConverter getConverter(AnnotatedConstructor<?> soleCreatedTypeConstructor,
-                                                               MethodParameterIndexer methodParameterIndexer) {
-        if (soleCreatedTypeConstructor.getAnnotation(Inject.class) != null) {
+                                                               MethodParameterIndexer methodParameterIndexer,
+                                                               boolean constructorInjection) {
+        if (constructorInjection) {
             return new MixedConstructorConverter(new QualifierAnnotationsFilter(beanManager),
                     soleCreatedTypeConstructor, methodParameterIndexer);
         } else {
@@ -76,5 +81,9 @@ public class AutoFactoryFromCreatedWithCreator<T> {
             // are taken from the factory method.
             return new FactoryParameterOnlyConstructorConverter(soleCreatedTypeConstructor, methodParameterIndexer);
         }
+    }
+
+    private boolean isConstructorInjection(AnnotatedConstructor<T> soleCreatedTypeConstructor) {
+        return soleCreatedTypeConstructor.getAnnotation(Inject.class) != null;
     }
 }

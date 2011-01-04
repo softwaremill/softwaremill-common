@@ -25,18 +25,21 @@ public class AutoFactoryBean<T> implements Bean<T> {
     private final ParameterValue[] createdTypeConstructorParameterValues;
     private final Constructor<?> createdTypeConstructor;
     private final InjectionTarget<?> createdTypeInjectionTarget;
+    private final boolean constructorInjection;
 
     private final Class<?>[] factoryClassInArray;
 
     public AutoFactoryBean(BeanManager beanManager, Class<?> factoryClass,
                            ParameterValue[] createdTypeConstructorParameterValues,
                            Constructor<T> createdTypeConstructor,
-                           InjectionTarget<T> createdTypeInjectionTarget) {
+                           InjectionTarget<T> createdTypeInjectionTarget,
+                           boolean constructorInjection) {
         this.beanManager = beanManager;
         this.factoryClass = factoryClass;
         this.createdTypeConstructorParameterValues = createdTypeConstructorParameterValues;
         this.createdTypeConstructor = createdTypeConstructor;
         this.createdTypeInjectionTarget = createdTypeInjectionTarget;
+        this.constructorInjection = constructorInjection;
 
         this.factoryClassInArray = new Class<?>[] { this.factoryClass };
     }
@@ -52,7 +55,8 @@ public class AutoFactoryBean<T> implements Bean<T> {
         return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                 factoryClassInArray,
                 new FactoryInvocationHandler(beanManager, createdTypeConstructor,
-                        createdTypeConstructorParameterValues, createdTypeInjectionTarget, creationalContext));
+                        createdTypeConstructorParameterValues, createdTypeInjectionTarget, creationalContext,
+                        constructorInjection));
     }
 
     @Override
