@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 @Interceptor
 @InterceptSecure({})
-public class SecurityInterceptor {
+public class SecurityInterceptor implements Serializable {
     @Inject
     private SecurityExtension se;
 

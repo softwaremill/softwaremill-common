@@ -7,13 +7,14 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import java.io.Serializable;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
 @Interceptor
 @SecureResult("")
-public class SecurityResultInterceptor {
+public class SecurityResultInterceptor implements Serializable {
     @Inject
     private ELEvaluator elEvaluator;
 

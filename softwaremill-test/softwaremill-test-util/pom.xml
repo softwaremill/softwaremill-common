@@ -2,13 +2,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-test-util</artifactId>
-    <version>44</version>
+    <version>45-SNAPSHOT</version>
     <name>Softwaremill Test Utils</name>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-test</artifactId>
-        <version>44</version>
+        <version>45-SNAPSHOT</version>
     </parent>
 
     <build>

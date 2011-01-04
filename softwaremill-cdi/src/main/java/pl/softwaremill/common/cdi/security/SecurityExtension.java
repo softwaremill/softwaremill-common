@@ -1,12 +1,13 @@
 package pl.softwaremill.common.cdi.security;
 
-import org.jboss.weld.extensions.reflection.annotated.AnnotatedTypeBuilder;
+import org.jboss.seam.solder.reflection.annotated.AnnotatedTypeBuilder;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.AnnotationLiteral;
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.Map;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class SecurityExtension implements Extension {
+public class SecurityExtension implements Extension, Serializable {
     private final Map<Method, InterceptSecure> interceptSecureForMethods = new HashMap<Method, InterceptSecure>();
 
     public InterceptSecure getInterceptSecure(Method m) {

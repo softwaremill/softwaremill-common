@@ -2,18 +2,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-parent</artifactId>
-    <version>44</version>
+    <version>45-SNAPSHOT</version>
     <name>Softwaremill Parent</name>
     <packaging>pom</packaging>
 
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>44</version>
+        <version>45-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <softwaremill.common.version>44</softwaremill.common.version>
+        <softwaremill.common.version>45-SNAPSHOT</softwaremill.common.version>
     </properties>
 
     <dependencyManagement>

@@ -27,7 +27,8 @@ public class TemporaryContextELEvaluator extends AbstractELEvaluator {
         } catch (RuntimeException e) {
             tempExpressionFactory = ClassUtil.newInstance("com.sun.el.ExpressionFactoryImpl", ExpressionFactory.class);
         }
-        expressionFactory = tempExpressionFactory;
+
+        expressionFactory = beanManager.wrapExpressionFactory(tempExpressionFactory);
 
         elContext = createELContext(beanManager);
     }

@@ -1,6 +1,7 @@
 package pl.softwaremill.common.cdi.security;
 
 import javax.enterprise.inject.Model;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -10,7 +11,7 @@ import java.util.concurrent.Callable;
  * @author Adam Warski (adam at warski dot org)
  */
 @Model
-public class SecurityFlags {
+public class SecurityFlags implements Serializable{
     private Set<String> flags = new HashSet<String>();
 
     public boolean hasFlag(String name) {

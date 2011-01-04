@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-common-parent</artifactId>
-    <version>44</version>
+    <version>45-SNAPSHOT</version>
     <name>Softwaremill Common Parent</name>
     <packaging>pom</packaging>
 
@@ -24,8 +25,8 @@
         <hibernate.version>3.6.0.Final</hibernate.version>
         <arquillian.version>1.0.0.Alpha3</arquillian.version>
         <findbugs.version>2.3.1</findbugs.version>
-        <weld.version>1.1.0.Beta2</weld.version>
-        <seam.version>3.0.0-SNAPSHOT</seam.version>
+        <weld.version>1.1.0.CR3</weld.version>
+        <seam.version>3.0.0.Beta2</seam.version>
     </properties>
 
     <dependencies>
@@ -137,7 +138,7 @@
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee6-specs-bom</artifactId>
-                <version>1.0.0.CR1</version>
+                <version>1.0.0.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -163,7 +164,7 @@
             <dependency>
                 <groupId>org.jboss.mx</groupId>
                 <artifactId>jboss-jmx</artifactId>
-                <version>6.0.0.Beta5</version>
+                <version>6.0.0.GA</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.logging</groupId>
@@ -207,9 +208,9 @@
                 <version>${weld.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-extensions</artifactId>
-                <version>1.0.0.Beta1</version>
+                <groupId>org.jboss.seam.solder</groupId>
+                <artifactId>seam-solder</artifactId>
+                <version>3.0.0.Beta1</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
@@ -225,7 +226,7 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.seam.remoting</groupId>
-                <artifactId>seam-remoting-core</artifactId>
+                <artifactId>seam-remoting</artifactId>
                 <version>${seam.version}</version>
             </dependency>
 
@@ -233,12 +234,12 @@
             <dependency>
                 <groupId>javax.faces</groupId>
                 <artifactId>jsf-api</artifactId>
-                <version>2.0.2-FCS</version>
+                <version>2.0.3-b05</version>
             </dependency>
             <dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-bom</artifactId>
-                <version>4.0.0.20101004-M3</version>
+                <version>4.0.0.20101110-M4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -366,16 +367,16 @@
                 <configuration>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <findbugsXmlOutputDirectory>target/findbugs</findbugsXmlOutputDirectory>
-					<failOnError>true</failOnError>
+                    <failOnError>true</failOnError>
                     <!-- Default is 512 but that is too much to reserve on TC agent -->
                     <maxHeap>256</maxHeap>
                     <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
             <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-release-plugin</artifactId>
-              <version>2.0-beta-9</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.0-beta-9</version>
             </plugin>
         </plugins>
 
@@ -389,8 +390,8 @@
     </build>
 
     <scm>
-      <developerConnection>scm:git:git@github.com:softwaremill/softwaremill-common.git</developerConnection>
-      <tag>HEAD</tag>
+        <developerConnection>scm:git:git@github.com:softwaremill/softwaremill-common.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <reporting>
