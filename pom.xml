@@ -23,7 +23,7 @@
         <softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>3.6.0.Final</hibernate.version>
-        <arquillian.version>1.0.0.Alpha3</arquillian.version>
+        <arquillian.version>1.0.0.Alpha4</arquillian.version>
         <findbugs.version>2.3.1</findbugs.version>
         <weld.version>1.1.0.CR3</weld.version>
         <seam.version>3.0.0.Beta2</seam.version>
