@@ -187,7 +187,7 @@ public class ObjectServiceExtension implements Extension {
      * @return An instance of a bean implementing the given service type.
      */
     private Object beanFromSpec(ObjectServiceSpecification spec) {
-        Set<Bean<?>> bestServiceBeans = beanManager.getBeans(spec.getServiceType(), new NewLiteral());
+        Set<Bean<?>> bestServiceBeans = beanManager.getBeans(spec.getServiceType());
         if (bestServiceBeans.size() == 0) {
             throw new RuntimeException("No bean found for specification: " + spec);
         }
