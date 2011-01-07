@@ -3,12 +3,10 @@ package pl.softwaremill.common.cdi.objectservice.extension;
 import pl.softwaremill.common.cdi.objectservice.OS;
 import pl.softwaremill.common.cdi.objectservice.OSP;
 
-import java.io.Serializable;
-
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class OSPImpl implements OSP, Serializable {
+public class OSPImpl implements OSP {
     private final ObjectServiceExtension extension;
     private final Class<?> serviceClass;
 
