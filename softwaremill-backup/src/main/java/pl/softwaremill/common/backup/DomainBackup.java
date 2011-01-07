@@ -38,7 +38,7 @@ public class DomainBackup {
     }
 
     private SDBListResult<Item> selectNextDataPortion(String nextToken) throws SDBException {
-        return domain.selectItems("select * from " + domain.getName(), nextToken, false);
+        return domain.selectItems("select * from `" + domain.getName() + "`", nextToken, false);
     }
 
     private void appendItemsToWriter(List<Item> items) throws IOException {

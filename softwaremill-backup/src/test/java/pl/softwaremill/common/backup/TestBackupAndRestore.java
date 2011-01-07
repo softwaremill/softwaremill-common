@@ -23,6 +23,7 @@ import static org.joda.time.format.ISODateTimeFormat.*;
  */
 public class TestBackupAndRestore extends AbstractBackupAndRestoreTest {
     private Domain simpleDataDomain;
+    private Domain dashedDomain;
     private Map<String, Map<String, Set<String>>> simpleData;
 
     @BeforeClass
@@ -47,6 +48,11 @@ public class TestBackupAndRestore extends AbstractBackupAndRestoreTest {
 
         populateDomainWithData(simpleDataDomain, simpleData);
         makeConsistent(simpleDataDomain);
+
+        // --
+
+        dashedDomain = simpleDB.createDomain("backup-and-restore-simple").getResult();
+        dashedDomain.setCacheProvider(null);
     }
 
     @Test
@@ -63,8 +69,21 @@ public class TestBackupAndRestore extends AbstractBackupAndRestoreTest {
         assertDomainHasData(simpleDataDomain, simpleData);
     }
 
+    @Test
+    public void testBackupAndRestoreDashed() throws IOException, SDBException {
+        // Given the data in simpleDataDomain and
+        StringWriter writer = new StringWriter();
+
+        // When
+        new DomainBackup(dashedDomain, writer).backup();
+        new DomainRestore(dashedDomain, new BufferedReader(new StringReader(writer.toString()))).restore();
+
+        // Then
+    }
+
     @AfterClass(alwaysRun = true)
     public void cleanup() throws SDBException {
         simpleDB.deleteDomain(simpleDataDomain);
+        simpleDB.deleteDomain(dashedDomain);
     }
 }
