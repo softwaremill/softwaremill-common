@@ -8,6 +8,7 @@ import javax.enterprise.context.Dependent;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.InjectionPoint;
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.Set;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class ObjectServiceProviderBean implements Bean {
+public class ObjectServiceProviderBean implements Bean, Serializable {
     private final ObjectServiceExtension extension;
     private final ObjectServiceSpecification specification;
 

@@ -1,5 +1,6 @@
 package pl.softwaremill.common.cdi.objectservice.extension;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
 /**
@@ -8,7 +9,7 @@ import java.lang.reflect.Type;
  *
  * @author Adam Warski (adam at warski dot org)
  */
-public class ObjectServiceSpecification {
+public class ObjectServiceSpecification implements Serializable {
     private final Class<?> objectClass;
     private final Type serviceType;
     private final Class<?> serviceClass;
