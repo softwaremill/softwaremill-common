@@ -2,7 +2,6 @@ package pl.softwaremill.common.cdi.objectservice.extension;
 
 import org.jboss.weld.literal.DefaultLiteral;
 import org.jboss.weld.util.reflection.ParameterizedTypeImpl;
-import pl.softwaremill.common.cdi.objectservice.OS;
 import pl.softwaremill.common.cdi.objectservice.OSP;
 
 import javax.enterprise.context.Dependent;
@@ -36,15 +35,7 @@ public class ObjectServiceProviderBean implements Bean {
 
     @Override
     public Object create(CreationalContext creationalContext) {
-        return new OSP() {
-            @Override
-            public OS f(Object obj) {
-                OS objectService = (OS) extension.serviceForObject(obj.getClass(), specification.getServiceClass());
-                //noinspection unchecked
-                objectService.setServiced(obj);
-                return objectService;
-            }
-        };
+        return new OSPImpl(extension, specification.getServiceClass());
     }
 
     @Override
