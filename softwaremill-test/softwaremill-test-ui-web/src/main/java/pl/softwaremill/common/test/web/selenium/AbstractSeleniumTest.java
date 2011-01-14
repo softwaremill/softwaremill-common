@@ -4,10 +4,8 @@ import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
+import pl.softwaremill.common.test.web.selenium.screenshots.FailureTestListener;
 import pl.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
 
 import java.io.File;
@@ -17,6 +15,7 @@ import java.io.PrintStream;
 /**
  * @author maciek
  */
+@Listeners({FailureTestListener.class})
 public abstract class AbstractSeleniumTest {
 
 	private SeleniumServer server;
@@ -117,6 +116,13 @@ public abstract class AbstractSeleniumTest {
 		System.out.println("--- Stopped browser");
 	}
 
+    /**
+     * @deprecated Please use regular TestNG asserts
+     *
+     * @param var
+     * @throws Exception
+     */
+    @Deprecated
 	public static void assertTrue(boolean var) throws Exception {
 		if (!var) {
 			captureScreenshot();
@@ -125,6 +131,14 @@ public abstract class AbstractSeleniumTest {
 		Assert.assertTrue(var);
 	}
 
+    /**
+     * @deprecated Please use regular TestNG asserts
+     *
+     * @param o1
+     * @param o2
+     * @throws Exception
+     */
+    @Deprecated
 	public static void assertEquals(Object o1, Object o2) throws Exception {
 		if (!o1.equals(o2)) {
 			captureScreenshot();
@@ -133,6 +147,13 @@ public abstract class AbstractSeleniumTest {
 		Assert.assertEquals(o1, o2);
 	}
 
+    /**
+     * @deprecated Please use regular TestNG asserts
+     *
+     * @param message
+     * @throws Exception
+     */
+    @Deprecated
 	public static void fail(String message) throws Exception {
 		captureScreenshot();
 
