@@ -8,29 +8,22 @@ import java.util.Map;
  * @author Adam Warski (adam at warski dot org)
  */
 public class CurrentPage extends AbstractPage {
-    private String viewId;
 
     public CurrentPage() {
-        this(null, Collections.<String, String>emptyMap());
+        super(Collections.<String, String>emptyMap(), false);
     }
 
-    public CurrentPage(String viewId, Map<String, String> params) {
-        super(params, false);
-
-        this.viewId = viewId;
+    public CurrentPage(Map<String, String> params, boolean requiresLogin) {
+        super(params, requiresLogin);
     }
 
     @Override
     protected String computeViewId() {
-        if (viewId == null) {
-            viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        }
-
-        return viewId;
+        return FacesContext.getCurrentInstance().getViewRoot().getViewId();
     }
 
     public Page copy(Map<String, String> params, boolean requiresLogin) {
-        return new CurrentPage(viewId, params);
+        return new CurrentPage(params, requiresLogin);
     }
 
     @Override
