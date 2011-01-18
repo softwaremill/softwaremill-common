@@ -1,7 +1,7 @@
 # SoftwareMill Common project
 
 Most of the modules are usable stand-alone and do not require other modules. Simply include the jar in your
-project and you're ready to use it. See the individual module READMEs for mor information.
+project and you're ready to use it. See the individual module READMEs for more information.
 
 Jars and sources are available in our Maven repository:
 
