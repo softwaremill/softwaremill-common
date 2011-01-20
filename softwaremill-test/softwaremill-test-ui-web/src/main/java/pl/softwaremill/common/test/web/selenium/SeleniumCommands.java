@@ -1,5 +1,7 @@
 package pl.softwaremill.common.test.web.selenium;
 
+import org.testng.Assert;
+
 import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.fail;
 import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.selenium;
 
@@ -34,7 +36,7 @@ public class SeleniumCommands {
 
 	public static void waitForElement(String element, boolean isPresent) throws Exception {
 		for (int second = 0; ; second++) {
-			if (second >= 30) fail("timeout");
+			if (second >= 30) Assert.fail("timeout");
 			try {
 				if (selenium.isElementPresent(element) == isPresent) {
 					break;
@@ -50,5 +52,24 @@ public class SeleniumCommands {
 	public static void clickAndWait(String locator, String timeout) {
 		selenium.click(locator);
 		selenium.waitForPageToLoad(timeout);
+	}
+
+    public static void waitForElementVisible(String locator) throws Exception {
+        waitForElementVisible(locator, true);
+    }
+
+    public static void waitForElementVisible(String locator, boolean isVisible) throws Exception {
+		for (int second = 0; ; second++) {
+			if (second >= 30) Assert.fail("timeout");
+			try {
+				if (selenium.isVisible(locator) == isVisible) {
+					break;
+				}
+			}
+			catch (Exception e) {
+				// Empty
+			}
+			Thread.sleep(1000);
+		}
 	}
 }
