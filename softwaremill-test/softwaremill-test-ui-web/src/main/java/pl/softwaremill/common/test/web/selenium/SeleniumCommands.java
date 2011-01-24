@@ -91,14 +91,26 @@ public class SeleniumCommands {
     }
 
     public static void waitForTextPresent(String text) throws Exception {
-        waitForTextPresent(text, 30);
+        waitForText(text, TIME_OUT, true);
     }
 
     public static void waitForTextPresent(String text, int timeout) throws Exception {
+        waitForText(text, timeout, true);
+    }
+
+    public static void waitForTextNotPresent(String text) throws Exception {
+        waitForText(text, TIME_OUT, false);
+    }
+
+    public static void waitForTextNotPresent(String text, int timeout) throws Exception {
+        waitForText(text, timeout, false);
+    }
+
+    public static void waitForText(String text, int timeout, boolean isPresent) throws Exception {
         for (int second = 0; ; second++) {
-            if (second >= 30) Assert.fail("Timed out waiting for text: " + text);
+            if (second >= timeout) Assert.fail("Timed out waiting for text: " + text);
             try {
-                if (selenium.isTextPresent(text)) {
+                if (selenium.isTextPresent(text) == isPresent) {
                     break;
                 }
             }
