@@ -32,16 +32,16 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
     private static final Logger log = LoggerFactory.getLogger(SQSTaskTimerBean.class);
 
     public void startTimer(int interval){
-        startTimer(EMAIL_SQS_QUEUE, interval);
+        startTimer(TASK_SQS_QUEUE, interval);
     }
 
     public void destroyTimer(){
-        destroyTimer(EMAIL_SQS_QUEUE);
+        destroyTimer(TASK_SQS_QUEUE);
     }
 
     @Timeout
     public void timeout(Timer timer) {
-        SQSAnswer sqsAnswer = SQSManager.receiveMessage(EMAIL_SQS_QUEUE);
+        SQSAnswer sqsAnswer = SQSManager.receiveMessage(TASK_SQS_QUEUE);
 
         if (sqsAnswer != null) {
             Object message = sqsAnswer.getMessage();
@@ -52,21 +52,21 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
                 try {
                     executeTask(task);
 
-                    SQSManager.deleteMessage(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle());
+                    SQSManager.deleteMessage(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle());
                 }
                 catch (RuntimeException e) {
                     log.warn("Something went wrong and the task has not been executed. Redelivery will occur.");
-                    SQSManager.setMessageVisibilityTimeout(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle(), 10);
+                    SQSManager.setMessageVisibilityTimeout(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle(), 10);
                     throw new SQSRuntimeException(e);
                 }
             } else {
-                log.warn("Trash in SQS: " + EMAIL_SQS_QUEUE);
+                log.warn("Trash in SQS: " + TASK_SQS_QUEUE);
                 log.warn("Deserialized message: " + message + " -- removing message from queue!");
-                SQSManager.deleteMessage(EMAIL_SQS_QUEUE, sqsAnswer.getReceiptHandle());
+                SQSManager.deleteMessage(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle());
             }
         }
 
-        log.debug("SQS task queue checked " + EMAIL_SQS_QUEUE);
+        log.debug("SQS task queue checked " + TASK_SQS_QUEUE);
     }
 
     private <T extends Task<T>> void executeTask(T task) {
@@ -78,6 +78,6 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
      * @param task Task to execute.
      */
     public static void scheduleTask(Task<?> task) {
-        SQSManager.sendMessage(EMAIL_SQS_QUEUE, task);
+        SQSManager.sendMessage(TASK_SQS_QUEUE, task);
     }
 }
