@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.email;
+package pl.softwaremill.common.sqs.task;
 
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.dumbster.smtp.SmtpMessage;
@@ -9,28 +9,30 @@ import com.xerox.amazonws.sqs2.SQSUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pl.softwaremill.common.sqs.email.SendEmailTask;
+import pl.softwaremill.common.sqs.email.SendEmailTaskExecutor;
 import pl.softwaremill.common.sqs.util.EmailDescription;
+import pl.softwaremill.common.util.dependency.D;
 
 import java.util.Iterator;
+import java.util.concurrent.Callable;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.Assertions.*;
 import static pl.softwaremill.common.sqs.SQSConfiguration.*;
 
 /**
- * Tests the SQSEmailSenderBean that reads message from sqs-queue and sends an email with that message
+ * Tests the SQSTaskTimerBean that reads message from sqs-queue and sends an email with that message
  *
  * @author maciek
  */
-public class SQSEmailSenderBeanTest {
-
-
+public class SQSTaskTimerBeanTest {
     private SimpleSmtpServer emailServer;
     private int REDELIVERY_LIMIT = 10;
 
-    private class SQSEmailSenderBeanMock extends SQSEmailSenderBean {
-         // In test we just need to invoke the timer manually
-    };
-    private SQSEmailSenderBean emailSenderBean = new SQSEmailSenderBeanMock();
+    private class SQSTaskTimerBeanMock extends SQSTaskTimerBean {
+        // In test we just need to invoke the timer manually
+    }
+    private SQSTaskTimerBean taskTimerBean = new SQSTaskTimerBeanMock();
 
     @BeforeClass
     public void init() {
@@ -50,7 +52,7 @@ public class SQSEmailSenderBeanTest {
             msgQueue.deleteMessage(msg);
         }
     }
-    
+
     @Test(enabled = true)
     public void testEmailDelivery() throws Exception {
         // Given
@@ -59,7 +61,7 @@ public class SQSEmailSenderBeanTest {
         String message = "Simple message from SQS email test";
 
         // When
-        SQSEmailSenderBean.sendEmail(new EmailDescription(to, message, subject));
+        SQSTaskTimerBean.scheduleTask(new SendEmailTask(new EmailDescription(to, message, subject)));
         sendEmail();
 
         // Then
@@ -73,15 +75,22 @@ public class SQSEmailSenderBeanTest {
         assertThat(email.getHeaderValue("Content-Type")).contains("UTF-8");
     }
 
-    private void sendEmail() throws InterruptedException {
-        // Actually gets sent to SQS, might take some time to receive it
-        for (int i = 0; i < REDELIVERY_LIMIT; i++) {
-            Thread.sleep(7000);
-            emailSenderBean.timeout(null);
-            if (emailServer.getReceivedEmailSize() > 0) {
-                break;
+    private void sendEmail() throws Exception {
+        D.withDependencies(new SendEmailTaskExecutor(), new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                // Actually gets sent to SQS, might take some time to receive it
+                for (int i = 0; i < REDELIVERY_LIMIT; i++) {
+                    Thread.sleep(7000);
+                    taskTimerBean.timeout(null);
+                    if (emailServer.getReceivedEmailSize() > 0) {
+                        break;
+                    }
+                }
+
+                return null;
             }
-        }
+        });
     }
 
     private SmtpMessage getEmail() {

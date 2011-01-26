@@ -3,8 +3,6 @@ package pl.softwaremill.common.sqs.util;
 import java.io.Serializable;
 
 /**
- * Object sent to SQSEmailSenderBean to send emails
- *
  * @author szimano@szimano.org
  *         Date: Aug 24, 2010
  */
