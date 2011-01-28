@@ -118,9 +118,13 @@ public class SQSManager {
                     ObjectInputStream ois = new ObjectInputStream(bais);
                     answer = ois.readObject();
                 } catch (IOException e) {
-                    throw new SQSRuntimeException("I/O exception.", e);
+                    log.error("I/O exception.", e);
+                    deleteMessage(queue, msg.getReceiptHandle());
+                    return null;
                 } catch (ClassNotFoundException e) {
-                    throw new SQSRuntimeException("Class of the serialized object cannot be found.", e);
+                    log.error("Class of the serialized object cannot be found.", e);
+                    deleteMessage(queue, msg.getReceiptHandle());
+                    return null;
                 }
 
                 log.debug("Got message from queue " + queue);

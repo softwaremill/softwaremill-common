@@ -19,6 +19,11 @@ public class SendEmailTask implements Task<SendEmailTask> {
     }
 
     @Override
+    public Integer getTaskTimeout() {
+        return null;
+    }
+
+    @Override
     public Class<? extends TaskExecutor<SendEmailTask>> getExecutorBeanClass() {
         return SendEmailTaskExecutor.class;
     }

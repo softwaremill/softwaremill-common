@@ -50,13 +50,16 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
                 log.debug("Deserialized message: " + message);
                 Task task = (Task) message;
                 try {
+                    if (task.getTaskTimeout() != null) {
+                        SQSManager.setMessageVisibilityTimeout(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle(), task.getTaskTimeout());
+                    }
+
                     executeTask(task);
 
                     SQSManager.deleteMessage(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle());
                 }
                 catch (RuntimeException e) {
                     log.warn("Something went wrong and the task has not been executed. Redelivery will occur.");
-                    SQSManager.setMessageVisibilityTimeout(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle(), 10);
                     throw new SQSRuntimeException(e);
                 }
             } else {
