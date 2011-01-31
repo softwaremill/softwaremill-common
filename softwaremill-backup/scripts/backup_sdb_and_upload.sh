@@ -3,7 +3,12 @@
 # Configuration
 ###############
 
-source backup_conf.sh
+if [ -n $1 ]; then
+    source $1
+else
+    source backup_conf.sh
+fi
+
 
 #########
 
