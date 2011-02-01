@@ -78,7 +78,7 @@ public class ServerProperties {
         return asVersion;
     }
 
-    public ServerProperties setAsVersion(int asVersion) {
+    public ServerProperties asVersion(int asVersion) {
         this.asVersion = asVersion;
         return this;
     }
@@ -87,7 +87,7 @@ public class ServerProperties {
         return secured;
     }
 
-    public ServerProperties setSecured(boolean secured) {
+    public ServerProperties secured(boolean secured) {
         this.secured = secured;
         return this;
     }
@@ -96,7 +96,7 @@ public class ServerProperties {
         return username;
     }
 
-    public ServerProperties setUsername(String username) {
+    public ServerProperties username(String username) {
         this.username = username;
         return this;
     }
@@ -105,7 +105,7 @@ public class ServerProperties {
         return password;
     }
 
-    public ServerProperties setPassword(String password) {
+    public ServerProperties password(String password) {
         this.password = password;
         return this;
     }
