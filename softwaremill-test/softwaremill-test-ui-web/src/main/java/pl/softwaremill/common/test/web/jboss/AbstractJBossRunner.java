@@ -8,11 +8,15 @@ import pl.softwaremill.common.test.web.selenium.ServerProperties;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * @author maciek
  * @author Pawel Wrzeszcz
+ * @author Jaroslaw Kijanowski
  */
 public abstract class AbstractJBossRunner {
 
@@ -21,6 +25,10 @@ public abstract class AbstractJBossRunner {
 	private boolean running;
 	private int portset;
 	private String additionalSystemProperties;
+    private int asVersion;
+    private boolean secured;
+    private String username;
+    private String password;
 
 	Process jbossProcess;
 
@@ -66,6 +74,10 @@ public abstract class AbstractJBossRunner {
 		this.running = serverProperties.isRunning();
 		this.portset = serverProperties.getPortset();
 		this.additionalSystemProperties = serverProperties.getAdditionalSystemProperties();
+        this.asVersion = serverProperties.getAsVersion();
+        this.secured = serverProperties.isSecured();
+        this.username = serverProperties.getUsername();
+        this.password = serverProperties.getPassword();
 	}
 
 	private void startServerIfNeeded() throws Exception {
@@ -126,8 +138,32 @@ public abstract class AbstractJBossRunner {
 	}
 
 	protected void shutdownServer() throws IOException, InterruptedException {
-		final Process shutdownProcess = Runtime.getRuntime().exec(
-				new String[]{getServerProperties().getServerHome() + createShutdownScript(), "--host=localhost", "--port=1" + getServerProperties().getPortset() + "90", "-S"});
+
+        String[] paramString = new String[1];
+        List<String> paramList = new ArrayList<String>();
+
+        // bin/shutdown.{sh, bat}
+        paramList.add(getServerProperties().getServerHome() + createShutdownScript());
+
+        if(asVersion == 5){
+            // JBoss5
+            paramList.add("-s localhost:1" + getServerProperties().getPortset() + "99");
+        } else {
+            // JBoss6 and above
+            paramList.add("--host=localhost");
+            paramList.add("--port=1" + getServerProperties().getPortset() + "90");
+        }
+
+        // shutdown
+        paramList.add("-S");
+
+        if(secured){
+            paramList.add("-u " + username);
+            paramList.add("-p " + password);
+        }
+
+		final Process shutdownProcess = Runtime.getRuntime().exec(paramList.toArray(new String[0]));
+        
 		if (winSystem()) {
 			PrintWriter writer = new PrintWriter(shutdownProcess.getOutputStream());
 			try {
