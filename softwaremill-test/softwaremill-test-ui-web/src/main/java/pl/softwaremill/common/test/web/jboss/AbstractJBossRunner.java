@@ -147,7 +147,7 @@ public abstract class AbstractJBossRunner {
 
         if(asVersion == 5){
             // JBoss5
-            paramList.add("-s localhost:1" + getServerProperties().getPortset() + "99");
+            paramList.add("--server=localhost:1" + getServerProperties().getPortset() + "99");
         } else {
             // JBoss6 and above
             paramList.add("--host=localhost");
