@@ -18,7 +18,7 @@ import java.io.PrintStream;
 @Listeners({FailureTestListener.class})
 public abstract class AbstractSeleniumTest {
 
-	private SeleniumServer server;
+	private static SeleniumServer server;
 
 	public static Selenium selenium;
 
@@ -48,7 +48,7 @@ public abstract class AbstractSeleniumTest {
 	@BeforeSuite
 	public void setupSelenium() throws Exception {
 
-		System.out.println("--- Starting selenium server");
+		System.out.println("--- Starting selenium server V2");
 
 		RemoteControlConfiguration rcc = new RemoteControlConfiguration();
 		rcc.setTimeoutInSeconds(60);
@@ -63,14 +63,14 @@ public abstract class AbstractSeleniumTest {
 		System.setOut(ps); // restore
 
 		server.start();
-		System.out.println("--- Started selenium server");
+		System.out.println("--- Started selenium server V2");
 	}
 
 	@AfterSuite(alwaysRun = true)
 	public void stopSelenium() throws Exception, InterruptedException {
-		System.out.println("--- Stopping selenium server");
+		System.out.println("--- Stopping selenium server V2");
 		server.stop();
-		System.out.println("--- Stopped selenium server");
+		System.out.println("--- Stopped selenium server V2");
 	}
 
 	@BeforeTest
