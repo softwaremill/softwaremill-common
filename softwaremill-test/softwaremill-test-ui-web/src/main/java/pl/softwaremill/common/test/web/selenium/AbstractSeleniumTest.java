@@ -48,7 +48,7 @@ public abstract class AbstractSeleniumTest {
 	@BeforeSuite
 	public void setupSelenium() throws Exception {
 
-		System.out.println("--- Starting selenium server V2");
+		System.out.println("--- Starting selenium server");
 
 		RemoteControlConfiguration rcc = new RemoteControlConfiguration();
 		rcc.setTimeoutInSeconds(60);
@@ -63,14 +63,14 @@ public abstract class AbstractSeleniumTest {
 		System.setOut(ps); // restore
 
 		server.start();
-		System.out.println("--- Started selenium server V2");
+		System.out.println("--- Started selenium server");
 	}
 
 	@AfterSuite(alwaysRun = true)
 	public void stopSelenium() throws Exception, InterruptedException {
-		System.out.println("--- Stopping selenium server V2");
+		System.out.println("--- Stopping selenium server");
 		server.stop();
-		System.out.println("--- Stopped selenium server V2");
+		System.out.println("--- Stopped selenium server");
 	}
 
 	@BeforeTest
