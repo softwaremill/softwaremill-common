@@ -3,8 +3,13 @@
 Most of the modules are usable stand-alone and do not require other modules. Simply include the jar in your
 project and you're ready to use it. See the individual module READMEs for more information.
 
-Jars and sources are available in our Maven repository:
+Jars and sources are available in our Maven repositories:
 
+    <repository>
+        <id>softwaremill-snapshots</id>
+        <name>SoftwareMill Snapshots</name>
+        <url>http://tools.softwaremill.pl/nexus/content/repositories/snapshots</url>
+    </repository>
     <repository>
         <id>softwaremill-releases</id>
         <name>SoftwareMill Releases</name>
