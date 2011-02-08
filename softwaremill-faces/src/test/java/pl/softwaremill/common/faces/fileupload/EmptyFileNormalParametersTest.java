@@ -39,7 +39,7 @@ public class EmptyFileNormalParametersTest extends AbstractDumpTestCase {
 		assertEquals(surnameValues[0], "Pell");
 		assertEquals(surnameValues[1], "Harris");
 		
-		assertEquals(request.getParameter("stuff"), "Are you going to upload a file.\r\n");
+		assertEquals(request.getParameter("stuff"), "Are you going to upload a file.\n");
 	}
 
     @Test
