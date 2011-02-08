@@ -1,0 +1,32 @@
+-----------------------------11638560561995084312135791687
+Content-Disposition: form-data; name="name"
+
+Jason
+-----------------------------11638560561995084312135791687
+Content-Disposition: form-data; name="surname"
+
+Pell
+-----------------------------11638560561995084312135791687
+Content-Disposition: form-data; name="file1"; filename=""
+Content-Type: application/octet-stream
+
+
+-----------------------------11638560561995084312135791687
+Content-Disposition: form-data; name="name"
+
+Clair
+-----------------------------11638560561995084312135791687
+Content-Disposition: form-data; name="surname"
+
+Harris
+-----------------------------11638560561995084312135791687
+Content-Disposition: form-data; name="file2"; filename="jason.txt"
+Content-Type: application/octet-stream
+
+
+-----------------------------11638560561995084312135791687
+Content-Disposition: form-data; name="stuff"
+
+Are you going to upload a file.
+
+-----------------------------11638560561995084312135791687--

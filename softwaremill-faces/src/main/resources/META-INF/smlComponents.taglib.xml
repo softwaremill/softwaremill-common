@@ -16,5 +16,10 @@
     </attribute>
   </tag>
 
-
+  <tag>
+    <tag-name>fileUpload</tag-name>
+    <component>
+      <component-type>FileUpload</component-type>
+    </component>
+  </tag>
 </facelet-taglib>

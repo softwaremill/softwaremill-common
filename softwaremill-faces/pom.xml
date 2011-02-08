@@ -24,7 +24,7 @@
             <artifactId>softwaremill-cdi</artifactId>
             <version>${version}</version>
         </dependency>
-        
+
         <!-- CDI (JSR-299) -->
         <dependency>
             <groupId>javax.enterprise</groupId>
@@ -46,5 +46,23 @@
             <artifactId>el-ri</artifactId>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <!-- FileUploadRenderer inherits from TextRenderer from this lib. -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+  </dependencies>
+
 </project>
