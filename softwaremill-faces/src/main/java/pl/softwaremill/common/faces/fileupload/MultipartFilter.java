@@ -3,6 +3,8 @@
 *
 * Copyright (C) 2009 BalusC
 *
+* Changes by Pawel Stawicki
+*
 * This program is free software: you can redistribute it and/or modify it under the terms of the
 * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
 * of the License, or (at your option) any later version.
@@ -27,7 +29,7 @@ import java.io.IOException;
 * This filter detects <tt>multipart/form-data</tt> and <tt>multipart/mixed</tt> POST requests and
 * will then replace the <code>HttpServletRequest</code> by a <code>{@link HttpMultipartRequest}</code>.
 *
-* @author BalusC
+* @author BalusC, Pawel Stawicki
 * @link http://balusc.blogspot.com/2009/12/uploading-files-in-servlet-30.html
 */
 
@@ -101,7 +103,6 @@ public class MultipartFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         if (isMultipartRequest(httpRequest)) {
-//            request = new MultipartRequest(httpRequest, true, "/tmp", "_richfaces_form_upload");
             request = new HttpMultipartRequest(
                     httpRequest,
                     maxContentLength,

@@ -29,7 +29,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 
 /**
- * @author Jason Pell
+ * @author Jason Pell, Pawel Stawicki
  * @version 2.00b11
  */
 public class MultipartFile {

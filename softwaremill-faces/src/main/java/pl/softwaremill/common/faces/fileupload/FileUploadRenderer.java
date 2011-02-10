@@ -36,7 +36,7 @@ import java.io.IOException;
 /**
  * Faces renderer for <code>input type="file"</code> field.
  *
- * @author BalusC
+ * @author BalusC, Pawel Stawicki
  * @link http://balusc.blogspot.com/2009/12/uploading-files-with-jsf-20-and-servlet.html
  */
 @FacesRenderer(rendererType = "javax.faces.File", componentFamily = "javax.faces.Input" )
