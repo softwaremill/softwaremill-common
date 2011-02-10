@@ -52,7 +52,8 @@ public class MultipartFilter implements Filter {
 
     private static final String REQUEST_METHOD_POST = "POST";
     private static final String CONTENT_TYPE_MULTIPART = "multipart/";
-
+    private static final String ABORT = "abort";
+    private static final String IGNORE = "ignore";
 
     // Vars --------------------------------------------------------------------------------------
     private String location;
@@ -66,20 +67,18 @@ public class MultipartFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
-        String maxContentLengthStr = config.getInitParameter(INIT_PARAM_MAX_CONTENT_LENGTH);
-        this.maxContentLength = Long.parseLong(maxContentLengthStr);
-
-        String maxContentToKeepInMemory = config.getInitParameter(INIT_PARAM_MAX_CONTENT_IN_MEM);
-        this.maxContentToKeepInMem = Long.parseLong(maxContentToKeepInMemory);
+        this.maxContentLength = parseParameterValue(config, INIT_PARAM_MAX_CONTENT_LENGTH);
+        this.maxContentToKeepInMem = parseParameterValue(config, INIT_PARAM_MAX_CONTENT_IN_MEM);
+        
 
         String onMaxLengthParam = config.getInitParameter(INIT_PARAM_ON_MAX_LENGTH);
-        if ("abort".equalsIgnoreCase(onMaxLengthParam)) {
+        if (ABORT.equalsIgnoreCase(onMaxLengthParam)) {
             onMaxLength = HttpMultipartRequest.ABORT_ON_MAX_LENGTH;
-        } else if ("ignore".equalsIgnoreCase(onMaxLengthParam)) {
+        } else if (IGNORE.equalsIgnoreCase(onMaxLengthParam)) {
             onMaxLength = HttpMultipartRequest.IGNORE_ON_MAX_LENGTH;
         } else {
-            throw new ServletException("Only \"abort\" or \"ignore\" values are allowed" +
-                    "for onMaxLength for MultipartFilter");
+            throw new ServletException("Only " + ABORT + " or " + IGNORE + " values are allowed" +
+                    "for " + INIT_PARAM_ON_MAX_LENGTH + " parameter for MultipartFilter");
         }
 
         encoding = config.getInitParameter(INIT_PARAM_ENCODING);
@@ -97,6 +96,16 @@ public class MultipartFilter implements Filter {
         }
     }
 
+    private long parseParameterValue(FilterConfig config, String paramName) throws ServletException {
+        String value = config.getInitParameter(paramName);
+        try {
+            return Long.parseLong(value);
+        } catch(NumberFormatException e) {
+            throw new ServletException("Invalid value for parameter " +
+                    paramName +": " + value);
+        }
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
@@ -109,7 +118,7 @@ public class MultipartFilter implements Filter {
                     maxContentToKeepInMem,
                     onMaxLength,
                     encoding,
-                    null);
+                    progressListener);
         }
         chain.doFilter(request, response);
     }
