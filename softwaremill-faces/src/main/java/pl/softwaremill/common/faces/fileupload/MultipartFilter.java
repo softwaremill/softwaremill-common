@@ -19,6 +19,8 @@
 
 package pl.softwaremill.common.faces.fileupload;
 
+import com.google.common.base.Strings;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
@@ -44,6 +46,7 @@ public class MultipartFilter implements Filter {
 
     // Constants ----------------------------------------------------------------------------------
 
+    //Init params names
     private static final String INIT_PARAM_MAX_CONTENT_LENGTH = "maxContentLength";
     private static final String INIT_PARAM_MAX_CONTENT_IN_MEM = "maxContentToKeepInMemory";
     private static final String INIT_PARAM_ON_MAX_LENGTH = "onMaxLength";
@@ -67,11 +70,11 @@ public class MultipartFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
-        this.maxContentLength = parseParameterValue(config, INIT_PARAM_MAX_CONTENT_LENGTH);
-        this.maxContentToKeepInMem = parseParameterValue(config, INIT_PARAM_MAX_CONTENT_IN_MEM);
+        this.maxContentLength = parseParameterValue(config, INIT_PARAM_MAX_CONTENT_LENGTH, 2048000);
+        this.maxContentToKeepInMem = parseParameterValue(config, INIT_PARAM_MAX_CONTENT_IN_MEM, 1024);
         
 
-        String onMaxLengthParam = config.getInitParameter(INIT_PARAM_ON_MAX_LENGTH);
+        String onMaxLengthParam = getParameterValue(config, INIT_PARAM_ON_MAX_LENGTH, ABORT);
         if (ABORT.equalsIgnoreCase(onMaxLengthParam)) {
             onMaxLength = HttpMultipartRequest.ABORT_ON_MAX_LENGTH;
         } else if (IGNORE.equalsIgnoreCase(onMaxLengthParam)) {
@@ -81,10 +84,9 @@ public class MultipartFilter implements Filter {
                     "for " + INIT_PARAM_ON_MAX_LENGTH + " parameter for MultipartFilter");
         }
 
-        encoding = config.getInitParameter(INIT_PARAM_ENCODING);
-
+        encoding = getParameterValue(config, INIT_PARAM_ENCODING, "UTF-8");
         String progressListenerClassName = config.getInitParameter(INIT_PARAM_PROGRESS_LISTENER);
-        if (!progressListenerClassName.isEmpty()) {
+        if (!Strings.isNullOrEmpty(progressListenerClassName)) {
             try {
                 Class<? extends ProgressListener> progressListenerClass =
                         (Class<? extends ProgressListener>) Class.forName(progressListenerClassName);
@@ -96,8 +98,22 @@ public class MultipartFilter implements Filter {
         }
     }
 
-    private long parseParameterValue(FilterConfig config, String paramName) throws ServletException {
+    private String getParameterValue(FilterConfig config, String paramName, String defaultValue) {
+        String paramValue = config.getInitParameter(paramName);
+        if (Strings.isNullOrEmpty(paramValue)) {
+            return defaultValue;
+        } else {
+            return paramValue;
+        }
+    }
+
+    private long parseParameterValue(FilterConfig config, String paramName, long defaultVal)
+            throws ServletException {
         String value = config.getInitParameter(paramName);
+        if (Strings.isNullOrEmpty(value)) {
+            return defaultVal;
+        }
+
         try {
             return Long.parseLong(value);
         } catch(NumberFormatException e) {
