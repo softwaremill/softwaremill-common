@@ -4,12 +4,12 @@
     <parent>
         <artifactId>softwaremill-common-parent</artifactId>
         <groupId>pl.softwaremill.common</groupId>
-        <version>45</version>
+        <version>46-SNAPSHOT</version>
     </parent>
 
     <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-test</artifactId>
-    <version>45</version>
+    <version>46-SNAPSHOT</version>
     <name>Softwaremill Test</name>
     <packaging>pom</packaging>
 
