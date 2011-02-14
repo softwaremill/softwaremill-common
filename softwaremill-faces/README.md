@@ -146,3 +146,19 @@ Value that goes to validator is `List` of submitted values of every `UIInput` co
     }
 
 If validation doesn't pass, message appears in `<h:message for="atLeastOne" />`
+
+##File upload
+
+For file upload to work, there is `MultipartFilter` necessary, which wraps http request in `HttpMultipartRequest`. It is necessary, because without it JSF is not able to get parameters from multipart request, and is not able to handle the request properly. It is safe to map filter to "/*" url pattern. 
+
+The simpliest form with file upload:
+ 
+    <form enctype="multipart/form-data">
+      <sml:fileUpload value="#{bean.file}" />
+    </form>
+
+It is also necessary to add namespace:
+
+    xmlns:sml="http://pl.softwaremill.common.faces/components"
+
+`file` property of the `bean` is of type java.io.File. `sml:fileUpload` renders to <input type="file">. After form submit, file is in the bean.
