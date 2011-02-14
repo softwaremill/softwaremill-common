@@ -17,7 +17,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 */
 
-package pl.softwaremill.common.faces.fileupload;
+package pl.softwaremill.common.servlet.multipart;
 
 import com.google.common.base.Strings;
 

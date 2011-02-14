@@ -23,6 +23,8 @@ import com.sun.faces.renderkit.Attribute;
 import com.sun.faces.renderkit.AttributeManager;
 import com.sun.faces.renderkit.RenderKitUtils;
 import com.sun.faces.renderkit.html_basic.TextRenderer;
+import pl.softwaremill.common.servlet.multipart.HttpMultipartRequest;
+import pl.softwaremill.common.servlet.multipart.MultipartFile;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;

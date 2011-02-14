@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.fileupload;
+package pl.softwaremill.common.servlet.multipart;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

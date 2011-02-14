@@ -7,9 +7,7 @@
         <version>46-SNAPSHOT</version>
     </parent>
 
-    <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-test</artifactId>
-    <version>46-SNAPSHOT</version>
     <name>Softwaremill Test</name>
     <packaging>pom</packaging>
 

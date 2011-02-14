@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.softwaremill.common.faces.fileupload;
+package pl.softwaremill.common.servlet.multipart;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

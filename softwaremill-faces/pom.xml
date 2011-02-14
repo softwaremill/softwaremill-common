@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>pl.softwaremill.common</groupId>
     <artifactId>softwaremill-faces</artifactId>
-    <version>46-SNAPSHOT</version>
     <name>Softwaremill JSF Extensions</name>
 
     <parent>
@@ -22,6 +20,11 @@
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-cdi</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-servlets</artifactId>
             <version>${version}</version>
         </dependency>
 
@@ -47,14 +50,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
         <!-- FileUploadRenderer inherits from TextRenderer from this lib. -->
         <dependency>
             <groupId>com.sun.faces</groupId>

@@ -1,11 +1,11 @@
-package pl.softwaremill.common.faces.fileupload;
+package pl.softwaremill.common.servlet.multipart;
+
+import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-
-import org.apache.commons.io.IOUtils;
 
 public class DumpFile {
 	private byte[] contents;

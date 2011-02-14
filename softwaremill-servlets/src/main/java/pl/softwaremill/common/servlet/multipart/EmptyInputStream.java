@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.fileupload;
+package pl.softwaremill.common.servlet.multipart;
 
 /*
  MultipartRequest servlet library
@@ -21,31 +21,25 @@ package pl.softwaremill.common.faces.fileupload;
  A copy of the Lesser General Public License (lesser.txt) is included in 
  this archive or goto the GNU website http://www.gnu.org/copyleft/lesser.html.
  */
+
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * @author Jason Pell
- * @version 2.00b11
+ * A dummy input stream class.
+ * 
+ * @author Copyright (C) 2001-2006 Jason Pell
+ * @version 2.00b3
  */
-public class MaxContentLengthException extends IOException {
-	private static final long serialVersionUID = 6953805748306660762L;
-	
-	private long maxContentLength;
-	private long contentLength;
-
-	public MaxContentLengthException(long contentLength, long maxContentLength) {
-		super("Content length exceeded (" + contentLength + " > "
-				+ maxContentLength + ")");
-		
-		this.maxContentLength = maxContentLength;
-		this.contentLength = contentLength;
+public class EmptyInputStream extends InputStream {
+	public EmptyInputStream() {
 	}
 
-	public long getContentLength() {
-		return this.contentLength;
+	public int read() throws IOException {
+		return -1;
 	}
 
-	public long getMaxContentLength() {
-		return this.maxContentLength;
+	public int available() throws IOException {
+		return 0;
 	}
 }

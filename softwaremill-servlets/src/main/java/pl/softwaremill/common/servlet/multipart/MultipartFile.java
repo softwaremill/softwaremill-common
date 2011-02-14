@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.fileupload;
+package pl.softwaremill.common.servlet.multipart;
 
 /*
 	MultipartRequest servlet library
