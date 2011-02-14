@@ -11,7 +11,7 @@ Maven dependency:
 ##HttpMultipartRequest
 
 Most important class in this library is `HttpMultipartRequest`. It is wrapper around
-regular HttpServletRequest, able to
+regular `HttpServletRequest`, able to
 retrieve regular parameters from multipart request, as well as file ones.
 You can wrap `HttpServletRequest` in `HttpMultipartRequest` in servlet, or earlier in
 filter:
@@ -39,11 +39,11 @@ In case of JSF, it is necessary to do it in filter, as JSF has to be able to use
 request parameters to handle it properly. This are parameters to configure
 `MultipartFilter`. None are mandatory, all have default values.
 
- * maxContentLength default value: 2048000 (2Mb)
- * maxContentToKeepInMemory Default value: 1024. If file is less or equal this length,
+ * `maxContentLength` default value: 2048000 (2Mb)
+ * `maxContentToKeepInMemory` Default value: 1024. If file is less or equal this length,
  it is kept in memory not saved to disk.
- * onMaxLength Default value: "abort". Possible values: "abort" or "ignore". What to
+ * `onMaxLength` Default value: "abort". Possible values: "abort" or "ignore". What to
  do if file exceeds maxContentLength. If "abort", exception is thrown.
- * defaultEncoding. Default value: "UTF-8". What encoding to use if browser
+ * `defaultEncoding`. Default value: "UTF-8". What encoding to use if browser
  doesn't specify one.
- * progressListener. Name of class implementing `ProgressListener`.
+ * `progressListener`. Name of class implementing `ProgressListener`.
