@@ -155,10 +155,11 @@ The simpliest form with file upload:
  
     <form enctype="multipart/form-data">
       <sml:fileUpload value="#{bean.file}" />
+      <h:commandButton action="#{bean.submit}" />
     </form>
 
 It is also necessary to add namespace:
 
     xmlns:sml="http://pl.softwaremill.common.faces/components"
 
-`file` property of the `bean` is of type java.io.File. `sml:fileUpload` renders to <input type="file">. After form submit, file is in the bean.
+`file` property of the `bean` is of type java.io.File. `sml:fileUpload` renders to &lt;input type="file"&gt;. After form submit, file is in the bean.
