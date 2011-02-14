@@ -67,6 +67,11 @@
                 <artifactId>softwaremill-backup</artifactId>
                 <version>${softwaremill.common.version}</version>
             </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-servlets</artifactId>
+                <version>${softwaremill.common.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
