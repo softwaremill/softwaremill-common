@@ -1,6 +1,9 @@
 package pl.softwaremill.common.cdi.transaction;
 
+import org.slf4j.Logger;
+
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -16,6 +19,10 @@ import java.io.Serializable;
 @Transactional
 @Interceptor
 public class TransactionalInterceptor implements Serializable {
+
+    @Inject
+    private Logger logger;
+
     @Resource
     private UserTransaction utx;
 
@@ -23,6 +30,7 @@ public class TransactionalInterceptor implements Serializable {
     public Object intercept(InvocationContext ic) throws Throwable {
         boolean startedTransaction = false;
         if (utx.getStatus() != Status.STATUS_ACTIVE) {
+            logger.debug("Starting a new transaction!");
             utx.begin();
             startedTransaction = true;
         }
@@ -32,10 +40,12 @@ public class TransactionalInterceptor implements Serializable {
             ret = ic.proceed();
 
             if (startedTransaction){
+                logger.debug("Transaction was executed properly!");
                 utx.commit();
             }
         } catch(Throwable t) {
             if (startedTransaction) {
+                logger.debug("Rolling back transaction!");
                 utx.rollback();
             }
 
