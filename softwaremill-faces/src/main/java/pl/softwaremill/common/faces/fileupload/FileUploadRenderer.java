@@ -82,7 +82,7 @@ public class FileUploadRenderer extends TextRenderer {
         HttpMultipartRequest multipartRequest = ((HttpMultipartRequest) context.getExternalContext().getRequest());
         MultipartFile file = multipartRequest.getFileParameter(clientId);
         try {
-            File tmpFile = file.getTmpFile();
+            File tmpFile = file != null ? file.getTmpFile() : null;
             // If no file is specified, set empty String to trigger validators.
             ((UIInput) component).setSubmittedValue(tmpFile != null ? tmpFile : "");
         } catch (IOException e) {

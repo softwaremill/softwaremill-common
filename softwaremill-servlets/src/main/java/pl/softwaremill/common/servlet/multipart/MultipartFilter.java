@@ -22,8 +22,6 @@ package pl.softwaremill.common.servlet.multipart;
 import com.google.common.base.Strings;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -35,13 +33,6 @@ import java.io.IOException;
 * @link http://balusc.blogspot.com/2009/12/uploading-files-in-servlet-30.html
 */
 
-@WebFilter(urlPatterns = { "/*" }, initParams = {
-        @WebInitParam(name = "maxContentLength", value = "2048000"),
-        @WebInitParam(name = "maxContentToKeepInMemory", value = "1024"),
-        @WebInitParam(name = "onMaxLength", value = "abort"),
-        @WebInitParam(name = "defaultEncoding", value = "UTF-8"),
-        @WebInitParam(name = "progressListener", value = "")
-        })
 public class MultipartFilter implements Filter {
 
     // Constants ----------------------------------------------------------------------------------
