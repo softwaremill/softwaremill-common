@@ -139,7 +139,6 @@ public abstract class AbstractJBossRunner {
 
 	protected void shutdownServer() throws IOException, InterruptedException {
 
-        String[] paramString = new String[1];
         List<String> paramList = new ArrayList<String>();
 
         // bin/shutdown.{sh, bat}
