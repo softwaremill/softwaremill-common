@@ -23,8 +23,6 @@ import com.sun.faces.renderkit.Attribute;
 import com.sun.faces.renderkit.AttributeManager;
 import com.sun.faces.renderkit.RenderKitUtils;
 import com.sun.faces.renderkit.html_basic.TextRenderer;
-import pl.softwaremill.common.servlet.multipart.HttpMultipartRequest;
-import pl.softwaremill.common.servlet.multipart.MultipartFile;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -32,11 +30,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 import javax.faces.render.FacesRenderer;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
 /**
  * Faces renderer for <code>input type="file"</code> field.
+ *
+ * For it to work, request has to be filtered through org.mortbay.servlet.MuitiPartFilter
  *
  * @author BalusC, Pawel Stawicki
  * @link http://balusc.blogspot.com/2009/12/uploading-files-with-jsf-20-and-servlet.html
@@ -79,15 +80,9 @@ public class FileUploadRenderer extends TextRenderer {
             clientId = component.getClientId(context);
         }
 
-        HttpMultipartRequest multipartRequest = ((HttpMultipartRequest) context.getExternalContext().getRequest());
-        MultipartFile file = multipartRequest.getFileParameter(clientId);
-        try {
-            File tmpFile = file != null ? file.getTmpFile() : null;
-            // If no file is specified, set empty String to trigger validators.
-            ((UIInput) component).setSubmittedValue(tmpFile != null ? tmpFile : "");
-        } catch (IOException e) {
-            throw new RuntimeException("Could not write data to file", e);
-        }
+        final HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        File file = (File) request.getAttribute(clientId);
+        ((UIInput) component).setSubmittedValue(file != null ? file : "");
     }
 
     @Override

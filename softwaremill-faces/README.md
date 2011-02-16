@@ -149,7 +149,42 @@ If validation doesn't pass, message appears in `<h:message for="atLeastOne" />`
 
 ##File upload
 
-For file upload to work, there is `MultipartFilter` necessary, which wraps http request in `HttpMultipartRequest`. It is necessary, because without it JSF is not able to get parameters from multipart request, and is not able to handle the request properly. It is safe to map filter to "/*" url pattern. 
+For file upload to work, there is jetty `MultipartFilter` necessary, which
+retrieves files from multipart request and adds them as request attributes.
+
+Dependency for jetty:
+
+    <dependency>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-util</artifactId>
+        <version>6.1.16</version>
+    </dependency>
+
+It is safe to map filter to "/*" url pattern in web.xml:
+
+    <filter>
+        <filter-name>MultipartRequestFilter</filter-name>
+        <filter-class>org.mortbay.servlet.MultiPartFilter</filter-class>
+        <init-param>
+            <param-name>deleteFiles</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>fileOutputBuffer</param-name>
+            <param-value>0</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>MultipartRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+Parameters are optional. Parameter values above are default values. Files are stored in
+directory set as ServletContext attribute "javax.servlet.context.tempdir". On JBoss it is
+<jboss-home>/server/<server>/work
+
+If `deleteFiles` is set to true, files are deleted after request is handled.
+
 
 The simpliest form with file upload:
  
