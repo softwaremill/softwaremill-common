@@ -5,7 +5,7 @@ import com.google.common.collect.Ordering;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class LexicographicPair<A extends Comparable<A>, B extends Comparable<B>>
+public class LexicographicPair<A extends Comparable, B extends Comparable>
         extends Pair<A, B>
         implements Comparable<LexicographicPair<A, B>> {
     private final static Ordering ordering = Ordering.natural().nullsFirst();
