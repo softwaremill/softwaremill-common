@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package pl.softwaremill.common.util.tuples;
 
 /**
  * @author Adam Warski (adam at warski dot org)
@@ -7,7 +7,7 @@ public class Pair<A, B> {
     private final A left;
     private final B right;
 
-    private Pair(A left, B right) {
+    protected Pair(A left, B right) {
         this.left = left;
         this.right = right;
     }
