@@ -58,4 +58,13 @@ public class EmailInbox {
             inbox.remove();
         }
     }
+
+    /**
+     *  Checks if the server is initialized and is not stopped
+     *
+     *  @return true if server is running, false otherwise
+     */
+    public static boolean isServerRunning() {
+        return AbstractEmailServerRunner.emailServer != null && !AbstractEmailServerRunner.emailServer.isStopped();
+    }
 }
