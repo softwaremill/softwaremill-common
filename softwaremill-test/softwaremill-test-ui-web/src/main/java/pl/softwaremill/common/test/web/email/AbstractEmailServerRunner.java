@@ -19,8 +19,9 @@ public abstract class AbstractEmailServerRunner {
 
 	@BeforeSuite(alwaysRun = true)
 	public void startEmailServer() {
-		System.out.println("--- Starting email server");
-		emailServer = SimpleSmtpServer.start(getSmtpServerPort());
+        int port = getSmtpServerPort();
+		System.out.println("--- Starting email server on port " + port);
+		emailServer = SimpleSmtpServer.start(port);
 	}
 
 	@AfterSuite(alwaysRun = true)
