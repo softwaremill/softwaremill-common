@@ -68,7 +68,7 @@ public class SeleniumCommands {
     }
 
     public static void clickAndWait(String locator) {
-        clickAndWait(locator, String.valueOf(TIME_OUT));
+        clickAndWait(locator, String.valueOf(WAIT_FOR_LOAD));
     }
 
     public static void waitForElementVisible(String locator) throws Exception {
