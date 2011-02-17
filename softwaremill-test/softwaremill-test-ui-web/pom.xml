@@ -26,6 +26,10 @@
             <artifactId>selenium-server</artifactId>
         </dependency>
 
+        <dependency>
+			<groupId>dumbster</groupId>
+			<artifactId>dumbster</artifactId>
+		</dependency>
     </dependencies>
 
     <build>
