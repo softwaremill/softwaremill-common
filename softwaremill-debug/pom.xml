@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>softwaremill-debug</artifactId>
+    <name>Softwaremill Debuggin utilities</name>
+
+    <parent>
+        <groupId>pl.softwaremill.common</groupId>
+        <artifactId>softwaremill-common-parent</artifactId>
+        <version>46-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <!-- Inter-modules dependencies -->
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-util</artifactId>
+            <version>${version}</version>
+        </dependency>
+
+        <!-- CDI (JSR-299) -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JEE -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.seam.solder</groupId>
+            <artifactId>seam-solder</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -17,6 +17,7 @@
         <module>softwaremill-faces</module>
         <module>softwaremill-parent</module>
         <module>softwaremill-test</module>
+        <module>softwaremill-debug</module>
     </modules>
 
     <properties>

@@ -67,6 +67,10 @@ Lets you run tests that use a database.
 
 Scripts and java classes to backup SimpleDB domains and upload them to S3.
 
+## [Debug utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-debug/)
+
+A timing interceptor + web filter + portable extension for profiling CDI beans.
+
 ---
 
 Licensed under the Apache2 license. [Softwaremill 2010](http://softwaremill.eu/).
