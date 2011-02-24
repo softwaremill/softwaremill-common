@@ -20,7 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 
-    private static Map<String, Map<String, String>> configurations = new ConcurrentHashMap<String, Map<String, String>>();
+    private static Map<String, Config<String, String>> configurations =
+            new ConcurrentHashMap<String, Config<String, String>>();
     private static List<PropertiesProvider> propertyProviders = new ArrayList<PropertiesProvider>();
 
     /**
@@ -35,7 +36,7 @@ public class Configuration {
      * @param name Name of the configuration.
      * @return The properties of the given configuration.
      */
-    public static Map<String, String> get(String name) {
+    public static Config<String, String> get(String name) {
         if (configurations.containsKey(name)) {
             return configurations.get(name);
         }
@@ -44,8 +45,9 @@ public class Configuration {
             Map<String, String> props = propertyProvider.lookupProperties(name);
             if (props != null) {
                 log.info("Loaded configuration for: " + name + " using " + propertyProvider.getClass().getName());
-                configurations.put(name, props);
-                return props;
+                Config<String, String> conf = new MapWrapper(props);
+                configurations.put(name, conf);
+                return conf;
             }
         }
 

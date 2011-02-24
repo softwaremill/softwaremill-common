@@ -22,4 +22,39 @@ public class ConfigurationTest {
     public void testTest2FromClasspath() {
         Configuration.get("test2");
     }
+
+    @Test
+    public void shouldGetDefaultValue() {
+        Config<String, String> config = Configuration.get("test1");
+        String value = config.get("nonexistingkey", "default value");
+        assertThat(value).isEqualTo("default value");
+}
+
+    @Test
+    public void shouldGetDefaultIntValue() {
+        Config<String, String> config = Configuration.get("test1");
+        int value = config.getAsInt("nonexistingkey", 2);
+        assertThat(value).isEqualTo(2);
+    }
+
+    @Test
+    public void shouldGetDefaultDoubleValue() {
+        Config<String, String> config = Configuration.get("test1");
+        double value = config.getAsDouble("nonexistingkey", 5.5);
+        assertThat(value).isEqualTo(5.5);
+    }
+
+    @Test
+    public void shouldGetDefaultBooleanValue() {
+        Config<String, String> config = Configuration.get("test1");
+        boolean value = config.getAsBoolean("nonexistingkey", false);
+        assertThat(value).isEqualTo(false);
+    }
+
+    @Test
+    public void shouldGetDefaultLongValue() {
+        Config<String, String> config = Configuration.get("test1");
+        long value = config.getAsLong("nonexistingkey", 0x7fffffffffffL);
+        assertThat(value).isEqualTo(0x7fffffffffffL);
+    }
 }
