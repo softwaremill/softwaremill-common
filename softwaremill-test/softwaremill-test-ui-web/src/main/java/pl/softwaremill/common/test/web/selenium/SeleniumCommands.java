@@ -2,8 +2,7 @@ package pl.softwaremill.common.test.web.selenium;
 
 import org.testng.Assert;
 
-import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.fail;
-import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.selenium;
+import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.*;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)
@@ -18,16 +17,11 @@ public class SeleniumCommands {
         selenium.waitForPageToLoad(WAIT_FOR_LOAD);
     }
 
-    public static void waitFor(String xpath) throws Exception {
-        for (int second = 0; ; second++) {
-            if (second >= TIME_OUT) {
-                Assert.fail("Timed out on xpath: " + xpath);
-            }
-            if (selenium.isElementPresent(xpath)) {
-                break;
-            }
-            Thread.sleep(1000);
-        }
+    public static void waitFor(final String xpath) throws Exception {
+       waitFor(TIME_OUT, new Check() {
+            @Override public boolean doCheck() { return selenium.isElementPresent(xpath); }
+            @Override public String getErrorMessage() { return "Timed out on xpath: " + xpath; }
+        });
     }
 
     public static void waitForElementPresent(String element) throws Exception {
@@ -46,19 +40,11 @@ public class SeleniumCommands {
         waitForElement(xpath, timeout, true);
     }
 
-    public static void waitForElement(String element, int timeout, boolean isPresent) throws Exception {
-        for (int second = 0; ; second++) {
-            if (second >= timeout) Assert.fail("Timed out on xpath: " + element);
-            try {
-                if (selenium.isElementPresent(element) == isPresent) {
-                    break;
-                }
-            }
-            catch (Exception e) {
-                // Empty
-            }
-            Thread.sleep(1000);
-        }
+    public static void waitForElement(final String element, int timeout, final boolean isPresent) throws Exception {
+        waitFor(timeout, new Check() {
+            @Override public boolean doCheck() { return selenium.isElementPresent(element) == isPresent; }
+            @Override public String getErrorMessage() { return "Timed out on xpath: " + element; }
+        });
     }
 
 
@@ -75,19 +61,11 @@ public class SeleniumCommands {
         waitForElementVisible(locator, true);
     }
 
-    public static void waitForElementVisible(String locator, boolean isVisible) throws Exception {
-        for (int second = 0; ; second++) {
-            if (second >= TIME_OUT) Assert.fail("timeout");
-            try {
-                if (selenium.isVisible(locator) == isVisible) {
-                    break;
-                }
-            }
-            catch (Exception e) {
-                // Empty
-            }
-            Thread.sleep(1000);
-        }
+    public static void waitForElementVisible(final String locator, final boolean isVisible) throws Exception {
+        waitFor(TIME_OUT, new Check() {
+            @Override public boolean doCheck() { return selenium.isVisible(locator) == isVisible; }
+            @Override public String getErrorMessage() { return "timeout"; }
+        });
     }
 
     public static void waitForTextPresent(String text) throws Exception {
@@ -106,19 +84,11 @@ public class SeleniumCommands {
         waitForText(text, timeout, false);
     }
 
-    public static void waitForText(String text, int timeout, boolean isPresent) throws Exception {
-        for (int second = 0; ; second++) {
-            if (second >= timeout) Assert.fail("Timed out waiting for text: " + text);
-            try {
-                if (selenium.isTextPresent(text) == isPresent) {
-                    break;
-                }
-            }
-            catch (Exception e) {
-                // Empty
-            }
-            Thread.sleep(1000);
-        }
+    public static void waitForText(final String text, int timeout, final boolean isPresent) throws Exception {
+        waitFor(timeout, new Check() {
+            @Override public boolean doCheck() { return selenium.isTextPresent(text) == isPresent; }
+            @Override public String getErrorMessage() { return "Timed out waiting for text: " + text; }
+        });
     }
 
     public static void clickOncePresent(String xpath) throws Exception {
@@ -137,5 +107,25 @@ public class SeleniumCommands {
     public static void typeOncePresent(String xpath, String text, int timeout) throws Exception {
         waitForElementPresent(xpath, timeout);
         selenium.type(xpath, text);
+    }
+
+    public static void waitFor(int maxSeconds, Check check) throws Exception {
+        for (int tries = 0; ; tries++) {
+            if (tries >= maxSeconds * 10) Assert.fail(check.getErrorMessage());
+            try {
+                if (check.doCheck()) {
+                    break;
+                }
+            }
+            catch (Exception e) {
+                // Empty
+            }
+            Thread.sleep(100);
+        }
+    }
+
+    public static interface Check {
+        boolean doCheck();
+        String getErrorMessage();
     }
 }
