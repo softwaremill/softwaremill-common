@@ -90,6 +90,7 @@ public class EmailInbox {
             email = (SmtpMessage) inbox.next();
             if(email.getHeaderValue("Subject").equals(subject)){
                 foundEmails.add(email);
+                inbox.remove();
             }
         }
 
