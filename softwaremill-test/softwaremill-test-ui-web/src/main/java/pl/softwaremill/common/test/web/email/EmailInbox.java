@@ -37,13 +37,16 @@ public class EmailInbox {
      */
     public static void waitForEmailInInbox(String subject) throws InterruptedException {
         // Wait till email is received by mock smtp
-        for (int i = 0; i < REDELIVERY_LIMIT; i++) {
+        DELIVER_CHECK: for (int i = 0; i < REDELIVERY_LIMIT; i++) {
             Thread.sleep(7000);
             if (AbstractEmailServerRunner.emailServer.getReceivedEmailSize() > 0) {
                 Iterator inbox = AbstractEmailServerRunner.emailServer.getReceivedEmail();
-                SmtpMessage email = (SmtpMessage) inbox.next();
-                if(email.getHeaderValue("Subject").equals(subject)){
-                    break;
+                SmtpMessage email;
+                while(inbox.hasNext()) {
+                    email = (SmtpMessage) inbox.next();
+                    if(email.getHeaderValue("Subject").equals(subject)){
+                        break DELIVER_CHECK;
+                    }
                 }
             }
         }
