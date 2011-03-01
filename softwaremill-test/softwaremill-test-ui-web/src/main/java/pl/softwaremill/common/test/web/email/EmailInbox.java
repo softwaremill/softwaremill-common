@@ -2,7 +2,9 @@ package pl.softwaremill.common.test.web.email;
 
 import com.dumbster.smtp.SmtpMessage;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class represents mock email inbox, with methods manage it.
@@ -14,14 +16,35 @@ public class EmailInbox {
     private static int REDELIVERY_LIMIT = 10;
 
     /**
-     * Waits for email to appear in inbox. This will happen after email task is downloaded from sqs queue and executed.
+     * Waits for first email to appear in inbox.
+     *
+     * When using sqs and timer this will happen after email task is downloaded from queue and executed.
      */
     public static void waitForEmailInInbox() throws InterruptedException {
-        // Actually gets sent to SQS, might take some time to receive it
+        // Wait till email is received by mock smtp
         for (int i = 0; i < REDELIVERY_LIMIT; i++) {
             Thread.sleep(7000);
             if (AbstractEmailServerRunner.emailServer.getReceivedEmailSize() > 0) {
                 break;
+            }
+        }
+    }
+
+    /**
+     * Waits for specific email to appear in inbox.
+     *
+     * When using sqs and timer this will happen after email task is downloaded from queue and executed.
+     */
+    public static void waitForEmailInInbox(String subject) throws InterruptedException {
+        // Wait till email is received by mock smtp
+        for (int i = 0; i < REDELIVERY_LIMIT; i++) {
+            Thread.sleep(7000);
+            if (AbstractEmailServerRunner.emailServer.getReceivedEmailSize() > 0) {
+                Iterator inbox = AbstractEmailServerRunner.emailServer.getReceivedEmail();
+                SmtpMessage email = (SmtpMessage) inbox.next();
+                if(email.getHeaderValue("Subject").equals(subject)){
+                    break;
+                }
             }
         }
     }
@@ -38,13 +61,41 @@ public class EmailInbox {
     /**
      * Downloads first email from the inbox and removes it from there
      *
-     * @return EmailMessage object representing mock email
+     * @return EmailMessage object representing mock email or null if no email found
      */
     public static EmailMessage getFirstEmailFromInbox() {
         Iterator inbox = AbstractEmailServerRunner.emailServer.getReceivedEmail();
-        SmtpMessage email = (SmtpMessage) inbox.next();
-        inbox.remove();
-        return new EmailMessage(email);
+        if (inbox.hasNext()) {
+            SmtpMessage email = (SmtpMessage) inbox.next();
+            inbox.remove();
+            return new EmailMessage(email);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Downloads latest email from the inbox with given subject and removes it from there
+     *
+     * @return EmailMessage object representing mock email
+     */
+    public static EmailMessage getLatestEmailBySubject(String subject) {
+        List<SmtpMessage> foundEmails = new ArrayList<SmtpMessage>();
+        Iterator inbox = AbstractEmailServerRunner.emailServer.getReceivedEmail();
+        SmtpMessage email;
+        while (inbox.hasNext()) {
+            email = (SmtpMessage) inbox.next();
+            if(email.getHeaderValue("Subject").equals(subject)){
+                foundEmails.add(email);
+            }
+        }
+
+        if(foundEmails.size() > 0) {
+            return new EmailMessage(foundEmails.get(foundEmails.size()-1));
+        } else {
+            return null;
+        }
+
     }
 
     /**
