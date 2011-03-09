@@ -47,6 +47,18 @@ public class CDIInjectorTest {
     }
 
     @Test
+    public void testInjectNull() {
+        // Given
+        InjectInto1 target = new InjectInto1();
+
+        // When
+        into(target).inject(new Object[] { null });
+
+        // Then
+        assertThat(target.getDep1()).isNull();
+    }
+
+    @Test
     public void testMultipleInject() {
         // Given
         InjectInto1 target = new InjectInto1();

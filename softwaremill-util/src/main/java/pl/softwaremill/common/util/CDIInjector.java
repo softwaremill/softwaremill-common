@@ -28,6 +28,10 @@ public class CDIInjector<T> {
     }
 
     private void doInject(Class<? extends Annotation> qualifier, Object obj) {
+        if (obj == null) {
+            return;
+        }
+
         for (Field field : target.getClass().getDeclaredFields()) {
             if (fieldIsInjectable(field) &&
                     fieldTypeAssignableFrom(field, obj.getClass()) && 
