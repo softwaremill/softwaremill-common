@@ -30,6 +30,13 @@
 			<scope>provided</scope>
 		</dependency>
 
+        <!-- For creating temporary requests in SQSTaskTimerBean -->
+        <dependency>
+           <groupId>org.jboss.weld.servlet</groupId>
+           <artifactId>weld-servlet</artifactId>
+           <scope>provided</scope>
+       </dependency>
+
 		<!-- typica -->
 		<dependency>
 			<groupId>com.google.code.typica</groupId>
