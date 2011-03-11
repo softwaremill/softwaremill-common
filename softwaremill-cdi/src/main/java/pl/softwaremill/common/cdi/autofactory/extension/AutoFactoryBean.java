@@ -42,7 +42,7 @@ public class AutoFactoryBean<T> implements Bean<T> {
     public T create(CreationalContext<T> creationalContext) {
         return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                 factoryClassInArray,
-                new FactoryInvocationHandler(beanManager, createdTypeData, creationalContext));
+                new FactoryInvocationHandler(beanManager, this, createdTypeData, creationalContext));
     }
 
     @Override

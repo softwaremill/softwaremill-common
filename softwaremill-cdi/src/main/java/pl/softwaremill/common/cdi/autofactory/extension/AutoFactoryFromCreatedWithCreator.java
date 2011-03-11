@@ -41,7 +41,7 @@ public class AutoFactoryFromCreatedWithCreator<T> {
 
         return new AutoFactoryBean<T>(beanManager, factoryClass,
                 new CreatedTypeData<T>(createdTypeConstructorParameterValues,
-                soleCreatedTypeConstructor.getJavaMember(), beanManager.createInjectionTarget(createdType),
+                soleCreatedTypeConstructor, beanManager.createInjectionTarget(createdType),
                 constructorInjection));
     }
 
