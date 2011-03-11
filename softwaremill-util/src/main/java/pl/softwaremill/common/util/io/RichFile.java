@@ -100,4 +100,29 @@ public class RichFile {
     public File createChildFile(String childName) {
         return new File(file.getAbsolutePath() + File.separator + childName);
     }
+
+    public File createFileSameNameDifferentExtension(String extension) {
+        String newName = getNameWithoutExtension() + "." + extension;
+        return new RichFile(file.getParentFile()).createChildFile(newName);
+    }
+
+    public String getNameWithoutExtension() {
+        String name = file.getName();
+        int lastDot = name.lastIndexOf('.');
+        if (lastDot != -1) {
+            return name.substring(0, lastDot);
+        } else {
+            return name;
+        }
+    }
+
+    public String getExtension() {
+        String name = file.getName();
+        int lastDot = name.lastIndexOf('.');
+        if (lastDot != -1) {
+            return name.substring(lastDot+1);
+        } else {
+            return "";
+        }
+    }
 }
