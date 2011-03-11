@@ -6,6 +6,7 @@ import com.xerox.amazonws.sqs2.Message;
 import com.xerox.amazonws.sqs2.MessageQueue;
 import com.xerox.amazonws.sqs2.SQSException;
 import com.xerox.amazonws.sqs2.SQSUtils;
+import org.jboss.weld.context.bound.BoundRequestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -18,6 +19,7 @@ import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 import static org.fest.assertions.Assertions.*;
+import static org.mockito.Mockito.*;
 import static pl.softwaremill.common.sqs.SQSConfiguration.*;
 
 /**
@@ -76,7 +78,7 @@ public class SQSTaskTimerBeanTest {
     }
 
     private void sendEmail() throws Exception {
-        D.withDependencies(new SendEmailTaskExecutor(), new Callable<Void>() {
+        D.withDependencies(new SendEmailTaskExecutor(), mock(BoundRequestContext.class), new Callable<Void>() {
             @Override
             public Void call() throws Exception {
                 // Actually gets sent to SQS, might take some time to receive it
