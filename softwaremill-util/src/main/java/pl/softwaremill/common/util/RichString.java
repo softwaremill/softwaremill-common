@@ -84,4 +84,41 @@ public class RichString {
 
         return result;
     }
+
+    public String replacePolishChars() {
+		char[] in = wrapped.toCharArray();
+		char[] out = new char[in.length];
+
+		int i = 0;
+		for (char c : in) {
+			char replaced = in[i];
+
+			if (c >= '\u0080') { // optimization
+				switch (c) {
+					case 'ą': replaced = 'a'; break;
+					case 'ć': replaced = 'c'; break;
+					case 'ę': replaced = 'e'; break;
+					case 'ł': replaced = 'l'; break;
+					case 'ń': replaced = 'n'; break;
+					case 'ó': replaced = 'o'; break;
+					case 'ś': replaced = 's'; break;
+					case 'ź': replaced = 'z'; break;
+					case 'ż': replaced = 'z'; break;
+					case 'Ą': replaced = 'A'; break;
+					case 'Ć': replaced = 'C'; break;
+					case 'Ę': replaced = 'E'; break;
+					case 'Ł': replaced = 'L'; break;
+					case 'Ń': replaced = 'N'; break;
+					case 'Ó': replaced = 'O'; break;
+					case 'Ś': replaced = 'S'; break;
+					case 'Ż': replaced = 'Z'; break;
+					case 'Ź': replaced = 'Z'; break;
+				}
+			}
+
+			out[i++] = replaced;
+		}
+
+		return new String(out);
+	}
 }
