@@ -1,6 +1,7 @@
 package pl.softwaremill.common.test.web.email;
 
 import com.dumbster.smtp.SmtpMessage;
+import org.mockito.Matchers;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -54,6 +55,23 @@ public class EmailMessageTest {
 		assertThat(links).containsExactly(expectedLinks);
 	}
 
+    @Test
+	public void shouldParseEncodedEmail() {
+        // Given
+        EmailMessage email = new EmailMessage(getMockEmail(plFullEmail, "quoted-printable"));
+
+        // When
+		List<String> links = email.getLinksLike("register/confirm");
+
+		// Then
+		assertThat(links).isNotNull();
+        assertThat(links.size()).isEqualTo(1);
+		assertThat(links.get(0)).isEqualTo("http://www.localhost.pl/register/confirm?code=newcomp2MFJRRPEHPUDCTQSCIMXT");
+        assertThat(email.getMessage()).contains("Witaj ncadmin ć");
+        assertThat(email.getMessage()).contains("New Company Ó");
+        assertThat(email.getMessage()).contains("Zespół Systemu");
+	}
+
     private final String link1 = "http://www.example.org";
     private final String link2 = "https://www.example.org";
     private final String link3 = "http://www.example.org/data/project-x";
@@ -69,6 +87,25 @@ public class EmailMessageTest {
 
     private final String message1 = "Welcome User,\n Visit our site at {link} for great deals!";
     private final String message2 = "Welcome User,\n To activate your account follow link {link1}. For help see our site at {link2}!";
+
+
+    private final String plFullEmail = "Witaj ncadmin =C4=87,\n" +
+            "\n" +
+            "\n" +
+            "Utworzyli=C5=9Bmy konto dla firmy 'New Company =C3=93' i u=C5=BCytkownika '=\n" +
+            "ncadmin =C4=87'. Konto b=C4=99dzie dost=C4=99pne po potwierdzeniu rejestrac=\n" +
+            "ji.\n" +
+            "\n" +
+            "W celu potwierdzenia rejestracji kliknij poni=C5=BCszy link:\n" +
+            "\n" +
+            "http://www.localhost.pl/register/confirm?code=3Dnewcomp2MFJRRPEHPUDCTQSCIMX=\n" +
+            "T\n" +
+            "\n" +
+            "\n" +
+            "--\n" +
+            "Z powa=C5=BCaniem,\n" +
+            "Zesp=C3=B3=C5=82 Systemu";
+
 
 	@DataProvider
 	private  Object[][] getMessagesWithSpecialLink(){
@@ -122,8 +159,13 @@ public class EmailMessageTest {
     }
 
     private SmtpMessage getMockEmail(String message){
+        return getMockEmail(message, "");
+    }
+
+    private SmtpMessage getMockEmail(String message, String encoding){
         SmtpMessage email = mock(SmtpMessage.class);
         when(email.getBody()).thenReturn(message);
+        when(email.getHeaderValue(Matchers.<String>any())).thenReturn(encoding);
 
         return email;
     }

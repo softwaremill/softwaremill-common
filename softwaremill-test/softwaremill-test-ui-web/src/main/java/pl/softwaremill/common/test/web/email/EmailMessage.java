@@ -1,7 +1,14 @@
 package pl.softwaremill.common.test.web.email;
 
 import com.dumbster.smtp.SmtpMessage;
+import com.google.common.io.CharStreams;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeUtility;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -26,8 +33,39 @@ public class EmailMessage {
         return email.getHeaderValue("Subject");
     }
 
+    /**
+     * @return Email body, decoded from quoted-printable if such encoding set
+     */
     public String getMessage(){
-        return email.getBody();
+        if(getHeaderValue(EmailHeader.CONTENT_TRANSFER_ENCODING).equals("quoted-printable")) {
+            return getDecodedMessage();
+        } else {
+            return getRawMessage();
+        }
+    }
+
+    /**
+     * @return Raw email body, can be encoded
+     */
+    public String getRawMessage(){
+       return email.getBody();
+    }
+
+    /**
+     * @return Decoded email body, can be encoded
+     */
+    private String getDecodedMessage(){
+       try {
+            InputStream is = new ByteArrayInputStream(email.getBody().getBytes("UTF-8"));
+            InputStream decodedIS = MimeUtility.decode(is, "quoted-printable");
+            return CharStreams.toString(new InputStreamReader(decodedIS, "UTF-8"));
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public String getToHeader(){
