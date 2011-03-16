@@ -1,14 +1,9 @@
 package pl.softwaremill.common.test.web.email;
 
 import com.dumbster.smtp.SmtpMessage;
-import com.google.common.io.CharStreams;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.net.QuotedPrintableCodec;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeUtility;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -52,20 +47,46 @@ public class EmailMessage {
     }
 
     /**
-     * @return Decoded email body, can be encoded
+     * @return Decoded email body, null if decoding failed
      */
-    private String getDecodedMessage(){
-       try {
-            InputStream is = new ByteArrayInputStream(email.getBody().getBytes("UTF-8"));
-            InputStream decodedIS = MimeUtility.decode(is, "quoted-printable");
-            return CharStreams.toString(new InputStreamReader(decodedIS, "UTF-8"));
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+    private String getDecodedMessage() {
+        String body = removeSoftLineBreaks(email.getBody());
+        QuotedPrintableCodec codec = new QuotedPrintableCodec();
+        try {
+            return codec.decode(body);
+        } catch (DecoderException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    /**
+     *  Removes "soft line breaks" from encoded email.
+     *
+     *  Email has line length limit to 76 chars - longer lines are split and char '=' is inserted.
+     *  When getting mock email body this line break could appear in th middle of one long line.
+     *  Also this soft line breaks need to be cleared for QuotedPrintableCodec
+     *
+     */
+    private String removeSoftLineBreaks(String message){
+        String[] lines = message.split("\n");
+        StringBuilder sb = new StringBuilder();
+        for (String line : lines) {
+            int overflows = (line.length() / 76);
+            if (overflows > 0) {
+                int i = 0;
+                for( ; i < (line.length() / 76); i++) {
+                    sb.append(line.substring(i*76, (i+1)*76 - 1));
+                }
+                sb.append(line.substring(i*76));
+            } else {
+                sb.append(line);
+                sb.append("\n");
+            }
+
+        }
+        return sb.toString();
     }
 
     public String getToHeader(){

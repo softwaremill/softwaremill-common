@@ -1,7 +1,6 @@
 package pl.softwaremill.common.test.web.email;
 
 import com.dumbster.smtp.SmtpMessage;
-import org.mockito.Matchers;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -56,9 +55,12 @@ public class EmailMessageTest {
 	}
 
     @Test
-	public void shouldParseEncodedEmail() {
+	public void shouldParseEncodedEmailInPolish() {
         // Given
-        EmailMessage email = new EmailMessage(getMockEmail(plFullEmail, "quoted-printable"));
+        EmailMessage email = new EmailMessage(getMockEmail(plEncodedEmail, "quoted-printable"));
+
+        System.out.println("RAW: \n"+email.getRawMessage());
+        System.out.println("MSG: \n"+email.getMessage());
 
         // When
 		List<String> links = email.getLinksLike("register/confirm");
@@ -71,6 +73,38 @@ public class EmailMessageTest {
         assertThat(email.getMessage()).contains("New Company Ó");
         assertThat(email.getMessage()).contains("Zespół Systemu");
 	}
+
+    @Test
+	public void shouldParseNotEncodedEmailInEnglish() {
+        // Given
+        EmailMessage email = new EmailMessage(getMockEmail(notQuotedPrintableEmail));
+
+        // When
+		List<String> links = email.getLinksLike("register/confirm");
+
+		// Then
+		assertThat(links).isNotNull();
+        assertThat(links.size()).isEqualTo(1);
+		assertThat(links.get(0)).isEqualTo("http://www.localhost.eu/register/confirm?code=engcompanyTRNAOJBALKSTRJBJUNOA");
+        assertThat(email.getMessage()).contains("Welcome ncadmin");
+        assertThat(email.getMessage()).contains("New Company");
+	}
+
+    @Test
+	public void shouldProperlyDecodeEmailWithSoftLineBreak() {
+        // Given
+        String body = "You applied for an account in Circular system, for organization New Company= =C3=93.";
+        EmailMessage email = new EmailMessage(getMockEmail(body, "quoted-printable"));
+
+        // When
+        String message = email.getMessage();
+
+        // Then
+		assertThat(message).contains("New Company Ó");
+        assertThat(message).doesNotContain("=");
+	}
+
+
 
     private final String link1 = "http://www.example.org";
     private final String link2 = "https://www.example.org";
@@ -89,7 +123,7 @@ public class EmailMessageTest {
     private final String message2 = "Welcome User,\n To activate your account follow link {link1}. For help see our site at {link2}!";
 
 
-    private final String plFullEmail = "Witaj ncadmin =C4=87,\n" +
+    private final String plEncodedEmail = "Witaj ncadmin =C4=87,\n" +
             "\n" +
             "\n" +
             "Utworzyli=C5=9Bmy konto dla firmy 'New Company =C3=93' i u=C5=BCytkownika '=\n" +
@@ -106,6 +140,21 @@ public class EmailMessageTest {
             "Z powa=C5=BCaniem,\n" +
             "Zesp=C3=B3=C5=82 Systemu";
 
+    private final String notQuotedPrintableEmail = "Welcome ncadmin,\n" +
+            "\n" +
+            "\n" +
+            "You applied for an account in our system, for organization New Company.\n" +
+            "\n" +
+            "Your new service will be available on http://engcompany.localhost.eu.\n" +
+            "\n" +
+            "To complete the registration process follow this link:\n" +
+            "\n" +
+            "http://www.localhost.eu/register/confirm?code=engcompanyTRNAOJBALKSTRJBJUNOA\n" +
+            "\n" +
+            "\n" +
+            "--\n" +
+            "Best regards,\n" +
+            "System Team";
 
 	@DataProvider
 	private  Object[][] getMessagesWithSpecialLink(){
@@ -165,7 +214,7 @@ public class EmailMessageTest {
     private SmtpMessage getMockEmail(String message, String encoding){
         SmtpMessage email = mock(SmtpMessage.class);
         when(email.getBody()).thenReturn(message);
-        when(email.getHeaderValue(Matchers.<String>any())).thenReturn(encoding);
+        when(email.getHeaderValue(EmailHeader.CONTENT_TRANSFER_ENCODING.getValue())).thenReturn(encoding);
 
         return email;
     }
