@@ -14,6 +14,10 @@ public class CDIInjector<T> {
         this.target = target;
     }
 
+    public T get() {
+        return target;
+    }
+
     public CDIInjector<T> inject(Object... objects) {
         for (Object obj : objects) {
             doInject(null, obj);
