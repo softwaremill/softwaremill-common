@@ -31,8 +31,8 @@ public class ScreenshotHttpCommandProcessor extends HttpCommandProcessor {
                 capturingScreenshot = true;
                 // create screenshot
                 screenshotter.doScreenshot();
-                capturingScreenshot = false;
             }
+            capturingScreenshot = false;
 
             // and rethrow
             throw e;
