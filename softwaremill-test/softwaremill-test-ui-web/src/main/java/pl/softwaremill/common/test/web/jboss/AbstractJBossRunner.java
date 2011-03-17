@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,6 +16,7 @@ import java.util.Scanner;
  * @author maciek
  * @author Pawel Wrzeszcz
  * @author Jaroslaw Kijanowski
+ * @author Pawel Stawicki
  */
 public abstract class AbstractJBossRunner {
 
@@ -176,9 +176,14 @@ public abstract class AbstractJBossRunner {
 			}
 		}
 		shutdownProcess.waitFor();
-		if (shutdownProcess.exitValue() != 0) {
-			log.info("Failed to stop JBoss");
-		}
+
+        if (shutdownProcess.exitValue() != 0) {
+            log.info("Failed to stop JBoss");
+        } else {
+            //Make sure jboss shuts down before leaving this method.
+            jbossProcess.waitFor();
+        }
+
 	}
 
 	private String createShutdownScript() {
