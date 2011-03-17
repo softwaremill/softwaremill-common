@@ -7,7 +7,9 @@ import com.thoughtworks.selenium.HttpCommandProcessor;
  *
  * User: szimano
  */
-public class ScreenshotHttpCommandProcessor extends HttpCommandProcessor{
+public class ScreenshotHttpCommandProcessor extends HttpCommandProcessor {
+
+    private boolean capturingScreenshot = false;
 
     private Screenshotter screenshotter;
 
@@ -23,8 +25,14 @@ public class ScreenshotHttpCommandProcessor extends HttpCommandProcessor{
             return super.doCommand(commandName, args);
         }
         catch (RuntimeException e) {
-            // create screenshot
-            screenshotter.doScreenshot();
+            if (!capturingScreenshot) {
+                //Prevent infinite loop, when
+                // screenshotter.doScreenshot() throws exception
+                capturingScreenshot = true;
+                // create screenshot
+                screenshotter.doScreenshot();
+                capturingScreenshot = false;
+            }
 
             // and rethrow
             throw e;
