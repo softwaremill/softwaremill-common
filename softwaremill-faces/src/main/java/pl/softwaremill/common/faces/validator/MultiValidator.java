@@ -64,6 +64,23 @@ public class MultiValidator extends UIInput {
     }
 
     @Override
+    public void encodeBegin(FacesContext context) throws IOException {
+        //Do nothing. Let inner components encode themselves, this component does not render to HTML
+    }
+
+    @Override
+    public void encodeChildren(FacesContext context) throws IOException {
+        for(UIComponent child : getChildren()) {
+            child.encodeAll(context);
+        }
+    }
+
+    @Override
+    public void encodeEnd(FacesContext context) throws IOException {
+        //Do nothing. Let inner components encode themselves, this component does not render to HTML
+    }
+
+    @Override
     protected Object getConvertedValue(FacesContext context, Object newSubmittedValue) throws ConverterException {
         return newSubmittedValue;
     }
