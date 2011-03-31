@@ -13,6 +13,7 @@ import org.hibernate.testing.tm.TransactionManagerLookupImpl;
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.annotations.*;
 import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
+import pl.softwaremill.common.dbtest.util.DbMode;
 import pl.softwaremill.common.dbtest.util.SqlFileResolver;
 
 import javax.persistence.EntityManager;
@@ -57,6 +58,8 @@ public abstract class AbstractDBTest extends Arquillian {
     private EntityManagerFactory emf;
 
     private static final Logger log = Logger.getLogger(AbstractDBTest.class);
+
+    private DbMode compatibilityMode = null;
 
     /**
      * Additional Hibernate configuration.
@@ -123,7 +126,7 @@ public abstract class AbstractDBTest extends Arquillian {
         cfg.configure("hibernate.test.cfg.xml");
 
         // Separate database for each test class
-        cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName());
+        cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() + addCompatibilityMode());
 
         cfg.setProperty("connection.provider_class", ConnectionProviderImpl.class.getName());
         cfg.setProperty(Environment.TRANSACTION_MANAGER_STRATEGY, TransactionManagerLookupImpl.class.getName());
@@ -144,6 +147,14 @@ public abstract class AbstractDBTest extends Arquillian {
 
         SimpleJtaTransactionManagerImpl.getInstance().commit();
         em.close();
+    }
+
+    private String addCompatibilityMode() {
+        if (compatibilityMode != null) {
+            return ";MODE=" + compatibilityMode.getParameterValue();
+        }
+        
+        return "";
     }
 
     @AfterClass
@@ -170,5 +181,13 @@ public abstract class AbstractDBTest extends Arquillian {
     @AfterMethod
     public void commitTransaction() throws SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException {
         SimpleJtaTransactionManagerImpl.getInstance().commit();
+    }
+
+    public void setCompatibilityMode(DbMode compatibilityMode) {
+        this.compatibilityMode = compatibilityMode;
+    }
+
+    public DbMode getCompatibilityMode() {
+        return compatibilityMode;
     }
 }
