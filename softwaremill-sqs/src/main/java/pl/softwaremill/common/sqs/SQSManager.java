@@ -192,4 +192,11 @@ public class SQSManager {
         }
     }
 
+    public static void deleteMessagesFromSQSQueue(String queue){
+        try {
+            new SQSEmptor(SQS_SERVER, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, queue).emptyQueue();
+        } catch (SQSException e) {
+            throw new SQSRuntimeException("Could not delete messages from queue " + queue + "!", e);
+        }
+    }
 }
