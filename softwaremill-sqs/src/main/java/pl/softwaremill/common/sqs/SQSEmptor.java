@@ -27,15 +27,14 @@ public class SQSEmptor {
     public void emptyQueue() throws SQSException {
         MessageQueue msgQueue = SQSManager.connectToQueue(serverName, accessKeyId, secretAccessKey, queueName, -1);
 
-        Message[] msgs;
-
+        Message msg;
         do {
-            msgs = msgQueue.receiveMessages(10);
-            for (Message msg : msgs) {
+            msg = msgQueue.receiveMessage();
+            if (msg != null) {
                 System.out.println("Deleting message: " + msg.getMessageId() + " (" + msg.getReceiptHandle() + ")");
                 msgQueue.deleteMessage(msg);
             }
-        } while (msgs.length > 0);
+        } while (msg != null);
 
         System.out.println("Queue emptied");
     }
