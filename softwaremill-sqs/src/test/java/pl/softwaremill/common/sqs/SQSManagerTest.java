@@ -1,8 +1,6 @@
 package pl.softwaremill.common.sqs;
 
-import com.xerox.amazonws.sqs2.SQSException;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 
@@ -19,19 +17,27 @@ public class SQSManagerTest {
 
     @Test(enabled = true)
     public void testTwoMessagesSQSDelivery() throws InterruptedException {
-        SQSManager.setQueueVisibilityTimeout("test", 0);
+        long oldDiscardMessagesSentBefore = getDiscardMessagesSentBefore();
+        // Allowing a second time difference between amazon and our clocks
+        setDiscardMessagesSentBefore(System.currentTimeMillis() - 1000);
 
-        //send a message to SQS
-        SQSManager.sendMessage("test", MESSAGE);
-        SQSManager.sendMessage("test", MESSAGE);
+        try {
+            SQSManager.setQueueVisibilityTimeout("test", 0);
 
-        //receive message from SQS
-        SQSAnswer answer1 = receiveAndDeleteMessage();
-        SQSAnswer answer2 = receiveAndDeleteMessage();
+            //send a message to SQS
+            SQSManager.sendMessage("test", MESSAGE);
+            SQSManager.sendMessage("test", MESSAGE);
 
-        //verify received message
-        Assert.assertEquals(answer1.getMessage().toString(), MESSAGE);
-        Assert.assertEquals(answer2.getMessage().toString(), MESSAGE);
+            //receive message from SQS
+            SQSAnswer answer1 = receiveAndDeleteMessage();
+            SQSAnswer answer2 = receiveAndDeleteMessage();
+
+            //verify received message
+            Assert.assertEquals(answer1.getMessage().toString(), MESSAGE);
+            Assert.assertEquals(answer2.getMessage().toString(), MESSAGE);
+        } finally {
+            setDiscardMessagesSentBefore(oldDiscardMessagesSentBefore);
+        }
     }
 
     private SQSAnswer receiveAndDeleteMessage() throws InterruptedException {
@@ -46,10 +52,5 @@ public class SQSManagerTest {
         }
 
         throw new RuntimeException("No message received from queue test in 3 seconds");
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void emptyQueue() throws SQSException {
-        new SQSEmptor(SQS_SERVER, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, "test").emptyQueue();
     }
 }
