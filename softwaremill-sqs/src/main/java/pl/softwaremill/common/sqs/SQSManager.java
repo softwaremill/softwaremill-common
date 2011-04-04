@@ -8,6 +8,8 @@ import pl.softwaremill.common.sqs.util.Base64Coder;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 
 import java.io.*;
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -104,11 +106,15 @@ public class SQSManager {
 
             log.debug("Polling queue " + queue);
 
-            MessageQueue msgQueue = connectToQueue(queue, -1);
-
-            Message msg = msgQueue.receiveMessage();
+            Message msg = doReceiveMessage(queue);
 
             if (msg != null) {
+                if (!isValid(msg)) {
+                    log.warn("Deleting an invalid message from SQS queue " + queue + " with handle " + msg.getReceiptHandle());
+                    deleteMessage(queue, msg.getReceiptHandle());
+                    return receiveMessage(queue);
+                }
+
                 String data = msg.getMessageBody();
 
                 ByteArrayInputStream bais = new ByteArrayInputStream(Base64Coder.decode(data));
@@ -139,6 +145,19 @@ public class SQSManager {
         }
     }
 
+    private static Message doReceiveMessage(String queue) throws SQSException {
+        MessageQueue msgQueue = connectToQueue(queue, -1);
+        Message[] messages = msgQueue.receiveMessages(BigInteger.valueOf(1L), null, Arrays.asList("SentTimestamp"));
+        switch (messages.length) {
+            case 0: return null;
+            case 1: return messages[0];
+            default: throw new IllegalStateException("Receive messages returned more than 1 message!");
+        }
+    }
+
+    private static boolean isValid(Message msg) {
+        return Long.parseLong(msg.getAttribute("SentTimestamp")) > SQSConfiguration.getDiscardMessagesSentBefore();
+    }
 
     /**
      * Deletes a message from a SQS queue

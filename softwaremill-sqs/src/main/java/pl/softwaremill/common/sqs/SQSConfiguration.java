@@ -35,4 +35,14 @@ public class SQSConfiguration {
         String server = props.get("sqsServer");
         SQS_SERVER = (server == null) ? "queue.amazonaws.com" : server;
     }
+
+    private static long discardMessagesSentBefore = 0;
+
+    public static long getDiscardMessagesSentBefore() {
+        return discardMessagesSentBefore;
+    }
+
+    public static void setDiscardMessagesSentBefore(long discardMessagesSentBefore) {
+        SQSConfiguration.discardMessagesSentBefore = discardMessagesSentBefore;
+    }
 }
