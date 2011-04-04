@@ -22,11 +22,6 @@
             <artifactId>softwaremill-cdi</artifactId>
             <version>${version}</version>
         </dependency>
-        <dependency>
-            <groupId>pl.softwaremill.common</groupId>
-            <artifactId>softwaremill-servlets</artifactId>
-            <version>${version}</version>
-        </dependency>
 
         <!-- CDI (JSR-299) -->
         <dependency>
