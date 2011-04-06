@@ -36,7 +36,14 @@ public class SQSConfiguration {
         SQS_SERVER = (server == null) ? "queue.amazonaws.com" : server;
     }
 
-    private static long discardMessagesSentBefore = 0;
+    private static long discardMessagesSentBefore;
+
+    static {
+        // Can be set e.g. by Selenium tests as an argument when starting up JBoss
+        discardMessagesSentBefore = Long.parseLong(System.getProperty("pl.softwaremill.common.sqs.discard_messages_sent_before", "0"));
+        System.out.println("--- Discard SQS messages sent before = " + discardMessagesSentBefore);
+    }
+
 
     public static long getDiscardMessagesSentBefore() {
         return discardMessagesSentBefore;
