@@ -1,18 +1,14 @@
 package pl.softwaremill.common.sqs.task;
 
-import org.jboss.weld.context.bound.BoundRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.sqs.SQSManager;
 import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
 import pl.softwaremill.common.sqs.timer.TimerManager;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
-import pl.softwaremill.common.util.dependency.D;
 
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
-import java.util.HashMap;
-import java.util.Map;
 
 import static pl.softwaremill.common.sqs.SQSConfiguration.*;
 
@@ -57,7 +53,7 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
                         SQSManager.setMessageVisibilityTimeout(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle(), task.getTaskTimeout());
                     }
 
-                    executeTask(task);
+                    new ExecuteWithRequestContext(task).execute();
 
                     SQSManager.deleteMessage(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle());
                 }
@@ -73,22 +69,6 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
         }
 
         log.debug("SQS task queue checked " + TASK_SQS_QUEUE);
-    }
-
-    private <T extends Task<T>> void executeTask(T task) {
-        BoundRequestContext requestContext = D.inject(BoundRequestContext.class);
-
-        Map<String, Object> context = new HashMap<String, Object>();
-        try {
-            requestContext.associate(context);
-            requestContext.activate();
-
-            D.inject(task.getExecutorBeanClass()).execute(task);
-        } finally {
-            requestContext.invalidate();
-            requestContext.deactivate();
-            requestContext.dissociate(context);
-        }
     }
 
     /**
