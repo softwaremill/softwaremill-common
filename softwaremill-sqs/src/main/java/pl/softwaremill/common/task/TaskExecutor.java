@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.task;
+package pl.softwaremill.common.task;
 
 /**
  * @author Adam Warski (adam at warski dot org)

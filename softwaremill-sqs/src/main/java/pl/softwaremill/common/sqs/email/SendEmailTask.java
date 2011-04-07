@@ -1,13 +1,13 @@
 package pl.softwaremill.common.sqs.email;
 
-import pl.softwaremill.common.sqs.task.Task;
-import pl.softwaremill.common.sqs.task.TaskExecutor;
 import pl.softwaremill.common.sqs.util.EmailDescription;
+import pl.softwaremill.common.task.OneTimeTask;
+import pl.softwaremill.common.task.TaskExecutor;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class SendEmailTask implements Task<SendEmailTask> {
+public class SendEmailTask implements OneTimeTask<SendEmailTask> {
     private final EmailDescription email;
 
     public SendEmailTask(EmailDescription email) {

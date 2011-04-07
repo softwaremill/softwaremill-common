@@ -6,6 +6,8 @@ import pl.softwaremill.common.sqs.SQSManager;
 import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
 import pl.softwaremill.common.sqs.timer.TimerManager;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
+import pl.softwaremill.common.task.ExecuteWithRequestContext;
+import pl.softwaremill.common.task.OneTimeTask;
 
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
@@ -45,9 +47,9 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
         if (sqsAnswer != null) {
             Object message = sqsAnswer.getMessage();
 
-            if (message instanceof Task) {
+            if (message instanceof OneTimeTask) {
                 log.debug("Deserialized message: " + message);
-                Task task = (Task) message;
+                OneTimeTask task = (OneTimeTask) message;
                 try {
                     if (task.getTaskTimeout() != null) {
                         SQSManager.setMessageVisibilityTimeout(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle(), task.getTaskTimeout());
@@ -75,7 +77,7 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
      * Asynchronously executes the given task.
      * @param task Task to execute.
      */
-    public static void scheduleTask(Task<?> task) {
+    public static void scheduleTask(OneTimeTask<?> task) {
         SQSManager.sendMessage(TASK_SQS_QUEUE, task);
     }
 }

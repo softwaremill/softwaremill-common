@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.task;
+package pl.softwaremill.common.task;
 
 import org.jboss.weld.context.bound.BoundRequestContext;
 import pl.softwaremill.common.util.dependency.D;

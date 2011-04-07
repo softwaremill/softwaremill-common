@@ -1,6 +1,6 @@
 package pl.softwaremill.common.sqs.email;
 
-import pl.softwaremill.common.sqs.task.TaskExecutor;
+import pl.softwaremill.common.task.TaskExecutor;
 
 import javax.mail.MessagingException;
 
