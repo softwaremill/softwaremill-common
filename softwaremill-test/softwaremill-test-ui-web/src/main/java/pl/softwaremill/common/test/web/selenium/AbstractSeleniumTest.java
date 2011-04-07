@@ -46,7 +46,6 @@ public abstract class AbstractSeleniumTest {
 	 * This can be used to modify this properties, e.g. when using different test url.
 	 */
 	public SeleniumBrowserProperties getBrowserProperties() {
-        System.out.println("br.props: "+browserProperties);
         return browserProperties;
 	}
 
