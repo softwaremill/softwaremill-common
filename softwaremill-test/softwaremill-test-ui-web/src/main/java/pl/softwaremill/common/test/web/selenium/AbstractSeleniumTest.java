@@ -22,19 +22,23 @@ public abstract class AbstractSeleniumTest {
 
 	public static Selenium selenium;
 
-	private SeleniumBrowserProperties browserProperties;
+	private static SeleniumBrowserProperties browserProperties;
 
-	private String seleniumHost;
-	private int seleniumServerPort;
+	private static String seleniumHost;
+	private static int seleniumServerPort;
 
-	public AbstractSeleniumTest() {
-		seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
-		seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
+    static {
+        seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
+        seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
 		String testServerPort = System.getProperty("selenium.testserver.port", "8280");
 		String testServerUrl = System.getProperty("selenium.testserver.url", "http://localhost");
 		String browserCommand = System.getProperty("selenium.browser.command", "*firefox");
 
-		browserProperties = new SeleniumBrowserProperties(browserCommand, testServerUrl, testServerPort);
+        browserProperties = new SeleniumBrowserProperties(browserCommand, testServerUrl, testServerPort);
+    }
+
+	public AbstractSeleniumTest() {
+
 	}
 
 	/**
@@ -42,7 +46,8 @@ public abstract class AbstractSeleniumTest {
 	 * This can be used to modify this properties, e.g. when using different test url.
 	 */
 	public SeleniumBrowserProperties getBrowserProperties() {
-		return browserProperties;
+        System.out.println("br.props: "+browserProperties);
+        return browserProperties;
 	}
 
 	@BeforeSuite
