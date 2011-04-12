@@ -41,7 +41,7 @@ public class SQSManagerTest {
     }
 
     private SQSAnswer receiveAndDeleteMessage() throws InterruptedException {
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<10; i++) {
             SQSAnswer answer = SQSManager.receiveMessage("test");
             if (answer != null) {
                 SQSManager.deleteMessage("test", answer.getReceiptHandle());
@@ -51,6 +51,6 @@ public class SQSManagerTest {
             Thread.sleep(1000);
         }
 
-        throw new RuntimeException("No message received from queue test in 3 seconds");
+        throw new RuntimeException("No message received from queue test in 10 seconds");
     }
 }
