@@ -25,7 +25,7 @@ public class EmailSender {
         boolean secured = smtpUsername != null;
 
         // Setup mail server
-        Properties props = System.getProperties();
+        Properties props = new Properties();
         if (secured) {
             props.put("mail.smtps.host", smtpHost);
             props.put("mail.smtps.port", smtpPort);
@@ -39,7 +39,7 @@ public class EmailSender {
         }
 
         // Get a mail session
-        Session session = Session.getDefaultInstance(props, null);
+        Session session = Session.getInstance(props);
 
         MimeMessage m = new MimeMessage(session);
         m.setFrom(new InternetAddress(from));
