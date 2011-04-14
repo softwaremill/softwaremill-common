@@ -85,10 +85,9 @@ public class SecurityPhaseListener implements PhaseListener {
 
     private Map<String, List<String>> repackageParameters(Map<String, String[]> requestParameterValuesMap) {
         Map<String, List<String>> map = new HashMap<String, List<String>>();
-        Set<String> keys = requestParameterValuesMap.keySet();
-        for (String key : keys) {
-            String[] strings = requestParameterValuesMap.get(key);
-            map.put(key, Arrays.asList(strings));
+        Set<Map.Entry<String, String[]>> entries = requestParameterValuesMap.entrySet();
+        for (Map.Entry<String, String[]> entry : entries) {
+            map.put(entry.getKey(), Arrays.asList(entry.getValue()));
         }
         return map;
     }
