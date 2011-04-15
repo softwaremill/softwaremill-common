@@ -8,6 +8,7 @@ import javax.faces.convert.ConverterException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,7 +31,9 @@ public class MultiValidator extends UIInput {
 
     private Collection<UIComponent> getAllChildren(UIComponent component) {
         List<UIComponent> children = new ArrayList<UIComponent>();
-        for(UIComponent child : component.getChildren()) {
+        Iterator<UIComponent> it = component.getFacetsAndChildren();
+        while(it.hasNext()) {
+            UIComponent child = it.next();
             children.add(child);
             children.addAll(getAllChildren(child));
         }
