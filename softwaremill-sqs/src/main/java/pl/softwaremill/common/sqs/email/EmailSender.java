@@ -2,14 +2,20 @@ package pl.softwaremill.common.sqs.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.softwaremill.common.sqs.util.AttachmentDescription;
 import pl.softwaremill.common.sqs.util.EmailDescription;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
@@ -21,7 +27,8 @@ public class EmailSender {
     private static final Logger log = LoggerFactory.getLogger(EmailSender.class);
 
     public static void send(String smtpHost, String smtpPort, String smtpUsername, String smtpPassword, String from,
-                            String encoding, EmailDescription emailDescription) throws MessagingException {
+                            String encoding, EmailDescription emailDescription,
+                            AttachmentDescription... attachmentDescriptions) throws MessagingException {
         boolean secured = smtpUsername != null;
 
         // Setup mail server
@@ -52,7 +59,13 @@ public class EmailSender {
         m.setRecipients(javax.mail.Message.RecipientType.TO, to);
         m.setSubject(emailDescription.getSubject(), encoding);
         m.setSentDate(new Date());
-        m.setText(emailDescription.getMessage(), encoding, "plain");
+
+        if (attachmentDescriptions.length > 0) {
+            addAttachments(m, emailDescription.getMessage(), encoding, attachmentDescriptions);
+        } else {
+            m.setText(emailDescription.getMessage(), encoding, "plain");
+        }
+
         if (secured) {
             Transport transport = session.getTransport("smtps");
             try {
@@ -66,5 +79,44 @@ public class EmailSender {
         }
 
         log.debug("Mail '" + emailDescription.getSubject() + "' sent to: " + Arrays.toString(to));
+    }
+
+    private static void addAttachments(MimeMessage mimeMessage, String msg, String encoding,
+                                       AttachmentDescription... attachmentDescriptions) throws MessagingException {
+        MimeMultipart multiPart = new MimeMultipart();
+
+        MimeBodyPart textPart = new MimeBodyPart();
+        multiPart.addBodyPart(textPart);
+        textPart.setText(msg, encoding, "plain");
+
+        for (final AttachmentDescription attachmentDescription : attachmentDescriptions) {
+            MimeBodyPart binaryPart = new MimeBodyPart();
+            multiPart.addBodyPart(binaryPart);
+
+            DataSource ds = new DataSource() {
+                public InputStream getInputStream() throws IOException {
+                    return new ByteArrayInputStream(attachmentDescription.getContent());
+                }
+
+                public OutputStream getOutputStream() throws IOException {
+                    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                    byteStream.write(attachmentDescription.getContent());
+                    return byteStream;
+                }
+
+                public String getContentType() {
+                    return attachmentDescription.getContentType();
+                }
+
+                public String getName() {
+                    return attachmentDescription.getFilename();
+                }
+            };
+            binaryPart.setDataHandler(new DataHandler(ds));
+            binaryPart.setFileName(attachmentDescription.getFilename());
+            binaryPart.setDescription("");
+        }
+
+        mimeMessage.setContent(multiPart);
     }
 }
