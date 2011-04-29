@@ -7,7 +7,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import java.util.List;
+import java.util.Iterator;
 
 /**
  * @author Adam Warski (adam at warski dot org)
@@ -32,8 +32,9 @@ public class FieldsEqualValidator implements javax.faces.validator.Validator {
         if (component.getId().equals(id)) {
             return component;
         } else {
-            List<UIComponent> children = component.getChildren();
-            for (UIComponent myComponent : children) {
+            Iterator<UIComponent> children = component.getFacetsAndChildren();
+            while(children.hasNext()) {
+                UIComponent myComponent = children.next();
                 UIComponent componentFound = findComponent(myComponent, id);
                 if (componentFound != null) return componentFound;
             }
