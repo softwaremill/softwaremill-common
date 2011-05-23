@@ -1,0 +1,1 @@
+Quick and dirty Scala script to create simple JSF view of fields of entity. It is necessary to add .jar with entity to the classpath (add it as dependency to pom.xml, and your IDE should do the rest).
