@@ -78,7 +78,7 @@ public abstract class AbstractPage implements Page {
         String paramSeparator = "?";
         for (Map.Entry<String, String> nameValue : params.entrySet()) {
             sb.append(paramSeparator).append(nameValue.getKey()).append("=").append(nameValue.getValue());
-            paramSeparator = "&amp;";
+            paramSeparator = "&";
         }
 
         return sb.toString();
