@@ -436,8 +436,7 @@
         </repository>
     </repositories>
 
-    <pluginRepositories>
-    </pluginRepositories>
+    <pluginRepositories></pluginRepositories>
 
     <profiles>
         <profile>
