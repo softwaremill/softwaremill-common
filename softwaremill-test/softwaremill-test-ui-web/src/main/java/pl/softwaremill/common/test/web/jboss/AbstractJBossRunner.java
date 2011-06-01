@@ -114,7 +114,7 @@ public abstract class AbstractJBossRunner {
 
 	private boolean winSystem() {
 		String osName = System.getProperty("os.name");
-		return osName != null && osName.indexOf("Windows") != -1;
+		return osName != null && osName.contains("Windows");
 	}
 
 	private void waitFor(Process process, String message) {
