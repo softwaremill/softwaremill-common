@@ -25,9 +25,7 @@ public class TestInjectDataAndLogger extends Arquillian {
                 .addClass(InjectDataAndLoggerField.class)
                 .addPackage(CreatedWith.class.getPackage());
 
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
-
-        return ar;
+        return ArquillianUtil.addEmptyBeansXml(ar);
     }
 
     @Inject

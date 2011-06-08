@@ -18,8 +18,6 @@ public class AutoFactoryFieldInjectionTest extends AbstractAutoFactoryTest {
                 .addClass(TotalPriceCalculatorFixedInjectionImpl.class)
                 .addPackage(CreatedWith.class.getPackage());
 
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
-
-        return ar;
+        return ArquillianUtil.addEmptyBeansXml(ar);
     }
 }

@@ -24,9 +24,7 @@ public class TestInjectDataAndInstance extends Arquillian {
                 .addClass(InstanceBean2.class)
                 .addPackage(CreatedWith.class.getPackage());
 
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
-
-        return ar;
+        return ArquillianUtil.addEmptyBeansXml(ar);
     }
 
     @Inject
