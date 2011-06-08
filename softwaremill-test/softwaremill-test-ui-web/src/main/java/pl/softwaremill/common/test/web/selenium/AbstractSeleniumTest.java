@@ -164,8 +164,16 @@ public abstract class AbstractSeleniumTest {
 		Assert.fail(message);
 	}
 
-	public static void captureScreenshot() throws Exception {
-		File f = File.createTempFile("selenium_screenshot", "failed.png");
+    /**
+     * Use {@link #captureScreenshot(String)} instead.
+     */
+    @Deprecated
+    public static void captureScreenshot() throws Exception {
+        captureScreenshot("");
+    }
+
+	public static void captureScreenshot(String testName) throws Exception {
+		File f = File.createTempFile("selenium_screenshot_" + testName + "_", "failed.png");
 
 		selenium.captureEntirePageScreenshot(f.getAbsolutePath(), "");
 
