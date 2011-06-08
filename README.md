@@ -73,4 +73,4 @@ A timing interceptor + web filter + portable extension for profiling CDI beans.
 
 ---
 
-Licensed under the Apache2 license. [Softwaremill 2010](http://softwaremill.eu/).
+Licensed under the Apache2 license. [Softwaremill 2010-2011](http://softwaremill.eu/).
