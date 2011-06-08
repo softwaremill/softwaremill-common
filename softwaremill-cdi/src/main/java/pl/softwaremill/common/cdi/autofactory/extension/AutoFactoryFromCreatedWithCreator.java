@@ -1,5 +1,8 @@
 package pl.softwaremill.common.cdi.autofactory.extension;
 
+import org.jboss.weld.manager.BeanManagerImpl;
+import org.jboss.weld.manager.SimpleInjectionTarget;
+import org.jboss.weld.resources.ClassTransformer;
 import pl.softwaremill.common.cdi.autofactory.CreatedWith;
 import pl.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
 import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.ConstructorToParameterValuesConverter;
@@ -39,10 +42,18 @@ public class AutoFactoryFromCreatedWithCreator<T> {
                 methodParameterIndexer, constructorInjection);
         ParameterValue[] createdTypeConstructorParameterValues = converter.convert();
 
+        // We cannot use BeanManager.createInjectionTarget as this adds the injection target to validation
+        InjectionTarget<T> injectionTarget = createInjectionTargetWithoutValidation();
+
         return new AutoFactoryBean<T>(beanManager, factoryClass,
                 new CreatedTypeData<T>(createdTypeConstructorParameterValues,
-                soleCreatedTypeConstructor, beanManager.createInjectionTarget(createdType),
+                soleCreatedTypeConstructor, injectionTarget,
                 constructorInjection));
+    }
+
+    private SimpleInjectionTarget<T> createInjectionTargetWithoutValidation() {
+        BeanManagerImpl bmi = (BeanManagerImpl) beanManager;
+        return new SimpleInjectionTarget<T>(bmi.getServices().get(ClassTransformer.class).loadClass(createdType), bmi);
     }
 
     private void checkFactoryClassIsAnInterface() {
