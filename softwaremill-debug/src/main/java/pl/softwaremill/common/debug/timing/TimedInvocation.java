@@ -37,4 +37,26 @@ public class TimedInvocation implements Comparable<TimedInvocation> {
     public int compareTo(TimedInvocation o) {
         return -Long.valueOf(dt).compareTo(o.dt);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TimedInvocation)) return false;
+
+        TimedInvocation that = (TimedInvocation) o;
+
+        if (calls != that.calls) return false;
+        if (dt != that.dt) return false;
+        if (method != null ? !method.equals(that.method) : that.method != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (dt ^ (dt >>> 32));
+        result = 31 * result + calls;
+        result = 31 * result + (method != null ? method.hashCode() : 0);
+        return result;
+    }
 }
