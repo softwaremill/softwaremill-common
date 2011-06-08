@@ -1,12 +1,12 @@
 package pl.softwaremill.common.cdi.objectservice.extension;
 
-import org.jboss.weld.literal.NewLiteral;
 import org.jboss.weld.util.reflection.HierarchyDiscovery;
 import org.jboss.weld.util.reflection.ParameterizedTypeImpl;
 import pl.softwaremill.common.cdi.objectservice.OS;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.*;
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class ObjectServiceExtension implements Extension {
+public class ObjectServiceExtension implements Serializable, Extension {
     /*
     An object service is a class which implements the OS interface, and its type parameter can be resolved
     to a class.
