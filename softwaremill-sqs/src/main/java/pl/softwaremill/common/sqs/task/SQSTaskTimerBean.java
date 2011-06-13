@@ -3,7 +3,6 @@ package pl.softwaremill.common.sqs.task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.sqs.SQSManager;
-import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
 import pl.softwaremill.common.sqs.timer.TimerManager;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 import pl.softwaremill.common.task.ExecuteWithRequestContext;
@@ -60,8 +59,7 @@ public abstract class SQSTaskTimerBean extends TimerManager implements SQSTaskTi
                     SQSManager.deleteMessage(TASK_SQS_QUEUE, sqsAnswer.getReceiptHandle());
                 }
                 catch (RuntimeException e) {
-                    log.warn("Something went wrong and the task has not been executed. Redelivery will occur.");
-                    throw new SQSRuntimeException(e);
+                    log.warn("Something went wrong and the task has not been executed. Redelivery will occur.", e);
                 }
             } else {
                 log.warn("Trash in SQS: " + TASK_SQS_QUEUE);
