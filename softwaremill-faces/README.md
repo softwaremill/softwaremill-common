@@ -147,6 +147,21 @@ Value that goes to validator is `List` of submitted values of every `UIInput` co
 
 If validation doesn't pass, message appears in `<h:message for="atLeastOne" />`
 
+## Delegating validator
+
+It can be used when you want to specify validator ID base on runtime value (eg. from bean passed to a view). All validators are
+resolved during JSF compile time, so you cannot just do it like this: `<f:validator validatorId="#{bean.validatorId}"/>` - it simple
+doesn't work. Instead, you can use `DelegatingValidator` to do the work, see an example below:
+
+    <h:inputText value="#{pageBean.userName}" id="userName">
+        <f:attribute name="validatorId" value="#{pageBean.validatorId}"/>
+        <f:validator validatorId="delegatingValidator"/>
+    </h:inputText>
+
+As you can see, you must specify two things, the validator itself and an attribute named `validatorId` with valid validator ID.
+The expression `#{pageBean.validatorId}` must return a valid validator ID - the validator must be registered with `faces-config.xml`
+or by `@FacesValidator` annotation.
+
 ##File upload
 
 For file upload to work, there is jetty `MultipartFilter` necessary, which
