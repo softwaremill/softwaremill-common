@@ -1,6 +1,7 @@
 package pl.softwaremill.common.faces.messages;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.cdi.el.ELEvaluator;
 import pl.softwaremill.common.faces.i18n.CurrentLocale;
 
@@ -11,7 +12,11 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * @author Seam2 authors (http://seamframework.org)
@@ -21,8 +26,7 @@ import java.util.*;
 // TODO: make @FlashScoped after flash is fixed
 public class FacesMessages implements Serializable {
 
-    @Inject
-    private Logger logger;
+    private final static Logger LOG = LoggerFactory.getLogger(FacesMessages.class);
 
     @Inject
     private ELEvaluator elEvaluator;
@@ -50,6 +54,27 @@ public class FacesMessages implements Serializable {
 
     private List<MessageData> messages = new ArrayList<MessageData>();
 
+    /**
+     * Adds a raw message (without looking into Resource Bundle) for a given UI control base on controlId
+     *
+     * @param controlId UI control ID
+     * @param message   a raw message to add
+     * @param severity  FacesMessage's severity level
+     */
+    public void addMesageToControl(String controlId, String message, FacesMessage.Severity severity) {
+        messages.add(new MessageData(controlId, new FacesMessage(severity, message, message)));
+    }
+
+    /**
+     * Adds a raw message (without looking into Resource Bundle) as a global message
+     *
+     * @param message  a raw message to add
+     * @param severity FacesMessage's severity level
+     */
+    public void addMesageToControl(String message, FacesMessage.Severity severity) {
+        addMesageToControl(null, message, severity);
+    }
+
     public void addEL(String elExpression, FacesMessage.Severity severity) {
         addELToControl(null, elExpression, severity);
     }
@@ -72,8 +97,8 @@ public class FacesMessages implements Serializable {
     }
 
     public void addFromBundleToControl(String controlId, String key, FacesMessage.Severity severity, Object... params) {
-        key = formatMessage(key, params);
-        FacesMessage fm = new FacesMessage(severity, key, key);
+        String message = formatMessage(key, params);
+        FacesMessage fm = new FacesMessage(severity, message, message);
         messages.add(new MessageData(controlId, fm));
     }
 
@@ -81,7 +106,6 @@ public class FacesMessages implements Serializable {
         for (MessageData message : messages) {
             FacesContext.getCurrentInstance().addMessage(getClientId(message.getControlId()), message.getFm());
         }
-
         messages.clear();
     }
 
@@ -90,7 +114,7 @@ public class FacesMessages implements Serializable {
         try {
             return tryFormatMessage(key, params);
         } catch (MissingResourceException e) {
-            logger.warn("Missing resource key: " + key, e);
+            LOG.warn("Missing resource key: [" + key + "]", e);
             return "???" + key + "???";
         }
     }
@@ -105,7 +129,6 @@ public class FacesMessages implements Serializable {
         if (id == null) {
             return null;
         }
-
         FacesContext facesContext = FacesContext.getCurrentInstance();
         return getClientId(facesContext.getViewRoot(), id, facesContext);
     }
