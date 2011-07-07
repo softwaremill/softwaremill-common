@@ -19,5 +19,10 @@ public class ClasspathPropertiesProvider implements PropertiesProvider {
             return null;
         }
     }
+
+    @Override
+    public boolean providerAvailable() {
+        return true;
+    }
 }
 

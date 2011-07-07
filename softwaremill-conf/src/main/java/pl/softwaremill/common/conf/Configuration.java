@@ -54,19 +54,26 @@ public class Configuration {
         throw new RuntimeException("No configuration found for: " + name);
     }
 
-    public static void registerPropertiesProvider(PropertiesProvider provider) {
-        propertyProviders.add(provider);
+    public static void registerPropertiesProvider(Class<? extends PropertiesProvider> providerClass) {
+        PropertiesProvider provider = null;
+        try {
+            provider = providerClass.newInstance();
+
+            if (provider.providerAvailable()) {
+                propertyProviders.add(provider);
+            }
+        } catch (InstantiationException e) {
+            // do not register
+        } catch (IllegalAccessException e) {
+            // do not register
+        }
     }
 
     // Registering default property providers. First JBoss (if available), then classpath.
     static {
-        try {
-            Thread.currentThread().getContextClassLoader().loadClass("org.jboss.mx.util.MBeanServerLocator");
-            registerPropertiesProvider(new JBossDeployPropertiesProvider());
-        } catch (ClassNotFoundException e) {
-            // Class not found - not registering.
-        }
-        registerPropertiesProvider(new ClasspathPropertiesProvider());
+        registerPropertiesProvider(JBoss6DeployPropertiesProvider.class);
+        registerPropertiesProvider(JBoss7DeployPropertiesProvider.class);
+        registerPropertiesProvider(ClasspathPropertiesProvider.class);
     }
 
     static ImmutableMap<String, String> loadFromURL(URL url) {

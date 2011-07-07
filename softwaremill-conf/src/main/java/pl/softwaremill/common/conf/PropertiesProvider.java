@@ -7,4 +7,6 @@ import com.google.common.collect.ImmutableMap;
  */
 public interface PropertiesProvider {
     ImmutableMap<String, String> lookupProperties(String name);
+
+    boolean providerAvailable();
 }
