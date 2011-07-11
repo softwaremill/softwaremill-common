@@ -6,7 +6,7 @@
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-test</artifactId>
-        <version>51</version>
+        <version>52-SNAPSHOT</version>
     </parent>
 
     <build>
