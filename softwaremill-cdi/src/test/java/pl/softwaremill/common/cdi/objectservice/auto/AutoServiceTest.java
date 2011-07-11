@@ -15,6 +15,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * Test for auto object services
  */
+@Test(groups = "autoObjectGroup", dependsOnGroups = "basicObjectGroup")
 public class AutoServiceTest extends Arquillian {
 
     @Deployment

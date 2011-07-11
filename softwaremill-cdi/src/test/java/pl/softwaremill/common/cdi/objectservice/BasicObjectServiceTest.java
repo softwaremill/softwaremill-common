@@ -14,6 +14,7 @@ import javax.inject.Inject;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
+@Test(groups = "basicObjectGroup")
 public class BasicObjectServiceTest extends Arquillian {
     @Deployment
     public static JavaArchive createTestArchive() {
