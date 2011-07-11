@@ -1,5 +1,6 @@
 package pl.softwaremill.common.cdi.objectservice.auto;
 
+import pl.softwaremill.common.cdi.objectservice.extension.ObjectServiceSpecification;
 import pl.softwaremill.common.util.dependency.BeanManagerDependencyProvider;
 
 import javax.enterprise.inject.spi.BeanManager;
@@ -42,16 +43,54 @@ public class AutoOSInvocationHandler implements InvocationHandler {
                 if ((bean = beanCache.get(toService)) != null) {
 
                 } else {
-                    Class serviceClass = autoObjectServiceExtension.autoOSMap.get(method.getDeclaringClass())
+                    Class<?> interfaceClass = method.getDeclaringClass();
+
+                    Class serviceClass = autoObjectServiceExtension.autoOSMap.get(interfaceClass)
                             .get(toService);
-                    beanCache.put(toService, bean = new BeanManagerDependencyProvider(beanManager).inject(
-                            serviceClass, serviceClass.getAnnotation(OSImpl.class)));
+
+                    if (serviceClass == null) {
+                        // try with inheritance if there's no direct match
+
+                        serviceClass = serviceForObject(toService, interfaceClass);
+                    }
+                    try {
+                        beanCache.put(toService, bean = new BeanManagerDependencyProvider(beanManager).inject(
+                                serviceClass, serviceClass.getAnnotation(OSImpl.class)));
+                    } catch (Exception e) {
+                        throw new AutoOSException("Cannot resolve implementation of @OS " + interfaceClass
+                                + " for object of type " + toService, e);
+                    }
                 }
 
-                return method.invoke(bean, args);
+                if (bean != null) {
+                    return method.invoke(bean, args);
+                }
             }
         }
 
-        throw new RuntimeException("Couldn't find appropriate ObjectService for class " + toService);
+        throw new AutoOSException("Couldn't find appropriate ObjectServiceImpl for class " + toService);
+    }
+
+    private Class serviceForObject(Class<?> objClass, Class<?> serviceClass) {
+        // TODO: cache results
+
+        Class bestSoFar = null;
+
+        // Checking all registered specifications
+        for (Class toService : autoObjectServiceExtension.autoOSMap.get(serviceClass).keySet()) {
+            // Checking if the service is suitable for the requested one
+            // Here we allow subclasses of objClass, to make sure that e.g. Hibernate Proxies work. However, this
+            // will not work if there are object services for non-terminal nodes (non-leaves) in the inheritance tree.
+            if (toService.isAssignableFrom(objClass)) {
+                // Checking if it's better (more specific) than the one currently found
+                if (bestSoFar == null || bestSoFar.isAssignableFrom(toService)) {
+                    bestSoFar = toService;
+                }
+
+                // TODO: check if there's no ambiguency (two "best")
+            }
+        }
+
+        return autoObjectServiceExtension.autoOSMap.get(serviceClass).get(bestSoFar);
     }
 }

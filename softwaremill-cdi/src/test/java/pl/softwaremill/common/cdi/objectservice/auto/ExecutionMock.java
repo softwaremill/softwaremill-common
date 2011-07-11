@@ -6,7 +6,7 @@ import java.io.Serializable;
 @ApplicationScoped
 public class ExecutionMock implements Serializable{
 
-    Integer urlExecs = 0;
+    Integer myStringExecs = 0;
 
     Integer stringExecs = 0;
 }

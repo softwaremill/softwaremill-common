@@ -5,14 +5,10 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.objectservice.OS;
-import pl.softwaremill.common.cdi.objectservice.auto.IAuto;
-import pl.softwaremill.common.cdi.objectservice.extension.ObjectServiceExtension;
 import pl.softwaremill.common.cdi.util.ArquillianUtil;
 
 import javax.inject.Inject;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -45,17 +41,17 @@ public class AutoServiceTest extends Arquillian {
     public void testAutoWire() throws MalformedURLException {
 
         assertThat(execMock.stringExecs).isEqualTo(0);
-        assertThat(execMock.urlExecs).isEqualTo(0);
+        assertThat(execMock.myStringExecs).isEqualTo(0);
 
         auto.doSomething("", new String("http://softwaremill.pl"), 1);
 
         assertThat(execMock.stringExecs).isEqualTo(1);
-        assertThat(execMock.urlExecs).isEqualTo(0);
+        assertThat(execMock.myStringExecs).isEqualTo(0);
 
-        auto.doSomething("", new URL("http://softwaremill.pl"), 1);
+        auto.doSomething("", new MyString("http://softwaremill.pl"), 1);
 
         assertThat(execMock.stringExecs).isEqualTo(1);
-        assertThat(execMock.urlExecs).isEqualTo(1);
+        assertThat(execMock.myStringExecs).isEqualTo(1);
     }
 
     @Test(dependsOnMethods = "testAutoWire")
@@ -67,5 +63,22 @@ public class AutoServiceTest extends Arquillian {
         auto.doSomething("", "", 1);
 
         assertThat(autoString.getInvCounter()).isEqualTo(3);
+    }
+
+    @Test(expectedExceptions = {AutoOSException.class},
+          expectedExceptionsMessageRegExp = "Cannot resolve implementation of @OS.*")
+    public void testCallWithWrongObject() {
+        auto.doSomething("", new Integer(0), 1);
+    }
+
+    @Test
+    public void testInheritanceCalls() {
+        int myStringExecs = execMock.myStringExecs;
+        int stringExecs = execMock.stringExecs;
+
+        auto.doSomething("", new MySpecialString("simple"), 1);
+
+        assertThat(execMock.myStringExecs).isEqualTo(myStringExecs + 1);
+        assertThat(execMock.stringExecs).isEqualTo(stringExecs);
     }
 }

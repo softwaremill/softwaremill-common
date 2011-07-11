@@ -53,7 +53,7 @@ public class AutoObjectServiceExtension implements Serializable, Extension {
 
                     if (rawClass.getAnnotation(OS.class) != null) {
                         if (autoClass != null) {
-                            throw new RuntimeException(implClass.getCanonicalName() +
+                            throw new AutoOSException(implClass.getCanonicalName() +
                                     "  implements more then one @OS interface. Found @OS interfaces: " +
                                     autoClass.getCanonicalName() + " , " + rawClass.getCanonicalName());
                         }
@@ -66,7 +66,7 @@ public class AutoObjectServiceExtension implements Serializable, Extension {
             }
 
             if (autoClass == null) {
-                throw new RuntimeException("@AutoOSImpl has to implement @AutoOS");
+                throw new AutoOSException("@AutoOSImpl has to implement @AutoOS");
             }
 
             Map<Class, Class> mapPerAuto;
