@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.TypeVariable;
 
 /**
- * //TODO fill in komentarz bitch!
+ * Handler for the @OS invocation
  */
 public class AutoOSInvocationHandler implements InvocationHandler {
 
