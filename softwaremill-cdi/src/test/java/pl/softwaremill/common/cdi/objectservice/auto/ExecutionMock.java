@@ -1,11 +1,12 @@
 package pl.softwaremill.common.cdi.objectservice.auto;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
 
 @ApplicationScoped
-public class ExecutionMock {
+public class ExecutionMock implements Serializable{
 
-    int urlExecs = 0;
+    Integer urlExecs = 0;
 
-    int stringExecs = 0;
+    Integer stringExecs = 0;
 }

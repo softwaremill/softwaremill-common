@@ -6,6 +6,8 @@ import javax.enterprise.inject.spi.BeanManager;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.TypeVariable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handler for the @OS invocation
@@ -14,6 +16,11 @@ public class AutoOSInvocationHandler implements InvocationHandler {
 
     private AutoObjectServiceExtension autoObjectServiceExtension;
     private BeanManager beanManager;
+
+    /**
+     * Cache for already resolved beans
+     */
+    private Map<Class, Object> beanCache = new HashMap<Class, Object>();
 
     public AutoOSInvocationHandler(AutoObjectServiceExtension autoObjectServiceExtension, BeanManager beanManager) {
         this.autoObjectServiceExtension = autoObjectServiceExtension;
@@ -29,15 +36,22 @@ public class AutoOSInvocationHandler implements InvocationHandler {
                 // found it, invoke
                 toService = args[i].getClass();
 
-                Class serviceClass = autoObjectServiceExtension.autoOSMap.get(method.getDeclaringClass())
-                        .get(toService);
-                Object o =  new BeanManagerDependencyProvider(beanManager).inject(
-                        serviceClass, serviceClass.getAnnotation(OSImpl.class));
+                Object bean = null;
 
-                return method.invoke(o, args);
+                // first check the cache
+                if ((bean = beanCache.get(toService)) != null) {
+
+                } else {
+                    Class serviceClass = autoObjectServiceExtension.autoOSMap.get(method.getDeclaringClass())
+                            .get(toService);
+                    beanCache.put(toService, bean = new BeanManagerDependencyProvider(beanManager).inject(
+                            serviceClass, serviceClass.getAnnotation(OSImpl.class)));
+                }
+
+                return method.invoke(bean, args);
             }
         }
 
-        throw new RuntimeException("Couldn't find appropriate ObjectService for class "+toService);
+        throw new RuntimeException("Couldn't find appropriate ObjectService for class " + toService);
     }
 }

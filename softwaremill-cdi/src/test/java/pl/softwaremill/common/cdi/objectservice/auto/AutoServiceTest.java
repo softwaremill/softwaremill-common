@@ -35,6 +35,9 @@ public class AutoServiceTest extends Arquillian {
     @Inject
     private IAuto auto;
 
+    @Inject @OSImpl
+    private AutoString autoString;
+
     @Inject
     private ExecutionMock execMock;
 
@@ -53,5 +56,16 @@ public class AutoServiceTest extends Arquillian {
 
         assertThat(execMock.stringExecs).isEqualTo(1);
         assertThat(execMock.urlExecs).isEqualTo(1);
+    }
+
+    @Test(dependsOnMethods = "testAutoWire")
+    public void testScopes() {
+        assertThat(autoString.getInvCounter()).isEqualTo(1);
+
+        // make few new calls
+        auto.doSomething("", "", 1);
+        auto.doSomething("", "", 1);
+
+        assertThat(autoString.getInvCounter()).isEqualTo(3);
     }
 }
