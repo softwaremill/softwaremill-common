@@ -5,7 +5,7 @@ Maven dependency:
     <dependency>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-cdi</artifactId>
-        <version>9</version>
+        <version>VERSION</version>
     </dependency>
 
 ## Stackable security interceptors
@@ -80,11 +80,13 @@ for each class in a hierarchy, using the extension it is possible to obtain a be
 resolution is performed run-time.
 
 For example, if we have the type hierarchy:
+
     abstract class A
     class B extends A
     class C extends A
 
 And corresponding services:
+
     interface TestService<T extends A> extends OS<T> { void someMethod(); }
     class TestServiceB implements TestService<B> { void someMethod() { ... } }
     class TestServiceC implements TestService<C> { void someMethod() { ... } }
@@ -110,11 +112,13 @@ service is obtained. On each invocation of `f()`, a new service instance is crea
 Similarly like with Adam's implementation there's one interface for the service and a number of services implementing it for different object types to be served. Resolution, like above, is performed run-time.
 
 With the same class hierarchy 
+
     abstract class A
     class B extends A
     class C extends A
 
 The implementation is:
+
     @OS
     interface TestService<T extends A> { void someMethod(T object); }
     @OSImpl
