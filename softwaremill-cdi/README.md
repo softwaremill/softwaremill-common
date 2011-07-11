@@ -73,6 +73,8 @@ in the EL context for the duration of the evaluation.
 
 ## Object services
 
+### Adam's flavor
+
 Object services can be used to "extend" a class hierarchy with methods. If there is a bean implementing some interface
 for each class in a hierarchy, using the extension it is possible to obtain a bean corresponding to a given object; the
 resolution is performed run-time.
@@ -102,6 +104,42 @@ The extension registeres object service provider beans:
 
 The serviced object (B or C in the above example) is set on the services using the `setServiced()` method, when the
 service is obtained. On each invocation of `f()`, a new service instance is created.
+
+### Tomek's flavor
+
+Similarly like with Adam's implementation there's one interface for the service and a number of services implementing it for different object types to be served. Resolution, like above, is performed run-time.
+
+With the same class hierarchy 
+    abstract class A
+    class B extends A
+    class C extends A
+
+The implementation is:
+    @OS
+    interface TestService<T extends A> { void someMethod(T object); }
+    @OSImpl
+    class TestServiceB implements TestService<B> { void someMethod(B object) { ... } }
+    @OSImpl
+    class TestServiceC implements TestService<C> { void someMethod(C object) { ... } }
+
+The interface is always annotated with @OS and has to have one parametrized type. All methods have to use this type once and all implementations have to be annotated with @OSImpl.
+
+The extension registeres object service provider beans:
+
+    @Inject
+    TestService testService;
+
+    void test() {
+        // Will invoke someMethod in TestServiceB
+        testService.someMethod(new B());
+
+        // Will invoke someMethod in TestServiceC
+        testService.someMethod(new C());
+    }
+
+If the implementing service needs to be implemented directly @OSImpl has to be used
+
+    @Inject @OSImpl TestServiceC;
 
 ## Static BeanInject
 
