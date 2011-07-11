@@ -1,7 +1,10 @@
 package pl.softwaremill.common.cdi.validator;
 
 import org.mockito.Mockito;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pl.softwaremill.common.cdi.validation.Password;
@@ -16,13 +19,14 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by amorfis on Dec 3, 2010 1:40:58 PM
  */
+@Test(groups = "passwordValidatorGroup")
 public class PasswordValidatorTest {
 
     private ConstraintValidatorContext context;
     private ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilder
             = mock(ConstraintValidatorContext.ConstraintViolationBuilder.class);
 
-    @BeforeTest
+    @BeforeMethod
     private void prepareMocks() {
         context = mock(ConstraintValidatorContext.class);
 
