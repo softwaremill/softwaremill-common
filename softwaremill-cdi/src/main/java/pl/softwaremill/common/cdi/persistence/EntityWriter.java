@@ -1,5 +1,6 @@
 package pl.softwaremill.common.cdi.persistence;
 
+import org.hibernate.proxy.HibernateProxy;
 import pl.softwaremill.common.util.persistance.Identifiable;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 /**
  * @author Adam Warski (adam at warski dot org)
  * @author Tomasz Szymanski (szimano at szimano dot org)
+ * @author Pawel Stawicki (pawelstawicki at gmail dot com)
  */
 public class EntityWriter {
     @Inject @ReadOnly
@@ -71,7 +73,8 @@ public class EntityWriter {
             // copy of the entity. It must also be detached, hence first looking it up. It is possible that the find()
             // loads the entity into the EM, but it's not possible to check if an entity is loaded into an EM simply
             // by id.
-            readOnlyEm.detach(readOnlyEm.find(entity.getClass(), entity.getId()));
+            Class<T> entityTargetClass = getTargetClassIfProxied((Class<T>) entity.getClass());
+            readOnlyEm.detach(readOnlyEm.find(entityTargetClass, entity.getId()));
         }
 
         // attach the entity
@@ -81,4 +84,15 @@ public class EntityWriter {
         writeableEm.remove(entity);
         writeableEm.flush();
     }
+
+    private <T> Class<T> getTargetClassIfProxied(Class<T> clazz) {
+        if (clazz == null) {
+            return null;
+        } else if (HibernateProxy.class.isAssignableFrom(clazz)) {
+            // Get the source class of Javassist proxy instance.
+            return (Class<T>) clazz.getSuperclass();
+        }
+        return clazz;
+    }
+
 }
