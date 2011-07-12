@@ -33,7 +33,8 @@ public class EntityWriter {
             // copy of the entity. It must also be detached, hence first looking it up. It is possible that the find()
             // loads the entity into the EM, but it's not possible to check if an entity is loaded into an EM simply
             // by id.
-            readOnlyEm.detach(readOnlyEm.find(entity.getClass(), entity.getId()));
+            Class<T> entityTargetClass = (Class<T>) getTargetClassIfProxied(entity.getClass());
+            readOnlyEm.detach(readOnlyEm.find(entityTargetClass, entity.getId()));
         }
         // Writing the changes
         T writtenEntity = writeableEm.merge(entity);
