@@ -25,7 +25,7 @@ public class FailureTestListener extends TestListenerAdapter {
         try {
             // only perform screenshot if this result wasn't handled yet (to avoid duplicates)
             if (failedResults.add(tr)) {
-                AbstractSeleniumTest.captureScreenshot();
+                AbstractSeleniumTest.captureScreenshot(tr.getName());
             }
         } catch (Exception e) {
             log.error("Couldn't capture screenshot", e);
