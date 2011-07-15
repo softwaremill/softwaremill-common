@@ -13,11 +13,11 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("delegatingValidator")
 public class DelegatingValidator implements Validator {
 
-    private static final String ATTRIBUTE_NAME = "validatorId";
+    protected static final String VALIDATOR_ID = "validatorId";
 
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object value) throws ValidatorException {
-        String validatorId = (String) uiComponent.getAttributes().get(ATTRIBUTE_NAME);
+        String validatorId = (String) uiComponent.getAttributes().get(VALIDATOR_ID);
         Validator validator = lookup(facesContext, validatorId);
         validator.validate(facesContext, uiComponent, value);
     }

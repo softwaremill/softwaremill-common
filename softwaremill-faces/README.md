@@ -162,6 +162,30 @@ As you can see, you must specify two things, the validator itself and an attribu
 The expression `#{pageBean.validatorId}` must return a valid validator ID - the validator must be registered with `faces-config.xml`
 or by `@FacesValidator` annotation.
 
+## OnSubmit validator
+
+When calling ajax model updates you sometimes want to skip the validation phase, but update the model, so immediate=true is not an option.
+
+This validator wrapper can help.
+
+All fields need to use f:onSubmitValidator. You can pass validatorId in an attribute (look at Delegating Validator)
+and the OnSubmit validator will call that specified validator.
+
+Optionally if you provide
+
+    <f:param name="required" value="true"/>
+
+The validator will check the value to be not empty.
+
+Then on the SUBMIT button you need to add
+
+    <f:param name="performValidation" value="true"/>
+
+This will trigger the validation when clicking this SUBMIT button.
+
+And voila! now the validation will be called only when SUBMIT is clicked, and you can freely perform as many ajax model
+updates as you want.
+
 ##File upload
 
 For file upload to work, there is jetty `MultipartFilter` necessary, which
