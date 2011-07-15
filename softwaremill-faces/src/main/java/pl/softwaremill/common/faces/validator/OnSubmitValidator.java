@@ -21,7 +21,7 @@ import java.util.Set;
 public class OnSubmitValidator extends DelegatingValidator {
 
     private static final String PERFORM_VALIDATION  = "performValidation";
-    private static final String REQUIRED = "required";
+    private static final String REQUIRED = "onSubmitRequired";
     private static final String TRUE = "true";
 
     @Override
@@ -33,8 +33,8 @@ public class OnSubmitValidator extends DelegatingValidator {
 
             if (TRUE.equals(component.getAttributes().get(REQUIRED))) {
                 // make it just required
-                if (value != null && (value instanceof String && !Strings.isNullOrEmpty((String)value)) &&
-                        (value instanceof Collection && !((Collection)value).isEmpty())) {
+                if (value == null || (value instanceof String && Strings.isNullOrEmpty((String)value)) ||
+                        (value instanceof Collection && ((Collection)value).isEmpty())) {
                     FacesMessage message = new FacesMessage("Value is required !");
                     message.setSeverity(FacesMessage.SEVERITY_ERROR);
 
