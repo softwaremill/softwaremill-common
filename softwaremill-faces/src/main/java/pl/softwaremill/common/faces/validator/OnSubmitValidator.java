@@ -18,7 +18,7 @@ import java.util.Set;
  * You can pass validatorId and/or required = true
  */
 @FacesValidator("onSubmitValidator")
-public class OnSubmitValidator extends DelegatingValidator {
+public class OnSubmitValidator extends AbstractDelgatingValidator {
 
     private static final String PERFORM_VALIDATION  = "performValidation";
     private static final String REQUIRED = "onSubmitRequired";
