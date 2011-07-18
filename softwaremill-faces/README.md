@@ -173,7 +173,7 @@ and the OnSubmit validator will call that specified validator.
 
 Optionally if you provide
 
-    <f:param name="onSubmitRequired" value="true"/>
+    <f:attribute name="onSubmitRequired" value="true"/>
 
 The validator will check the value to be not empty.
 
