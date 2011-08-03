@@ -63,8 +63,37 @@ public class SeleniumCommands {
 
     public static void waitForElementVisible(final String locator, final boolean isVisible) throws Exception {
         waitFor(TIME_OUT, new Check() {
-            @Override public boolean doCheck() { return selenium.isVisible(locator) == isVisible; }
-            @Override public String getErrorMessage() { return "timeout"; }
+            @Override
+            public boolean doCheck() {
+                return selenium.isVisible(locator) == isVisible;
+            }
+
+            @Override
+            public String getErrorMessage() {
+                return "timeout";
+            }
+        });
+    }
+
+    public static void waitForElementEditable(final String locator) throws Exception {
+        waitForElementEditable(locator, true);
+    }
+
+    public static void waitForElementNotEditable(final String locator) throws Exception {
+        waitForElementEditable(locator, false);
+    }
+
+    public static void waitForElementEditable(final String locator, final boolean isEditable) throws Exception {
+        waitFor(TIME_OUT, new Check() {
+            @Override
+            public boolean doCheck() {
+                return selenium.isEditable(locator) == isEditable;
+            }
+
+            @Override
+            public String getErrorMessage() {
+                return "Timeout waiting for element to be " + (isEditable ? "" : "not ") + " editable!";
+            }
         });
     }
 
