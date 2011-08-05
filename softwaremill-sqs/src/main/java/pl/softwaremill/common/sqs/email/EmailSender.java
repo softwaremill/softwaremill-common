@@ -11,10 +11,7 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Date;
@@ -50,13 +47,12 @@ public class EmailSender {
 
         MimeMessage m = new MimeMessage(session);
         m.setFrom(new InternetAddress(from));
-        Address[] to = new InternetAddress[emailDescription.getEmails().length];
 
-        for (int i = 0; i < emailDescription.getEmails().length; i++) {
-            to[i] = new InternetAddress(emailDescription.getEmails()[i]);
-        }
+        Address[] to = convertStringEmailsToAddresses(emailDescription.getEmails());
+        Address[] replyTo = convertStringEmailsToAddresses(emailDescription.getReplyToEmails());
 
         m.setRecipients(javax.mail.Message.RecipientType.TO, to);
+        m.setReplyTo(replyTo);
         m.setSubject(emailDescription.getSubject(), encoding);
         m.setSentDate(new Date());
 
@@ -79,6 +75,16 @@ public class EmailSender {
         }
 
         log.debug("Mail '" + emailDescription.getSubject() + "' sent to: " + Arrays.toString(to));
+    }
+
+    private static Address[] convertStringEmailsToAddresses(String[] emails) throws AddressException {
+        Address[] addresses = new InternetAddress[emails.length];
+
+        for (int i = 0; i < emails.length; i++) {
+            addresses[i] = new InternetAddress(emails[i]);
+        }
+
+        return addresses;
     }
 
     private static void addAttachments(MimeMessage mimeMessage, String msg, String encoding,

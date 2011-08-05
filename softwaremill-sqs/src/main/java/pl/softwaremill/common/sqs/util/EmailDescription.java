@@ -11,15 +11,21 @@ public class EmailDescription implements Serializable {
     private final String message;
     private final String[] emails;
     private final String subject;
+    private final String[] replyToEmails;
 
     public EmailDescription(String email, String message, String subject) {
-        this(new String[]{email}, message, subject);
+        this(new String[]{email}, message, subject, new String[]{});
     }
 
-    public EmailDescription(String[] emails, String message, String subject) {
+    public EmailDescription(String email, String message, String subject, String replyToEmail) {
+        this(new String[]{email}, message, subject, new String[]{replyToEmail});
+    }
+
+    public EmailDescription(String[] emails, String message, String subject, String[] replyToEmails) {
         this.emails = emails;
         this.message = message;
         this.subject = subject;
+        this.replyToEmails = replyToEmails;
     }
 
     public String getMessage() {
@@ -33,5 +39,9 @@ public class EmailDescription implements Serializable {
     public String getSubject() {
         return subject;
     }
-    
+
+    public String[] getReplyToEmails() {
+        return replyToEmails;
+    }
+
 }
