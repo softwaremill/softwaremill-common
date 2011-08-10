@@ -5,6 +5,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.net.QuotedPrintableCodec;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +14,8 @@ import java.util.regex.Pattern;
  *
  * Class wraps SmtpMessage from mock email server and represents an email message
  * with methods to extract certain parts of it.
+ *
+ * Available headers might vary, depending on how email was sent.
  *
  * @author maciek
  */
@@ -103,6 +106,18 @@ public class EmailMessage {
 
     public String[] getHeaderValues(EmailHeader header){
         return email.getHeaderValues(header.getValue());
+    }
+
+    public String getHeaderValue(String headerName){
+        return email.getHeaderValue(headerName);
+    }
+
+    public String[] getHeaderValues(String headerName){
+        return email.getHeaderValues(headerName);
+    }
+
+    public Iterator getHeaderNames() {
+        return email.getHeaderNames();
     }
 
     /**
