@@ -194,6 +194,11 @@ To enable, add to beans.xml:
         <class>pl.softwaremill.common.cdi.transaction.TransactionTimeoutInterceptor</class>
     </interceptors>
 
+Because the tx timeout must be specified *before* the transaction is started, make sure to specify the
+timeout interceptor *before* the `TransacitonalInterceptor`. Also, note that this annotation will not work
+if using the `TransactionPhaseListener`, as then transactions are started at the beginning of the
+JSF request, before any methods are called.
+
 ## Autofactories, or assisted inject implementation for CDI
 
 Assisted inject originates from Guice: http://code.google.com/p/google-guice/wiki/AssistedInject
