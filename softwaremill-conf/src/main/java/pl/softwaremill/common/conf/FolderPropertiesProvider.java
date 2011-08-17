@@ -21,8 +21,12 @@ public abstract class FolderPropertiesProvider implements PropertiesProvider {
         // Looking up the server's conf directory
         String serverConfDirectory = lookupConfigDirectory();
 
+        if (serverConfDirectory == null) {
+            return null;
+        }
+
         // make sure it ends with /
-        if (serverConfDirectory != null && !serverConfDirectory.endsWith(File.separator)) {
+        if (!serverConfDirectory.endsWith(File.separator)) {
             serverConfDirectory = serverConfDirectory + File.separator;
         }
 
