@@ -1,7 +1,7 @@
 package pl.softwaremill.common.test.web.email;
 
 /**
- * Headers available in mock email
+ * Most common headers available in email
  *
  * @author maciek
  */
@@ -21,7 +21,9 @@ public enum EmailHeader {
 
     CONTENT_TYPE("Content-Type"),
 
-    FROM("From");
+    FROM("From"),
+
+    REPLY_TO("Reply-To");
 
     private String value;
 

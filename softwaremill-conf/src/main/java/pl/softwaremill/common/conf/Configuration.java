@@ -55,7 +55,7 @@ public class Configuration {
     }
 
     public static void registerPropertiesProvider(Class<? extends PropertiesProvider> providerClass) {
-        PropertiesProvider provider = null;
+        PropertiesProvider provider;
         try {
             provider = providerClass.newInstance();
 
@@ -71,6 +71,7 @@ public class Configuration {
 
     // Registering default property providers. First JBoss (if available), then classpath.
     static {
+        registerPropertiesProvider(JBoss5DeployPropertiesProvider.class);
         registerPropertiesProvider(JBoss6DeployPropertiesProvider.class);
         registerPropertiesProvider(JBoss7DeployPropertiesProvider.class);
         registerPropertiesProvider(ClasspathPropertiesProvider.class);

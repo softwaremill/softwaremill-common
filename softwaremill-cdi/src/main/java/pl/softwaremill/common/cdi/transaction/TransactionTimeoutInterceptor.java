@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 /**
  * An interceptor for the {@link Transactional} annotation.
+ * Must run before the {@link TransactionalInterceptor}.
+ * Does not work if the tx is started before setting the timeout.
  * @author Adam Warski (adam at warski dot org)
  * @link http://smokeandice.blogspot.com/2009/12/cdi-and-declarative-transactions.html
  */
