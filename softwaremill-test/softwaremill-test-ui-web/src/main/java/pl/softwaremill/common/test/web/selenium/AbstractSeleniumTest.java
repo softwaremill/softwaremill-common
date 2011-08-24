@@ -11,6 +11,8 @@ import pl.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author maciek
@@ -168,16 +170,19 @@ public abstract class AbstractSeleniumTest {
      * Use {@link #captureScreenshot(String)} instead.
      */
     @Deprecated
-    public static void captureScreenshot() throws Exception {
-        captureScreenshot("");
+    public static File captureScreenshot() throws Exception {
+        return captureScreenshot("");
     }
 
-	public static void captureScreenshot(String testName) throws Exception {
-		File f = File.createTempFile("selenium_screenshot_" + testName + "_", "failed.png");
+	public static File captureScreenshot(String testName) throws Exception {
+        String date = new SimpleDateFormat(".yyyy-MM-dd-HH-mm-ss.").format(new Date());
+		File f = File.createTempFile("selenium_screenshot_" + testName + "_", date + "failed.png");
 
 		selenium.captureEntirePageScreenshot(f.getAbsolutePath(), "");
 
 		System.out.println("##teamcity[publishArtifacts '" + f.getAbsolutePath() + "']");
+
+        return f;
 	}
 
 	protected void afterSeleniumStart() throws Exception {
