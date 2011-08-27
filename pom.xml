@@ -26,7 +26,6 @@
         <arquillian.version>1.0.0.Alpha4</arquillian.version>
         <findbugs.version>2.3.1</findbugs.version>
         <weld.version>1.1.1.Final</weld.version>
-        <seam.version>3.0.0.Final</seam.version>
     </properties>
 
     <dependencies>
@@ -211,7 +210,7 @@
             <dependency>
                 <groupId>org.jboss.seam.solder</groupId>
                 <artifactId>seam-solder</artifactId>
-                <version>${seam.version}</version>
+                <version>3.0.0.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
@@ -223,12 +222,12 @@
             <dependency>
                 <groupId>org.jboss.seam.faces</groupId>
                 <artifactId>seam-faces</artifactId>
-                <version>${seam.version}</version>
+                <version>3.0.2.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.seam.remoting</groupId>
                 <artifactId>seam-remoting</artifactId>
-                <version>${seam.version}</version>
+                <version>3.0.0.Final</version>
             </dependency>
 
             <!-- JSF2 -->
