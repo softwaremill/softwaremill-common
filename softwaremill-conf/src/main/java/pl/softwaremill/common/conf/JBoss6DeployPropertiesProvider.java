@@ -4,13 +4,7 @@ import org.jboss.mx.util.MBeanServerLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanException;
-import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-import javax.management.ReflectionException;
+import javax.management.*;
 
 /**
  * JBoss 6 configuration provider
@@ -29,10 +23,8 @@ public class JBoss6DeployPropertiesProvider extends FolderPropertiesProvider {
         } catch (MBeanException e) {
             return null;
         } catch (AttributeNotFoundException e) {
-            log.error("Cannot get server conf directory", e);
             return null;
         } catch (InstanceNotFoundException e) {
-            log.error("Cannot get server conf directory", e);
             return null;
         } catch (ReflectionException e) {
             log.error("Cannot get server conf directory", e);

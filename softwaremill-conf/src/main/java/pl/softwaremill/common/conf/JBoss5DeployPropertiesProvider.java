@@ -22,8 +22,10 @@ public class JBoss5DeployPropertiesProvider extends FolderPropertiesProvider {
         } catch (InstanceNotFoundException e) {
             return null;
         } catch (ReflectionException e) {
+            log.error("Cannot get server conf directory", e);
             return null;
         } catch (MalformedObjectNameException e) {
+            log.error("Cannot get server conf directory", e);
             return null;
         }
     }
