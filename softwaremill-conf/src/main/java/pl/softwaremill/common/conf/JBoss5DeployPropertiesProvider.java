@@ -1,6 +1,8 @@
 package pl.softwaremill.common.conf;
 
 import org.jboss.mx.util.MBeanServerLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.management.*;
 
@@ -8,6 +10,8 @@ import javax.management.*;
  * JBoss 5 configuration provider
  */
 public class JBoss5DeployPropertiesProvider extends FolderPropertiesProvider {
+    private static final Logger log = LoggerFactory.getLogger(JBoss5DeployPropertiesProvider.class);
+
     @Override
     public String lookupConfigDirectory() {
         try {
