@@ -82,8 +82,10 @@ public class TeamcityTestNGNotifier extends TestListenerAdapter {
     private String escapeForTeamcity(String string) {
         // more info http://confluence.jetbrains.net/display/TCD65/Build+Script+Interaction+with+TeamCity#BuildScriptInteractionwithTeamCity-ReportingTests
 
-        for (String[] chars : charsToReplace) {
-            string = string.replace(chars[0], chars[1]);
+        if (string != null) {
+            for (String[] chars : charsToReplace) {
+                string = string.replace(chars[0], chars[1]);
+            }
         }
 
         return string;
