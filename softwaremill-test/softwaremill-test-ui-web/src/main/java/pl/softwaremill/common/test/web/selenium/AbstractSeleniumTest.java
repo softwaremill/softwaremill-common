@@ -29,12 +29,15 @@ public abstract class AbstractSeleniumTest {
 	private static String seleniumHost;
 	private static int seleniumServerPort;
 
+    private static boolean debug;
+
     static {
         seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
         seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
 		String testServerPort = System.getProperty("selenium.testserver.port", "8280");
 		String testServerUrl = System.getProperty("selenium.testserver.url", "http://localhost");
 		String browserCommand = System.getProperty("selenium.browser.command", "*firefox");
+        debug = Boolean.parseBoolean(System.getProperty("selenium.debug.enabled", "true"));
 
         browserProperties = new SeleniumBrowserProperties(browserCommand, testServerUrl, testServerPort);
     }
@@ -54,7 +57,7 @@ public abstract class AbstractSeleniumTest {
 	@BeforeSuite
 	public void setupSelenium() throws Exception {
 
-		System.out.println("--- Starting selenium server");
+		System.out.println("--- Starting selenium server with debug set to " + debug);
 
 		RemoteControlConfiguration rcc = new RemoteControlConfiguration();
 		rcc.setTimeoutInSeconds(60);
@@ -63,8 +66,7 @@ public abstract class AbstractSeleniumTest {
 		rcc.setSingleWindow(false);
 		PrintStream ps = System.out; // backup
 		System.setOut(new PrintStream(new FileOutputStream("logfile")));
-		//SeleniumServer.setDebugMode(true);
-		rcc.setDebugMode(true);
+		rcc.setDebugMode(debug);
 		server = new SeleniumServer(false, rcc);
 		System.setOut(ps); // restore
 
