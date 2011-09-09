@@ -11,6 +11,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.CountDownLatch;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.testng.Assert.fail;
 
 /**
  * @author maciek
@@ -45,6 +49,8 @@ public abstract class AbstractJBossRunner {
 	protected abstract Deployment[] getDeployments();
 
 	private Process tailProcess;
+
+    private boolean timedout;
 
 	@BeforeSuite
 	public void start() throws Exception {
@@ -119,7 +125,7 @@ public abstract class AbstractJBossRunner {
 
 	private void waitFor(Process process, String message) {
 		log.info("Waiting for message: [" + message + "]");
-		Scanner scanner = new Scanner(process.getInputStream()).useDelimiter(message);
+		final Scanner scanner = new Scanner(process.getInputStream()).useDelimiter(message);
 		scanner.next();
 	}
 
@@ -197,8 +203,10 @@ public abstract class AbstractJBossRunner {
 		for (Deployment deployment : getDeployments()) {
 			deployment.deploy(getDeployDir());
 			if (deployment.getWaitForMessage() != null) {
-//                waitFor(jbossProcess, deployment.getWaitForMessage());
-				waitFor(getTailProcess(), deployment.getWaitForMessage());
+                waitForMessageOrTimeout(deployment);
+                if (timedout) {
+                   fail("Server startup/deploy timeout exceeded.");
+                }
 			} else {
 				Thread.sleep(deployment.getWaitMillis());
 			}
@@ -208,6 +216,25 @@ public abstract class AbstractJBossRunner {
 		// close the tail process so it doesn't overload
 		tailProcess.getInputStream().close();
 	}
+
+    private void waitForMessageOrTimeout(final Deployment deployment) throws Exception {
+
+        final CountDownLatch latch = new CountDownLatch(1);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    waitFor(getTailProcess(), deployment.getWaitForMessage());
+                    latch.countDown();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        }).start();
+
+        while (!timedout && !latch.await(50, MILLISECONDS)) { }
+
+    }
 
 	private void undeploy() throws Exception {
 		for (Deployment deployment : getDeployments()) {
@@ -234,9 +261,8 @@ public abstract class AbstractJBossRunner {
 						try {
 							Thread.sleep(((long) getServerProperties().getDeploymentTimeoutMinutes()) * MILLISECONDS_IN_MINUTE);
 							if (!deploymentComplete) {
-								System.out.println("Timeout, shutting down JBoss");
-								shutdown();
-								throw new RuntimeException("Timeout");
+                                timedout = true;
+                                log.info("Server startup/deploy timeout exceeded.");
 							}
 						} catch (InterruptedException e) {
 							// do nothing
@@ -250,8 +276,8 @@ public abstract class AbstractJBossRunner {
 
 	protected void publishLog() throws IOException {
 		File tmpLogFile = File.createTempFile("jboss_log", ".txt");
-		File log = new File(getServerLogPath());
-		FileUtils.copyFile(log, tmpLogFile);
+		File logFile = new File(getServerLogPath());
+		FileUtils.copyFile(logFile, tmpLogFile);
 
 		System.out.println("##teamcity[publishArtifacts '" + tmpLogFile.getAbsolutePath() + "']");
 
