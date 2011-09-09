@@ -21,6 +21,7 @@ import static org.testng.Assert.fail;
  * @author Pawel Wrzeszcz
  * @author Jaroslaw Kijanowski
  * @author Pawel Stawicki
+ * @author Marcin Jekot
  */
 public abstract class AbstractJBossRunner {
 
