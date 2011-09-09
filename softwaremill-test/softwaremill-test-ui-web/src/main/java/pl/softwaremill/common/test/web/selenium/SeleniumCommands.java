@@ -2,7 +2,9 @@ package pl.softwaremill.common.test.web.selenium;
 
 import org.testng.Assert;
 
-import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.*;
+import java.util.Calendar;
+
+import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.selenium;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)
@@ -139,8 +141,9 @@ public class SeleniumCommands {
     }
 
     public static void waitFor(int maxSeconds, Check check) throws Exception {
-        for (int tries = 0; ; tries++) {
-            if (tries >= maxSeconds * 10) Assert.fail(check.getErrorMessage());
+        Calendar start = Calendar.getInstance();
+        while(true) {
+            if (nowMinusSeconds(maxSeconds).after(start)) Assert.fail(check.getErrorMessage());
             try {
                 if (check.doCheck()) {
                     break;
@@ -151,6 +154,13 @@ public class SeleniumCommands {
             }
             Thread.sleep(100);
         }
+    }
+
+    private static Calendar nowMinusSeconds(int seconds) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, -seconds);
+
+        return cal;
     }
 
     public static interface Check {
