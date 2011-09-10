@@ -122,6 +122,24 @@ public class SeleniumCommands {
         });
     }
 
+    public static void waitForNumberOfElementsChange(long initialNumberOfElements, String xpath) throws Exception {
+        waitForNumberOfElementsChange(initialNumberOfElements, xpath, TIME_OUT);
+    }
+
+    public static void waitForNumberOfElementsChange(final long initialNumberOfElements, final String xpath, int timeout) throws Exception {
+        waitFor(timeout, new Check() {
+            @Override
+            public boolean doCheck() {
+                return selenium.getXpathCount(xpath).longValue() != initialNumberOfElements;
+            }
+
+            @Override
+            public String getErrorMessage() {
+                return "Number of elements did not change.";
+            }
+        });
+    }
+
     public static void clickOncePresent(String xpath) throws Exception {
         clickOncePresent(xpath, TIME_OUT);
     }
