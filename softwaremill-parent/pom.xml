@@ -11,7 +11,7 @@
     </parent>
 
     <properties>
-        <softwaremill.common.version>58</softwaremill.common.version>
+        <softwaremill.common.version>59-SNAPSHOT</softwaremill.common.version>
     </properties>
 
     <dependencyManagement>
