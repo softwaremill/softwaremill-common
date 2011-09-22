@@ -13,8 +13,14 @@ import static org.testng.Assert.*;
 public class DTest {
     public static class LoginInfo {
         private final String login;
-        LoginInfo(String login) { this.login = login; }
-        public String getLogin() { return login; }
+
+        LoginInfo(String login) {
+            this.login = login;
+        }
+
+        public String getLogin() {
+            return login;
+        }
     }
 
     @Test
@@ -124,11 +130,69 @@ public class DTest {
         assertCannotInjectLoginInfo();
     }
 
+    @Test
+    public void testWithQualifiers() throws Exception {
+        LoginInfo info = new LoginInfo("user");
+
+        LoginInfo injected = D.withDependencies(D.qualifiedDependency(info, D.qualifier(TestQualifier.class)),
+                new Callable<LoginInfo>() {
+                    @Override
+                    public LoginInfo call() throws Exception {
+                        return D.inject(LoginInfo.class, D.qualifier(TestQualifier.class));
+                    }
+                });
+
+        assertThat(injected).isEqualTo(info);
+    }
+
+    @Test
+    public void testWithQualifiersFromClass() throws Exception {
+        LoginInfo info = new LoginInfo("user");
+
+        LoginInfo injected = D.withDependencies(D.qualifiedDependency(info, D.qualifier(TestQualifier.class)),
+                new Callable<LoginInfo>() {
+                    @Override
+                    public LoginInfo call() throws Exception {
+                        return D.inject(LoginInfo.class, FooAnnotatedClass.class.getAnnotation(TestQualifier.class));
+                    }
+                });
+
+        assertThat(injected).isEqualTo(info);
+    }
+
+    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "No dependencies.+")
+    public void testWithNoAvailableQualifiers() throws Exception {
+        LoginInfo info = new LoginInfo("user");
+
+        LoginInfo injected = D.withDependencies(info,
+                new Callable<LoginInfo>() {
+                    @Override
+                    public LoginInfo call() throws Exception {
+                        return D.inject(LoginInfo.class, D.qualifier(TestQualifier.class));
+                    }
+                });
+    }
+
+    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "No dependencies.+")
+    public void testWithNoWrongQualifiers() throws Exception {
+        LoginInfo info = new LoginInfo("user");
+
+        LoginInfo injected = D.withDependencies(D.qualifiedDependency(info, D.qualifier(TestQualifier.class)),
+                new Callable<LoginInfo>() {
+                    @Override
+                    public LoginInfo call() throws Exception {
+                        return D.inject(LoginInfo.class, D.qualifier(AnotherTestQualifier.class));
+                    }
+                });
+
+        System.out.println(injected);
+    }
+
     private void assertCannotInjectLoginInfo() {
         try {
             D.inject(LoginInfo.class);
             fail("Injected a login info!");
-        } catch(RuntimeException e) {
+        } catch (RuntimeException e) {
             assertThat(e.getMessage().contains("No dependencies"));
         }
     }

@@ -3,11 +3,16 @@ package pl.softwaremill.common.util.dependency;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.softwaremill.common.util.ClassUtil;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -71,5 +76,17 @@ public class D {
         } finally {
             unregister(dependencyProvider);
         }
+    }
+
+    public static Annotation qualifier(Class<? extends Annotation> annotationClass) {
+        return ClassUtil.instantiateAnnotation(annotationClass);
+    }
+
+    public static QualifiedDependency qualifiedDependency(Object dep, Annotation... qualifiers) {
+        return new QualifiedDependency(qualifiers, dep);
+    }
+
+    static Set<Annotation> createKeyForAnnotations(Annotation[] annotations) {
+        return new HashSet<Annotation>(Arrays.asList(annotations));
     }
 }

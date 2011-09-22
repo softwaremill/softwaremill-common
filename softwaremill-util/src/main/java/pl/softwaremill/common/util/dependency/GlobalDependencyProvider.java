@@ -1,37 +1,30 @@
 package pl.softwaremill.common.util.dependency;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class GlobalDependencyProvider implements DependencyProvider {
+public class GlobalDependencyProvider extends AbstractDependencyProvider {
     private final List<Object> dependencies;
+    private final List<QualifiedDependency> dependenciesWithQualifiers;
 
     public GlobalDependencyProvider(List<Object> deps) {
-        dependencies = deps;
-    }
+        dependencies = new ArrayList<Object>();
+        dependenciesWithQualifiers = new ArrayList<QualifiedDependency>();
 
-    @SuppressWarnings({"unchecked"})
-    @Override
-    public <T> T inject(Class<T> cls, Annotation... qualifiers) {
-        // Only dependencies without qualifiers are supported by this provider
-        if (qualifiers.length > 0) {
-            return null;
-        }
-
-        for (Object dependency : dependencies) {
-            if (cls.isAssignableFrom(dependency.getClass())) {
-                return (T) dependency;
-            }
-        }
-
-        return null;
+        loadDeps(deps);
     }
 
     @Override
-    public String toString() {
-        return "GlobalDependencyProvider{dependencies=" + dependencies + "}";
+    protected List<Object> getDependencies() {
+        return dependencies;
+    }
+
+    @Override
+    protected List<QualifiedDependency> getDependenciesWithQualifiers() {
+        return dependenciesWithQualifiers;
     }
 }

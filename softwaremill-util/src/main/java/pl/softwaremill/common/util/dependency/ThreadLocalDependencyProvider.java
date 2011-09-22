@@ -2,15 +2,28 @@ package pl.softwaremill.common.util.dependency;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public class ThreadLocalDependencyProvider implements DependencyProvider {
+public class ThreadLocalDependencyProvider extends AbstractDependencyProvider {
+
     private final ThreadLocal<List<Object>> dependencies;
+    private final ThreadLocal<List<QualifiedDependency>> dependenciesWithQualifiers;
 
     public ThreadLocalDependencyProvider(List<Object> deps) {
+        dependenciesWithQualifiers = new ThreadLocal<List<QualifiedDependency>>() {
+            @Override
+            protected List<QualifiedDependency> initialValue() {
+                return new ArrayList<QualifiedDependency>();
+            }
+        };
+
         dependencies = new ThreadLocal<List<Object>>() {
             @Override
             protected List<Object> initialValue() {
@@ -18,28 +31,16 @@ public class ThreadLocalDependencyProvider implements DependencyProvider {
             }
         };
 
-        dependencies.set(deps);
-    }
-
-    @SuppressWarnings({"unchecked"})
-    @Override
-    public <T> T inject(Class<T> cls, Annotation... qualifiers) {
-        // Only dependencies without qualifiers are supported by this provider
-        if (qualifiers.length > 0) {
-            return null;
-        }
-
-        for (Object dependency : dependencies.get()) {
-            if (cls.isAssignableFrom(dependency.getClass())) {
-                return (T) dependency;
-            }
-        }
-
-        return null;
+        loadDeps(deps);
     }
 
     @Override
-    public String toString() {
-        return "ThreadLocalDependencyProvider{dependencies=" + dependencies.get() + "}";
+    protected List<Object> getDependencies() {
+        return dependencies.get();
+    }
+
+    @Override
+    protected List<QualifiedDependency> getDependenciesWithQualifiers() {
+        return dependenciesWithQualifiers.get();
     }
 }
