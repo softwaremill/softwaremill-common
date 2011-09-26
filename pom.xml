@@ -341,6 +341,33 @@
                 <artifactId>dumbster</artifactId>
                 <version>1.6</version>
             </dependency>
+
+            <!-- soapui testing -->
+            <dependency>
+                <groupId>eviware</groupId>
+                <artifactId>soapui</artifactId>
+                <version>3.6</version>
+            </dependency>
+            <dependency>
+                <groupId>eviware</groupId>
+                <artifactId>soapui-xmlbeans</artifactId>
+                <version>3.6</version>
+            </dependency>
+            <dependency>
+                <groupId>eviware</groupId>
+                <artifactId>soap-xmlbeans</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xmlbeans</groupId>
+                <artifactId>xmlbeans</artifactId>
+                <version>2.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty</artifactId>
+                <version>6.1.21</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

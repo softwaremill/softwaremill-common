@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>softwaremill-test-ui-web</artifactId>
     <name>Softwaremill Web UI Test</name>
@@ -27,9 +28,9 @@
         </dependency>
 
         <dependency>
-			<groupId>dumbster</groupId>
-			<artifactId>dumbster</artifactId>
-		</dependency>
+            <groupId>dumbster</groupId>
+            <artifactId>dumbster</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>commons-codec</groupId>
@@ -40,6 +41,38 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
+
+        <!-- SoapUI dependencies -->
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>soapui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>soapui-xmlbeans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eviware</groupId>
+            <artifactId>soap-xmlbeans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
