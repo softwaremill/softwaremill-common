@@ -1,7 +1,6 @@
 package pl.softwaremill.common.util.dependency;
 
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +25,6 @@ public abstract class AbstractDependencyProvider implements DependencyProvider{
     @SuppressWarnings({"unchecked"})
     @Override
     public <T> T inject(Class<T> cls, Annotation... qualifiers) {
-        // Only dependencies without qualifiers are supported by this provider
         if (qualifiers.length > 0) {
             // check for dependencies with qualifiers
             Set<Annotation> key = D.createKeyForAnnotations(qualifiers);
