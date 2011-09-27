@@ -3,7 +3,6 @@ package pl.softwaremill.common.test.web.soap;
 import com.eviware.soapui.model.testsuite.TestCaseRunContext;
 import com.eviware.soapui.model.testsuite.TestCaseRunner;
 import com.eviware.soapui.model.testsuite.TestRunListener;
-import com.eviware.soapui.model.testsuite.TestRunner;
 import com.eviware.soapui.model.testsuite.TestStep;
 import com.eviware.soapui.model.testsuite.TestStepResult;
 import org.slf4j.Logger;
@@ -43,8 +42,8 @@ public class ArtifactPublisherListener implements TestRunListener {
         try {
             LOG.info("soapUI TestCase:TestStep [" + testCaseRunner.getTestCase().getLabel() + ":" +
                     testStepResult.getTestStep().getLabel() +
-                    "] finished with status [" + testCaseRunner.getStatus() + "]");
-            if (TestRunner.Status.FAILED.equals(testCaseRunner.getStatus())) {
+                    "] finished with status [" + testStepResult.getStatus() + "]");
+            if (TestStepResult.TestStepStatus.FAILED.equals(testStepResult.getStatus())) {
                 String date = new SimpleDateFormat(".yyyy-MM-dd-HH-mm-ss.").format(new Date());
                 File f = File.createTempFile("sopaui_result_" + testStepResult.getTestStep().getLabel() + "_", date + ".txt");
                 FileOutputStream fos = new FileOutputStream(f);
