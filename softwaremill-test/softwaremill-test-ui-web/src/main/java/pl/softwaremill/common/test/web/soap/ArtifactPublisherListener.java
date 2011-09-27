@@ -54,7 +54,8 @@ public class ArtifactPublisherListener implements TestRunListener {
                 fos.close();
                 System.out.println("##teamcity[publishArtifacts '" + f.getAbsolutePath() + "']");
             }
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            LOG.error("Error occurred during publishing artifact!", e);
         }
     }
 }
