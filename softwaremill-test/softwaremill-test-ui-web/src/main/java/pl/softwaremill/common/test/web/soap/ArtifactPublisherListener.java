@@ -26,16 +26,22 @@ public class ArtifactPublisherListener extends TestRunListenerAdapter {
         try {
             LOG.info("soapUI TestCase:TestStep [" + testCaseRunner.getTestCase().getLabel() + ":" +
                     testStepResult.getTestStep().getLabel() + "] finished with status [" + testStepResult.getStatus() + "]");
-            Throwable error = testStepResult.getError();
-            if (error != null) {
-                LOG.error("Error occurred during running TestCase:TestStep [" + testCaseRunner.getTestCase().getLabel() + ":" +
-                        testStepResult.getTestStep().getLabel() + "]", error);
-                File file = File.createTempFile(createPrefix(testStepResult), createSuffix());
+            if (isFailed(testCaseRunner, testStepResult)) {
+                File file = createFile(testStepResult);
                 publishArtifact(writeResultTo(testStepResult, file));
             }
         } catch (Exception e) {
             LOG.error("Error occurred during publishing artifact!", e);
         }
+    }
+
+    private File createFile(TestStepResult testStepResult) throws IOException {
+        return File.createTempFile(createPrefix(testStepResult), createSuffix());
+    }
+
+    private boolean isFailed(TestCaseRunner testCaseRunner, TestStepResult testStepResult) {
+        return TestStepResult.TestStepStatus.FAILED.equals(testStepResult.getStatus())
+                || TestCaseRunner.Status.FAILED.equals(testCaseRunner.getStatus());
     }
 
     private File writeResultTo(TestStepResult testStepResult, File file) throws IOException {
