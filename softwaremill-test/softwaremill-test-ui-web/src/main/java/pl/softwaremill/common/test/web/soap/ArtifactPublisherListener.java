@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,18 +30,33 @@ public class ArtifactPublisherListener extends TestRunListenerAdapter {
             if (error != null) {
                 LOG.error("Error occurred during running TestCase:TestStep [" + testCaseRunner.getTestCase().getLabel() + ":" +
                         testStepResult.getTestStep().getLabel() + "]", error);
-                String date = new SimpleDateFormat(".yyyy-MM-dd-HH-mm-ss.").format(new Date());
-                File f = File.createTempFile("sopaui_result_" + testStepResult.getTestStep().getLabel() + "_", date + ".txt");
-                FileOutputStream fos = new FileOutputStream(f);
-                PrintWriter pw = new PrintWriter(fos);
-                testStepResult.writeTo(pw);
-                pw.close();
-                fos.close();
-                System.out.println("##teamcity[publishArtifacts '" + f.getAbsolutePath() + "']");
+                File file = File.createTempFile(createPrefix(testStepResult), createSuffix());
+                publishArtifact(writeResultTo(testStepResult, file));
             }
         } catch (Exception e) {
             LOG.error("Error occurred during publishing artifact!", e);
         }
+    }
+
+    private File writeResultTo(TestStepResult testStepResult, File file) throws IOException {
+        FileOutputStream fos = new FileOutputStream(file);
+        PrintWriter pw = new PrintWriter(fos);
+        testStepResult.writeTo(pw);
+        pw.close();
+        fos.close();
+        return file;
+    }
+
+    private void publishArtifact(File f) {
+        System.out.println("##teamcity[publishArtifacts '" + f.getAbsolutePath() + "']");
+    }
+
+    private String createSuffix() {
+        return new SimpleDateFormat(".yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
+    }
+
+    private String createPrefix(TestStepResult testStepResult) {
+        return "sopaui_result_" + testStepResult.getTestStep().getLabel() + "_";
     }
 
 }
