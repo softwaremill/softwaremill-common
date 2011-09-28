@@ -20,15 +20,22 @@ public class FailureTestListener extends TestListenerAdapter {
 
     @Override
     public void onTestFailure(ITestResult tr) {
+        super.onTestFailure(tr);
         // capture screenshot
-
         try {
-            // only perform screenshot if this result wasn't handled yet (to avoid duplicates)
-            if (failedResults.add(tr)) {
+            if (shouldMakeScreenShot(tr)) {
                 AbstractSeleniumTest.captureScreenshot(tr.getName());
             }
         } catch (Exception e) {
             log.error("Couldn't capture screenshot", e);
         }
     }
+
+    /**
+     * make screenshot only for Selenium test and if the result wasn't handled yet (to avoid duplicates)
+     */
+    private boolean shouldMakeScreenShot(ITestResult tr) {
+        return AbstractSeleniumTest.class.isAssignableFrom(tr.getTestClass().getRealClass()) && failedResults.add(tr);
+    }
+
 }
