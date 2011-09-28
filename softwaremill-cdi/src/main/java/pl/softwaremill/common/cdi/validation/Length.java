@@ -5,12 +5,12 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Checks if length is greater than min, and lesser than max. Can product different error message for
- * too short string and for too long one.
+ * Checks if length is greater than {@code min}, and less than {@code max}.
+ * Two different error messages for strings that are either too short or two long can be supplied.
  */
 @Documented
 @Constraint(validatedBy = LengthValidator.class)
-@Target( {ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER })
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Length {
 
@@ -24,8 +24,8 @@ public @interface Length {
 
     String message() default "Something is wrong";
 
-    Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default { };
+    Class<? extends Payload>[] payload() default {};
 
 }
