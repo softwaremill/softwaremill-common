@@ -16,9 +16,9 @@ import static pl.softwaremill.common.util.tuples.Pair.pair;
  * @author Maciej Biłas
  * @since 9/27/11 19:41
  */
-public class SMLCollections {
+public class Collections3 {
 
-    private SMLCollections() {
+    private Collections3() {
         /* this class should not be instantiated */
     }
 

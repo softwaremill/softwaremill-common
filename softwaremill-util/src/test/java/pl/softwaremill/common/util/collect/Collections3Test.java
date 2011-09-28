@@ -14,13 +14,13 @@ import java.util.Set;
 import static com.google.common.base.Predicates.alwaysFalse;
 import static com.google.common.base.Predicates.alwaysTrue;
 import static org.testng.Assert.*;
-import static pl.softwaremill.common.util.collect.SMLCollections.partition;
+import static pl.softwaremill.common.util.collect.Collections3.partition;
 
 /**
  * @author Maciej Biłas
  * @since 9/27/11 20:13
  */
-public class SMLCollectionsTest {
+public class Collections3Test {
 
     @SuppressWarnings({"NullableProblems"})
     @Test(expectedExceptions = NullPointerException.class)
