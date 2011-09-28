@@ -40,6 +40,15 @@ public class Pair<A, B> {
         return result;
     }
 
+    /**
+     * Factory method instantiating a pair.
+     *
+     * @param left  the left-hand element
+     * @param right the right-hand element
+     * @param <A>   the type of the left-hand element
+     * @param <B>   the type of the right-hand element
+     * @return the constructed pair
+     */
     public static <A, B> Pair<A, B> pair(A left, B right) {
         return new Pair<A, B>(left, right);
     }
