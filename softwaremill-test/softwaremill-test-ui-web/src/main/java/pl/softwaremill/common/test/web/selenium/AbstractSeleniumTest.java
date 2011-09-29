@@ -75,7 +75,7 @@ public abstract class AbstractSeleniumTest {
 	}
 
 	@AfterSuite(alwaysRun = true)
-	public void stopSelenium() throws Exception, InterruptedException {
+	public void stopSelenium() throws Exception {
 		System.out.println("--- Stopping selenium server");
 		server.stop();
 		System.out.println("--- Stopped selenium server");

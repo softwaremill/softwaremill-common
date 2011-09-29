@@ -1,10 +1,27 @@
 package pl.softwaremill.common.test.web.selenium.screenshots;
 
+import com.thoughtworks.selenium.Selenium;
+import org.testng.IClass;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+
 /**
  * This test cannot be run during module build, it have to be commented
  */
 public class FailureTestListenerTest {
-/*
 
     private Selenium selenium;
     private PrintStream out;
@@ -68,17 +85,6 @@ public class FailureTestListenerTest {
         when(result.getTestClass()).thenReturn(testClass);
         return result;
     }
-*/
 
 }
-
-/*
-@Test
-class AnSeleniumTest extends AbstractSeleniumTest {}
-*/
-
-/*
-@Test
-class AnTest {}
-*/
 
