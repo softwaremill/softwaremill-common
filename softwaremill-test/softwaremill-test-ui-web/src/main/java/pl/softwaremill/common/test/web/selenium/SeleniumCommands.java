@@ -64,7 +64,15 @@ public class SeleniumCommands {
     }
 
     public static void waitForElementVisible(final String locator, final boolean isVisible) throws Exception {
-        waitFor(TIME_OUT, new Check() {
+        waitForElementVisible(locator, isVisible, TIME_OUT);
+    }
+
+    public static void waitForElementVisible(final String locator, final int timeoutSeconts) throws Exception {
+        waitForElementVisible(locator, true, timeoutSeconts);
+    }
+
+    public static void waitForElementVisible(final String locator, final boolean isVisible, final int timeoutSeconds) throws Exception {
+        waitFor(timeoutSeconds, new Check() {
             @Override
             public boolean doCheck() {
                 return selenium.isVisible(locator) == isVisible;
