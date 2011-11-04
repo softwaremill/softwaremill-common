@@ -30,7 +30,7 @@ public class ExecutionTest {
 	}
 
 	@Test
-	public void shouldReturnNullForClosureWithourException() throws Exception {
+	public void shouldReturnNullForClosureWithoutException() throws Exception {
 	    // Given
 	    Execution execution = new Execution() {
 
