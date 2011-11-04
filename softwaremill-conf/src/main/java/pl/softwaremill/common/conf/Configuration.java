@@ -3,6 +3,7 @@ package pl.softwaremill.common.conf;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.softwaremill.common.conf.encoding.ConfigurationValueCoder;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,6 +24,8 @@ public class Configuration {
     private static Map<String, Config<String, String>> configurations =
             new ConcurrentHashMap<String, Config<String, String>>();
     private static List<PropertiesProvider> propertyProviders = new ArrayList<PropertiesProvider>();
+
+    private static ConfigurationValueCoder valueCoder = new ConfigurationValueCoder();
 
     /**
      * Reads configuration for the specified name.
@@ -89,7 +92,12 @@ public class Configuration {
 
             ImmutableMap.Builder<String, String> propsAsImmMapBuilder = new ImmutableMap.Builder<String, String>();
             for (String propName : props.stringPropertyNames()) {
-                propsAsImmMapBuilder = propsAsImmMapBuilder.put(propName, props.getProperty(propName));
+                String propValue = props.getProperty(propName);
+                if (valueCoder.isEncoded(propValue)) {
+                    propValue = valueCoder.decode(propValue);
+                }
+
+                propsAsImmMapBuilder = propsAsImmMapBuilder.put(propName, propValue);
             }
 
             return propsAsImmMapBuilder.build();
