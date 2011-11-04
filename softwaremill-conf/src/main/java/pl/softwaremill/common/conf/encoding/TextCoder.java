@@ -12,7 +12,7 @@ import javax.xml.bind.DatatypeConverter;
  * @author Adam Warski (adam at warski dot org)
  */
 public class TextCoder {
-    // Don't change!
+    // Don't change! Any changes will cause all already encrypted values to by undecryptable using these methods.
     private final static String ALGORITHM = "PBEWithMD5AndTripleDES";
     private final static int ITERATION_COUNT = 20;
     private final static byte[] SALT = "9ak12av8".getBytes();
