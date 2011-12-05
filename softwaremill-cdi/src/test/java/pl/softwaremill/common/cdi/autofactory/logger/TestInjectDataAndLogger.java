@@ -37,12 +37,12 @@ public class TestInjectDataAndLogger extends Arquillian {
     @Test
     public void testField() {
         assertThat(injectDataAndLoggerFieldFactory.create("z").getData()).isEqualTo("z");
-        assertThat(injectDataAndLoggerFieldFactory.create("z").getLogger().getName()).contains("InjectDataAndLoggerField");
+        assertThat(injectDataAndLoggerFieldFactory.create("z").getLogger()).isNotNull();
     }
 
     @Test
     public void testConstructor() {
         assertThat(injectDataAndLoggerConstructorFactory.create("z").getData()).isEqualTo("z");
-        assertThat(injectDataAndLoggerConstructorFactory.create("z").getLogger().getName()).contains("InjectDataAndLoggerConstructor");
+        assertThat(injectDataAndLoggerConstructorFactory.create("z").getLogger()).isNotNull();
     }
 }
