@@ -26,6 +26,7 @@
         <arquillian.version>1.0.0.Alpha4</arquillian.version>
         <findbugs.version>2.3.1</findbugs.version>
         <weld.version>1.1.2.Final</weld.version>
+        <jackson.version>1.9.2</jackson.version>
     </properties>
 
     <dependencies>
@@ -367,6 +368,18 @@
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty</artifactId>
                 <version>6.1.21</version>
+            </dependency>
+
+            <!-- JSON -->
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
