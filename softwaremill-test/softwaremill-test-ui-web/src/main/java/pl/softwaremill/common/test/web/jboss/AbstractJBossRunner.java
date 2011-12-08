@@ -5,7 +5,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import pl.softwaremill.common.test.util.MessageWaiter;
 import pl.softwaremill.common.test.web.jboss.server.JBossAS;
-import pl.softwaremill.common.test.web.jboss.server.JBossASv56;
+import pl.softwaremill.common.test.web.jboss.server.JBossASProvider;
 import pl.softwaremill.common.test.web.selenium.ServerProperties;
 
 import java.io.File;
@@ -45,7 +45,7 @@ public abstract class AbstractJBossRunner {
 		scheduleTimeout();
 		undeploy(); // Clean old deployments
 
-		jboss = new JBossASv56(getServerProperties());
+		jboss = new JBossASProvider(getServerProperties()).createJBossASInstance();
 		tailProcess = jboss.start();
 
 		deploy();

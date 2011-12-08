@@ -6,13 +6,11 @@ import pl.softwaremill.common.test.web.selenium.ServerProperties;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)
  */
-public class JBossASv56 implements JBossAS {
+public abstract class AbstractJBossAS implements JBossAS {
 
 	private final static SysoutLog log = new SysoutLog();
 
@@ -20,10 +18,10 @@ public class JBossASv56 implements JBossAS {
 
 	private Process jbossProcess;
 	private boolean running;
-	private ServerProperties properties;
+	protected ServerProperties properties;
 
 
-	public JBossASv56(ServerProperties serverProperties) {
+	public AbstractJBossAS(ServerProperties serverProperties) {
 		this.properties = serverProperties;
 		this.running = serverProperties.isRunning();
 	}
@@ -33,14 +31,14 @@ public class JBossASv56 implements JBossAS {
 		return (running) ? jbossProcess : startServer();
 	}
 
+	abstract String[] startCommand();
+	abstract String[] shutdownCommand();
+
+
 	protected Process startServer() throws Exception {
 		log.info("Starting JBoss server");
 
-		jbossProcess = Runtime.getRuntime().exec(new String[]{
-				properties.getServerHome() + createRunScript(), "-c",
-				properties.getConfiguration(),
-				createPortSetCommand(),
-				properties.getAdditionalSystemProperties()});
+		jbossProcess = Runtime.getRuntime().exec(startCommand());
 
 		new MessageWaiter(jbossProcess).waitFor(STARTED_LOG_MESSAGE);
 
@@ -49,22 +47,7 @@ public class JBossASv56 implements JBossAS {
 		return jbossProcess;
 	}
 
-	private String createPortSetCommand() {
-		if (properties.getPortset() <= 0) {
-			return "";
-		}
-
-		return "-Djboss.service.binding.set=ports-0" + properties.getPortset();
-	}
-
-	private String createRunScript() {
-		if (winSystem()) {
-			return "/bin/run.bat";
-		}
-		return "/bin/run.sh";
-	}
-
-	private boolean winSystem() {
+	protected boolean winSystem() {
 		String osName = System.getProperty("os.name");
 		return osName != null && osName.contains("Windows");
 	}
@@ -80,29 +63,7 @@ public class JBossASv56 implements JBossAS {
 
 	protected void shutdownServer() throws IOException, InterruptedException {
 
-        List<String> paramList = new ArrayList<String>();
-
-        // bin/shutdown.{sh, bat}
-        paramList.add(properties.getServerHome() + createShutdownScript());
-
-        if(properties.getAsVersion() == 5){
-            // JBoss5
-            paramList.add("--server=localhost:1" + properties.getPortset() + "99");
-        } else {
-            // JBoss6 and above
-            paramList.add("--host=localhost");
-            paramList.add("--port=1" + properties.getPortset() + "90");
-        }
-
-        // shutdown
-        paramList.add("-S");
-
-        if(properties.isSecured()){
-            paramList.add("-u " + properties.getUsername());
-            paramList.add("-p " + properties.getPassword());
-        }
-
-		final Process shutdownProcess = Runtime.getRuntime().exec(paramList.toArray(new String[0]));
+		final Process shutdownProcess = Runtime.getRuntime().exec(shutdownCommand());
 
 		if (winSystem()) {
 			PrintWriter writer = new PrintWriter(shutdownProcess.getOutputStream());
@@ -124,22 +85,5 @@ public class JBossASv56 implements JBossAS {
             //Make sure jboss shuts down before leaving this method.
             jbossProcess.waitFor();
         }
-
-	}
-
-	private String createShutdownScript() {
-		if (winSystem()) {
-			return "/bin/shutdown.bat";
-		}
-		return "/bin/shutdown.sh";
-	}
-
-	@Override
-	public String getDeployDir() {
-		return properties.getServerHome() + "/server/" + properties.getConfiguration() + "/deploy/";
-	}
-
-	public String getServerLogPath() {
-		return properties.getServerHome() + "/server/" + properties.getConfiguration() + "/log/server.log";
 	}
 }
