@@ -43,7 +43,9 @@ public class JBossAS7 extends AbstractJBossAS {
 
         List<String> paramList = new ArrayList<String>();
 
-        paramList.add(properties.getServerHome() + shutdownScript() + " --connect command=:shutdown");
+        paramList.add(properties.getServerHome() + shutdownScript());
+		paramList.add("--connect");
+		paramList.add("command=:shutdown");
 
         if(properties.isSecured()){
             paramList.add("--user=" + properties.getUsername());
