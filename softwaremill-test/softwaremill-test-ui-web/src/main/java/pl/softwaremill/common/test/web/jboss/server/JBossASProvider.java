@@ -18,6 +18,7 @@ public class JBossASProvider {
 		switch (version) {
 			case 5: return new JBossAS5or6(serverProperties);
 			case 6: return new JBossAS5or6(serverProperties);
+			case 7: return new JBossAS7(serverProperties);
 			default: throw new IllegalArgumentException("Not supported JBossAS version: " + version);
 		}
 	}
