@@ -15,7 +15,7 @@ public class StaticPropertiesProvider implements PropertiesProvider {
         return configurations.get(name);
     }
     
-    public void setProperties(String configurationName, ImmutableMap<String, String> properties) {
+    public static void setProperties(String configurationName, ImmutableMap<String, String> properties) {
         configurations.put(configurationName, properties);
     }
 
