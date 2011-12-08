@@ -61,14 +61,17 @@ public class Configuration {
         PropertiesProvider provider;
         try {
             provider = providerClass.newInstance();
-
-            if (provider.providerAvailable()) {
-                propertyProviders.add(provider);
-            }
+            registerPropertiesProvider(provider);
         } catch (InstantiationException e) {
             // do not register
         } catch (IllegalAccessException e) {
             // do not register
+        }
+    }
+
+    public static void registerPropertiesProvider(PropertiesProvider provider) {
+        if (provider.providerAvailable()) {
+            propertyProviders.add(provider);
         }
     }
 
@@ -78,6 +81,7 @@ public class Configuration {
         registerPropertiesProvider(JBoss6DeployPropertiesProvider.class);
         registerPropertiesProvider(JBoss7DeployPropertiesProvider.class);
         registerPropertiesProvider(ClasspathPropertiesProvider.class);
+        registerPropertiesProvider(new StaticPropertiesProvider());
     }
 
     static ImmutableMap<String, String> loadFromURL(URL url) {
