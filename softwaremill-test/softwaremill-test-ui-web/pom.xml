@@ -20,6 +20,11 @@
             <artifactId>softwaremill-util</artifactId>
             <version>${version}</version>
         </dependency>
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-test-util</artifactId>
+            <version>${version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
