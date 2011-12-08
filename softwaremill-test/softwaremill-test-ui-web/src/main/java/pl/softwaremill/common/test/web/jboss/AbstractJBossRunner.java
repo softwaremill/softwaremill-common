@@ -43,9 +43,9 @@ public abstract class AbstractJBossRunner {
 	@BeforeSuite
 	public void start() throws Exception {
 		scheduleTimeout();
-		undeploy(); // Clean old deployments
 
 		jboss = new JBossASProvider(getServerProperties()).createJBossASInstance();
+		undeploy(); // Clean old deployments
 		tailProcess = jboss.start();
 
 		deploy();
