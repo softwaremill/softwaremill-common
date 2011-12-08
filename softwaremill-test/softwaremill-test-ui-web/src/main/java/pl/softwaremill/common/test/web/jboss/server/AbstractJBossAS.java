@@ -14,8 +14,6 @@ public abstract class AbstractJBossAS implements JBossAS {
 
 	private final static SysoutLog log = new SysoutLog();
 
-	private static final String STARTED_LOG_MESSAGE = "Started in";
-
 	private Process jbossProcess;
 	private boolean running;
 	protected ServerProperties properties;
@@ -33,14 +31,14 @@ public abstract class AbstractJBossAS implements JBossAS {
 
 	abstract String[] startCommand();
 	abstract String[] shutdownCommand();
-
+	abstract String startedLogMessage();
 
 	protected Process startServer() throws Exception {
 		log.info("Starting JBoss server");
 
 		jbossProcess = Runtime.getRuntime().exec(startCommand());
 
-		new MessageWaiter(jbossProcess).waitFor(STARTED_LOG_MESSAGE);
+		new MessageWaiter(jbossProcess).waitFor(startedLogMessage());
 
 		log.info("JBoss started");
 

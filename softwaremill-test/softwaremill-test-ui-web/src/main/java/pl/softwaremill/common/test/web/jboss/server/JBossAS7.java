@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class JBossAS7 extends AbstractJBossAS {
 
+	private static final String STARTED_LOG_MESSAGE = "started in";
+
 	public JBossAS7(ServerProperties serverProperties) {
 		super(serverProperties);
 		verifyDefaultPortset();
@@ -61,5 +63,10 @@ public class JBossAS7 extends AbstractJBossAS {
 
 	public String getServerLogPath() {
 		return properties.getServerHome() + "/standalone/log/server.log";
+	}
+
+	@Override
+	String startedLogMessage() {
+		return STARTED_LOG_MESSAGE;
 	}
 }

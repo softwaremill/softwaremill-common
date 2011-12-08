@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class JBossAS5or6 extends AbstractJBossAS {
 
+	private static final String STARTED_LOG_MESSAGE = "Started in";
+
 	public JBossAS5or6(ServerProperties serverProperties) {
 		super(serverProperties);
 	}
@@ -59,6 +61,11 @@ public class JBossAS5or6 extends AbstractJBossAS {
             paramList.add("-p " + properties.getPassword());
         }
 		return paramList.toArray(new String[0]);
+	}
+
+	@Override
+	String startedLogMessage() {
+		return STARTED_LOG_MESSAGE;
 	}
 
 	private String createShutdownScript() {
