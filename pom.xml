@@ -223,6 +223,11 @@
                 <artifactId>weld-servlet</artifactId>
                 <version>${weld.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.jboss.weld.se</groupId>
+                <artifactId>weld-se-core</artifactId>
+                <version>${weld.version}</version>
+            </dependency>
 
             <!-- Seam 3 -->
             <dependency>
