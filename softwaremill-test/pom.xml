@@ -20,6 +20,7 @@
         <module>softwaremill-test-db</module>
         <module>softwaremill-test-ui-web</module>
         <module>softwaremill-test-ui-swing</module>
+        <module>softwaremill-test-arquillian</module>
   </modules>
 
     <dependencies>

@@ -54,6 +54,11 @@
             </dependency>
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-test-arquillian</artifactId>
+                <version>${softwaremill.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-cdi</artifactId>
                 <version>${softwaremill.common.version}</version>
             </dependency>
