@@ -273,3 +273,21 @@ or setter injection:
     }
 
 The `@Inject` annotation on the constructor and the `@FactoryParameter` annotations aren't needed in this case.
+
+## Injecting configuration values
+
+You can inject configuration values specified in `<name>.conf` files
+(see [Configuration reader](/softwaremill/softwaremill-common/tree/master/softwaremill-conf/)):
+
+    @Inject
+    @ConfValue(confName="xxx", confKey="yyy")
+    private String xxx;
+
+If you want to provide configuration values in an Arquillian test, add this method in which you provide a map to the
+`ConfValueProducer.from` method:
+
+    @Produces
+    @ConfValue(confName="", confKey="")
+    public String getConfiguration(InjectionPoint ip) {
+        return ConfigurationValueProducer.from(ip, testConfiguration);
+    }
