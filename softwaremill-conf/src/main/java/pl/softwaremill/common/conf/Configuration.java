@@ -5,9 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.conf.encoding.ConfigurationValueCoder;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,11 +78,18 @@ public class Configuration {
     }
     
     public static void setConfiguration(String configurationName, ImmutableMap<String, String> properties) {
+        log.info("Set configuration for: "+configurationName);
         configurations.put(configurationName, new MapWrapper(properties));
     }
 
     public static void clearConfiguration(String configurationName) {
+        log.info("Cleared configuration for: "+configurationName);
         configurations.remove(configurationName);
+    }
+
+    public static void setFromFile(String configurationName, File file) throws MalformedURLException {
+        ImmutableMap<String, String> conf = loadFromURL(file.toURI().toURL());
+        setConfiguration(configurationName, conf);
     }
 
     // Registering default property providers. First JBoss (if available), then classpath.
