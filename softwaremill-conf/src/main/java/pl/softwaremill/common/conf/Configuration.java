@@ -74,6 +74,14 @@ public class Configuration {
             propertyProviders.add(provider);
         }
     }
+    
+    public static void setConfiguration(String configurationName, ImmutableMap<String, String> properties) {
+        configurations.put(configurationName, new MapWrapper(properties));
+    }
+
+    public static void clearConfiguration(String configurationName) {
+        configurations.remove(configurationName);
+    }
 
     // Registering default property providers. First JBoss (if available), then classpath.
     static {
@@ -81,7 +89,6 @@ public class Configuration {
         registerPropertiesProvider(JBoss6DeployPropertiesProvider.class);
         registerPropertiesProvider(JBoss7DeployPropertiesProvider.class);
         registerPropertiesProvider(ClasspathPropertiesProvider.class);
-        registerPropertiesProvider(new StaticPropertiesProvider());
     }
 
     static ImmutableMap<String, String> loadFromURL(URL url) {
