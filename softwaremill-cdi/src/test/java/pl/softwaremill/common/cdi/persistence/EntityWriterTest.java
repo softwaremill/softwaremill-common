@@ -6,7 +6,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
+import pl.softwaremill.common.arquillian.ManifestUtil;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -31,7 +31,7 @@ public class EntityWriterTest extends AbstractHibernateTest {
                 .addClass(EntityWriter.class)
                 .addClass(MockEntityManagerProducers.class);
 
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
+        ar = ManifestUtil.addEmptyBeansXml(ar);
 
         return ar;
     }

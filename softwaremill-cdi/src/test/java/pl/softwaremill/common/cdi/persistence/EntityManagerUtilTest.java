@@ -6,7 +6,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
+import pl.softwaremill.common.arquillian.ManifestUtil;
 
 import javax.persistence.EntityManager;
 
@@ -22,7 +22,7 @@ public class EntityManagerUtilTest extends AbstractHibernateTest {
     @Deployment
     public static JavaArchive createTestArchive() {
         JavaArchive ar = ShrinkWrap.create(JavaArchive.class, "test.jar");
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
+        ar = ManifestUtil.addEmptyBeansXml(ar);
 
         return ar;
     }

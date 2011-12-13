@@ -5,19 +5,19 @@ import org.testng.IHookCallBack;
 import org.testng.ITestResult;
 
 public abstract class BetterArquillian extends Arquillian {
-    protected void beforeTestWithDependencies() { }
-    protected void afterTestWithDependencies() { }
+    protected void beforeMethodWithDependencies() { }
+    protected void afterMethodWithDependencies() { }
 
     @Override
     public void run(final IHookCallBack callback, ITestResult testResult) {
         super.run(new IHookCallBack() {
             @Override
             public void runTestMethod(ITestResult testResult) {
-                beforeTestWithDependencies();
+                beforeMethodWithDependencies();
                 try {
                     callback.runTestMethod(testResult);
                 } finally {
-                    afterTestWithDependencies();
+                    afterMethodWithDependencies();
                 }
             }
         }, testResult);

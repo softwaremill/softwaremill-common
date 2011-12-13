@@ -3,19 +3,12 @@ package pl.softwaremill.common.cdi.util;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.jboss.shrinkwrap.api.container.ManifestContainer;
 import org.jboss.shrinkwrap.api.container.ResourceContainer;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
 public class ArquillianUtil {
-    public static <T extends Archive<T> & ManifestContainer<T>> T addEmptyBeansXml(T archive) {
-        return archive.addManifestResource(
-                        new ByteArrayAsset("<beans/>".getBytes()),
-                        ArchivePaths.create("META-INF/beans.xml"));
-    }
-
     public static <T extends Archive<T> & ResourceContainer<T>> T addTestBeansXml(T archive) {
         StringBuilder beansXmlBuilder = new StringBuilder();
         beansXmlBuilder.append("<beans>");

@@ -6,7 +6,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
+import pl.softwaremill.common.arquillian.ManifestUtil;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class ELEvaluatorTest extends Arquillian {
                 .addClasses(StringHoldingBean.class)
                 .addPackage(ELEvaluator.class.getPackage());
 
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
+        ar = ManifestUtil.addEmptyBeansXml(ar);
 
         return ar;
     }

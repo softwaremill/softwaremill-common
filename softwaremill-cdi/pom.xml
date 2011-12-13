@@ -84,14 +84,10 @@
 
         <!-- Arquillian -->
         <dependency>
-            <groupId>org.jboss.arquillian</groupId>
-            <artifactId>arquillian-testng</artifactId>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-test-arquillian</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.weld.arquillian.container</groupId>
-            <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-            <scope>test</scope>
+            <version>${version}</version>
         </dependency>
 
         <!-- Testing -->
