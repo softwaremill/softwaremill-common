@@ -20,7 +20,7 @@ import static org.testng.Assert.assertTrue;
  * @author Maciej Bilas
  * @since 10/20/11 11:42
  */
-public class ExtMockito {
+public class MockitoPersistence {
 
     private static class LazyValidatorHolder {
         public static Validator instance = Validation.buildDefaultValidatorFactory().getValidator();
@@ -30,20 +30,10 @@ public class ExtMockito {
         return LazyValidatorHolder.instance;
     }
 
-    private ExtMockito() {
+    private MockitoPersistence() {
         /* this class should not be instantiated */
     }
 
-    /**
-     * Checks if the given object is a mock.
-     *
-     * @param o
-     * @return
-     * @throws NullPointerException if {@code o} is {@code null}
-     */
-    public static boolean isAMock(Object o) {
-        return checkNotNull(o) instanceof Factory;
-    }
 
     /**
      * Can be used with typical DAO {@code persist(entity)} method.

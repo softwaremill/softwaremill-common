@@ -6,28 +6,13 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.*;
-import static pl.softwaremill.common.dbtest.ExtMockito.*;
+import static pl.softwaremill.common.dbtest.MockitoPersistence.*;
 
 /**
  * @author Maciej Bilas
  * @since 15/12/11 11:57
  */
-public class ExtMockitoTest {
-
-    @Test
-    public void isAMockShouldReturnTrueWhenAMockIsPassedToIt() {
-        assertTrue(isAMock(mock(Entity.class)));
-    }
-
-    @Test(expectedExceptions = NullPointerException.class)
-    public void isAMockShouldThrowAnNPEIfTheObjectPassedToItIsNull() {
-        isAMock(null);
-    }
-
-    @Test
-    public void isAMockShouldReturnFalseIfTheObjectIsNotAMock() {
-        assertFalse(isAMock(new Entity()));
-    }
+public class MockitoPersistenceTest {
 
     @Test
     public void persistAnswerShouldRunValidations() {
