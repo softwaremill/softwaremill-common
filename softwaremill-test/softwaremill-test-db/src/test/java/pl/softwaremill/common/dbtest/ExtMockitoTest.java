@@ -2,8 +2,6 @@ package pl.softwaremill.common.dbtest;
 
 import org.testng.annotations.Test;
 
-import javax.validation.constraints.NotNull;
-
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -73,29 +71,3 @@ public class ExtMockitoTest {
 
 }
 
-interface EntityDAO {
-    Entity persist(Entity entity);
-
-    Entity reload(Entity entity);
-}
-
-class Entity {
-
-    @NotNull
-    private String field;
-
-    Entity() {
-    }
-
-    Entity(String field) {
-        this.field = field;
-    }
-
-    public String getField() {
-        return field;
-    }
-
-    public void setField(String field) {
-        this.field = field;
-    }
-}
