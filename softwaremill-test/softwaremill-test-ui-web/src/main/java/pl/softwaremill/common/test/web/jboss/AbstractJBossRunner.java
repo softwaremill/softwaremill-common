@@ -24,11 +24,11 @@ import static org.testng.Assert.fail;
  */
 public abstract class AbstractJBossRunner {
 
-	private JBossAS jboss;
+	private static JBossAS jboss;
 
 	protected final static SysoutLog log = new SysoutLog();
 
-	private boolean deploymentComplete = false;
+	private static boolean deploymentComplete = false;
 
 	private static final int MILLISECONDS_IN_MINUTE = 60 * 1000;
 
@@ -36,9 +36,9 @@ public abstract class AbstractJBossRunner {
 
 	protected abstract Deployment[] getDeployments();
 
-	private Process tailProcess;
+	private static Process tailProcess;
 
-    private boolean timedout;
+    private static boolean timedout;
 
 	@BeforeSuite
 	public void start() throws Exception {
@@ -58,7 +58,7 @@ public abstract class AbstractJBossRunner {
 		publishLog();
 	}
 
-	private Process getTailProcess() throws IOException {
+	public static Process getTailProcess() throws IOException {
 		if (tailProcess == null) {
 			// this happens when jboss was already started
 			tailProcess = Runtime.getRuntime().exec(
