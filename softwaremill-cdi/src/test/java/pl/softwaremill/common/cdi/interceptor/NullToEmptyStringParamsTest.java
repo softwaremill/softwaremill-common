@@ -17,12 +17,12 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)
  */
-public class NotNullStringParamsInterceptorTest  extends Arquillian {
+public class NullToEmptyStringParamsTest extends Arquillian {
 	@Deployment
 	public static JavaArchive createTestArchive() {
 		JavaArchive ar = ShrinkWrap.create(JavaArchive.class, "test.jar")
 				.addClass(BeanToIntercept.class)
-				.addClass(NotNullStringParams.class)
+				.addClass(NullToEmptyStringParams.class)
 				.addClass(NotNullStringParamsInterceptor.class);
 
 		ar = addTestBeansXml(ar);

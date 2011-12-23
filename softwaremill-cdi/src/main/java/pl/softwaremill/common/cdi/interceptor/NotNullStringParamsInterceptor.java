@@ -9,7 +9,8 @@ import javax.interceptor.InvocationContext;
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)
  */
-@NotNullStringParams @Interceptor
+@NullToEmptyStringParams
+@Interceptor
 public class NotNullStringParamsInterceptor {
 	@AroundInvoke
 	public Object convertEmptyStringParameters(InvocationContext ctx) throws Exception {
