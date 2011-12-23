@@ -11,7 +11,7 @@ import javax.interceptor.InvocationContext;
  */
 @NullToEmptyStringParams
 @Interceptor
-public class NotNullStringParamsInterceptor {
+public class NullToEmptyStringParamsInterceptor {
 	@AroundInvoke
 	public Object convertEmptyStringParameters(InvocationContext ctx) throws Exception {
 

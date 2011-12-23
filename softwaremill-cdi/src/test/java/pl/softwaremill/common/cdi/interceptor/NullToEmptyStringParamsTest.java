@@ -23,7 +23,7 @@ public class NullToEmptyStringParamsTest extends Arquillian {
 		JavaArchive ar = ShrinkWrap.create(JavaArchive.class, "test.jar")
 				.addClass(BeanToIntercept.class)
 				.addClass(NullToEmptyStringParams.class)
-				.addClass(NotNullStringParamsInterceptor.class);
+				.addClass(NullToEmptyStringParamsInterceptor.class);
 
 		ar = addTestBeansXml(ar);
 
@@ -64,7 +64,7 @@ public class NullToEmptyStringParamsTest extends Arquillian {
 		StringBuilder beansXmlBuilder = new StringBuilder();
 		beansXmlBuilder.append("<beans>");
 		beansXmlBuilder.append("<interceptors>");
-		beansXmlBuilder.append("<class>pl.softwaremill.common.cdi.interceptor.NotNullStringParamsInterceptor</class>");
+		beansXmlBuilder.append("<class>pl.softwaremill.common.cdi.interceptor.NullToEmptyStringParamsInterceptor</class>");
 		beansXmlBuilder.append("</interceptors>");
 		beansXmlBuilder.append("</beans>");
 
