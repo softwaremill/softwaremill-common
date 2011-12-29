@@ -1,5 +1,9 @@
 package pl.softwaremill.common.test.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 /**
@@ -7,15 +11,19 @@ import java.util.Scanner;
  */
 public class MessageWaiter {
 
-	private final Process process;
+	private final InputStream inputStream;
 
 	public MessageWaiter(Process process) {
-		this.process = process;
+		this.inputStream = process.getInputStream();
+	}
+
+	public MessageWaiter(File file) throws FileNotFoundException {
+		this.inputStream = new FileInputStream(file);
 	}
 
 	public void waitFor(String message) {
 		System.out.println("Waiting for message: [" + message + "]");
-		final Scanner scanner = new Scanner(process.getInputStream()).useDelimiter(message);
+		final Scanner scanner = new Scanner(inputStream).useDelimiter(message);
 		scanner.next();
 	}
 

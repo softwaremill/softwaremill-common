@@ -4,12 +4,12 @@ import org.jboss.arquillian.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.annotations.Test;
+import pl.softwaremill.common.arquillian.ManifestUtil;
 import pl.softwaremill.common.cdi.autofactory.AbstractAutoFactoryTest;
 import pl.softwaremill.common.cdi.autofactory.CreatedWith;
 import pl.softwaremill.common.cdi.autofactory.PriceCalculator;
 import pl.softwaremill.common.cdi.autofactory.mixed.PriceCalculatorMixedConstructorImpl;
 import pl.softwaremill.common.cdi.autofactory.mixed.TotalPriceCalculatorMixedConstructorImpl;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
 
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ public class AutoFactoryWithProducerTest extends AbstractAutoFactoryTest {
                 .addClass(ExamplePriceCalculatorProducer.class)
                 .addPackage(CreatedWith.class.getPackage());
 
-        return ArquillianUtil.addEmptyBeansXml(ar);
+        return ManifestUtil.addEmptyBeansXml(ar);
     }
 
     @Inject @ExampleProductQualifier

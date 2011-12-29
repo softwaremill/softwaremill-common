@@ -5,8 +5,8 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.annotations.Test;
+import pl.softwaremill.common.arquillian.ManifestUtil;
 import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
 
 import javax.inject.Inject;
 
@@ -24,7 +24,7 @@ public class TestInjectDataAndInstance extends Arquillian {
                 .addClass(InstanceBean2.class)
                 .addPackage(CreatedWith.class.getPackage());
 
-        return ArquillianUtil.addEmptyBeansXml(ar);
+        return ManifestUtil.addEmptyBeansXml(ar);
     }
 
     @Inject

@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>softwaremill-test-arquillian</artifactId>
+    <name>Softwaremill Arqullian Test Util</name>
+
+    <parent>
+        <groupId>pl.softwaremill.common</groupId>
+        <artifactId>softwaremill-test</artifactId>
+        <version>62-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian</groupId>
+            <artifactId>arquillian-testng</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.arquillian.container</groupId>
+            <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core</artifactId>
+        </dependency>
+        <!-- Required as this is an EE container -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-6.0</artifactId>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+</project>

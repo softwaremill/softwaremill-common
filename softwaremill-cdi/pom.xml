@@ -7,7 +7,7 @@
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>61-SNAPSHOT</version>
+        <version>62-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -15,6 +15,11 @@
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-conf</artifactId>
             <version>${version}</version>
         </dependency>
 
@@ -84,14 +89,10 @@
 
         <!-- Arquillian -->
         <dependency>
-            <groupId>org.jboss.arquillian</groupId>
-            <artifactId>arquillian-testng</artifactId>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-test-arquillian</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.weld.arquillian.container</groupId>
-            <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-            <scope>test</scope>
+            <version>${version}</version>
         </dependency>
 
         <!-- Testing -->

@@ -7,11 +7,11 @@
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>61-SNAPSHOT</version>
+        <version>62-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <softwaremill.common.version>61-SNAPSHOT</softwaremill.common.version>
+        <softwaremill.common.version>62-SNAPSHOT</softwaremill.common.version>
     </properties>
 
     <dependencyManagement>
@@ -50,6 +50,11 @@
             <dependency>
                 <groupId>pl.softwaremill.common</groupId>
                 <artifactId>softwaremill-test-ui-web</artifactId>
+                <version>${softwaremill.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pl.softwaremill.common</groupId>
+                <artifactId>softwaremill-test-arquillian</artifactId>
                 <version>${softwaremill.common.version}</version>
             </dependency>
             <dependency>

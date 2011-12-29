@@ -4,7 +4,7 @@
     <parent>
         <artifactId>softwaremill-common-parent</artifactId>
         <groupId>pl.softwaremill.common</groupId>
-        <version>61-SNAPSHOT</version>
+        <version>62-SNAPSHOT</version>
     </parent>
 
     <artifactId>softwaremill-test</artifactId>
@@ -20,6 +20,7 @@
         <module>softwaremill-test-db</module>
         <module>softwaremill-test-ui-web</module>
         <module>softwaremill-test-ui-swing</module>
+        <module>softwaremill-test-arquillian</module>
   </modules>
 
     <dependencies>

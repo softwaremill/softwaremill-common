@@ -5,12 +5,12 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
+import pl.softwaremill.common.arquillian.ManifestUtil;
 
 import javax.inject.Inject;
 import java.net.MalformedURLException;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.Assertions.*;
 
 /**
  * Test for auto object services
@@ -24,7 +24,7 @@ public class AutoServiceTest extends Arquillian {
                 .addPackage(IAuto.class.getPackage())
                 .addPackage(AutoObjectServiceExtension.class.getPackage());
 
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
+        ar = ManifestUtil.addEmptyBeansXml(ar);
 
         return ar;
     }

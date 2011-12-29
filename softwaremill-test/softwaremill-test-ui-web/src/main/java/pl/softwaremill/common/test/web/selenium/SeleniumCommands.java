@@ -157,6 +157,12 @@ public class SeleniumCommands {
         selenium.click(xpath);
     }
 
+    public static void clickIfPresent(String locator) {
+        if (selenium.isElementPresent(locator)) {
+            selenium.click(locator);
+        }
+    }
+
     public static void typeOncePresent(String xpath, String text) throws Exception {
         typeOncePresent(xpath, text, TIME_OUT);
     }

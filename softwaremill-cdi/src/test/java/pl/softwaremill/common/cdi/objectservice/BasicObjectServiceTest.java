@@ -6,8 +6,8 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pl.softwaremill.common.arquillian.ManifestUtil;
 import pl.softwaremill.common.cdi.objectservice.extension.ObjectServiceExtension;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
 
 import javax.inject.Inject;
 
@@ -23,7 +23,7 @@ public class BasicObjectServiceTest extends Arquillian {
                 .addPackage(OS.class.getPackage())
                 .addPackage(ObjectServiceExtension.class.getPackage());
 
-        ar = ArquillianUtil.addEmptyBeansXml(ar);
+        ar = ManifestUtil.addEmptyBeansXml(ar);
 
         return ar;
     }
