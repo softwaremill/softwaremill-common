@@ -27,6 +27,7 @@
         <findbugs.version>2.3.1</findbugs.version>
         <weld.version>1.1.2.Final</weld.version>
         <jackson.version>1.9.2</jackson.version>
+		<slf4j.version>1.5.11</slf4j.version>
     </properties>
 
     <dependencies>
@@ -114,17 +115,17 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.5.11</version>
+                <version>${slf4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.5.11</version>
+				<version>${slf4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-jdk14</artifactId>
-                <version>1.5.11</version>
+				<version>${slf4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
