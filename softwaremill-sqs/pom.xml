@@ -8,7 +8,7 @@
 	<parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>62-SNAPSHOT</version>
+        <version>62</version>
     </parent>
 
 	<dependencies>
