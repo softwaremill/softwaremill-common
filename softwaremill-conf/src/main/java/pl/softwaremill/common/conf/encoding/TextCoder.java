@@ -9,6 +9,12 @@ import javax.xml.bind.DatatypeConverter;
 
 /**
  * Encodes and decodes arbitrary chunks of texts using the master password.
+ *
+ * Usage note:
+ * To avoid "java.security.InvalidKeyException:illegal Key Size" please:
+ * 1. Download "Java Cryptography Extension (JCE) unlimited strength jurisdiction policy files"
+ * 2. Extract and copy jars to $JAVA_HOME/jre/lib/security
+ *
  * @author Adam Warski (adam at warski dot org)
  */
 public class TextCoder {
