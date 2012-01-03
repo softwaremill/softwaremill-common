@@ -123,7 +123,7 @@ public abstract class AbstractDBTest extends Arquillian {
     public void initDatabase() throws IOException, SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException, NotSupportedException {
         Ejb3Configuration cfg = new Ejb3Configuration();
 
-        cfg.configure("hibernate.test.cfg.xml");
+        cfg.configure(getHibernateConfigurationFile());
 
         // Separate database for each test class
         cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() + addCompatibilityMode());
@@ -147,6 +147,15 @@ public abstract class AbstractDBTest extends Arquillian {
 
         SimpleJtaTransactionManagerImpl.getInstance().commit();
         em.close();
+    }
+
+    /**
+     * Can be overwritten in subclass and can return null
+     *
+     * @return name of Hibernate XML Configuration file
+     */
+    protected String getHibernateConfigurationFile() {
+        return "hibernate.test.cfg.xml";
     }
 
     private String addCompatibilityMode() {
