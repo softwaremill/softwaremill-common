@@ -4,7 +4,7 @@
     <parent>
         <artifactId>softwaremill-common-parent</artifactId>
         <groupId>pl.softwaremill.common</groupId>
-        <version>63-SNAPSHOT</version>
+        <version>63</version>
     </parent>
 
     <artifactId>softwaremill-test</artifactId>
