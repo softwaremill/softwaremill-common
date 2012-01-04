@@ -7,7 +7,7 @@ import org.jboss.shrinkwrap.api.container.ManifestContainer;
 
 public class ManifestUtil {
     public static <T extends Archive<T> & ManifestContainer<T>> T addEmptyBeansXml(T archive) {
-        return archive.addManifestResource(
+        return archive.addAsManifestResource(
                 new ByteArrayAsset("<beans/>".getBytes()),
                 ArchivePaths.create("META-INF/beans.xml"));
     }

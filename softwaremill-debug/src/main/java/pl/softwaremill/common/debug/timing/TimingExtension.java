@@ -1,7 +1,7 @@
 package pl.softwaremill.common.debug.timing;
 
 import com.google.common.base.Strings;
-import org.jboss.seam.solder.reflection.annotated.AnnotatedTypeBuilder;
+import org.jboss.solder.reflection.annotated.AnnotatedTypeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.util.RichString;

@@ -15,11 +15,11 @@
             <artifactId>testng</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss.arquillian</groupId>
-            <artifactId>arquillian-testng</artifactId>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss.weld.arquillian.container</groupId>
+            <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
         </dependency>
         <dependency>

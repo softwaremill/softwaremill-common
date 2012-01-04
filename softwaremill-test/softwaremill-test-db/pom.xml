@@ -14,12 +14,12 @@
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-cdi</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         
         <!-- JEE and Hibernate -->
@@ -76,32 +76,14 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
         </dependency>
+
+        <!-- Arquillian -->
+        <dependency>
+            <groupId>pl.softwaremill.common</groupId>
+            <artifactId>softwaremill-test-arquillian</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
-
-  <profiles>
-        <profile>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-
-            <id>weld-ee-embedded-1.1</id>
-            
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian</groupId>
-                    <artifactId>arquillian-testng</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.weld.arquillian.container</groupId>
-                    <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.weld</groupId>
-                    <artifactId>weld-core</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>

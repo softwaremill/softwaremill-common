@@ -15,7 +15,7 @@
         <dependency>
             <groupId>pl.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- CDI (JSR-299) -->
@@ -34,8 +34,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.seam.solder</groupId>
-            <artifactId>seam-solder</artifactId>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-impl</artifactId>
         </dependency>
     </dependencies>
 </project>

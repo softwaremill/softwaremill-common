@@ -1,7 +1,7 @@
 package pl.softwaremill.common.dbtest;
 
 import org.hibernate.ejb.Ejb3Configuration;
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;

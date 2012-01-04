@@ -23,11 +23,10 @@
         <softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>3.6.6.Final</hibernate.version>
-        <arquillian.version>1.0.0.Alpha4</arquillian.version>
         <findbugs.version>2.3.1</findbugs.version>
-        <weld.version>1.1.2.Final</weld.version>
+        <weld.version>1.1.4.Final</weld.version>
         <jackson.version>1.9.2</jackson.version>
-		<slf4j.version>1.5.11</slf4j.version>
+		<slf4j.version>1.6.4</slf4j.version>
     </properties>
 
     <dependencies>
@@ -80,7 +79,7 @@
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>5.12.1</version>
+                <version>5.14.10</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
@@ -128,9 +127,14 @@
 				<version>${slf4j.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-ext</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>0.9.20</version>
+                <version>1.0.0</version>
             </dependency>
 
             <!-- Joda-time -->
@@ -203,15 +207,14 @@
 
             <!-- Arquillian -->
             <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-testng</artifactId>
-                <version>${arquillian.version}</version>
+                <groupId>org.jboss.arquillian.testng</groupId>
+                <artifactId>arquillian-testng-container</artifactId>
+                <version>1.0.0.CR7</version>
             </dependency>
-
             <dependency>
-                <groupId>org.jboss.weld.arquillian.container</groupId>
+                <groupId>org.jboss.arquillian.container</groupId>
                 <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-                <version>${weld.version}</version>
+                <version>1.0.0.CR3</version>
             </dependency>
 
             <!-- Weld -->
@@ -221,9 +224,9 @@
                 <version>${weld.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jboss.seam.solder</groupId>
-                <artifactId>seam-solder</artifactId>
-                <version>3.0.0.Final</version>
+                <groupId>org.jboss.solder</groupId>
+                <artifactId>solder-impl</artifactId>
+                <version>3.1.0.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>

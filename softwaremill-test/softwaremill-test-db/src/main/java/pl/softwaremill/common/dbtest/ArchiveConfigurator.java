@@ -22,7 +22,7 @@ public abstract class ArchiveConfigurator {
         fillBeansXml(beansXmlBuilder);
         beansXmlBuilder.append("</beans>");
 
-        ar = ar.addManifestResource(
+        ar = ar.addAsManifestResource(
                 new ByteArrayAsset(beansXmlBuilder.toString().getBytes()),
                 ArchivePaths.create("beans.xml"));
 

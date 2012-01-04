@@ -1,6 +1,6 @@
 package pl.softwaremill.common.cdi.interceptor;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePaths;
@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.Assertions.*;
 
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)
@@ -68,8 +68,8 @@ public class NullToEmptyStringParamsTest extends Arquillian {
 		beansXmlBuilder.append("</interceptors>");
 		beansXmlBuilder.append("</beans>");
 
-		return archive.addResource(
-				new ByteArrayAsset(beansXmlBuilder.toString().getBytes()),
-				ArchivePaths.create("META-INF/beans.xml"));
+		return archive.addAsResource(
+                new ByteArrayAsset(beansXmlBuilder.toString().getBytes()),
+                ArchivePaths.create("META-INF/beans.xml"));
 	}
 }

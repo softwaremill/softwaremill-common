@@ -1,6 +1,6 @@
 package pl.softwaremill.common.cdi.autofactory.mixed;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import pl.softwaremill.common.arquillian.ManifestUtil;

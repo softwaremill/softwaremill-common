@@ -20,6 +20,11 @@ public abstract class BetterArquillian extends Arquillian {
                     afterMethodWithDependencies();
                 }
             }
+
+            @Override
+            public Object[] getParameters() {
+                return callback.getParameters();
+            }
         }, testResult);
     }
 }

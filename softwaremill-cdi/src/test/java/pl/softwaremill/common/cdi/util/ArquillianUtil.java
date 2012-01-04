@@ -18,7 +18,7 @@ public class ArquillianUtil {
         beansXmlBuilder.append("</interceptors>");
         beansXmlBuilder.append("</beans>");
 
-        return archive.addResource(
+        return archive.addAsResource(
                 new ByteArrayAsset(beansXmlBuilder.toString().getBytes()),
                 ArchivePaths.create("META-INF/beans.xml"));
     }

@@ -10,22 +10,31 @@ import org.hibernate.ejb.Ejb3Configuration;
 import org.hibernate.testing.tm.ConnectionProviderImpl;
 import org.hibernate.testing.tm.SimpleJtaTransactionManagerImpl;
 import org.hibernate.testing.tm.TransactionManagerLookupImpl;
-import org.jboss.arquillian.testng.Arquillian;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import pl.softwaremill.common.arquillian.BetterArquillian;
 import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
 import pl.softwaremill.common.dbtest.util.DbMode;
 import pl.softwaremill.common.dbtest.util.SqlFileResolver;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.*;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.Synchronization;
+import javax.transaction.SystemException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang.StringUtils.*;
 
 /**
  * Extend this class to create tests which have a private database. The persistence classes from cdi-ext are available.
@@ -53,7 +62,7 @@ import static org.apache.commons.lang.StringUtils.isBlank;
  *
  * @author Adam Warski (adam at warski dot org)
  */
-public abstract class AbstractDBTest extends Arquillian {
+public abstract class AbstractDBTest extends BetterArquillian {
 
     private EntityManagerFactory emf;
 
