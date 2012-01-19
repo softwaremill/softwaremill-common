@@ -1,13 +1,17 @@
 package pl.softwaremill.common.util.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.List;
 
 public class KillableProcess {
+    private static final Logger log = LoggerFactory.getLogger(KillableProcess.class);
+
     private final String shellCommand;
     private final String processGrepString;
     
-    private List<String> pids;
     private Process process;
 
     /**
@@ -24,8 +28,6 @@ public class KillableProcess {
                 "-c",
                 shellCommand).start();
         
-        pids = Shell.readProcessPids(processGrepString);
-        
         return process;
     }
     
@@ -38,16 +40,16 @@ public class KillableProcess {
     }
     
     public void sendSig(int sig) throws IOException, InterruptedException {
-        for (String pid : pids) {
+        for (String pid : readPids()) {
+            log.info("Sending signal {} to pid {}", sig, pid);
             Shell.runShellCommand("kill -"+sig+" "+pid).waitFor();
         }
         
         process = null;
-        pids = null;
     }
 
-    public List<String> getPids() {
-        return pids;
+    public List<String> readPids() throws IOException {
+        return Shell.readProcessPids(processGrepString);
     }
 
     public Process getProcess() {
