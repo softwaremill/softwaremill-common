@@ -38,6 +38,10 @@ public class KillableProcess {
     public void sendSigKill() throws IOException, InterruptedException {
         sendSig(9);
     }
+
+    public void sendSigTerm() throws IOException, InterruptedException {
+        sendSig(15);
+    }
     
     public void sendSig(int sig) throws IOException, InterruptedException {
         for (String pid : readPids()) {
