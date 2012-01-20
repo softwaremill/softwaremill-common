@@ -1,12 +1,11 @@
 package pl.softwaremill.common.test.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
 /**
+ * <strong>Warning:</strong> do not use with {@code FileInputStream}. If you want to tail a file and wait for a message,
+ * use {@link FileMessageWaiter}.
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)
  */
 public class MessageWaiter {
@@ -14,15 +13,6 @@ public class MessageWaiter {
 
 	public MessageWaiter(Process process) {
 		this(process.getInputStream());
-	}
-
-    /**
-     * BROKEN! Will only search through file content as it is *now*.
-     * Use {@link FileMessageWaiter} instead.
-     */
-    @Deprecated
-	public MessageWaiter(File file) throws FileNotFoundException {
-		this(new FileInputStream(file));
 	}
 
     public MessageWaiter(InputStream inputStream) {
