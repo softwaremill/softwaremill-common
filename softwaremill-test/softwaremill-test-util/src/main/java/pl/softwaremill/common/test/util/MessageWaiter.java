@@ -20,6 +20,7 @@ public class MessageWaiter {
      * BROKEN! Will only search through file content as it is *now*.
      * Use {@link FileMessageWaiter} instead.
      */
+    @Deprecated
 	public MessageWaiter(File file) throws FileNotFoundException {
 		this(new FileInputStream(file));
 	}
