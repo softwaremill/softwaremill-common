@@ -8,10 +8,10 @@ package pl.softwaremill.common.util;
  */
 public class SecsToMills {
 
-	public static long ONE_SECOND = 1000l;
-	public static long TWO_SECONDS = 2 * ONE_SECOND;
-	public static long TEN_SECONDS = 10 * ONE_SECOND;
+	public static final long ONE_SECOND = 1000l;
+	public static final long TWO_SECONDS = 2 * ONE_SECOND;
+	public static final long TEN_SECONDS = 10 * ONE_SECOND;
 
-	public static long ONE_MINUTE = 60 * ONE_SECOND;
-	public static long TWO_MINUTES = 2 * ONE_MINUTE;
+	public static final long ONE_MINUTE = 60 * ONE_SECOND;
+	public static final long TWO_MINUTES = 2 * ONE_MINUTE;
 }
