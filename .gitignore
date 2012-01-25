@@ -6,6 +6,7 @@ target
 .project
 .settings
 *~
+*.tmp
 *.iml
 *.ipr
 *.iws
