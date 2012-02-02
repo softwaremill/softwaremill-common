@@ -5,19 +5,19 @@ package pl.softwaremill.common.util;
  * reached.
  */
 public class IncrementalSleeper {
-    private final int initialInterval;
-    private final int maxInterval;
+    private final long initialInterval;
+    private final long maxInterval;
 
-    private int currentInterval;
+    private long currentInterval;
 
-    public IncrementalSleeper(int initialInterval, int maxInterval) {
+    public IncrementalSleeper(long initialInterval, long maxInterval) {
         this.initialInterval = initialInterval;
         this.maxInterval = maxInterval;
 
         this.currentInterval = initialInterval;
     }
 
-    public int getCurrentInterval() {
+    public long getCurrentInterval() {
         return currentInterval;
     }
 
