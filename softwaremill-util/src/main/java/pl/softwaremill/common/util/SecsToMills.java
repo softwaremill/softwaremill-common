@@ -8,7 +8,7 @@ package pl.softwaremill.common.util;
  */
 public class SecsToMills {
 
-	public static final long ONE_SECOND = 1000l;
+	public static final long ONE_SECOND = 1000L;
 	public static final long TWO_SECONDS = 2 * ONE_SECOND;
 	public static final long TEN_SECONDS = 10 * ONE_SECOND;
 
