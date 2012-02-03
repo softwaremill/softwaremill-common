@@ -6,6 +6,6 @@ package pl.softwaremill.common.util;
 public class InfiniteSleeper {
 
 	public synchronized void sleepInfinitely() throws InterruptedException {
-		wait();
+		wait(); // Never expected to be notified
 	}
 }
