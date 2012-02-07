@@ -1,5 +1,14 @@
 package pl.softwaremill.common.test.web.selenium;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+
+import javax.annotation.Nullable;
+import java.util.Map;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Collections2.transform;
+
 /**
  *
  * @author maciek
@@ -71,6 +80,16 @@ public class ServerProperties {
 
     public ServerProperties additionalSystemProperties(String additionalSystemProperties) {
         this.additionalSystemProperties = additionalSystemProperties;
+        return this;
+    }
+
+    public ServerProperties additionalSystemPropertiesFrom(Map<String, String> propertyMap) {
+        this.additionalSystemProperties = Joiner.on(" ").join(transform(checkNotNull(propertyMap).entrySet(), new Function<Map.Entry<String, String>, String>() {
+            @Override
+            public String apply(@Nullable Map.Entry<String, String> input) {
+                return "-D" + input.getKey() + "=" + input.getValue();
+            }
+        }));
         return this;
     }
 
