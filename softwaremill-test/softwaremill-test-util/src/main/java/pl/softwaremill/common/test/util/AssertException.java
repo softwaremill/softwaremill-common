@@ -1,9 +1,9 @@
 package pl.softwaremill.common.test.util;
 
 import com.sun.istack.internal.NotNull;
-import sun.jvm.hotspot.utilities.Assert;
+import org.testng.Assert;
 
-import static pl.softwaremill.common.test.util.ExpectThrowable.ExceptionMatch.EXCEPTION_MUST_EQUAL;
+import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_MUST_EQUAL;
 
 /**
  * Allows expecting and intercepting exceptions in a nice way.
@@ -14,7 +14,7 @@ import static pl.softwaremill.common.test.util.ExpectThrowable.ExceptionMatch.EX
  *
  * @author Konrad Malawski (konrad.malawski@java.pl)
  */
-public class ExpectThrowable {
+public class AssertException {
 
   public static abstract class ExceptionMatch {
 
@@ -28,7 +28,7 @@ public class ExpectThrowable {
     public static final ExceptionMatch.Strategy EXCEPTION_MAY_BE_SUBCLASS_OF = new Strategy() {
       @Override
       public boolean matchesExpected(@NotNull Class<?> expected, @NotNull Class<? extends Throwable> got) {
-        return got.isAssignableFrom(expected); // todo check this
+        return expected.isAssignableFrom(got);
       }
     };
 
@@ -46,11 +46,11 @@ public class ExpectThrowable {
       failWithExpectedButGotNothing(expectedThrowableClass);
 
     } catch (Throwable thr) {
-      Class<? extends Throwable> thrownClass = thr.getClass();
+      Class<? extends Throwable> gotThrowableClass = thr.getClass();
 
-      boolean gotExpectedException = matchStrategy.matchesExpected(expectedThrowableClass, thrownClass);
+      boolean gotExpectedException = matchStrategy.matchesExpected(expectedThrowableClass, gotThrowableClass);
       if (!gotExpectedException) {
-        failWithExpectedButGot(expectedThrowableClass, thrownClass);
+        failWithExpectedButGot(expectedThrowableClass, gotThrowableClass);
       }
     }
   }
@@ -75,23 +75,23 @@ public class ExpectThrowable {
       return null; // make compiler happy
 
     } catch (Throwable thr) {
-      Class<? extends Throwable> thrownClass = thr.getClass();
+      Class<? extends Throwable> gotThrowableClass = thr.getClass();
 
-      boolean gotExpectedException = thrownClass.equals(expectedThrowableClass);
+      boolean gotExpectedException = matchStrategy.matchesExpected(expectedThrowableClass, gotThrowableClass);
       if (gotExpectedException) {
         return expectedThrowableClass.cast(thr);
       } else {
-        failWithExpectedButGot(expectedThrowableClass, expectedThrowableClass); // will throw
+        failWithExpectedButGot(expectedThrowableClass, gotThrowableClass); // will throw
         return null; // make compiler happy
       }
     }
   }
 
-  private static void failWithExpectedButGotNothing(Class<?> expected) throws AssertionException {
+  private static void failWithExpectedButGotNothing(Class<?> expected) {
     Assert.fail(String.format("Expected [%s] to be thrown but no exception was thrown.", expected.getSimpleName()));
   }
 
-  private static void failWithExpectedButGot(Class<?> expected, Class<?> got) throws AssertionException {
+  private static void failWithExpectedButGot(Class<?> expected, Class<?> got) {
     Assert.fail(String.format("Expected [%s] to be thrown but got [%s]", expected.getSimpleName(), got.getSimpleName()));
   }
 
