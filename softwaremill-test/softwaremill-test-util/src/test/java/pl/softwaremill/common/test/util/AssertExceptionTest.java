@@ -7,6 +7,9 @@ import static org.testng.Assert.fail;
 import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_MAY_BE_SUBCLASS_OF;
 
 /**
+ * Ironic test in which we check the "better way" of checking exceptions
+ * by writing tests "the old way".
+ *
  * @author Konrad Malawski (konrad.malawski@java.pl)
  */
 @SuppressWarnings("ThrowableResultOfMethodCallIgnored")

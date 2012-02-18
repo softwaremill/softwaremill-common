@@ -36,22 +36,11 @@ public class AssertException {
         }
     }
 
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
     public static <T extends Throwable> void thrown(ExceptionMatch.Strategy matchStrategy,
                                                     Class<T> expectedThrowableClass,
                                                     Runnable block) {
-        try {
-            block.run();
-
-            failWithExpectedButGotNothing(expectedThrowableClass);
-
-        } catch (Throwable thr) {
-            Class<? extends Throwable> gotThrowableClass = thr.getClass();
-
-            boolean gotExpectedException = matchStrategy.matchesExpected(expectedThrowableClass, gotThrowableClass);
-            if (!gotExpectedException) {
-                failWithExpectedButGot(expectedThrowableClass, gotThrowableClass);
-            }
-        }
+        intercept(matchStrategy, expectedThrowableClass, block);
     }
 
     public static <T extends Throwable> void thrown(Class<T> expectedThrowableClass,
