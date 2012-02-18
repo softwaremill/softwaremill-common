@@ -1,6 +1,5 @@
 package pl.softwaremill.common.test.util;
 
-import com.sun.istack.internal.NotNull;
 import org.testng.Assert;
 
 import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_MUST_EQUAL;
@@ -20,26 +19,26 @@ public class AssertException {
 
         public static final ExceptionMatch.Strategy EXCEPTION_MUST_EQUAL = new Strategy() {
             @Override
-            public boolean matchesExpected(@NotNull Class<?> expected, @NotNull Class<? extends Throwable> got) {
+            public boolean matchesExpected(Class<?> expected, Class<? extends Throwable> got) {
                 return got.equals(expected);
             }
         };
 
         public static final ExceptionMatch.Strategy EXCEPTION_MAY_BE_SUBCLASS_OF = new Strategy() {
             @Override
-            public boolean matchesExpected(@NotNull Class<?> expected, @NotNull Class<? extends Throwable> got) {
+            public boolean matchesExpected(Class<?> expected, Class<? extends Throwable> got) {
                 return expected.isAssignableFrom(got);
             }
         };
 
         static interface Strategy {
-            boolean matchesExpected(@NotNull Class<?> expected, @NotNull Class<? extends Throwable> got);
+            boolean matchesExpected(Class<?> expected, Class<? extends Throwable> got);
         }
     }
 
-    public static <T extends Throwable> void thrown(@NotNull ExceptionMatch.Strategy matchStrategy,
-                                                    @NotNull Class<T> expectedThrowableClass,
-                                                    @NotNull Runnable block) {
+    public static <T extends Throwable> void thrown(ExceptionMatch.Strategy matchStrategy,
+                                                    Class<T> expectedThrowableClass,
+                                                    Runnable block) {
         try {
             block.run();
 
@@ -55,19 +54,19 @@ public class AssertException {
         }
     }
 
-    public static <T extends Throwable> void thrown(@NotNull Class<T> expectedThrowableClass,
-                                                    @NotNull Runnable block) {
+    public static <T extends Throwable> void thrown(Class<T> expectedThrowableClass,
+                                                    Runnable block) {
         thrown(EXCEPTION_MUST_EQUAL, expectedThrowableClass, block);
     }
 
-    public static <T extends Throwable> T intercept(@NotNull Class<T> expectedThrowableClass,
-                                                    @NotNull Runnable block) {
+    public static <T extends Throwable> T intercept(Class<T> expectedThrowableClass,
+                                                    Runnable block) {
         return intercept(EXCEPTION_MUST_EQUAL, expectedThrowableClass, block);
     }
 
-    public static <T extends Throwable> T intercept(@NotNull ExceptionMatch.Strategy matchStrategy,
-                                                    @NotNull Class<T> expectedThrowableClass,
-                                                    @NotNull Runnable block) {
+    public static <T extends Throwable> T intercept(ExceptionMatch.Strategy matchStrategy,
+                                                    Class<T> expectedThrowableClass,
+                                                    Runnable block) {
         try {
             block.run();
 
