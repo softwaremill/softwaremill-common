@@ -9,12 +9,12 @@ public interface Config<K, V> extends Map<K, V> {
 
     V get(K key, V defaultValue);
 
-    int getAsInt(V key, int defaultValue);
+    int getAsInt(K key, int defaultValue);
 
-    double getAsDouble(V s, double v);
+    double getAsDouble(K key, double defaultValue);
 
-    boolean getAsBoolean(V key, boolean defaultValue);
+    boolean getAsBoolean(K key, boolean defaultValue);
 
-    long getAsLong(V key, long defaultValue);
+    long getAsLong(K key, long defaultValue);
 
 }
