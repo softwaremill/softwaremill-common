@@ -11,8 +11,14 @@ public class Shell {
         return Runtime.getRuntime().exec(new String[] { "sh", "-c", command });
     }
 
-    public static List<String> readProcessPids(String processGrepString) throws IOException {
-        Process getPidProcess = runShellCommand("ps ax | grep " + processGrepString + " | grep -v grep | cut -c1-5");
+    public static List<String> readProcessPids(String... processGrepStrings) throws IOException {
+        StringBuilder cmd = new StringBuilder("ps ax");
+        for (String processGrepString : processGrepStrings) {
+            cmd.append(" | grep ").append(processGrepString);
+        }
+        cmd.append(" | grep -v grep | cut -c1-5");
+
+        Process getPidProcess = runShellCommand(cmd.toString());
         return readLines(newReaderSupplier(
                 new InputStreamInputSupplier(getPidProcess.getInputStream()),
                 Charset.defaultCharset()));

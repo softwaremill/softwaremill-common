@@ -10,17 +10,17 @@ public class KillableProcess {
     private static final Logger log = LoggerFactory.getLogger(KillableProcess.class);
 
     private final String shellCommand;
-    private final String processGrepString;
+    private final String[] processGrepStrings;
     
     private Process process;
 
     /**
      * @param shellCommand Command to run the process.
-     * @param processGrepString String which will be used when grepping the process list to determine the process's pid.
+     * @param processGrepStrings Strings which will be used when grepping the process list to determine the process's pid.
      */
-    public KillableProcess(String shellCommand, String processGrepString) {
+    public KillableProcess(String shellCommand, String... processGrepStrings) {
         this.shellCommand = shellCommand;
-        this.processGrepString = processGrepString;
+        this.processGrepStrings = processGrepStrings;
     }
     
     public Process start() throws IOException {
@@ -53,7 +53,7 @@ public class KillableProcess {
     }
 
     public List<String> readPids() throws IOException {
-        return Shell.readProcessPids(processGrepString);
+        return Shell.readProcessPids(processGrepStrings);
     }
 
     public Process getProcess() {
