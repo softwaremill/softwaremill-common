@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public class MapWrapper implements Config<String, String> {
 
-    private Map<String, String> delegate;
+    protected Map<String, String> delegate;
 
     public MapWrapper(Map<String, String> map) {
 

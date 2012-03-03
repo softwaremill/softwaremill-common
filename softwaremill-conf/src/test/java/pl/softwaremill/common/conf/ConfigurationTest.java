@@ -26,8 +26,8 @@ public class ConfigurationTest {
     }
 
     @Test(expectedExceptions = RuntimeException.class)
-    public void testTest2FromClasspath() {
-        Configuration.get("test2");
+    public void testTest3FromClasspath() {
+        Configuration.get("test3");
     }
 
     @Test
@@ -68,5 +68,18 @@ public class ConfigurationTest {
         Config<String, String> config = Configuration.get("test1");
         long value = config.getAsLong("nonexistingkey", 0x7fffffffffffL);
         assertThat(value).isEqualTo(0x7fffffffffffL);
+    }
+    
+    @Test
+    public void shouldReturnNullOnNonExistingKey() {
+        Map<String, String> props = Configuration.get("test1");
+        assertThat(props.get("nonexistingkey")).isNull();
+    }
+
+    @Test
+    public void shouldReturnSystemPopertyOnNonExistingKey() {
+        Map<String, String> props = Configuration.get("test2", true);
+        System.setProperty("nonexistingkey", "existingvalue");
+        assertThat(props.get("nonexistingkey")).isEqualTo("existingvalue");
     }
 }
