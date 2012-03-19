@@ -31,10 +31,21 @@ public class RichFileTest {
         File testFile = new File("/some/path/file.txt");
 
         // When
-        File result = new RichFile(testFile).createFileSameNameDifferentExtension("jpg");
+        String newExtension = "jpg";
+        File result = new RichFile(testFile).createFileSameNameDifferentExtension(newExtension);
 
         // Then
-        assertThat(result.getPath()).isEqualTo("/some/path/file.jpg");
+        assertThat(result.getAbsolutePath()).isEqualTo(getAbsolutePathWithoutExtension(testFile) + "." + newExtension);
+    }
+
+    private static String getAbsolutePathWithoutExtension(File file) {
+        String absolutePath = file.getAbsolutePath();
+        int lastDot = absolutePath.lastIndexOf('.');
+        if (lastDot != -1) {
+            return absolutePath.substring(0, lastDot);
+        } else {
+            return absolutePath;
+        }
     }
 
     @Test
