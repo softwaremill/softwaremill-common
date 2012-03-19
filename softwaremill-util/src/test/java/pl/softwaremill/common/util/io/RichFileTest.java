@@ -35,17 +35,7 @@ public class RichFileTest {
         File result = new RichFile(testFile).createFileSameNameDifferentExtension(newExtension);
 
         // Then
-        assertThat(result.getAbsolutePath()).isEqualTo(getAbsolutePathWithoutExtension(testFile) + "." + newExtension);
-    }
-
-    private static String getAbsolutePathWithoutExtension(File file) {
-        String absolutePath = file.getAbsolutePath();
-        int lastDot = absolutePath.lastIndexOf('.');
-        if (lastDot != -1) {
-            return absolutePath.substring(0, lastDot);
-        } else {
-            return absolutePath;
-        }
+        assertThat(result.getAbsolutePath()).matches("[A-Z]:\\\\some\\\\path\\\\file\\.jpg|/some/path/file\\.jpg");
     }
 
     @Test
