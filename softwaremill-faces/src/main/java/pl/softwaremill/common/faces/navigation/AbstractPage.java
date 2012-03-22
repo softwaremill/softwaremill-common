@@ -7,13 +7,14 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewDeclarationLanguage;
 import javax.faces.view.ViewMetadata;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * @author Adam Warski (adam at warski dot org)
  */
-public abstract class AbstractPage implements Page {
+public abstract class AbstractPage implements Page, Serializable {
     private final Map<String, String> params;
     private final boolean requiresLogin;
 
