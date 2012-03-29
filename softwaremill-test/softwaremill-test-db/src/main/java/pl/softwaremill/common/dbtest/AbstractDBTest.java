@@ -4,16 +4,23 @@ import com.google.common.io.Resources;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.cfg.Environment;
 import org.hibernate.ejb.AvailableSettings;
 import org.hibernate.ejb.Ejb3Configuration;
 import org.testng.annotations.*;
 import pl.softwaremill.common.arquillian.BetterArquillian;
 import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
 import pl.softwaremill.common.dbtest.util.DbMode;
+import pl.softwaremill.common.dbtest.util.InMemoryContextFactoryBuilder;
 import pl.softwaremill.common.dbtest.util.SqlFileResolver;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.naming.spi.NamingManager;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import javax.transaction.*;
 import java.io.IOException;
 import java.net.URL;
@@ -51,7 +58,15 @@ import static org.apache.commons.lang.StringUtils.isBlank;
  */
 public abstract class AbstractDBTest extends BetterArquillian {
 
-    private EntityManagerFactory emf;
+    static {
+        try {
+            NamingManager.setInitialContextFactoryBuilder(new InMemoryContextFactoryBuilder());
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected EntityManagerFactory emf;
 
     private static final Logger log = Logger.getLogger(AbstractDBTest.class);
 
@@ -116,36 +131,51 @@ public abstract class AbstractDBTest extends BetterArquillian {
         Logger.getRootLogger().setLevel(Level.INFO);
     }
 
-    @BeforeClass
-    public void initDatabase() throws IOException, SystemException, RollbackException, HeuristicRollbackException,
-            HeuristicMixedException, NotSupportedException {
-        Ejb3Configuration cfg = new Ejb3Configuration();
 
-        cfg.configure(getPersistanceUnitName(), null);
+    public AbstractDBTest() {
+        try {
 
-        // Separate database for each test class
-        cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() +
-                ";DB_CLOSE_DELAY=-1" +
-                addCompatibilityMode());
+            Ejb3Configuration cfg = new Ejb3Configuration();
 
-        transactionManager = DBTestJtaBootstrap.updateConfigAndCreateTM(cfg.getProperties());
+            cfg.configure(getPersistanceUnitName(), null);
 
-        configureEntities(cfg);
-        emf = cfg.buildEntityManagerFactory();
+            // Separate database for each test class
+            cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() +
+                    ";DB_CLOSE_DELAY=-1" +
+                    addCompatibilityMode());
 
-        // Setting the EMF so that it's produced correctly
-        EntityManagerFactoryProducer.setStaticEntityManagerFactory(emf);
+            transactionManager = DBTestJtaBootstrap.updateConfigAndCreateTM(cfg.getProperties());
 
-        // Loading the test data for this test
-        transactionManager.begin();
+            configureEntities(cfg);
+            emf = cfg.buildEntityManagerFactory();
 
-        EntityManager em = emf.createEntityManager();
-        em.joinTransaction();
+            // Setting the EMF so that it's produced correctly
+            EntityManagerFactoryProducer.setStaticEntityManagerFactory(emf);
 
-        loadTestData(em);
+            // Loading the test data for this test
+            transactionManager.begin();
 
-        transactionManager.commit();
-        em.close();
+            EntityManager em = emf.createEntityManager();
+            em.joinTransaction();
+
+            loadTestData(em);
+
+            transactionManager.commit();
+            em.close();
+
+            // bind in JNDI for use in arq-persistance
+            UserTransaction ut = (UserTransaction) transactionManager.getTransaction();
+
+            //((Session) em.getDelegate()).getSessionFactory().
+            DataSource ds = (DataSource) cfg.getHibernateConfiguration().getProperties().get(Environment.DATASOURCE);
+
+            InitialContext initialContext = new InitialContext();
+
+            initialContext.bind("/dataSource", ds);
+            initialContext.bind("/userTransaction", ut);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
