@@ -22,9 +22,9 @@
     <properties>
         <softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hibernate.version>3.6.6.Final</hibernate.version>
+        <hibernate.version>4.0.1.Final</hibernate.version>
         <findbugs.version>2.3.1</findbugs.version>
-        <weld.version>1.1.4.Final</weld.version>
+        <weld.version>1.1.5.AS71.Final</weld.version>
         <jackson.version>1.9.2</jackson.version>
 		<slf4j.version>1.6.4</slf4j.version>
     </properties>
@@ -161,7 +161,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>4.1.0.Final</version>
+                <version>4.2.0.Final</version>
             </dependency>
             <dependency>
                 <groupId>javax.mail</groupId>
@@ -173,7 +173,7 @@
             <dependency>
                 <groupId>org.jboss.ejb3</groupId>
                 <artifactId>jboss-ejb3-ext-api</artifactId>
-                <version>1.1.1</version>
+                <version>2.0.0</version>
             </dependency>
 
             <!-- JBoss -->
@@ -185,7 +185,13 @@
             <dependency>
                 <groupId>org.jboss.logging</groupId>
                 <artifactId>jboss-logging</artifactId>
-                <version>3.0.0.GA</version>
+                <version>3.1.0.GA</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>1.6.1</version>
             </dependency>
 
             <!-- Hibernate -->
@@ -216,6 +222,7 @@
                 <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
                 <version>1.0.0.CR3</version>
             </dependency>
+
 
             <!-- Weld -->
             <dependency>
@@ -273,7 +280,7 @@
             <dependency>
                 <groupId>com.sun.faces</groupId>
                 <artifactId>jsf-impl</artifactId>
-                <version>2.0.2</version>
+                <version>2.1.7-jbossorg-2</version>
             </dependency>
 
             <!-- AWS -->
@@ -351,7 +358,7 @@
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-server</artifactId>
-                <version>2.14.0</version>
+                <version>2.20.0</version>
             </dependency>
 
             <!-- Databases -->
