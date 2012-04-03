@@ -39,5 +39,10 @@
 		<Method name="main"/>
        	<Bug code="NP"/>
     </Match>
+	<Match>
+       	<Class name="pl.softwaremill.common.util.InfiniteSleeper" />
+		<Method name="sleepInfinitely"/>
+       	<Bug code="UW"/>
+    </Match>
 
 </FindBugsFilter>

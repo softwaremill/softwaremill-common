@@ -31,10 +31,11 @@ public class RichFileTest {
         File testFile = new File("/some/path/file.txt");
 
         // When
-        File result = new RichFile(testFile).createFileSameNameDifferentExtension("jpg");
+        String newExtension = "jpg";
+        File result = new RichFile(testFile).createFileSameNameDifferentExtension(newExtension);
 
         // Then
-        assertThat(result.getPath()).isEqualTo("/some/path/file.jpg");
+        assertThat(result.getAbsolutePath()).matches("[A-Z]:\\\\some\\\\path\\\\file\\.jpg|/some/path/file\\.jpg");
     }
 
     @Test

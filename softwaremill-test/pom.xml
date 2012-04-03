@@ -4,7 +4,7 @@
     <parent>
         <artifactId>softwaremill-common-parent</artifactId>
         <groupId>pl.softwaremill.common</groupId>
-        <version>64-SNAPSHOT</version>
+        <version>65-SNAPSHOT</version>
     </parent>
 
     <artifactId>softwaremill-test</artifactId>
@@ -28,9 +28,9 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-		</dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+      </dependency>
     </dependencies>
 </project>

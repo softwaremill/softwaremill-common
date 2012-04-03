@@ -38,10 +38,11 @@ public class Configuration {
      *
      * The {@code &lt;name&gt;.conf} should be a simple key-value file.
      *
-     * @param name Name of the configuration.
+     * @param name                       Name of the configuration.
+     * @param readSystemPropertiesOnNull flag indicating if System.getProperty() should be called when configuration did not contain a key
      * @return The properties of the given configuration.
      */
-    public static Config<String, String> get(String name) {
+    public static Config<String, String> get(String name, boolean readSystemPropertiesOnNull) {
         if (configurations.containsKey(name)) {
             return configurations.get(name);
         }
@@ -50,13 +51,22 @@ public class Configuration {
             Map<String, String> props = propertyProvider.lookupProperties(name);
             if (props != null) {
                 log.info("Loaded configuration for: " + name + " using " + propertyProvider.getClass().getName());
-                Config<String, String> conf = new MapWrapper(props);
+                Config<String, String> conf;
+                if (readSystemPropertiesOnNull) {
+                    conf = new SystemPropertiesMapWrapper(props);
+                } else {
+                    conf = new MapWrapper(props);
+                }
                 configurations.put(name, conf);
                 return conf;
             }
         }
 
         throw new RuntimeException("No configuration found for: " + name);
+    }
+
+    public static Config<String, String> get(String name) {
+        return get(name, false);
     }
 
     public static void registerPropertiesProvider(Class<? extends PropertiesProvider> providerClass) {
@@ -76,14 +86,14 @@ public class Configuration {
             propertyProviders.add(provider);
         }
     }
-    
+
     public static void setConfiguration(String configurationName, ImmutableMap<String, String> properties) {
-        log.info("Set configuration for: "+configurationName);
+        log.info("Set configuration for: " + configurationName);
         configurations.put(configurationName, new MapWrapper(properties));
     }
 
     public static void clearConfiguration(String configurationName) {
-        log.info("Cleared configuration for: "+configurationName);
+        log.info("Cleared configuration for: " + configurationName);
         configurations.remove(configurationName);
     }
 
@@ -124,7 +134,7 @@ public class Configuration {
         } catch (FileNotFoundException e) {
             // Configuration not found in this provider - trying the next one.
             return null;
-        }catch (IOException e) {
+        } catch (IOException e) {
             log.error("Error while reading configuration from url: " + url.toString(), e);
             return null;
         }
