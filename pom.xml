@@ -17,7 +17,8 @@
         <module>softwaremill-parent</module>
         <module>softwaremill-test</module>
         <module>softwaremill-debug</module>
-    </modules>
+    <module>softwaremill-paypal</module>
+  </modules>
 
     <properties>
         <softwaremill.common.skipIntegrationTests>true</softwaremill.common.skipIntegrationTests>
@@ -518,7 +519,7 @@
         </repository>
     </repositories>
 
-    <pluginRepositories />
+    <pluginRepositories/>
 
     <profiles>
         <profile>
