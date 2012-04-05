@@ -1,7 +1,5 @@
 package pl.softwaremill.common.dbtest.util;
 
-import org.jnp.interfaces.NamingContext;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -15,13 +13,13 @@ import java.util.Map;
  */
 public class InMemoryContextFactory implements InitialContextFactory{
 
-    private final static ThreadLocal<Context> hashtableThreadLocal = new ThreadLocal<Context>();
+    private final static ThreadLocal<Context> contextThreadLocal = new ThreadLocal<Context>();
 
     @Override
     public Context getInitialContext(Hashtable<?, ?> hashtable) throws NamingException {
         Context context;
 
-        if ((context = hashtableThreadLocal.get()) == null) {
+        if ((context = contextThreadLocal.get()) == null) {
             context = new InitialContext(true) {
                 Map<String, Object> bindings = new HashMap<String, Object>();
 
@@ -37,7 +35,7 @@ public class InMemoryContextFactory implements InitialContextFactory{
                 }
             };
 
-            hashtableThreadLocal.set(context);
+            contextThreadLocal.set(context);
         }
 
         return context;

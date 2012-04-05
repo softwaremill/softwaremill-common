@@ -4,16 +4,16 @@ import com.google.common.io.Resources;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.hibernate.cfg.Environment;
-import org.hibernate.ejb.AvailableSettings;
 import org.hibernate.ejb.Ejb3Configuration;
-import org.testng.annotations.*;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import pl.softwaremill.common.arquillian.BetterArquillian;
 import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
-import pl.softwaremill.common.dbtest.util.DbMode;
-import pl.softwaremill.common.dbtest.util.InMemoryContextFactoryBuilder;
-import pl.softwaremill.common.dbtest.util.SqlFileResolver;
+import pl.softwaremill.common.dbtest.util.*;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -131,8 +131,13 @@ public abstract class AbstractDBTest extends BetterArquillian {
         Logger.getRootLogger().setLevel(Level.INFO);
     }
 
-
     public AbstractDBTest() {
+        this(false);
+    }
+
+    public AbstractDBTest(boolean shouldEmptyDBAfterEachTest) {
+        this.shouldEmptyDBAfterEachTest = shouldEmptyDBAfterEachTest;
+
         try {
 
             Ejb3Configuration cfg = new Ejb3Configuration();
@@ -161,18 +166,21 @@ public abstract class AbstractDBTest extends BetterArquillian {
             loadTestData(em);
 
             transactionManager.commit();
-            em.close();
 
             // bind in JNDI for use in arq-persistance
-            UserTransaction ut = (UserTransaction) transactionManager.getTransaction();
-
-            //((Session) em.getDelegate()).getSessionFactory().
             DataSource ds = (DataSource) cfg.getHibernateConfiguration().getProperties().get(Environment.DATASOURCE);
 
             InitialContext initialContext = new InitialContext();
 
-            initialContext.bind("/dataSource", ds);
-            initialContext.bind("/userTransaction", ut);
+            SchemaExport schemaExport = new SchemaExport(cfg.getHibernateConfiguration());
+
+            initialContext.bind("/dataSource", new UnclosableDataSource(ds));
+            initialContext.bind("/userTransaction", new DBTestUserTransaction(transactionManager));
+
+            if (shouldEmptyDBAfterEachTest) {
+                initialContext.bind("/schemaExporter", schemaExport);
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -200,27 +208,36 @@ public abstract class AbstractDBTest extends BetterArquillian {
         emf.close();
     }
 
+    boolean tranactionHandledByContainer = true;
+    boolean shouldEmptyDBAfterEachTest = false;
+
     @BeforeMethod
     public void beginTransaction() throws SystemException, NotSupportedException, RollbackException {
-        transactionManager.begin();
+        if (transactionManager.getStatus() == Status.STATUS_NO_TRANSACTION) {
+            tranactionHandledByContainer = false;
 
-        // There must be at least one sync, otherwise an exception is thrown.
-        transactionManager.getTransaction().registerSynchronization(
-                new Synchronization() {
-                    @Override
-                    public void beforeCompletion() {
-                    }
+            transactionManager.begin();
 
-                    @Override
-                    public void afterCompletion(int status) {
+            // There must be at least one sync, otherwise an exception is thrown.
+            transactionManager.getTransaction().registerSynchronization(
+                    new Synchronization() {
+                        @Override
+                        public void beforeCompletion() {
+                        }
+
+                        @Override
+                        public void afterCompletion(int status) {
+                        }
                     }
-                }
-        );
+            );
+        }
     }
 
     @AfterMethod
     public void commitTransaction() throws SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException {
-        transactionManager.commit();
+        if (!tranactionHandledByContainer) {
+            transactionManager.commit();
+        }
     }
 
     public void setCompatibilityMode(DbMode compatibilityMode) {
