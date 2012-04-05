@@ -7,9 +7,17 @@ import org.testng.ITestResult;
 public abstract class BetterArquillian extends Arquillian {
     protected void beforeMethodWithDependencies() { }
     protected void afterMethodWithDependencies() { }
+    protected void beforeClassWithDependencies() { }
+
+    private boolean beforeClassRun = false;
 
     @Override
     public void run(final IHookCallBack callback, ITestResult testResult) {
+        if (!beforeClassRun) {
+            beforeClassRun = true;
+            beforeClassWithDependencies();
+        }
+
         super.run(new IHookCallBack() {
             @Override
             public void runTestMethod(ITestResult testResult) {

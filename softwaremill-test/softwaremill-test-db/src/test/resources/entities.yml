@@ -1,0 +1,5 @@
+test_entity_1:
+  - id: 1
+    data_c: "some data"
+  - id: 2
+    data_c: "other_data"
