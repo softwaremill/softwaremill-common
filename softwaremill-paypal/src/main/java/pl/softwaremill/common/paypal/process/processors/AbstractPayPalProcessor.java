@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.process;
+package pl.softwaremill.common.paypal.process.processors;
 
 public abstract class AbstractPayPalProcessor implements PayPalProcessor {
 

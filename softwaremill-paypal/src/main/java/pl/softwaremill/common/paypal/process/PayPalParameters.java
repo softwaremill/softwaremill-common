@@ -1,7 +1,5 @@
 package pl.softwaremill.common.paypal.process;
 
-import javax.servlet.http.HttpServletRequest;
-
 public class PayPalParameters {
 
     private static final String PAYPAL_CREDIT_PREFIX = "paypal-";
@@ -19,19 +17,19 @@ public class PayPalParameters {
     private String option;
     private String parentTxnId;
 
-    public static PayPalParameters create(HttpServletRequest request) {
+    public static PayPalParameters create(RequestParameters requestParameters) {
         PayPalParameters parameters = new PayPalParameters();
-        parameters.itemName = request.getParameter("item_name");
-        parameters.itemNumber = request.getParameter("item_number");
-        parameters.paymentStatus = request.getParameter("payment_status");
-        parameters.paymentAmount = request.getParameter("mc_gross");
-        parameters.paymentCurrency = request.getParameter("mc_currency");
-        parameters.txnId = request.getParameter("txn_id");
-        parameters.receiverEmail = request.getParameter("receiver_email");
-        parameters.payerEmail = request.getParameter("payer_email");
-        parameters.userId = request.getParameter("custom");
-        parameters.option = request.getParameter("option_selection1");
-        parameters.parentTxnId = request.getParameter("parent_txn_id");
+        parameters.itemName = requestParameters.getParameter(RequestParameters.Parameter.item_name);
+        parameters.itemNumber = requestParameters.getParameter(RequestParameters.Parameter.item_number);
+        parameters.paymentStatus = requestParameters.getParameter(RequestParameters.Parameter.payment_status);
+        parameters.paymentAmount = requestParameters.getParameter(RequestParameters.Parameter.mc_gross);
+        parameters.paymentCurrency = requestParameters.getParameter(RequestParameters.Parameter.mc_currency);
+        parameters.txnId = requestParameters.getParameter(RequestParameters.Parameter.txn_id);
+        parameters.receiverEmail = requestParameters.getParameter(RequestParameters.Parameter.receiver_email);
+        parameters.payerEmail = requestParameters.getParameter(RequestParameters.Parameter.payer_email);
+        parameters.userId = requestParameters.getParameter(RequestParameters.Parameter.custom);
+        parameters.option = requestParameters.getParameter(RequestParameters.Parameter.option_selection1);
+        parameters.parentTxnId = requestParameters.getParameter(RequestParameters.Parameter.parent_txn_id);
         return parameters;
     }
 
@@ -117,4 +115,6 @@ public class PayPalParameters {
                 ", option='" + option + '\'' +
                 '}';
     }
+
+
 }
