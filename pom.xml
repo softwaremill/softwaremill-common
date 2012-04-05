@@ -28,6 +28,7 @@
         <weld.version>1.1.5.AS71.Final</weld.version>
         <jackson.version>1.9.2</jackson.version>
 		<slf4j.version>1.6.4</slf4j.version>
+        <solder.version>3.1.0.Final</solder.version>
     </properties>
 
     <dependencies>
@@ -234,7 +235,17 @@
             <dependency>
                 <groupId>org.jboss.solder</groupId>
                 <artifactId>solder-impl</artifactId>
-                <version>3.1.0.Final</version>
+                <version>${solder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.solder</groupId>
+                <artifactId>solder-api</artifactId>
+                <version>${solder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.solder</groupId>
+                <artifactId>solder-logging</artifactId>
+                <version>${solder.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld.servlet</groupId>
