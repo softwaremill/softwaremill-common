@@ -5,36 +5,30 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.hibernate.cfg.Environment;
-import org.hibernate.ejb.AvailableSettings;
 import org.hibernate.ejb.Ejb3Configuration;
-import org.hibernate.testing.tm.ConnectionProviderImpl;
-import org.hibernate.testing.tm.SimpleJtaTransactionManagerImpl;
-import org.hibernate.testing.tm.TransactionManagerLookupImpl;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pl.softwaremill.common.arquillian.BetterArquillian;
 import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
-import pl.softwaremill.common.dbtest.util.DbMode;
-import pl.softwaremill.common.dbtest.util.SqlFileResolver;
+import pl.softwaremill.common.dbtest.util.*;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.naming.spi.NamingManager;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.Synchronization;
-import javax.transaction.SystemException;
+import javax.sql.DataSource;
+import javax.transaction.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.lang.StringUtils.*;
+import static org.apache.commons.lang.StringUtils.isBlank;
 
 /**
  * Extend this class to create tests which have a private database. The persistence classes from cdi-ext are available.
@@ -45,7 +39,7 @@ import static org.apache.commons.lang.StringUtils.*;
  *  public void configureEntities(Ejb3Configuration cfg) {
  *      cfg.addAnnotatedClass(MyEntity.class);
  * }
- * <p/>
+ *
  *  @Deployment
  *  public static JavaArchive createTestArchive() {
  *      return new ArchiveConfigurator() {
@@ -54,7 +48,7 @@ import static org.apache.commons.lang.StringUtils.*;
  *              return ar.addPackage(MyBean.class.getPackage());
  *      }.createTestArchive();
  *  }
- * <p/>
+ *
  *  @Test
  *  public void mytest() { }
  *  }
@@ -64,11 +58,21 @@ import static org.apache.commons.lang.StringUtils.*;
  */
 public abstract class AbstractDBTest extends BetterArquillian {
 
-    private EntityManagerFactory emf;
+    static {
+        try {
+            NamingManager.setInitialContextFactoryBuilder(new InMemoryContextFactoryBuilder());
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected EntityManagerFactory emf;
 
     private static final Logger log = Logger.getLogger(AbstractDBTest.class);
 
     private DbMode compatibilityMode = null;
+
+    private TransactionManager transactionManager;
 
     /**
      * Additional Hibernate configuration.
@@ -103,9 +107,8 @@ public abstract class AbstractDBTest extends BetterArquillian {
         for (String query : divideQueries(queries)) {
             try {
                 em.createNativeQuery(query).executeUpdate();
-            }
-            catch (Exception e) {
-                log.error("Problem running query:\n" + query + "\n", e);      
+            } catch (Exception e) {
+                log.error("Problem running query:\n" + query + "\n", e);
             }
         }
     }
@@ -114,7 +117,7 @@ public abstract class AbstractDBTest extends BetterArquillian {
         List<String> queryList = new ArrayList<String>();
 
         for (String q : queries.split(";")) {
-            if (! isBlank(q)) {
+            if (!isBlank(q)) {
                 queryList.add(q + ";");
             }
         }
@@ -128,34 +131,59 @@ public abstract class AbstractDBTest extends BetterArquillian {
         Logger.getRootLogger().setLevel(Level.INFO);
     }
 
-    @BeforeClass
-    public void initDatabase() throws IOException, SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException, NotSupportedException {
-        Ejb3Configuration cfg = new Ejb3Configuration();
+    public AbstractDBTest() {
+        this(false);
+    }
 
-        cfg.configure(getHibernateConfigurationFile());
+    public AbstractDBTest(boolean shouldEmptyDBAfterEachTest) {
+        this.shouldEmptyDBAfterEachTest = shouldEmptyDBAfterEachTest;
 
-        // Separate database for each test class
-        cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() + addCompatibilityMode());
+        try {
 
-        cfg.setProperty("connection.provider_class", ConnectionProviderImpl.class.getName());
-        cfg.setProperty(Environment.TRANSACTION_MANAGER_STRATEGY, TransactionManagerLookupImpl.class.getName());
-        cfg.setProperty(AvailableSettings.TRANSACTION_TYPE, "JTA");
+            Ejb3Configuration cfg = new Ejb3Configuration();
 
-        configureEntities(cfg);
-        emf = cfg.buildEntityManagerFactory();
+            cfg.configure(getPersistanceUnitName(), null);
 
-        // Setting the EMF so that it's produced correctly
-        EntityManagerFactoryProducer.setStaticEntityManagerFactory(emf);
+            // Separate database for each test class
+            cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() +
+                    ";DB_CLOSE_DELAY=-1" +
+                    addCompatibilityMode());
 
-        // Loading the test data for this test
-        SimpleJtaTransactionManagerImpl.getInstance().begin();
-        EntityManager em = emf.createEntityManager();
-        em.joinTransaction();
+            transactionManager = DBTestJtaBootstrap.updateConfigAndCreateTM(cfg.getProperties());
 
-        loadTestData(em);
+            configureEntities(cfg);
+            emf = cfg.buildEntityManagerFactory();
 
-        SimpleJtaTransactionManagerImpl.getInstance().commit();
-        em.close();
+            // Setting the EMF so that it's produced correctly
+            EntityManagerFactoryProducer.setStaticEntityManagerFactory(emf);
+
+            // Loading the test data for this test
+            transactionManager.begin();
+
+            EntityManager em = emf.createEntityManager();
+            em.joinTransaction();
+
+            loadTestData(em);
+
+            transactionManager.commit();
+
+            // bind in JNDI for use in arq-persistance
+            DataSource ds = (DataSource) cfg.getHibernateConfiguration().getProperties().get(Environment.DATASOURCE);
+
+            InitialContext initialContext = new InitialContext();
+
+            SchemaExport schemaExport = new SchemaExport(cfg.getHibernateConfiguration());
+
+            initialContext.bind("/dataSource", new UnclosableDataSource(ds));
+            initialContext.bind("/userTransaction", new DBTestUserTransaction(transactionManager));
+
+            if (shouldEmptyDBAfterEachTest) {
+                initialContext.bind("/schemaExporter", schemaExport);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -163,15 +191,15 @@ public abstract class AbstractDBTest extends BetterArquillian {
      *
      * @return name of Hibernate XML Configuration file
      */
-    protected String getHibernateConfigurationFile() {
-        return "hibernate.test.cfg.xml";
+    protected String getPersistanceUnitName() {
+        return "hibernate-test-pu";
     }
 
     private String addCompatibilityMode() {
         if (compatibilityMode != null) {
             return ";MODE=" + compatibilityMode.getParameterValue();
         }
-        
+
         return "";
     }
 
@@ -180,25 +208,36 @@ public abstract class AbstractDBTest extends BetterArquillian {
         emf.close();
     }
 
+    boolean tranactionHandledByContainer = true;
+    boolean shouldEmptyDBAfterEachTest = false;
+
     @BeforeMethod
     public void beginTransaction() throws SystemException, NotSupportedException, RollbackException {
-        SimpleJtaTransactionManagerImpl.getInstance().begin();
+        if (transactionManager.getStatus() == Status.STATUS_NO_TRANSACTION) {
+            tranactionHandledByContainer = false;
 
-        // There must be at least one sync, otherwise an exception is thrown.
-        SimpleJtaTransactionManagerImpl.getInstance().getTransaction().registerSynchronization(new Synchronization() {
-            @Override
-            public void beforeCompletion() {
-            }
+            transactionManager.begin();
 
-            @Override
-            public void afterCompletion(int status) {
-            }
-        });
+            // There must be at least one sync, otherwise an exception is thrown.
+            transactionManager.getTransaction().registerSynchronization(
+                    new Synchronization() {
+                        @Override
+                        public void beforeCompletion() {
+                        }
+
+                        @Override
+                        public void afterCompletion(int status) {
+                        }
+                    }
+            );
+        }
     }
 
     @AfterMethod
     public void commitTransaction() throws SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException {
-        SimpleJtaTransactionManagerImpl.getInstance().commit();
+        if (!tranactionHandledByContainer) {
+            transactionManager.commit();
+        }
     }
 
     public void setCompatibilityMode(DbMode compatibilityMode) {
