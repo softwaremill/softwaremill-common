@@ -15,7 +15,10 @@ public class TestErrorHandler extends PayPalErrorHandler {
     }
 
     public static class ErrorMessage extends PayPalErrorHandler.ErrorMessage {
-
+        @Override
+        public String toString() {
+            return "test";
+        }
     }
 
     @Override
@@ -24,6 +27,8 @@ public class TestErrorHandler extends PayPalErrorHandler {
     }
 
     public static void main(String[] args) {
-        System.out.println(new TestErrorHandler().prepareErrorMessage().getClass());
+        PayPalErrorHandler testErrorHandler = new TestErrorHandler();
+        System.out.println(testErrorHandler.prepareErrorMessage().getClass());
+        System.out.println(testErrorHandler.prepareErrorMessage().toString());
     }
 }

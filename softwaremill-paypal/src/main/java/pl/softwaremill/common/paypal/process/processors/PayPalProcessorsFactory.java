@@ -10,13 +10,17 @@ import java.util.Set;
  * Date: 05.04.12
  * Time: 14:01
  */
-public class PayPalProcessorFactory {
+public class PayPalProcessorsFactory {
 
     private Set<Class<? extends PayPalProcessor>> processors = new HashSet<Class<? extends PayPalProcessor>>();
 
-    public PayPalProcessorFactory(List<Class<? extends PayPalProcessor>> processors) {
+    public PayPalProcessorsFactory(Class<? extends VerifiedPayPalProcessor> processor) {
         this.processors.add(InvalidPayPalProcessor.class);
         this.processors.add(UnknownPayPalProcessor.class);
+        this.processors.add(processor);
+    }
+
+    public PayPalProcessorsFactory(Set<Class<? extends PayPalProcessor>> processors) {
         this.processors.addAll(processors);
     }
 
@@ -26,9 +30,10 @@ public class PayPalProcessorFactory {
             try {
                 listOfProcessors.add(processor.newInstance());
             } catch (InstantiationException e) {
-                new RuntimeException(e);
+                //if user needs to have args-constructor should extend this Factory with his own implementation
+                throw new RuntimeException("Please check if processor class:" + processor.getCanonicalName() + "\n has non args constructor.", e);
             } catch (IllegalAccessException e) {
-                new RuntimeException(e);
+                throw new RuntimeException(e);
             }
         }
         return listOfProcessors;
