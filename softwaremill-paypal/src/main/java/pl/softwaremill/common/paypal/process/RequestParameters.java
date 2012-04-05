@@ -40,7 +40,7 @@ public class RequestParameters {
 
     private String getParameter(String parameterName) {
         String[] values = this.parametersMap.get(parameterName);
-        return values.length > 0 ? values[0] : null;
+        return values != null && values.length > 0 ? values[0] : null;
     }
 
     public String buildRequestParametersForUrl(String encoding) {

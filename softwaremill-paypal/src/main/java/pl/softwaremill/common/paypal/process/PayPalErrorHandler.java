@@ -39,5 +39,5 @@ public abstract class PayPalErrorHandler {
         return new ErrorMessage();
     }
 
-    public abstract void processErrorMessage(ErrorMessage errorMessage, PayPalProcessor processor);
+    public abstract void processErrorMessage(ErrorMessage errorMessage);
 }

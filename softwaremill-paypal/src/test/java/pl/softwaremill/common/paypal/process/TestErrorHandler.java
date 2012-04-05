@@ -1,6 +1,6 @@
 package pl.softwaremill.common.paypal.process;
 
-import pl.softwaremill.common.paypal.process.processors.PayPalProcessor;
+import java.util.logging.Logger;
 
 /**
  * @Author: lukasz.zuchowski at gmail dot com
@@ -9,26 +9,16 @@ import pl.softwaremill.common.paypal.process.processors.PayPalProcessor;
  */
 public class TestErrorHandler extends PayPalErrorHandler {
 
+    private Logger logger = Logger.getLogger(TestErrorHandler.class.getName());
+
     @Override
     public PayPalErrorHandler.ErrorMessage prepareErrorMessage() {
         return new ErrorMessage();
     }
 
-    public static class ErrorMessage extends PayPalErrorHandler.ErrorMessage {
-        @Override
-        public String toString() {
-            return "test";
-        }
-    }
-
     @Override
-    public void processErrorMessage(PayPalErrorHandler.ErrorMessage errorMessage, PayPalProcessor processor) {
-
+    public void processErrorMessage(PayPalErrorHandler.ErrorMessage errorMessage) {
+        logger.info(errorMessage.toString());
     }
 
-    public static void main(String[] args) {
-        PayPalErrorHandler testErrorHandler = new TestErrorHandler();
-        System.out.println(testErrorHandler.prepareErrorMessage().getClass());
-        System.out.println(testErrorHandler.prepareErrorMessage().toString());
-    }
 }

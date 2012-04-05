@@ -1,15 +1,11 @@
 package pl.softwaremill.common.paypal.service;
 
 import pl.softwaremill.common.paypal.process.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashSet;
-import java.util.Set;
+import pl.softwaremill.common.paypal.process.processors.PayPalProcessor;
+import pl.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
+import pl.softwaremill.common.paypal.process.status.DefaultPayPalStatusVerifier;
+import pl.softwaremill.common.paypal.process.status.PayPalStatus;
+import pl.softwaremill.common.paypal.process.status.PayPalStatusVerifier;
 
 /**
  * @Author: lukasz.zuchowski at gmail dot com
@@ -18,70 +14,48 @@ import java.util.Set;
  */
 public class PayPalVerificationService {
 
-    public static final String ENCODING = "UTF-8";
+    public static final PayPalStatusVerifier DefaultStatusVerifier = new DefaultPayPalStatusVerifier();
 
     private String payPalAddress;
-    private VerifiedPayPalProcessor verifiedPayPalProcessor;
-    private PayPalErrorProcessor payPalErrorProcessor;
+    private PayPalErrorHandler errorHandler;
+    private PayPalStatusVerifier statusVerifier;
+    private PayPalProcessorsFactory processorsFactory;
 
-    public PayPalVerificationService(String payPalAddress, VerifiedPayPalProcessor verifiedPayPalProcessor, PayPalErrorProcessor payPalErrorProcessor) {
-        this.payPalAddress = payPalAddress;
-        this.verifiedPayPalProcessor = verifiedPayPalProcessor;
-        this.payPalErrorProcessor = payPalErrorProcessor;
+    public PayPalVerificationService(String payPalAddress, PayPalProcessorsFactory palProcessorsFactory, PayPalErrorHandler errorHandler) {
+        this(payPalAddress, palProcessorsFactory, errorHandler, DefaultStatusVerifier);
     }
 
-    public boolean verify(RequestParameters requestParameters) throws IOException {
-        PayPalStatus status = checkPayPalStatus(payPalAddress, requestParameters);
+    public PayPalVerificationService(String payPalAddress, PayPalProcessorsFactory processorsFactory, PayPalErrorHandler errorHandler, PayPalStatusVerifier statusVerifier) {
+        this.payPalAddress = payPalAddress;
+        this.processorsFactory = processorsFactory;
+        this.errorHandler = errorHandler;
+        this.statusVerifier = statusVerifier;
+    }
+
+    public PayPalStatus verify(RequestParameters requestParameters) {
+        PayPalStatus status = statusVerifier.verify(payPalAddress, requestParameters);
+
         // assign values
         PayPalParameters parameters = PayPalParameters.create(requestParameters);
 
-        PayPalErrorProcessor.ErrorMessage errorMessage = payPalErrorProcessor.prepareErrorMessage();
+        PayPalErrorHandler.ErrorMessage errorMessage = errorHandler.prepareErrorMessage();
         errorMessage.appendPayPalParameters(parameters);
-        return process(errorMessage, status, parameters);
-    }
-
-    protected PayPalStatus checkPayPalStatus(String url, RequestParameters requestParameters) throws IOException {
-        // checks PayPal status with paypal
-        URLConnection uc = new URL(url).openConnection();
-        uc.setDoOutput(true);
-        uc.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        PrintWriter pw = new PrintWriter(uc.getOutputStream());
-        pw.println(buildRequestString(requestParameters).toString());
-        pw.close();
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
-        PayPalStatus status = new PayPalStatus(in.readLine());
-        in.close();
+        process(errorMessage, status, parameters);
         return status;
     }
 
-    private static StringBuilder buildRequestString(RequestParameters request) {
-        StringBuilder str = new StringBuilder("cmd=_notify-validate");
-        str.append(request.buildRequestParametersForUrl(ENCODING));
-        return str;
-    }
-
-
-    protected boolean process(PayPalErrorProcessor.ErrorMessage errorMessage, PayPalStatus status, PayPalParameters parameters) {
-        for (PayPalProcessor processor : listProcessors()) {
+    protected void process(PayPalErrorHandler.ErrorMessage errorMessage, PayPalStatus status, PayPalParameters parameters) {
+        for (PayPalProcessor processor : processorsFactory.buildProcessors()) {
             if (processor.accept(status)) {
                 processor.process(status, parameters);
                 if (processor.isError()) {
-                    payPalErrorProcessor.processErrorMessage(errorMessage, processor);
-                    return false;
+                    errorMessage.appendProcessingError(processor.getErrorMessage());
+                    errorHandler.processErrorMessage(errorMessage);
                 }
-                return true;
+                return;
             }
         }
-        return false;
-    }
-
-    private Set<PayPalProcessor> listProcessors() {
-        Set<PayPalProcessor> processors = new HashSet<PayPalProcessor>();
-        processors.add(verifiedPayPalProcessor);
-        processors.add(new InvalidPayPalProcessor());
-        processors.add(new UnknownPayPalProcessor());
-        return processors;
+        throw new IllegalStateException("Unable to fin proper PayPalProcessor for status:"+status);
     }
 
 }

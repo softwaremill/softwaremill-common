@@ -1,10 +1,10 @@
 package pl.softwaremill.common.paypal.process.processors;
 
 import pl.softwaremill.common.paypal.process.PayPalParameters;
-import pl.softwaremill.common.paypal.process.PayPalStatus;
+import pl.softwaremill.common.paypal.process.status.PayPalStatus;
 
 public class UnknownPayPalProcessor extends AbstractPayPalProcessor {
-
+    
     @Override
     public boolean accept(PayPalStatus status) {
         return status.isUnknown();

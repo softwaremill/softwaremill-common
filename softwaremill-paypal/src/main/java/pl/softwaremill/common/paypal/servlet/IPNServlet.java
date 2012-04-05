@@ -1,6 +1,8 @@
 package pl.softwaremill.common.paypal.servlet;
 
 import pl.softwaremill.common.paypal.process.*;
+import pl.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
+import pl.softwaremill.common.paypal.process.status.PayPalStatus;
 import pl.softwaremill.common.paypal.service.PayPalVerificationService;
 
 import javax.servlet.ServletConfig;
@@ -28,26 +30,28 @@ public abstract class IPNServlet extends HttpServlet {
 
         if (config.getInitParameter("paypal.sandbox").toLowerCase().equals("true")) {
             usedPaypalAddress = SANDBOX_PAYPAL_ADDRESS;
-        }
-        else {
+        } else {
             usedPaypalAddress = PAYPAL_ADDRESS;
         }
     }
 
     //******************************************************************************
 
-    protected abstract <T extends PayPalErrorProcessor> T getPayPalErrorProcessor();
+    protected abstract <T extends PayPalErrorHandler> T getPayPalErrorProcessor();
 
-    protected abstract <T extends VerifiedPayPalProcessor> T getVerifiedProcessor();
+    protected abstract PayPalProcessorsFactory getPayPalProcessorsFactory();
 
     //******************************************************************************
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PayPalVerificationService payPalVerificationService = new PayPalVerificationService(usedPaypalAddress,getVerifiedProcessor(),getPayPalErrorProcessor());
-        payPalVerificationService.verify(new RequestParameters(request.getParameterMap()));
+        PayPalVerificationService payPalVerificationService = new PayPalVerificationService(usedPaypalAddress,
+                getPayPalProcessorsFactory(),
+                getPayPalErrorProcessor());
+        PayPalStatus verify = payPalVerificationService.verify(new RequestParameters(request.getParameterMap()));
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendError(500, "GET not supported");

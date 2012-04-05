@@ -1,7 +1,6 @@
 package pl.softwaremill.common.paypal.process.status;
 
 import pl.softwaremill.common.paypal.process.RequestParameters;
-import pl.softwaremill.common.paypal.process.VerificationException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
+ * Checks transaction status with PayPal
  * @Author: lukasz.zuchowski at gmail dot com
  * Date: 05.04.12
  * Time: 13:13
