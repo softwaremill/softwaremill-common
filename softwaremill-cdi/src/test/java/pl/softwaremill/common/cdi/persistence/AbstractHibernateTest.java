@@ -1,14 +1,12 @@
 package pl.softwaremill.common.cdi.persistence;
 
 import org.hibernate.ejb.Ejb3Configuration;
-import org.hibernate.service.ServiceRegistryBuilder;
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.io.IOException;
 
 /**
@@ -17,11 +15,11 @@ import java.io.IOException;
 public abstract class AbstractHibernateTest extends Arquillian {
     private EntityManagerFactory emf;
     private Ejb3Configuration cfg;
-    
+
     @BeforeClass
     public void init() throws IOException {
         cfg = new Ejb3Configuration();
-        cfg.configure("hibernate-test-pu", null);
+        cfg.configure("hibernate.test.cfg.xml");
         configure(cfg);
         emf = cfg.buildEntityManagerFactory();
     }
