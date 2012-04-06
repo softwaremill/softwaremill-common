@@ -11,6 +11,7 @@ import pl.softwaremill.common.cdi.persistence.ReadOnly;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -19,6 +20,15 @@ import static org.fest.assertions.Assertions.assertThat;
  * User: szimano
  */
 public class TestOfDBTestWithArqPersistence extends AbstractDBTest {
+
+    public TestOfDBTestWithArqPersistence() {
+        super(true);
+    }
+
+    @Override
+    protected void loadTestData(EntityManager em) throws IOException {
+        // do nothing
+    }
 
     @Override
     public void configureEntities(Ejb3Configuration cfg) {

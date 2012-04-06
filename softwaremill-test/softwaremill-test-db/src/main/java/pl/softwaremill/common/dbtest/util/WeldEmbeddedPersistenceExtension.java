@@ -5,12 +5,7 @@ import org.jboss.arquillian.persistence.container.CommandServiceProducer;
 import org.jboss.arquillian.persistence.data.dbunit.DBUnitDataHandler;
 import org.jboss.arquillian.persistence.data.dbunit.DBUnitDataStateLogger;
 import org.jboss.arquillian.persistence.data.dbunit.DBUnitPersistenceTestLifecycleHandler;
-import org.jboss.arquillian.persistence.lifecycle.CustomScriptsAroundTestExecutor;
-import org.jboss.arquillian.persistence.lifecycle.DataScriptsHandler;
-import org.jboss.arquillian.persistence.lifecycle.DatasetHandler;
-import org.jboss.arquillian.persistence.lifecycle.ErrorCollectorHandler;
-import org.jboss.arquillian.persistence.lifecycle.PersistenceTestHandler;
-import org.jboss.arquillian.persistence.lifecycle.TransactionHandler;
+import org.jboss.arquillian.persistence.lifecycle.*;
 import org.jboss.arquillian.persistence.transaction.TransactionalWrapper;
 
 /**
@@ -33,7 +28,7 @@ public class WeldEmbeddedPersistenceExtension implements LoadableExtension {
         builder.observer(DBUnitDataHandler.class)
                 .observer(DBUnitPersistenceTestLifecycleHandler.class)
                 .observer(DBUnitDataStateLogger.class)
-                .observer(DataSetRegisterCleaner.class);
+                .observer(DBCleaner.class);
     }
 
     private void registerTestLifecycleHandlers(ExtensionBuilder builder) {
