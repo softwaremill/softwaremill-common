@@ -7,7 +7,11 @@ import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;
 import org.testng.ITestContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TestNG Listener modifying order in which test methods are executed in each class. It uses @FirstTest, @LastTest and @TestOrder annotations.
@@ -41,7 +45,7 @@ public class TestNGReorderingListener implements IMethodInterceptor {
 
         ArrayListMultimap<Class, IMethodInstance> methodsInClass = ArrayListMultimap.create();
         for (IMethodInstance method : methods) {
-            methodsInClass.put(method.getMethod().getTestClass().getRealClass(), method);
+            methodsInClass.put(method.getMethod().getRealClass(), method);
         }
 
         return methodsInClass;

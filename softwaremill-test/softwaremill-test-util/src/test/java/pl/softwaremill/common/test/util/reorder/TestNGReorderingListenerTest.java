@@ -3,7 +3,6 @@ package pl.softwaremill.common.test.util.reorder;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.testng.IMethodInstance;
-import org.testng.ITestClass;
 import org.testng.ITestNGMethod;
 import org.testng.annotations.Test;
 
@@ -336,7 +335,7 @@ public class TestNGReorderingListenerTest {
         List<IMethodInstance> reorderedMethods = listener.reorder(listener.distributeMethodsByClass(methods));
 
         // then
-        assertThat(reorderedMethods).onProperty("method.testClass.realClass.simpleName").containsExactly(
+        assertThat(reorderedMethods).onProperty("method.realClass.simpleName").containsExactly(
                 FirstTestAnnotatedClassNumberOne.class.getSimpleName(),
                 ClassWithMethodsToTest.class.getSimpleName(),
                 ClassWithMethodsToTest.class.getSimpleName());
@@ -362,11 +361,9 @@ public class TestNGReorderingListenerTest {
                                                      boolean lastTestAnnotation, boolean orderAnnotation) throws Exception {
         IMethodInstance methodInstance = mock(IMethodInstance.class);
         ITestNGMethod testNgMethod = mock(ITestNGMethod.class);
-        ITestClass testNgClass = mock(ITestClass.class);
 
         when(methodInstance.getMethod()).thenReturn(testNgMethod);
-        when(testNgMethod.getTestClass()).thenReturn(testNgClass);
-        when(testNgClass.getRealClass()).thenReturn(methodClass);
+        when(testNgMethod.getRealClass()).thenReturn(methodClass);
 
         String methodName;
         if (firstTestAnnotation && lastTestAnnotation && orderAnnotation == true) {
@@ -411,12 +408,9 @@ public class TestNGReorderingListenerTest {
     private IMethodInstance mockIMethodDependantUponOtherMethods(Class methodClass) throws Exception {
         IMethodInstance methodInstance = mock(IMethodInstance.class);
         ITestNGMethod testNgMethod = mock(ITestNGMethod.class);
-        ITestClass testNgClass = mock(ITestClass.class);
 
         when(methodInstance.getMethod()).thenReturn(testNgMethod);
-        when(testNgMethod.getTestClass()).thenReturn(testNgClass);
-        when(testNgClass.getRealClass()).thenReturn(methodClass);
-
+        when(testNgMethod.getRealClass()).thenReturn(methodClass);
         when(testNgMethod.getMethodsDependedUpon()).thenReturn(new String[]{"method1, method2"});
 
 
@@ -432,11 +426,9 @@ public class TestNGReorderingListenerTest {
 
         IMethodInstance methodInstance = mock(IMethodInstance.class);
         ITestNGMethod testNgMethod = mock(ITestNGMethod.class);
-        ITestClass testNgClass = mock(ITestClass.class);
 
         when(methodInstance.getMethod()).thenReturn(testNgMethod);
-        when(testNgMethod.getTestClass()).thenReturn(testNgClass);
-        when(testNgClass.getRealClass()).thenReturn(ClassWithMethodsToTest.class);
+        when(testNgMethod.getRealClass()).thenReturn(ClassWithMethodsToTest.class);
 
         mockWithMethod(testNgMethod, ClassWithMethodsToTest.WITH_TEST_ORDER_ONE);
 
@@ -449,11 +441,9 @@ public class TestNGReorderingListenerTest {
 
         IMethodInstance methodInstance = mock(IMethodInstance.class);
         ITestNGMethod testNgMethod = mock(ITestNGMethod.class);
-        ITestClass testNgClass = mock(ITestClass.class);
 
         when(methodInstance.getMethod()).thenReturn(testNgMethod);
-        when(testNgMethod.getTestClass()).thenReturn(testNgClass);
-        when(testNgClass.getRealClass()).thenReturn(ClassWithMethodsToTest.class);
+        when(testNgMethod.getRealClass()).thenReturn(ClassWithMethodsToTest.class);
 
         mockWithMethod(testNgMethod, ClassWithMethodsToTest.WITH_TEST_ORDER_TEN);
 
