@@ -33,7 +33,11 @@ public abstract class IPNServlet extends HttpServlet {
     }
 
     protected void checkIfInSandbox(ServletConfig config) {
-        if (config.getInitParameter("paypal.sandbox").toLowerCase().equals("true")) {
+        setPaypalAddress(config.getInitParameter("paypal.sandbox").toLowerCase().equals("true"));
+    }
+
+    protected void setPaypalAddress(boolean sandbox) {
+        if (sandbox) {
             usedPaypalAddress = SANDBOX_PAYPAL_ADDRESS;
         } else {
             usedPaypalAddress = PAYPAL_ADDRESS;
