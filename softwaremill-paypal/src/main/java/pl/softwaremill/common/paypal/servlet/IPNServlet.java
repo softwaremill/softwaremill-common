@@ -1,6 +1,7 @@
 package pl.softwaremill.common.paypal.servlet;
 
-import pl.softwaremill.common.paypal.process.*;
+import pl.softwaremill.common.paypal.process.PayPalErrorHandler;
+import pl.softwaremill.common.paypal.process.RequestParameters;
 import pl.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
 import pl.softwaremill.common.paypal.process.status.PayPalStatus;
 import pl.softwaremill.common.paypal.service.PayPalVerificationService;
@@ -37,7 +38,7 @@ public abstract class IPNServlet extends HttpServlet {
 
     //******************************************************************************
 
-    protected abstract <T extends PayPalErrorHandler> T getPayPalErrorProcessor();
+    protected abstract PayPalErrorHandler getPayPalErrorProcessor();
 
     protected abstract PayPalProcessorsFactory getPayPalProcessorsFactory();
 
