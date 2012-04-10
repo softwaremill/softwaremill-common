@@ -298,6 +298,32 @@ public class PaypalButtonGeneratorTest {
                 "</form>\n");
     }
 
+    @Test
+    public void shouldUseInvoiceNumber() {
+        // given
+
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com");
+
+        // when
+        pbg.withInvoiceNumber("invoice/123/10").addItem("test", "10");
+
+        String form = pbg.build();
+
+        // then
+        assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
+                "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
+                "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
+                "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
+                "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
+                "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
+                "\t<input type=\"hidden\" name=\"amount_1\" value=\"10\"/>\n" +
+                "\t<input type=\"hidden\" name=\"shipping_1\" value=\"0.0\"/>\n" +
+                "\t<input type=\"hidden\" name=\"tax_1\" value=\"0.0\"/>\n" +
+                "\t<input type=\"hidden\" name=\"invoice\" value=\"invoice/123/10\"/>\n" +
+                "\t<input type=\"submit\" value=\"Pay with PayPal\"/>\n" +
+                "</form>\n");
+    }
+
     @Test(expectedExceptions = NumberFormatException.class)
     public void shouldFailOnBadAmount() {
         new PaypalCartItem("test", "badAmount", "0", "0");

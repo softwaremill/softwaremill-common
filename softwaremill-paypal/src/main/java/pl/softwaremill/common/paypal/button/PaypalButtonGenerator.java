@@ -20,6 +20,8 @@ public class PaypalButtonGenerator {
 
     private String paypalButtonImage = null;
 
+    private String invoiceNumber = null;
+
     private List<PaypalCartItem> cartItems = new ArrayList<PaypalCartItem>();
 
     public PaypalButtonGenerator(String sellerPaypalEmail) {
@@ -54,6 +56,11 @@ public class PaypalButtonGenerator {
 
     public PaypalButtonGenerator withSubmitImage(String imageSrc) {
         paypalButtonImage = imageSrc;
+        return this;
+    }
+
+    public PaypalButtonGenerator withInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
         return this;
     }
 
@@ -123,6 +130,12 @@ public class PaypalButtonGenerator {
                     .append(cartItem.getItemShippingAmount()).append("\"/>\n");
             sb.append("\t<input type=\"hidden\" name=\"tax_").append(i).append("\" value=\"")
                     .append(cartItem.getItemTaxAmount()).append("\"/>\n");
+        }
+
+        // optional invoice number
+        if (invoiceNumber != null) {
+            sb.append("\t<input type=\"hidden\" name=\"invoice\" value=\"")
+                    .append(invoiceNumber).append("\"/>\n");
         }
 
         // add submit button
