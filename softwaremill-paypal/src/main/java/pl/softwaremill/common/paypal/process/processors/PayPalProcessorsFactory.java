@@ -28,7 +28,7 @@ public class PayPalProcessorsFactory {
         List<PayPalProcessor> listOfProcessors = new ArrayList<PayPalProcessor>();
         for (Class<? extends PayPalProcessor> processor : processors) {
             try {
-                listOfProcessors.add(processor.newInstance());
+                listOfProcessors.add(createNewInstance(processor));
             } catch (InstantiationException e) {
                 //if user needs to have args-constructor should extend this Factory with his own implementation
                 throw new RuntimeException("Please check if processor class:" + processor.getCanonicalName() + "\n has non args constructor.", e);
@@ -37,6 +37,11 @@ public class PayPalProcessorsFactory {
             }
         }
         return listOfProcessors;
+    }
+
+    protected <T extends PayPalProcessor> T createNewInstance(Class<T> processorClass) throws IllegalAccessException,
+            InstantiationException {
+        return processorClass.newInstance();
     }
 
 }
