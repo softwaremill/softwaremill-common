@@ -17,6 +17,7 @@
         <module>softwaremill-parent</module>
         <module>softwaremill-test</module>
         <module>softwaremill-debug</module>
+	<module>softwaremill-paypal</module>
     </modules>
 
     <properties>
