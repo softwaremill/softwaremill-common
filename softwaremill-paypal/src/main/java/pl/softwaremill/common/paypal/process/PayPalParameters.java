@@ -16,6 +16,7 @@ public class PayPalParameters {
     private String userId;
     private String option;
     private String parentTxnId;
+    private String invoice;
 
     public static PayPalParameters create(RequestParameters requestParameters) {
         PayPalParameters parameters = new PayPalParameters();
@@ -30,6 +31,7 @@ public class PayPalParameters {
         parameters.userId = requestParameters.getParameter(RequestParameters.Parameter.custom);
         parameters.option = requestParameters.getParameter(RequestParameters.Parameter.option_selection1);
         parameters.parentTxnId = requestParameters.getParameter(RequestParameters.Parameter.parent_txn_id);
+        parameters.invoice = requestParameters.getParameter(RequestParameters.Parameter.invoice);
         return parameters;
     }
 
@@ -100,6 +102,10 @@ public class PayPalParameters {
         return PAYPAL_CREDIT_PREFIX + parentTxnId;
     }
 
+    public String getInvoice() {
+        return invoice;
+    }
+
     @Override
     public String toString() {
         return "PayPalParameters{" +
@@ -113,6 +119,7 @@ public class PayPalParameters {
                 ", payerEmail='" + payerEmail + '\'' +
                 ", userId='" + userId + '\'' +
                 ", option='" + option + '\'' +
+                ", invoice='" + invoice + '\'' +
                 '}';
     }
 

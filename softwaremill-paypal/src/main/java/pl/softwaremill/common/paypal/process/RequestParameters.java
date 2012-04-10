@@ -24,8 +24,8 @@ public class RequestParameters {
         payer_email,
         custom,
         option_selection1,
-        parent_txn_id
-
+        parent_txn_id,
+        invoice
     }
 
     private final Map<String, String[]> parametersMap = new HashMap<String, String[]>();
