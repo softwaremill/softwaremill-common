@@ -3,6 +3,7 @@ package pl.softwaremill.common.test.web.email;
 import com.dumbster.smtp.SimpleSmtpServer;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import pl.softwaremill.common.test.util.SimpleSmtpServerStarter;
 
 
 /**
@@ -21,7 +22,7 @@ public abstract class AbstractEmailServerRunner {
 	public void startEmailServer() {
         int port = getSmtpServerPort();
 		System.out.println("--- Starting email server on port " + port);
-		emailServer = SimpleSmtpServer.start(port);
+		emailServer = SimpleSmtpServerStarter.start(port);
 	}
 
 	@AfterSuite(alwaysRun = true)
