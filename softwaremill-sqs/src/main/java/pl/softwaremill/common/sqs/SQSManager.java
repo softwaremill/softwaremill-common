@@ -1,13 +1,21 @@
 package pl.softwaremill.common.sqs;
 
-import com.xerox.amazonws.sqs2.*;
+import com.xerox.amazonws.sqs2.Message;
+import com.xerox.amazonws.sqs2.MessageQueue;
+import com.xerox.amazonws.sqs2.QueueService;
+import com.xerox.amazonws.sqs2.SQSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
 import pl.softwaremill.common.sqs.util.Base64Coder;
 import pl.softwaremill.common.sqs.util.SQSAnswer;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Map;
@@ -199,7 +207,7 @@ public class SQSManager {
 
     public static MessageQueue connectToQueue(String serverName, String accessKeyId, String secretAccessKey,
                                               String queue, int visibilityTimeout) throws SQSException {
-        QueueService queueService = SQSUtils.getQueueService(accessKeyId, secretAccessKey, serverName);
+        QueueService queueService = new QueueServiceResolver().resolveQueue(serverName, accessKeyId, secretAccessKey);
 
         String queueUrl = queueUrlCache.get(queue);
         if (queueUrl == null) {

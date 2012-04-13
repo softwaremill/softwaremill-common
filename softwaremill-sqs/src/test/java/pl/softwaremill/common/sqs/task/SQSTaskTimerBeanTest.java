@@ -4,12 +4,13 @@ import com.dumbster.smtp.SimpleSmtpServer;
 import com.dumbster.smtp.SmtpMessage;
 import com.xerox.amazonws.sqs2.Message;
 import com.xerox.amazonws.sqs2.MessageQueue;
+import com.xerox.amazonws.sqs2.QueueService;
 import com.xerox.amazonws.sqs2.SQSException;
-import com.xerox.amazonws.sqs2.SQSUtils;
 import org.jboss.weld.context.bound.BoundRequestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pl.softwaremill.common.sqs.QueueServiceResolver;
 import pl.softwaremill.common.sqs.email.SendEmailTask;
 import pl.softwaremill.common.sqs.email.SendEmailTaskExecutor;
 import pl.softwaremill.common.sqs.util.EmailDescription;
@@ -18,8 +19,8 @@ import pl.softwaremill.common.util.dependency.D;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import static org.fest.assertions.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static pl.softwaremill.common.sqs.SQSConfiguration.*;
 
 /**
@@ -46,9 +47,13 @@ public class SQSTaskTimerBeanTest {
         if (emailServer != null) {
             emailServer.stop();
         }
+
+        QueueService service = new QueueServiceResolver().
+                resolveQueue(SQS_SERVER, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+
         // Make sure the sqs queue is empty - if not next test run by anyone-anywhere could fail
-        MessageQueue msgQueue = SQSUtils.connectToQueue(SQS_SERVER, TASK_SQS_QUEUE, AWS_ACCESS_KEY_ID,
-                AWS_SECRET_ACCESS_KEY);
+        MessageQueue msgQueue = service.getOrCreateMessageQueue(TASK_SQS_QUEUE);
+
         Message msg;
         while((msg = msgQueue.receiveMessage()) != null){
             msgQueue.deleteMessage(msg);
