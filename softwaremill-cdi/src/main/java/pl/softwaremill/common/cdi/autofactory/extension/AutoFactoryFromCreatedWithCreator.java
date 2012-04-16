@@ -15,12 +15,10 @@ import javax.annotation.Nullable;
 import javax.enterprise.inject.spi.*;
 import javax.inject.Inject;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.collect.Collections2.filter;
-import static com.google.common.collect.Iterables.any;
 import static com.google.common.collect.Iterables.concat;
 
 /**
@@ -89,21 +87,12 @@ public class AutoFactoryFromCreatedWithCreator<T> {
                 return input.getJavaMember().getAnnotation(Inject.class) != null;
             }
         };
-        final Predicate<AnnotatedConstructor<T>> defaultConstructorPredicate = new Predicate<AnnotatedConstructor<T>>() {
-            @Override
-            public boolean apply(@Nullable AnnotatedConstructor<T> input) {
-                return input.getParameters().isEmpty();
-            }
-        };
 
         Set<? extends AnnotatedConstructor<T>> allConstructors = createdType.getConstructors();
         Collection<? extends AnnotatedConstructor<T>> diConstructors = filter(allConstructors,
                 diConstructorPredicate);
-        boolean defaultConstructorPresent = any(allConstructors, defaultConstructorPredicate);
 
         if (diConstructors.size() > 1 || (allConstructors.size() > 1 && diConstructors.size() == 0)) {
-            System.err.println("di constructors: "  + diConstructors.size() +
-                    " " +  Arrays.toString(allConstructors.toArray()));
             throw new RuntimeException("A bean created with an auto-factory " +
                     "can have only one constructor: " +
                     createdType);
