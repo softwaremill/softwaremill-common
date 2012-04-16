@@ -1,5 +1,7 @@
 package pl.softwaremill.common.cdi.autofactory.extension;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import org.jboss.weld.manager.BeanManagerImpl;
 import org.jboss.weld.manager.SimpleInjectionTarget;
 import org.jboss.weld.resources.ClassTransformer;
@@ -9,10 +11,17 @@ import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.Cons
 import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.FactoryParameterOnlyConstructorConverter;
 import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.MixedConstructorConverter;
 
+import javax.annotation.Nullable;
 import javax.enterprise.inject.spi.*;
 import javax.inject.Inject;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
+
+import static com.google.common.collect.Collections2.filter;
+import static com.google.common.collect.Iterables.any;
+import static com.google.common.collect.Iterables.concat;
 
 /**
  * @author Adam Warski (adam at warski dot org)
@@ -33,7 +42,7 @@ public class AutoFactoryFromCreatedWithCreator<T> {
         checkFactoryClassIsAnInterface();
 
         Method soleFactoryMethod = getSoleFactoryMethod();
-        AnnotatedConstructor<T> soleCreatedTypeConstructor = getSoleConstructorOfCreatedType();
+        AnnotatedConstructor<T> soleCreatedTypeConstructor = getSoleAcceptableConstructorOfCreatedType();
 
         boolean constructorInjection = isConstructorInjection(soleCreatedTypeConstructor);
 
@@ -72,14 +81,35 @@ public class AutoFactoryFromCreatedWithCreator<T> {
         return factoryClass.getMethods()[0];
     }
 
-    private AnnotatedConstructor<T> getSoleConstructorOfCreatedType() {
-        Set<? extends AnnotatedConstructor<T>> constructors = createdType.getConstructors();
-        if (constructors.size() != 1) {
-            throw new RuntimeException("A bean created with an auto-factory can have only one constructor: " +
+    private AnnotatedConstructor<T> getSoleAcceptableConstructorOfCreatedType() {
+        /* Yup, I know, imperatively it would've been shorter */
+        final Predicate<AnnotatedConstructor<T>> diConstructorPredicate = new Predicate<AnnotatedConstructor<T>>() {
+            @Override
+            public boolean apply(@Nullable AnnotatedConstructor<T> input) {
+                return input.getJavaMember().getAnnotation(Inject.class) != null;
+            }
+        };
+        final Predicate<AnnotatedConstructor<T>> defaultConstructorPredicate = new Predicate<AnnotatedConstructor<T>>() {
+            @Override
+            public boolean apply(@Nullable AnnotatedConstructor<T> input) {
+                return input.getParameters().isEmpty();
+            }
+        };
+
+        Set<? extends AnnotatedConstructor<T>> allConstructors = createdType.getConstructors();
+        Collection<? extends AnnotatedConstructor<T>> diConstructors = filter(allConstructors,
+                diConstructorPredicate);
+        boolean defaultConstructorPresent = any(allConstructors, defaultConstructorPredicate);
+
+        if (diConstructors.size() > 1 || (allConstructors.size() > 1 && diConstructors.size() == 0)) {
+            System.err.println("di constructors: "  + diConstructors.size() +
+                    " " +  Arrays.toString(allConstructors.toArray()));
+            throw new RuntimeException("A bean created with an auto-factory " +
+                    "can have only one constructor: " +
                     createdType);
         }
 
-        return constructors.iterator().next();
+        return Iterables.get(concat(diConstructors, allConstructors), 0);
     }
 
     private ConstructorToParameterValuesConverter getConverter(AnnotatedConstructor<?> soleCreatedTypeConstructor,
