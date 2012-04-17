@@ -66,7 +66,7 @@ public class AssertExceptionTest {
         // when
         AssertException.thrown(EXCEPTION_MAY_BE_SUBCLASS_OF, MyTestException.class, throwsMyDetailedTestException);
 
-        // then, should have cought sub class exception
+        // then, should have caught sub class exception
     }
 
     @Test
