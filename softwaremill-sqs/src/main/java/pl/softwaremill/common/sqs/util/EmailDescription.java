@@ -16,25 +16,24 @@ public class EmailDescription implements Serializable {
     private final String[] bccEmails;
 
     public EmailDescription(String email, String message, String subject) {
-        this(new String[]{email}, message, subject, new String[]{});
+        this(new String[]{email}, message, subject, toA(null));
     }
 
     public EmailDescription(String email, String message, String subject, String replyToEmail) {
-        this(new String[]{email}, message, subject, new String[]{replyToEmail});
+        this(new String[]{email}, message, subject, toA(replyToEmail));
     }
 
     public EmailDescription(String email, String message, String subject, String replyToEmail, String ccEmail) {
-        this(new String[]{email}, message, subject, new String[]{replyToEmail}, new String[]{ccEmail}, new String[]{});
+        this(new String[]{email}, message, subject, toA(replyToEmail), toA(ccEmail), toA(null));
     }
 
     public EmailDescription(String email, String message, String subject, String replyToEmail, String ccEmail,
                             String bccEmail) {
-        this(new String[]{email}, message, subject, new String[]{replyToEmail}, new String[]{ccEmail},
-                new String[]{bccEmail});
+        this(new String[]{email}, message, subject, toA(replyToEmail), toA(ccEmail), toA(bccEmail));
     }
 
     public EmailDescription(String[] emails, String message, String subject, String[] replyToEmails) {
-        this(emails, message, subject, replyToEmails, new String[]{}, new String[]{});
+        this(emails, message, subject, replyToEmails, toA(null), toA(null));
     }
 
     public EmailDescription(String[] emails, String message, String subject, String[] replyToEmails, String[] ccEmails,
@@ -70,5 +69,14 @@ public class EmailDescription implements Serializable {
 
     public String[] getBccEmails() {
         return bccEmails;
+    }
+
+    private static String[] toA(String emailAddress) {
+        if (emailAddress == null) {
+            return new String[]{};
+        }
+        else {
+            return new String[]{emailAddress};
+        }
     }
 }
