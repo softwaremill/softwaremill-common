@@ -8,11 +8,20 @@ import pl.softwaremill.common.sqs.util.EmailDescription;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.Address;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.*;
-import java.io.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
@@ -50,8 +59,12 @@ public class EmailSender {
 
         Address[] to = convertStringEmailsToAddresses(emailDescription.getEmails());
         Address[] replyTo = convertStringEmailsToAddresses(emailDescription.getReplyToEmails());
+        Address[] cc = convertStringEmailsToAddresses(emailDescription.getCcEmails());
+        Address[] bcc = convertStringEmailsToAddresses(emailDescription.getBccEmails());
 
         m.setRecipients(javax.mail.Message.RecipientType.TO, to);
+        m.setRecipients(Message.RecipientType.CC, cc);
+        m.setRecipients(Message.RecipientType.BCC, bcc);
         m.setReplyTo(replyTo);
         m.setSubject(emailDescription.getSubject(), encoding);
         m.setSentDate(new Date());
