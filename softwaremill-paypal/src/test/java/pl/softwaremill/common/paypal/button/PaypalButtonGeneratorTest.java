@@ -343,4 +343,30 @@ public class PaypalButtonGeneratorTest {
     public void shouldPassOnAllGoodAmounts() {
         new PaypalCartItem("test", "0", "0", "0");
     }
+
+    @Test
+    public void shouldUseNotifyUrl() {
+        // given
+
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com").withNotifyUrl("http://notify.com/paypal");
+
+        // when
+        pbg.addItem("test", "10");
+
+        String form = pbg.build();
+
+        // then
+        assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
+                "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
+                "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
+                "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
+                "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
+                "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
+                "\t<input type=\"hidden\" name=\"amount_1\" value=\"10\"/>\n" +
+                "\t<input type=\"hidden\" name=\"shipping_1\" value=\"0.0\"/>\n" +
+                "\t<input type=\"hidden\" name=\"tax_1\" value=\"0.0\"/>\n" +
+                "\t<input type=\"hidden\" name=\"notify_url\" value=\"http://notify.com/paypal\"/>\n" +
+                "\t<input type=\"submit\" value=\"Pay with PayPal\"/>\n" +
+                "</form>\n");
+    }
 }

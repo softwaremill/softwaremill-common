@@ -22,6 +22,8 @@ public class PaypalButtonGenerator {
 
     private String invoiceNumber = null;
 
+    private String notifyUrl = null;
+
     private List<PaypalCartItem> cartItems = new ArrayList<PaypalCartItem>();
 
     public PaypalButtonGenerator(String sellerPaypalEmail) {
@@ -61,6 +63,11 @@ public class PaypalButtonGenerator {
 
     public PaypalButtonGenerator withInvoiceNumber(String invoiceNumber) {
         this.invoiceNumber = invoiceNumber;
+        return this;
+    }
+
+    public PaypalButtonGenerator withNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
         return this;
     }
 
@@ -136,6 +143,12 @@ public class PaypalButtonGenerator {
         if (invoiceNumber != null) {
             sb.append("\t<input type=\"hidden\" name=\"invoice\" value=\"")
                     .append(invoiceNumber).append("\"/>\n");
+        }
+
+        // optional notify url
+        if (notifyUrl != null) {
+            sb.append("\t<input type=\"hidden\" name=\"notify_url\" value=\"")
+                    .append(notifyUrl).append("\"/>\n");
         }
 
         // add submit button
