@@ -6,6 +6,7 @@ import javax.enterprise.inject.InjectionException;
 import javax.enterprise.inject.spi.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,11 @@ public class ConfigExtension implements Extension {
         final Map<Field, Object> configuredValues = new HashMap<Field, Object>();
 
         AnnotatedType<X> at = pit.getAnnotatedType();
-
+        Annotation annotation = at.getAnnotation(Configuration.class);
+        if(annotation == null){
+            //don't process classes not marked with @Configuration annotation
+            return;
+        }
         String propsFileName = at.getJavaClass().getSimpleName() + ".properties";
         InputStream stream = at.getJavaClass().getResourceAsStream(propsFileName);
         if (stream!=null) {
