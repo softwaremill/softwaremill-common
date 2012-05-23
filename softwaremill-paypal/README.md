@@ -31,18 +31,20 @@ all the information about items, prices, taxes etc. to paypal and will take user
 To find out how it works, it's best to check out the PaypalButtonGeneratorTest but you can check out this short example:
 
 ```java
-PaypalButtonGenerator pbg = new PaypalButtonGenerator(configurationBean.getProperty(Conf.PAYPAL_EMAIL),
-    "http://foo.bar/shop",
-    "http://foo.bar/shop/paymentCancelled",
-    false,              // work in sandbox
-    "USD",)
-.withInvoiceNumber(invoiceId)
-.withNotifyUrl("http://foo.bar/shop/paypal");  // the IPN url
+PaypalButtonGenerator pbg = new PaypalButtonGenerator(
+    "paypal@foo.bar",                           // merchand paypal email
+    "http://foo.bar/shop",                      // link to redirect after successful transaction
+    "http://foo.bar/shop/paymentCancelled",     // link to redirect after cancelled transaction
+    false,                                      // work in sandbox
+    "USD",)                                     // currency
+.withInvoiceNumber(invoiceId)                   // invoice ID that will be passed back to IPN
+.withNotifyUrl("http://foo.bar/shop/paypal");   // the IPN url
 
 for (Item item : items) {
-    pbg.addItem(item.getDescription(),
-    item.getAmount(),
-    item.getShippingAmount(),
-    item.getVatAmount());
+    pbg.addItem(
+        item.getDescription(),                  // description shown on paypal
+        item.getAmount(),                       // basic price
+        item.getShippingAmount(),               // shipping costs
+        item.getVatAmount());                   // vat amount
 }
 ```
