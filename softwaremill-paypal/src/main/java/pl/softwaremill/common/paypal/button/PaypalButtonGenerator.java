@@ -24,16 +24,19 @@ public class PaypalButtonGenerator {
 
     private String notifyUrl = null;
 
+    private String goBackLink;
+
     private List<PaypalCartItem> cartItems = new ArrayList<PaypalCartItem>();
 
-    public PaypalButtonGenerator(String sellerPaypalEmail) {
-        this(sellerPaypalEmail, false, "USD");
+    public PaypalButtonGenerator(String sellerPaypalEmail, String goBackLink) {
+        this(sellerPaypalEmail, goBackLink, false, "USD");
     }
 
-    public PaypalButtonGenerator(String sellerPaypalEmail, boolean sandbox, String currency) {
+    public PaypalButtonGenerator(String sellerPaypalEmail, String goBackLink, boolean sandbox, String currency) {
         this.sellerPaypalEmail = sellerPaypalEmail;
         isSandbox = sandbox;
         this.currency = currency;
+        this.goBackLink = goBackLink;
     }
 
     public PaypalButtonGenerator withDefaultShipping(String defaultShipping) {
@@ -118,6 +121,9 @@ public class PaypalButtonGenerator {
         // cart command so paypal knows what is it
         sb.append("\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n");
         sb.append("\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n");
+
+        // where should the user be taken after clicking continue shopping
+        sb.append("\t<input type=\"hidden\" name=\"shopping_url\" value=\"").append(goBackLink).append("\"/>\n");
 
         // our seller email
         sb.append("\t<input type=\"hidden\" name=\"business\" value=\"").append(sellerPaypalEmail).append("\"/>\n");
