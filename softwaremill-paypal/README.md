@@ -35,8 +35,8 @@ PaypalButtonGenerator pbg = new PaypalButtonGenerator(
     "paypal@foo.bar",                           // merchand paypal email
     "http://foo.bar/shop",                      // link to redirect after successful transaction
     "http://foo.bar/shop/paymentCancelled",     // link to redirect after cancelled transaction
-    false,                                      // work in sandbox
-    "USD",)                                     // currency
+    false,                                      // should it work in sandbox?
+    "USD")                                      // currency
 .withInvoiceNumber(invoiceId)                   // invoice ID that will be passed back to IPN
 .withNotifyUrl("http://foo.bar/shop/paypal");   // the IPN url
 
