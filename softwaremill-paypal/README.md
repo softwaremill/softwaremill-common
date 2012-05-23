@@ -47,4 +47,6 @@ for (Item item : items) {
         item.getShippingAmount(),               // shipping costs
         item.getVatAmount());                   // vat amount
 }
+
+return pbg.build();                             // generates the actuall html
 ```
