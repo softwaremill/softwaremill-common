@@ -71,6 +71,10 @@ Scripts and java classes to backup SimpleDB domains and upload them to S3.
 
 A timing interceptor + web filter + portable extension for profiling CDI beans.
 
+## [Paypal](/softwaremill/softwaremill-common/tree/master/softwaremill-paypal/)
+
+Paypal utilities for handling paypal requests (IPN) and generating paypal pay buttons (custom cart).
+
 ---
 
-Licensed under the Apache2 license. [Softwaremill 2010-2011](http://softwaremill.eu/).
+Licensed under the Apache2 license. [Softwaremill 2010-2012](http://softwaremill.com/).
