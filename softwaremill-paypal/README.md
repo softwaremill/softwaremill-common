@@ -4,7 +4,9 @@
 
 To enable your application supporting paypal requests, you need to extend the abstract
 
-  pl.softwaremill.common.paypal.servlet.IPNServlet
+```java
+pl.softwaremill.common.paypal.servlet.IPNServlet
+```
 
 And provide an implementation of two things - PayPalErrorHandler and an instance of PayPalProcessorsFactory that will
 return your own implementation of VerifiedPayPalProcessor.
@@ -28,17 +30,19 @@ all the information about items, prices, taxes etc. to paypal and will take user
 
 To find out how it works, it's best to check out the PaypalButtonGeneratorTest but you can check out this short example:
 
-            PaypalButtonGenerator pbg = new PaypalButtonGenerator(configurationBean.getProperty(Conf.PAYPAL_EMAIL),
-                    "http://foo.bar/shop",
-                    "http://foo.bar/shop/paymentCancelled",
-                    false,              // work in sandbox
-                    "USD",
-                    .withInvoiceNumber(invoiceId)
-                    .withNotifyUrl("http://foo.bar/shop/paypal");  // the IPN url
+```java
+PaypalButtonGenerator pbg = new PaypalButtonGenerator(configurationBean.getProperty(Conf.PAYPAL_EMAIL),
+    "http://foo.bar/shop",
+    "http://foo.bar/shop/paymentCancelled",
+    false,              // work in sandbox
+    "USD",)
+.withInvoiceNumber(invoiceId)
+.withNotifyUrl("http://foo.bar/shop/paypal");  // the IPN url
 
-            for (Item item : items) {
-                pbg.addItem(item.getDescription(),
-                        item.getAmount(),
-                        item.getShippingAmount(),
-                        item.getVatAmount());
-            }
+for (Item item : items) {
+    pbg.addItem(item.getDescription(),
+    item.getAmount(),
+    item.getShippingAmount(),
+    item.getVatAmount());
+}
+```
