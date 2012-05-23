@@ -7,12 +7,13 @@ import static org.fest.assertions.Assertions.assertThat;
 public class PaypalButtonGeneratorTest {
 
     private static final String GO = "http://go.back";
+    private static final String GO_CANCEL = "http://go.cancel";
 
     @Test
     public void shouldPassSimpleCase() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.addItem("test", "10");
@@ -23,7 +24,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -38,7 +41,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldUseImageIfSet() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withSubmitImage("image_button.png").addItem("test", "10");
@@ -49,7 +52,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -64,7 +69,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldPassWithAllParametersPassedCase() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.addItem("test", "10", "1.23", "2.34");
@@ -75,7 +80,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -90,7 +97,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldPassWithDefaultTax() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withDefaultTax("23").addItemWithShipping("test", "10", "1.23");
@@ -101,7 +108,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -116,7 +125,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldPassWithDefaultShipping() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withDefaultShipping("11").addItemWithTax("test", "10", "1.5");
@@ -127,7 +136,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -142,7 +153,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldPassWithMoreItems() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.addItem("foo", "12").addItem("bar", "10");
@@ -153,7 +164,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"foo\"/>\n" +
@@ -172,7 +185,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldPassWithMoreItemsAndObjects() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.addItem("foo", "12").addItem("bar", "10")
@@ -184,7 +197,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"foo\"/>\n" +
@@ -211,7 +226,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldUseCorrectDefaultTax() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withDefaultTax("12.5").addItem("test", "10");
@@ -222,7 +237,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -237,7 +254,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldUseCorrectDefaultShipping() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withDefaultShipping("10.5").addItem("test", "10");
@@ -248,7 +265,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -263,7 +282,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldUseCorrectPaypalLabel() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withPaypalButtonLabel("Pay me please").addItem("test", "10");
@@ -274,7 +293,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -289,7 +310,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldUseCorrectCurrency() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withCurrency("PLN").addItem("test", "10");
@@ -300,7 +321,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"PLN\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -315,7 +338,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldUseInvoiceNumber() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO);
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL);
 
         // when
         pbg.withInvoiceNumber("invoice/123/10").addItem("test", "10");
@@ -326,7 +349,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +
@@ -362,7 +387,7 @@ public class PaypalButtonGeneratorTest {
     public void shouldUseNotifyUrl() {
         // given
 
-        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO).
+        PaypalButtonGenerator pbg = new PaypalButtonGenerator("test@email.com", GO, GO_CANCEL).
                 withNotifyUrl("http://notify.com/paypal");
 
         // when
@@ -374,7 +399,9 @@ public class PaypalButtonGeneratorTest {
         assertThat(form).isEqualTo("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n" +
                 "\t<input type=\"hidden\" name=\"cmd\" value=\"_cart\"/>\n" +
                 "\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n" +
-                "\t<input type=\"hidden\" name=\"shopping_url\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"return\" value=\"http://go.back\"/>\n" +
+                "\t<input type=\"hidden\" name=\"cancel_return\" value=\"http://go.cancel\"/>\n" +
+                "\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n" +
                 "\t<input type=\"hidden\" name=\"business\" value=\"test@email.com\"/>\n" +
                 "\t<input type=\"hidden\" name=\"currency_code\" value=\"USD\"/>\n" +
                 "\t<input type=\"hidden\" name=\"item_name_1\" value=\"test\"/>\n" +

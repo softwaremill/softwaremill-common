@@ -25,18 +25,21 @@ public class PaypalButtonGenerator {
     private String notifyUrl = null;
 
     private String goBackLink;
+    private String goBackCancelLink;
 
     private List<PaypalCartItem> cartItems = new ArrayList<PaypalCartItem>();
 
-    public PaypalButtonGenerator(String sellerPaypalEmail, String goBackLink) {
-        this(sellerPaypalEmail, goBackLink, false, "USD");
+    public PaypalButtonGenerator(String sellerPaypalEmail, String goBackLink, String goBackCancelLink) {
+        this(sellerPaypalEmail, goBackLink, goBackCancelLink, false, "USD");
     }
 
-    public PaypalButtonGenerator(String sellerPaypalEmail, String goBackLink, boolean sandbox, String currency) {
+    public PaypalButtonGenerator(String sellerPaypalEmail, String goBackLink, String goBackCancelLink,
+                                 boolean sandbox, String currency) {
         this.sellerPaypalEmail = sellerPaypalEmail;
         isSandbox = sandbox;
         this.currency = currency;
         this.goBackLink = goBackLink;
+        this.goBackCancelLink = goBackCancelLink;
     }
 
     public PaypalButtonGenerator withDefaultShipping(String defaultShipping) {
@@ -123,7 +126,10 @@ public class PaypalButtonGenerator {
         sb.append("\t<input type=\"hidden\" name=\"upload\" value=\"1\"/>\n");
 
         // where should the user be taken after clicking continue shopping
-        sb.append("\t<input type=\"hidden\" name=\"shopping_url\" value=\"").append(goBackLink).append("\"/>\n");
+        sb.append("\t<input type=\"hidden\" name=\"return\" value=\"").append(goBackLink).append("\"/>\n");
+        sb.append("\t<input type=\"hidden\" name=\"cancel_return\" value=\"").append(goBackCancelLink).append("\"/>\n");
+        // this will access cancel/return links via get
+        sb.append("\t<input type=\"hidden\" name=\"rm\" value=\"1\"/>\n");
 
         // our seller email
         sb.append("\t<input type=\"hidden\" name=\"business\" value=\"").append(sellerPaypalEmail).append("\"/>\n");
