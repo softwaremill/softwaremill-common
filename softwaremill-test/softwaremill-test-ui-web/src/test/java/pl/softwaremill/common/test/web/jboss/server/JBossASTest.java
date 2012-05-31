@@ -83,11 +83,11 @@ public class JBossASTest {
 			},
 			{
 				new ServerProperties(SERVER_HOME).asVersion(7).portset(0),
-				SERVER_HOME + "/bin/jboss-admin.sh --connect command=:shutdown"
+				SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown"
 			},
 			{
 				new ServerProperties(SERVER_HOME).asVersion(7).portset(0).secured(true).username("scott").password("tiger"),
-				SERVER_HOME + "/bin/jboss-admin.sh --connect command=:shutdown --user=scott --password=tiger"
+				SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown --user=scott --password=tiger"
 			},
 	    };
 	}
