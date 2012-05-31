@@ -55,7 +55,7 @@ public class JBossAS7 extends AbstractJBossAS {
 	}
 
 	private String shutdownScript() {
-		return winSystem() ? "/bin/jboss-admin.bin" : "/bin/jboss-admin.sh";
+		return winSystem() ? "/bin/jboss-cli.bin" : "/bin/jboss-cli.sh";
 	}
 
 	@Override
