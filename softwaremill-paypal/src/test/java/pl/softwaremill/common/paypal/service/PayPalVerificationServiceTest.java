@@ -37,7 +37,7 @@ public class PayPalVerificationServiceTest {
         parametersMap.put(RequestParameters.Parameter.payment_status.toString(), new String[]{"VERIFIED"});
 
         //when
-        PayPalStatus status = verificationService.verify(new RequestParameters(parametersMap));
+        PayPalStatus status = verificationService.verify(new RequestParameters(new RequestMock(parametersMap)));
 
         //then
         assertThat(status.isVerified()).isTrue();
@@ -55,7 +55,7 @@ public class PayPalVerificationServiceTest {
         HashMap<String, String[]> parametersMap = new HashMap<String, String[]>();
         parametersMap.put(RequestParameters.Parameter.payment_status.toString(), new String[]{"INVALID"});
         //when
-        PayPalStatus status = verificationService.verify(new RequestParameters(parametersMap));
+        PayPalStatus status = verificationService.verify(new RequestParameters(new RequestMock(parametersMap)));
 
         //then
         assertThat(status.isInvalid()).isTrue();
@@ -73,7 +73,7 @@ public class PayPalVerificationServiceTest {
         HashMap<String, String[]> parametersMap = new HashMap<String, String[]>();
         //when
         parametersMap.put(RequestParameters.Parameter.payment_status.toString(), new String[]{"UNKNOWN"});
-        PayPalStatus status = verificationService.verify(new RequestParameters(parametersMap));
+        PayPalStatus status = verificationService.verify(new RequestParameters(new RequestMock(parametersMap)));
 
         //then
         assertThat(status.isUnknown()).isTrue();

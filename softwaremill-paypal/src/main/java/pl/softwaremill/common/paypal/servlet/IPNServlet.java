@@ -58,7 +58,7 @@ public abstract class IPNServlet extends HttpServlet {
         PayPalVerificationService payPalVerificationService = new PayPalVerificationService(usedPaypalAddress,
                 getPayPalProcessorsFactory(),
                 getPayPalErrorProcessor());
-        PayPalStatus verify = payPalVerificationService.verify(new RequestParameters(request.getParameterMap()));
+        PayPalStatus verify = payPalVerificationService.verify(new RequestParameters(request));
     }
 
     @Override

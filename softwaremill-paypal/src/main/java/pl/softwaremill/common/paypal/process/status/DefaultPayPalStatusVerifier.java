@@ -17,8 +17,6 @@ import java.net.URLConnection;
  */
 public class DefaultPayPalStatusVerifier implements PayPalStatusVerifier {
 
-    public static final String ENCODING = "UTF-8";
-
     public PayPalStatus verify(String url, RequestParameters requestParameters) {
         try {
             // checks PayPal status with paypal
@@ -41,7 +39,7 @@ public class DefaultPayPalStatusVerifier implements PayPalStatusVerifier {
 
     private static StringBuilder buildRequestString(RequestParameters request) {
         StringBuilder str = new StringBuilder("cmd=_notify-validate");
-        str.append(request.buildRequestParametersForUrl(ENCODING));
+        str.append(request.buildRequestParametersForUrl());
         return str;
     }
 }

@@ -1,10 +1,9 @@
 package pl.softwaremill.common.paypal.process;
 
+import javax.servlet.ServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Enumeration;
 
 /**
  * @Author: lukasz.zuchowski at gmail dot com
@@ -12,6 +11,8 @@ import java.util.Map;
  * Time: 11:17
  */
 public class RequestParameters {
+
+    private ServletRequest request;
 
     public enum Parameter {
         item_name,
@@ -28,10 +29,8 @@ public class RequestParameters {
         invoice
     }
 
-    private final Map<String, String[]> parametersMap = new HashMap<String, String[]>();
-
-    public RequestParameters(Map<String, String[]> parametersMap) {
-        this.parametersMap.putAll(parametersMap);
+    public RequestParameters(ServletRequest request) {
+        this.request = request;
     }
 
     public String getParameter(Parameter parameter) {
@@ -39,20 +38,29 @@ public class RequestParameters {
     }
 
     private String getParameter(String parameterName) {
-        String[] values = this.parametersMap.get(parameterName);
-        return values != null && values.length > 0 ? values[0] : null;
+        return request.getParameter(parameterName);
     }
 
-    public String buildRequestParametersForUrl(String encoding) {
+    public String buildRequestParametersForUrl() {
         try {
-            Iterator parametersIterator = parametersMap.keySet().iterator();
-            StringBuilder str = new StringBuilder();
-            while (parametersIterator.hasNext()) {
-                String paramName = (String) parametersIterator.next();
-                String paramValue = getParameter(paramName);
-                str.append("&").append(paramName).append("=").append(URLEncoder.encode(paramValue, encoding));
+            StringBuffer postBackMessage = new StringBuffer();
+
+            String charset = request.getParameter("charset");
+            if (charset == null) {
+                charset = "UTF-8";
             }
-            return str.toString();
+
+            Enumeration<String> paramNames = request.getParameterNames();
+            while (paramNames.hasMoreElements()) {
+                String paramName = paramNames.nextElement();
+
+                postBackMessage.append("&");
+                postBackMessage.append(paramName);
+                postBackMessage.append("=");
+                postBackMessage.append(URLEncoder.encode(request.getParameter(paramName), charset));
+            }
+
+            return postBackMessage.toString();
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
