@@ -1,5 +1,7 @@
 package pl.softwaremill.common.util;
 
+import org.joda.time.DateTime;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,11 +13,11 @@ import java.util.Date;
 public class DateUtil {
 
     public static final String DATE_FORMAT_YYYYMMDD = "yyyy/MM/dd";
-    public static final String DATE_TIME_FORMAT_YYYYMMDD_HHSS = "yyyy/MM/dd HH:mm";
+    public static final String DATE_TIME_FORMAT_YYYYMMDD_HHMM = "yyyy/MM/dd HH:mm";
 
     public static Date createDateFromString(String date, String format) throws ParseException {
         if (date == null) {
-            throw new ParseException("Date is null!", 0);
+            throw new IllegalArgumentException("Date is null!");
         }
         DateFormat df = new SimpleDateFormat(format);
         return df.parse(date);
@@ -27,12 +29,12 @@ public class DateUtil {
     }
 
     /**
-     * Formats Date with Time  using yyyy/MM/dd HH:mm
+     * Formats Date with Time using yyyy/MM/dd HH:mm
      *
      * @return formatted Date as a String
      */
     public static String formatDateTime(Date date) {
-        return formatDate(date, DATE_TIME_FORMAT_YYYYMMDD_HHSS);
+        return formatDate(date, DATE_TIME_FORMAT_YYYYMMDD_HHMM);
     }
 
     /**
@@ -43,6 +45,18 @@ public class DateUtil {
 
     public static String formatDate(Date date) {
         return formatDate(date, DATE_FORMAT_YYYYMMDD);
+    }
+
+    /**
+     * Created date with given year, month and day
+     *
+     * @param year  given year
+     * @param month given month (1-12)
+     * @param day   given day of month
+     * @return created Date
+     */
+    public static Date createDate(int year, int month, int day) {
+        return new DateTime().withDate(year, month, day).toDate();
     }
 
 
