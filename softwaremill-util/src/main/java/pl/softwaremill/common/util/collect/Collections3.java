@@ -1,14 +1,15 @@
 package pl.softwaremill.common.util.collect;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import pl.softwaremill.common.util.tuples.Pair;
 
 import java.util.Collection;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Predicates.not;
-import static com.google.common.collect.Collections2.filter;
-import static pl.softwaremill.common.util.tuples.Pair.pair;
+import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Predicates.*;
+import static com.google.common.collect.Collections2.*;
+import static pl.softwaremill.common.util.tuples.Pair.*;
 
 /**
  * Common {@link java.util.Collection} helper methods
@@ -35,5 +36,16 @@ public class Collections3 {
                                                                    Predicate<? super E> predicate) {
         return pair(filter(checkNotNull(unpartitioned), checkNotNull(predicate)),
                 filter(unpartitioned, not(predicate)));
+    }
+
+    public static <T> Optional<T> findByClass(Collection<? super T> coll, Class<T> cls) {
+        for (Object o : coll) {
+            if (o != null && cls.isAssignableFrom(o.getClass())) {
+                //noinspection unchecked
+                return Optional.of((T) o);
+            }
+        }
+
+        return Optional.absent();
     }
 }

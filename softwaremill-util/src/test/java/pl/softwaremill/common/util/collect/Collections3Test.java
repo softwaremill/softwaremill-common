@@ -1,5 +1,6 @@
 package pl.softwaremill.common.util.collect;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
@@ -9,12 +10,12 @@ import pl.softwaremill.common.util.tuples.Pair;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
-import static com.google.common.base.Predicates.alwaysFalse;
-import static com.google.common.base.Predicates.alwaysTrue;
+import static com.google.common.base.Predicates.*;
 import static org.testng.Assert.*;
-import static pl.softwaremill.common.util.collect.Collections3.partition;
+import static pl.softwaremill.common.util.collect.Collections3.*;
 
 /**
  * @author Maciej Biłas
@@ -87,6 +88,22 @@ public class Collections3Test {
         assertNotNull(satisfied);
         assertEquals(satisfied.size(), 2);
         assertTrue(satisfied.containsAll(ImmutableSet.of(3, 4)), "Left set should contain elements 3 and 4.");
+    }
+
+    @Test
+    public void shouldFindByClass() {
+        // Given
+        List<Number> objects = ImmutableList.<Number>of(10L, 15, 1.4d);
+
+        // When
+        Optional<Long> result1 = Collections3.findByClass(objects, Long.class);
+        Optional<Integer> result2 = Collections3.findByClass(objects, Integer.class);
+        Optional<Float> result3 = Collections3.findByClass(objects, Float.class);
+
+        // Then
+        assertEquals(result1, Optional.of(10L));
+        assertEquals(result2, Optional.of(15));
+        assertEquals(result3, Optional.absent());
     }
 
     private <E> void assertContainsExactly(Collection<E> left, Collection<E> elements) {
