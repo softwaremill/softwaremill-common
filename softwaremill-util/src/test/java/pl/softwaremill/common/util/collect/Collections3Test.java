@@ -96,9 +96,9 @@ public class Collections3Test {
         List<Number> objects = ImmutableList.<Number>of(10L, 15, 1.4d);
 
         // When
-        Optional<Long> result1 = Collections3.findInstanceOf(objects, Long.class);
-        Optional<Integer> result2 = Collections3.findInstanceOf(objects, Integer.class);
-        Optional<Float> result3 = Collections3.findInstanceOf(objects, Float.class);
+        Optional<Long> result1 = Collections3.findFirstInstanceOf(objects, Long.class);
+        Optional<Integer> result2 = Collections3.findFirstInstanceOf(objects, Integer.class);
+        Optional<Float> result3 = Collections3.findFirstInstanceOf(objects, Float.class);
 
         // Then
         assertEquals(result1, Optional.of(10L));

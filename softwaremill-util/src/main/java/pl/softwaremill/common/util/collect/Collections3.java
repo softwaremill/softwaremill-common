@@ -38,7 +38,7 @@ public class Collections3 {
                 filter(unpartitioned, not(predicate)));
     }
 
-    public static <T> Optional<T> findInstanceOf(Collection<? super T> coll, Class<T> cls) {
+    public static <T> Optional<T> findFirstInstanceOf(Collection<? super T> coll, Class<T> cls) {
         for (Object o : coll) {
             if (o != null && cls.isAssignableFrom(o.getClass())) {
                 //noinspection unchecked
