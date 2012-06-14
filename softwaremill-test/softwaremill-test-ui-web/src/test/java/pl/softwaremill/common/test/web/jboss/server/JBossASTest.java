@@ -28,33 +28,37 @@ public class JBossASTest {
 		assertThat(normalize(command)).isEqualTo(expectedCommand);
 	}
 
-	@DataProvider
-	public Object[][] getServerProperties() {
-	    return new Object[][] {
-	        {
-				new ServerProperties(SERVER_HOME).asVersion(5),
-				SERVER_HOME + "/bin/run.sh -c default -Djboss.service.binding.set=ports-02"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(5).secured(true).username("scott").password("tiger").configuration("myconf").portset(0),
-				SERVER_HOME + "/bin/run.sh -c myconf"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(6).additionalSystemProperties("-Dmyprop=val"),
-				SERVER_HOME + "/bin/run.sh -c default -Djboss.service.binding.set=ports-02 -Dmyprop=val"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(7).portset(0),
-				SERVER_HOME + "/bin/standalone.sh"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(7).configuration("mystandalone.xml").portset(0),
-				SERVER_HOME + "/bin/standalone.sh -c mystandalone.xml"
-			},
-	    };
-	}
+    @DataProvider
+    public Object[][] getServerProperties() {
+        return new Object[][]{
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(5),
+                        SERVER_HOME + "/bin/run.sh -c default -Djboss.service.binding.set=ports-02"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(5).secured(true).username("scott").password("tiger").configuration("myconf").portset(0),
+                        SERVER_HOME + "/bin/run.sh -c myconf"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(6).additionalSystemProperties("-Dmyprop=val"),
+                        SERVER_HOME + "/bin/run.sh -c default -Djboss.service.binding.set=ports-02 -Dmyprop=val"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(7).portset(0),
+                        SERVER_HOME + "/bin/standalone.sh"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(7).portset(2),
+                        SERVER_HOME + "/bin/standalone.sh  -Djboss.socket.binding.port-offset=200"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(7).configuration("mystandalone.xml").portset(0),
+                        SERVER_HOME + "/bin/standalone.sh -c mystandalone.xml"
+                },
+        };
+    }
 
-	@Test(dataProvider = "getServerPropertiesShutdown")
+    @Test(dataProvider = "getServerPropertiesShutdown")
 	public void shouldShutdownJBossWithProperCommnd(ServerProperties properties, String expectedCommand) throws Exception {
 	    // Given
 	     AbstractJBossAS jboss = (AbstractJBossAS) new JBossASProvider(properties).createJBossASInstance();
@@ -90,25 +94,6 @@ public class JBossASTest {
 				SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown --user=scott --password=tiger"
 			},
 	    };
-	}
-
-	@Test
-	public void shouldJBossAS7OnlySupportDefaultPortset() throws Exception {
-	      // Given
-		final ServerProperties properties = new ServerProperties(SERVER_HOME).asVersion(7).configuration("mystandalone.xml").portset(1);
-
-		// When
-		Execution execution = new Execution() {
-
-			@Override
-			protected void execute() throws Exception {
-				new JBossASProvider(properties).createJBossASInstance();
-			}
-		};
-
-	    // Then
-		//noinspection ThrowableResultOfMethodCallIgnored
-		assertThat(execution.getException()).isNotNull().isInstanceOf(IllegalArgumentException.class);
 	}
 
 	private static String normalize(String[] command) {
