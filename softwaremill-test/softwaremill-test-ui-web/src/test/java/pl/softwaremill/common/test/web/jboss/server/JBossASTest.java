@@ -71,32 +71,36 @@ public class JBossASTest {
 	}
 
 	@DataProvider
-	public Object[][] getServerPropertiesShutdown() {
-	    return new Object[][] {
-	        {
-				new ServerProperties(SERVER_HOME).asVersion(5),
-				SERVER_HOME + "/bin/shutdown.sh --server=localhost:1299 -S"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(5).secured(true).username("scott").password("tiger").configuration("myconf").portset(0),
-				SERVER_HOME + "/bin/shutdown.sh --server=localhost:1099 -S -u scott -p tiger"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(6).additionalSystemProperties("-Dmyprop=val"),
-				SERVER_HOME + "/bin/shutdown.sh --host=localhost --port=1290 -S"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(7).portset(0),
-				SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown"
-			},
-			{
-				new ServerProperties(SERVER_HOME).asVersion(7).portset(0).secured(true).username("scott").password("tiger"),
-				SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown --user=scott --password=tiger"
-			},
-	    };
-	}
+    public Object[][] getServerPropertiesShutdown() {
+        return new Object[][]{
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(5),
+                        SERVER_HOME + "/bin/shutdown.sh --server=localhost:1299 -S"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(5).secured(true).username("scott").password("tiger").configuration("myconf").portset(0),
+                        SERVER_HOME + "/bin/shutdown.sh --server=localhost:1099 -S -u scott -p tiger"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(6).additionalSystemProperties("-Dmyprop=val"),
+                        SERVER_HOME + "/bin/shutdown.sh --host=localhost --port=1290 -S"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(7).portset(0),
+                        SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(7).portset(2),
+                        SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown --controller=localhost:10199"
+                },
+                {
+                        new ServerProperties(SERVER_HOME).asVersion(7).portset(0).secured(true).username("scott").password("tiger"),
+                        SERVER_HOME + "/bin/jboss-cli.sh --connect command=:shutdown --user=scott --password=tiger"
+                },
+        };
+    }
 
-	private static String normalize(String[] command) {
+    private static String normalize(String[] command) {
 		return Arrays.toString(command).replaceAll("[,\\[\\]]","").trim();
 	}
 }

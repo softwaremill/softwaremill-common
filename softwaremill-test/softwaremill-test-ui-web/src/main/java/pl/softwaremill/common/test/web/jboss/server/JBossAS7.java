@@ -53,6 +53,10 @@ public class JBossAS7 extends AbstractJBossAS {
             paramList.add("--user=" + properties.getUsername());
             paramList.add("--password=" + properties.getPassword());
         }
+        if (properties.getPortset() > 0) {
+            int controllerPort = 9999 + (properties.getPortset() * 100);
+            paramList.add("--controller=localhost:" + controllerPort);
+        }
         return paramList.toArray(new String[0]);
     }
 
