@@ -105,7 +105,7 @@ public abstract class AbstractDBTest extends BetterArquillian {
                 em.createNativeQuery(query).executeUpdate();
             }
             catch (Exception e) {
-                log.error("Problem running query:\n" + query + "\n", e);      
+                log.error("Problem running query:\n" + query + "\n", e);
             }
         }
     }
@@ -130,22 +130,7 @@ public abstract class AbstractDBTest extends BetterArquillian {
 
     @BeforeClass
     public void initDatabase() throws IOException, SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException, NotSupportedException {
-        Ejb3Configuration cfg = new Ejb3Configuration();
-
-        cfg.configure(getHibernateConfigurationFile());
-
-        // Separate database for each test class
-        cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() + addCompatibilityMode());
-
-        cfg.setProperty("connection.provider_class", ConnectionProviderImpl.class.getName());
-        cfg.setProperty(Environment.TRANSACTION_MANAGER_STRATEGY, TransactionManagerLookupImpl.class.getName());
-        cfg.setProperty(AvailableSettings.TRANSACTION_TYPE, "JTA");
-
-        configureEntities(cfg);
-        emf = cfg.buildEntityManagerFactory();
-
-        // Setting the EMF so that it's produced correctly
-        EntityManagerFactoryProducer.setStaticEntityManagerFactory(emf);
+        initEntityManagerFactory();
 
         // Loading the test data for this test
         SimpleJtaTransactionManagerImpl.getInstance().begin();
@@ -156,6 +141,29 @@ public abstract class AbstractDBTest extends BetterArquillian {
 
         SimpleJtaTransactionManagerImpl.getInstance().commit();
         em.close();
+    }
+
+    protected void initEntityManagerFactory() {
+        Ejb3Configuration cfg = new Ejb3Configuration();
+
+        cfg.configure(getHibernateConfigurationFile());
+
+        configureDatabase(cfg);
+        configureTransactions(cfg);
+        configureEntities(cfg);
+        emf = cfg.buildEntityManagerFactory();
+        // Setting the EMF so that it's produced correctly
+        EntityManagerFactoryProducer.setStaticEntityManagerFactory(emf);
+    }
+
+    protected void configureDatabase(Ejb3Configuration cfg){
+        cfg.setProperty("hibernate.connection.url", "jdbc:h2:mem:" + this.getClass().getName() + addCompatibilityMode());
+        cfg.setProperty("connection.provider_class", ConnectionProviderImpl.class.getName());
+    }
+
+    protected void configureTransactions(Ejb3Configuration cfg){
+        cfg.setProperty(Environment.TRANSACTION_MANAGER_STRATEGY, TransactionManagerLookupImpl.class.getName());
+        cfg.setProperty(AvailableSettings.TRANSACTION_TYPE, "JTA");
     }
 
     /**
@@ -171,7 +179,7 @@ public abstract class AbstractDBTest extends BetterArquillian {
         if (compatibilityMode != null) {
             return ";MODE=" + compatibilityMode.getParameterValue();
         }
-        
+
         return "";
     }
 
