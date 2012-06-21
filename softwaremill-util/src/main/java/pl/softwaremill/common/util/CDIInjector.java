@@ -1,5 +1,8 @@
 package pl.softwaremill.common.util;
 
+import com.google.common.base.Predicates;
+import org.reflections.ReflectionUtils;
+
 import javax.inject.Inject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -36,7 +39,7 @@ public class CDIInjector<T> {
             return;
         }
 
-        for (Field field : target.getClass().getDeclaredFields()) {
+        for (Field field : ReflectionUtils.getAllFields(target.getClass(), Predicates.alwaysTrue())) {
             if (fieldIsInjectable(field) &&
                     fieldTypeAssignableFrom(field, obj.getClass()) && 
                     fieldHasQualifier(field, qualifier)) {

@@ -120,6 +120,19 @@ public class CDIInjectorTest {
         assertThat(target.getDep1bis()).isNull();
     }
 
+    @Test
+    public void testInjectionIntoSuperClass() {
+        // Given
+        InjectInto4WithSuperClass target = new InjectInto4WithSuperClass();
+        Dep1 dep1 = new Dep1();
+
+        // When
+        into(target).inject(dep1);
+
+        // Then
+        assertThat(target.getDep1()).isSameAs(dep1);
+    }
+
     public static class InjectInto1 {
         @Inject
         private Dep1 dep1;
@@ -157,6 +170,15 @@ public class CDIInjectorTest {
         public Dep1 getDep1() { return dep1; }
         public Dep1 getDep1bis() { return dep1bis; }
     }
+
+    public static class SuperClassForInjectInto4 {
+        @Inject
+        private Dep1 dep1;
+
+        public Dep1 getDep1() { return dep1; }
+    }
+
+    public static class InjectInto4WithSuperClass extends SuperClassForInjectInto4 { }
 
     public static class Dep1 {}
     public static class Dep1Sub extends Dep1 {}
