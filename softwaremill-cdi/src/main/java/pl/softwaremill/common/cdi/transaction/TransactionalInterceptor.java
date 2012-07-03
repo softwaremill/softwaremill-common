@@ -13,6 +13,7 @@ import java.io.Serializable;
 
 /**
  * An interceptor for the {@link pl.softwaremill.common.cdi.transaction.Transactional} annotation.
+ *
  * @author Adam Warski (adam at warski dot org)
  * @link http://smokeandice.blogspot.com/2009/12/cdi-and-declarative-transactions.html
  */
@@ -39,15 +40,13 @@ public class TransactionalInterceptor implements Serializable {
         try {
             ret = ic.proceed();
 
-            if (startedTransaction){
+            if (startedTransaction) {
                 logger.debug("Transaction was executed properly!");
                 utx.commit();
             }
-        } catch(Throwable t) {
-            if (startedTransaction) {
-                logger.debug("Rolling back transaction!");
-                utx.rollback();
-            }
+        } catch (Throwable t) {
+            logger.debug("Rolling back transaction!");
+            utx.rollback();
 
             throw t;
         }
