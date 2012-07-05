@@ -69,6 +69,14 @@ public class AssertExceptionTest {
         // then, should have caught sub class exception
     }
 
+    @Test(expectedExceptions = Error.class, expectedExceptionsMessageRegExp = "Expected subclass of .Error. to be thrown but got .MyDetailedTestException.")
+    public void thrown_EXCEPTION_MAY_BE_SUBCLASS_OF_shouldNotInterceptException() throws Exception {
+        // when
+        AssertException.thrown(EXCEPTION_MAY_BE_SUBCLASS_OF, Error.class, throwsMyDetailedTestException);
+
+        fail("Should not have swallowed sub class exception.");
+    }
+
     @Test
     public void intercept_shouldInterceptExactException() throws Exception {
         // when
