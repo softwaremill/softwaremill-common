@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
+import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_CLASS_AND_MESSAGE_MUST_EQUAL;
 import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_MAY_BE_SUBCLASS_OF;
 
 /**
@@ -11,6 +12,8 @@ import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EX
  * by writing tests "the old way".
  *
  * @author Konrad Malawski (konrad.malawski@java.pl)
+ * @author Tomek Dziurko (tdziurko@gmail.com)
+ *
  */
 @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
 public class AssertExceptionTest {
@@ -102,5 +105,22 @@ public class AssertExceptionTest {
 
         // then
         assertEquals(intercepted, myDetailedTestException);
+    }
+
+    @Test
+    public void thrownWithMessage_shouldInterceptExactExceptionWithRequestedMessage() {
+
+        // When
+        AssertException.thrownWithMessage(EXCEPTION_CLASS_AND_MESSAGE_MUST_EQUAL, MyTestException.class, myTestException.getMessage(),
+                throwsMyTestException);
+    }
+
+    @Test(expectedExceptions = AssertionError.class, expectedExceptionsMessageRegExp = "Expected .MyTestException. to be thrown with message " +
+            ".It's a me, Exception!-POSTFIX. but got .MyTestException. with message .It's a me, Exception!.")
+    public void thrownWithMessage_shouldNotInterceptExactExceptionWithDifferentMessage() {
+
+        // When
+        AssertException.thrownWithMessage(EXCEPTION_CLASS_AND_MESSAGE_MUST_EQUAL, MyTestException.class, myTestException.getMessage() + "-POSTFIX",
+                throwsMyTestException);
     }
 }

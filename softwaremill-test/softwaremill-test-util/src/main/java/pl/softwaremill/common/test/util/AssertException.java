@@ -28,6 +28,12 @@ public class AssertException {
             }
         };
 
+        /**
+         * Please use EXCEPTION_CLASS_MUST_EQUAL instead
+         */
+        @Deprecated
+        public static final ExceptionMatch.Strategy EXCEPTION_MUST_EQUAL = EXCEPTION_CLASS_MUST_EQUAL;
+
         public static final ExceptionMatch.Strategy EXCEPTION_MAY_BE_SUBCLASS_OF = new Strategy() {
             @Override
             public boolean matchesExpected(Class<? extends Throwable> expectedClass, Throwable got, String expectedMessage) {
@@ -36,6 +42,18 @@ public class AssertException {
 
             public void failWithExpectedButGot(Class<? extends Throwable> expectedClass, Throwable got,String expectedMessage) {
                 Assert.fail(String.format("Expected subclass of [%s] to be thrown but got [%s]", expectedClass.getSimpleName(), got.getClass().getSimpleName()));
+            }
+        };
+
+        public static final ExceptionMatch.Strategy EXCEPTION_CLASS_AND_MESSAGE_MUST_EQUAL = new Strategy() {
+            @Override
+            public boolean matchesExpected(Class<? extends Throwable> expectedClass, Throwable got, String expectedMessage) {
+                return got.getClass().equals(expectedClass) && expectedMessage.equals(got.getMessage());
+            }
+
+            public void failWithExpectedButGot(Class<? extends Throwable> expectedClass, Throwable got, String expectedMessage) {
+                Assert.fail(String.format("Expected [%s] to be thrown with message [%s] but got [%s] with message [%s]", expectedClass.getSimpleName(),
+                        expectedMessage, got.getClass().getSimpleName(), got.getMessage()));
             }
         };
 
@@ -51,6 +69,13 @@ public class AssertException {
                                                     Class<T> expectedThrowableClass,
                                                     Runnable block) {
         intercept(matchStrategy, expectedThrowableClass, block);
+    }
+
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    public static <T extends Throwable> void thrownWithMessage(ExceptionMatch.Strategy matchStrategy,
+                                                               Class<T> expectedThrowableClass, String expectedMessage,
+                                                               Runnable block) {
+        intercept(matchStrategy, expectedThrowableClass, expectedMessage, block);
     }
 
     public static <T extends Throwable> void thrown(Class<T> expectedThrowableClass,
