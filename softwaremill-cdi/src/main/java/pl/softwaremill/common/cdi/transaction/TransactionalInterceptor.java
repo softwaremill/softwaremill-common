@@ -45,8 +45,10 @@ public class TransactionalInterceptor implements Serializable {
                 utx.commit();
             }
         } catch (Throwable t) {
-            logger.debug("Rolling back transaction!");
-            utx.rollback();
+            if (utx.getStatus() == Status.STATUS_ACTIVE) {
+                logger.debug("Rolling back transaction!");
+                utx.rollback();
+            }
 
             throw t;
         }
