@@ -8,14 +8,14 @@ import com.google.common.collect.ImmutableSet;
 import org.testng.annotations.Test;
 import pl.softwaremill.common.util.tuples.Pair;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static com.google.common.base.Predicates.*;
+import static com.google.common.base.Predicates.alwaysFalse;
+import static com.google.common.base.Predicates.alwaysTrue;
+import static org.fest.assertions.Assertions.assertThat;
 import static org.testng.Assert.*;
-import static pl.softwaremill.common.util.collect.Collections3.*;
+import static pl.softwaremill.common.util.collect.Collections3.nullSafeMax;
+import static pl.softwaremill.common.util.collect.Collections3.partition;
 
 /**
  * @author Maciej Biłas
@@ -104,6 +104,29 @@ public class Collections3Test {
         assertEquals(result1, Optional.of(10L));
         assertEquals(result2, Optional.of(15));
         assertEquals(result3, Optional.absent());
+    }
+
+    @Test
+    public void nullSafeMaxShouldReturnNullIfTheInputCollectionIsNull() {
+        assertThat(nullSafeMax((Collection<String>) null)).isNull();
+        assertThat(nullSafeMax(null, null)).isNull();
+    }
+
+    @Test
+    public void nullSafeMaxShouldReturnNullIfTheInputCollectionIsEmpty() {
+        assertThat(nullSafeMax(Collections.<String>emptySet())).isNull();
+        assertThat(nullSafeMax(Collections.<String>emptySet(), null)).isNull();
+    }
+
+    @Test
+    public void nullSafeMaxShouldReturnTheMaximumElementOfACollection() {
+        assertThat(nullSafeMax(ImmutableList.of(1, 2, 3))).isEqualTo(3);
+    }
+
+    @Test
+    public void nullSafeMaxIgnoreNullCollectionElements() {
+        /* I'm ignoring the method variant that takes a Comparator. There is just no point in duplicating those tests */
+        assertThat(nullSafeMax(Arrays.asList(1, null, 2))).isEqualTo(2);
     }
 
     private <E> void assertContainsExactly(Collection<E> left, Collection<E> elements) {
