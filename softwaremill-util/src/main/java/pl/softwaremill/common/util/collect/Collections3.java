@@ -70,7 +70,7 @@ public class Collections3 {
      *                            not <i>mutually comparable</i> using the specified comparator.
      * @see Comparable
      */
-    public static <T> T nullSafeMax(Collection<? extends T> coll, Comparator<? super T> comp) {
+    public static <T> T maxNullSafe(Collection<? extends T> coll, Comparator<? super T> comp) {
         if (coll == null || coll.isEmpty())
             return null;
 
@@ -93,7 +93,7 @@ public class Collections3 {
      *                            integers).
      * @see Comparable
      */
-    public static <T extends Object & Comparable<? super T>> T nullSafeMax(Collection<? extends T> coll) {
+    public static <T extends Object & Comparable<? super T>> T maxNullSafe(Collection<? extends T> coll) {
         if (coll == null || coll.isEmpty())
             return null;
 

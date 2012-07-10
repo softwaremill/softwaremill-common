@@ -14,7 +14,7 @@ import static com.google.common.base.Predicates.alwaysFalse;
 import static com.google.common.base.Predicates.alwaysTrue;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.testng.Assert.*;
-import static pl.softwaremill.common.util.collect.Collections3.nullSafeMax;
+import static pl.softwaremill.common.util.collect.Collections3.maxNullSafe;
 import static pl.softwaremill.common.util.collect.Collections3.partition;
 
 /**
@@ -107,26 +107,26 @@ public class Collections3Test {
     }
 
     @Test
-    public void nullSafeMaxShouldReturnNullIfTheInputCollectionIsNull() {
-        assertThat(nullSafeMax((Collection<String>) null)).isNull();
-        assertThat(nullSafeMax(null, null)).isNull();
+    public void maxNullSafeShouldReturnNullIfTheInputCollectionIsNull() {
+        assertThat(maxNullSafe((Collection<String>) null)).isNull();
+        assertThat(Collections3.maxNullSafe(null, null)).isNull();
     }
 
     @Test
-    public void nullSafeMaxShouldReturnNullIfTheInputCollectionIsEmpty() {
-        assertThat(nullSafeMax(Collections.<String>emptySet())).isNull();
-        assertThat(nullSafeMax(Collections.<String>emptySet(), null)).isNull();
+    public void maxNullSafeShouldReturnNullIfTheInputCollectionIsEmpty() {
+        assertThat(maxNullSafe(Collections.<String>emptySet())).isNull();
+        assertThat(Collections3.maxNullSafe(Collections.<String>emptySet(), null)).isNull();
     }
 
     @Test
-    public void nullSafeMaxShouldReturnTheMaximumElementOfACollection() {
-        assertThat(nullSafeMax(ImmutableList.of(1, 2, 3))).isEqualTo(3);
+    public void maxNullSafeShouldReturnTheMaximumElementOfACollection() {
+        assertThat(maxNullSafe(ImmutableList.of(1, 2, 3))).isEqualTo(3);
     }
 
     @Test
-    public void nullSafeMaxIgnoreNullCollectionElements() {
+    public void maxNullSafeIgnoreNullCollectionElements() {
         /* I'm ignoring the method variant that takes a Comparator. There is just no point in duplicating those tests */
-        assertThat(nullSafeMax(Arrays.asList(1, null, 2))).isEqualTo(2);
+        assertThat(maxNullSafe(Arrays.asList(1, null, 2))).isEqualTo(2);
     }
 
     private <E> void assertContainsExactly(Collection<E> left, Collection<E> elements) {
