@@ -74,7 +74,11 @@ public class Collections3 {
         if (coll == null || coll.isEmpty())
             return null;
 
-        return Collections.max(filter(coll, notNull()), comp);
+        Collection<? extends T> nullFiltered = filter(coll, notNull());
+        if (nullFiltered.isEmpty())
+            return null;
+        else
+            return Collections.max(nullFiltered, comp);
     }
 
     /**
@@ -97,6 +101,11 @@ public class Collections3 {
         if (coll == null || coll.isEmpty())
             return null;
 
-        return Collections.max(filter(coll, notNull()));
+
+        Collection<? extends T> nullFiltered = filter(coll, notNull());
+        if (nullFiltered.isEmpty())
+            return null;
+        else
+            return Collections.max(nullFiltered);
     }
 }

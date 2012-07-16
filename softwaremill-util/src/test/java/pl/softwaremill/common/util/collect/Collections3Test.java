@@ -129,6 +129,12 @@ public class Collections3Test {
         assertThat(maxNullSafe(Arrays.asList(1, null, 2))).isEqualTo(2);
     }
 
+    @Test
+    public void maxNullSafeShouldReturnNullIfACollectionContainingOnlyNullsIsPassed() {
+        /* Again this test is done only on the single argument variant */
+        assertThat(maxNullSafe(Arrays.<Integer>asList(null, null, null))).isNull();
+    }
+
     private <E> void assertContainsExactly(Collection<E> left, Collection<E> elements) {
         assertNotNull(left);
         assertEquals(left.size(), elements.size());
