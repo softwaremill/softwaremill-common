@@ -29,10 +29,14 @@ public class EntityManagerProducer {
     }
 
     public void disposeOfReadOnlyEntityManager(@Disposes @ReadOnly EntityManager readOnlyEntityManager) {
-        readOnlyEntityManager.close();
+        if (readOnlyEntityManager.isOpen()) {
+            readOnlyEntityManager.close();
+        }
     }
 
     public void disposeOfWriteableEntityManager(@Disposes @Writeable EntityManager writeableEntityManager) {
-        writeableEntityManager.close();
+        if (writeableEntityManager.isOpen()) {
+            writeableEntityManager.close();
+        }
     }
 }
