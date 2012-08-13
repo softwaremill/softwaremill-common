@@ -1,6 +1,7 @@
 package pl.softwaremill.common.cdi.persistence;
 
 import org.hibernate.ejb.Ejb3Configuration;
+import org.hibernate.proxy.HibernateProxy;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -11,7 +12,8 @@ import pl.softwaremill.common.arquillian.ManifestUtil;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import static org.testng.Assert.*;
+import static org.fest.assertions.Assertions.assertThat;
+import static org.testng.Assert.assertNull;
 
 /**
  * @author Adam Warski (adam at warski dot org)
@@ -20,6 +22,7 @@ public class EntityWriterTest extends AbstractHibernateTest {
     @Override
     protected void configure(Ejb3Configuration cfg) {
         cfg.addAnnotatedClass(SimpleEntity.class);
+        cfg.addAnnotatedClass(EntityWithLazySubentity.class);
         // Setting isolation to TRANSACTION_READ_UNCOMMITTED as JTA is not available and using two EMs causes otherwise
         // deadlocks.
         cfg.setProperty("hibernate.connection.isolation", "1");
@@ -164,6 +167,49 @@ public class EntityWriterTest extends AbstractHibernateTest {
         // Closing
         readOnlyEm.close();
         writeableEm.close();
+    }
+
+    @Test
+    public void shouldPersistEntityProxyEvenIfNotInWritableEmContext() {
+        // Creating and setting the entity managers
+        EntityManager readOnlyEm = newReadOnlyEntityManager();
+        EntityManager writeableEm = newEntityManager();
+
+        readOnlyEntityManagerDelegator.setDelegate(readOnlyEm);
+        writeableEntityManagerDelegator.setDelegate(writeableEm);
+
+        // Write an entity with proxy
+        EntityWithLazySubentity entityWithLazy = new EntityWithLazySubentity();
+        entityWithLazy.setSubentity(new SimpleEntity());
+
+        // Write to the DB
+        writeableEm.getTransaction().begin();
+        readOnlyEm.joinTransaction();
+
+        // Write entity with proxy
+        EntityWithLazySubentity writtenEntity = entityWriter.write(entityWithLazy);
+
+        writeableEm.getTransaction().commit();
+
+        readOnlyEm.clear();
+        writeableEm.clear();
+
+        // Write to the DB
+        writeableEm.getTransaction().begin();
+        readOnlyEm.joinTransaction();
+
+        // Get proxy
+        writtenEntity = readOnlyEm.find(EntityWithLazySubentity.class, writtenEntity.getId());
+        assertThat(writtenEntity).isNotNull();
+
+        SimpleEntity proxy = writtenEntity.getSubentity();
+        assertThat(proxy).isNotNull();
+
+        // Try to write the proxy
+        SimpleEntity writeResult = entityWriter.write(proxy);
+
+        assertThat(writeResult).isNotNull();
+        assertThat(writeResult instanceof HibernateProxy).isFalse();
     }
 
 }

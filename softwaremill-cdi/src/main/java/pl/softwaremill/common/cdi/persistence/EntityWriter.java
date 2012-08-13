@@ -41,7 +41,7 @@ public class EntityWriter {
         writeableEm.flush();
         // Now looking up a fresh copy of the entity. We won't get a stale one because we removed it from the context
         // in the beginning
-        return (T) readOnlyEm.find(writtenEntity.getClass(), writtenEntity.getId());
+        return (T) readOnlyEm.find(getTargetClassIfProxied(writtenEntity.getClass()), writtenEntity.getId());
     }
 
     /**
