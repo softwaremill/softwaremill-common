@@ -1,5 +1,9 @@
 package pl.softwaremill.common.util.tuples;
 
+import com.google.common.base.Function;
+
+import javax.annotation.Nullable;
+
 /**
  * @author Adam Warski (adam at warski dot org)
  */
@@ -51,5 +55,33 @@ public class Pair<A, B> {
      */
     public static <A, B> Pair<A, B> pair(A left, B right) {
         return new Pair<A, B>(left, right);
+    }
+
+    public static class Functions {
+        private Functions() {
+            /* this class should not be instantiated */
+        }
+
+        public static <L, R> Function<Pair<L, R>, L> getLeft() {
+            return new Function<Pair<L, R>, L>() {
+                @Override
+                public L apply(@Nullable Pair<L, R> input) {
+                    return input == null
+                            ? null
+                            : input.getLeft();
+                }
+            };
+        }
+
+        public static <L, R> Function<Pair<L, R>, R> getRight() {
+            return new Function<Pair<L, R>, R>() {
+                @Override
+                public R apply(@Nullable Pair<L, R> input) {
+                    return input == null
+                            ? input.getRight()
+                            : null;
+                }
+            };
+        }
     }
 }
