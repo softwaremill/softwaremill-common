@@ -78,8 +78,8 @@ public class Pair<A, B> {
                 @Override
                 public R apply(@Nullable Pair<L, R> input) {
                     return input == null
-                            ? input.getRight()
-                            : null;
+                            ? null
+                            : input.getRight();
                 }
             };
         }
