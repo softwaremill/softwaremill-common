@@ -25,6 +25,7 @@ public class FailureTestListener extends TestListenerAdapter {
         try {
             if (shouldMakeScreenShot(tr)) {
                 AbstractSeleniumTest.captureScreenshot(tr.getName());
+                AbstractSeleniumTest.captureHtmlSource(tr.getName());
             }
         } catch (Exception e) {
             log.error("Couldn't capture screenshot", e);

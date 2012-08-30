@@ -1,15 +1,21 @@
 package pl.softwaremill.common.test.web.selenium;
 
 import com.thoughtworks.selenium.Selenium;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import pl.softwaremill.common.test.web.selenium.screenshots.FailureTestListener;
 import pl.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -177,15 +183,35 @@ public abstract class AbstractSeleniumTest {
     }
 
 	public static File captureScreenshot(String testName) throws Exception {
-        String date = new SimpleDateFormat(".yyyy-MM-dd-HH-mm-ss.").format(new Date());
-		File f = File.createTempFile("selenium_screenshot_" + testName + "_", date + "failed.png");
+        File f = createTempArtifactFile("selenium_screenshot_", testName, ".png");
 
 		selenium.captureEntirePageScreenshot(f.getAbsolutePath(), "");
 
-		System.out.println("##teamcity[publishArtifacts '" + f.getAbsolutePath() + "']");
+        publishArtifact(f);
 
         return f;
 	}
+
+    public static File captureHtmlSource(String testName) throws Exception {
+        File f = createTempArtifactFile("selenium_source_", testName, ".txt");
+
+        String htmlSource = selenium.getHtmlSource();
+        FileUtils.write(f, htmlSource);
+
+        publishArtifact(f);
+
+        return f;
+    }
+
+    private static void publishArtifact(File f) {
+        System.out.println("##teamcity[publishArtifacts '" + f.getAbsolutePath() + "']");
+    }
+
+    private static File createTempArtifactFile(String prefix, String testName, String suffix)
+            throws IOException {
+        String date = new SimpleDateFormat(".yyyy-MM-dd-HH-mm-ss.").format(new Date());
+        return File.createTempFile(prefix + testName + "_", date + "failed" + suffix);
+    }
 
 	protected void afterSeleniumStart() throws Exception {
 		// base implementation does nothing
