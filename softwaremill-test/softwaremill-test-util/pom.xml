@@ -31,5 +31,9 @@
             <groupId>dumbster</groupId>
             <artifactId>dumbster</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
     </dependencies>
 </project>
