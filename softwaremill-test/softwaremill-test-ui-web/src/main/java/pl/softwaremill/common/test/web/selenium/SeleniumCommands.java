@@ -63,6 +63,10 @@ public class SeleniumCommands {
         waitForElementVisible(locator, true);
     }
 
+    public static void waitForElementNotVisible(String locator) throws Exception {
+        waitForElementVisible(locator, false);
+    }
+
     public static void waitForElementVisible(final String locator, final boolean isVisible) throws Exception {
         waitForElementVisible(locator, isVisible, TIME_OUT);
     }
