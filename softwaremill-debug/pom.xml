@@ -7,7 +7,7 @@
     <parent>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>67-SNAPSHOT</version>
+        <version>67</version>
     </parent>
 
     <dependencies>
