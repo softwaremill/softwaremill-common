@@ -61,8 +61,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
+            <groupId>org.codehaus.btm</groupId>
+            <artifactId>btm</artifactId>
         </dependency>
 
         <dependency>
@@ -86,21 +86,19 @@
     </dependencies>
 
     <build>
-        <plugins>
-        </plugins>
-			<testResources>
-				<testResource>
-					<directory>src/test/resources</directory>
-					<includes>
-						<include>*</include>
-					</includes>
-				</testResource>
-				<testResource>
-					<directory>src/test/java</directory>
-					<includes>
-						<include>**/*.sql</include>
-					</includes>
-				</testResource>
-			</testResources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>*</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**/*.sql</include>
+                </includes>
+            </testResource>
+        </testResources>
     </build>
 </project>
