@@ -58,7 +58,7 @@ public class SecurityPhaseListener implements PhaseListener {
             if (nav.shouldRedirectToLogin()) {
                 redirectToLogin(ctx, session, nav, page);
             } else {
-                responseForbidden(ctx);
+                nav.responseForbidden(ctx);
             }
         } else if (login.isLoggedIn() && session.getAttribute(PREVIOUS_VIEW) != null) {
             redirectToPreviousView(ctx, session);
@@ -110,11 +110,6 @@ public class SecurityPhaseListener implements PhaseListener {
         ctx.responseComplete();
     }
 
-    private void responseForbidden(FacesContext ctx) {
-        ctx.getExternalContext().setResponseStatus(403);
-        ctx.responseComplete();
-    }
-
     private void evaluateSecurityExpression(FacesContext ctx, Page page) {
         ELEvaluator evaluator = BeanInject.lookup(ELEvaluator.class);
         Boolean securityResult = evaluator.evaluate(page.getSecurityEL(), Boolean.class);
@@ -122,7 +117,7 @@ public class SecurityPhaseListener implements PhaseListener {
             throw new RuntimeException("Security EL: " + page.getSecurityEL() + " on page " + page.s() + " doesn't resolve to Boolean");
         }
         if (!securityResult) {
-            responseForbidden(ctx);
+            nav.responseForbidden(ctx);
         }
     }
 

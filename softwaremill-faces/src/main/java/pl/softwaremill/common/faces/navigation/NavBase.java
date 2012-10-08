@@ -1,5 +1,6 @@
 package pl.softwaremill.common.faces.navigation;
 
+import javax.faces.context.FacesContext;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -60,6 +61,15 @@ public abstract class NavBase {
     public abstract Page getLogin();
 
     public abstract Page getError();
+
+	/**
+	 * Method executed when the security el expression for the given page returns false
+	 * @param ctx {@code FacesContext}
+	 */
+	public void responseForbidden(FacesContext ctx) {
+		ctx.getExternalContext().setResponseStatus(403);
+		ctx.responseComplete();
+	}
 
     /**
      * If this returns true, the user will be redirected to a login page once trying to access restricted page.
