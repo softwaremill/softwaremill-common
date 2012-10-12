@@ -33,6 +33,7 @@ import static pl.softwaremill.common.sqs.SQSConfiguration.*;
  *         Date: Aug 16, 2010
  * @author Adam Warski
  */
+@Deprecated
 public class SQSManager {
     private static final Logger log = LoggerFactory.getLogger(SQSManager.class);
 

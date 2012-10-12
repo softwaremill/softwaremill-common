@@ -2,6 +2,7 @@ package pl.softwaremill.common.sqs;
 
 import com.xerox.amazonws.sqs2.QueueService;
 
+@Deprecated
 public class QueueServiceResolver {
 
     public QueueService resolveQueue(String sqsServer, String awsAccessKey, String awsSecretKey) {

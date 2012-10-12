@@ -1,7 +1,6 @@
 package pl.softwaremill.common.sqs;
 
-import com.xerox.amazonws.sqs2.Message;
-import com.xerox.amazonws.sqs2.MessageQueue;
+import com.google.common.base.Optional;
 import com.xerox.amazonws.sqs2.SQSException;
 
 import java.io.BufferedReader;
@@ -25,16 +24,15 @@ public class SQSEmptor {
     }
 
     public void emptyQueue() throws SQSException {
-        MessageQueue msgQueue = SQSManager.connectToQueue(serverName, accessKeyId, secretAccessKey, queueName, -1);
-
-        Message msg;
+        Queue queue = new SQS(serverName, accessKeyId, secretAccessKey).getQueueByName(queueName);
+        Optional<ReceivedMessage> message;
         do {
-            msg = msgQueue.receiveMessage();
-            if (msg != null) {
-                System.out.println("Deleting message: " + msg.getMessageId() + " (" + msg.getReceiptHandle() + ")");
-                msgQueue.deleteMessage(msg);
+            message = queue.receiveSingleMessage();
+            if (message.isPresent()) {
+                System.out.println("Deleting message: " + message.get().getMessageId().get() + " (" + message.get().getReceiptHandle().get() + ")");
+                queue.deleteMessage(message.get());
             }
-        } while (msg != null);
+        } while (message.isPresent());
 
         System.out.println("Queue emptied");
     }
