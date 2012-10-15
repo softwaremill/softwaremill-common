@@ -16,11 +16,11 @@ import java.util.Collection;
  *         Date: Aug 17, 2010
  */
 public abstract class TimerManager {
+    private static final Logger LOG = LoggerFactory.getLogger(TimerManager.class);
 
     @Resource
     TimerService timerService;
 
-    private static final Logger log = LoggerFactory.getLogger(TimerManager.class);
 
     public void startTimer(String id, int interval) {
         // need to make sure all timers are down (e.g. after redeploy)
@@ -32,23 +32,23 @@ public abstract class TimerManager {
         timerConfig.setInfo(id);
         timerService.createIntervalTimer(interval, interval, timerConfig);
 
-        log.info("Timer for " + id + " started.");
+        LOG.info("Timer for " + id + " started.");
 
     }
 
     public void destroyTimer(String id) {
 
-        log.info("Shutting down all timers...");
+        LOG.info("Shutting down all timers...");
 
         Collection<Timer> timersCollection = timerService.getTimers();
 
         for (Timer timer : timersCollection) {
             // if (timer.getInfo().equals(id))
             timer.cancel();
-            log.info("Timer for " + id + " removed.");
+            LOG.info("Timer for " + id + " removed.");
         }
 
-        log.info("Shut down all timers successfully");
+        LOG.info("Shut down all timers successfully");
 
     }
 }

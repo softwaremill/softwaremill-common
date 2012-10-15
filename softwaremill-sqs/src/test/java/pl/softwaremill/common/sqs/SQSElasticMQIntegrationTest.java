@@ -160,7 +160,7 @@ public class SQSElasticMQIntegrationTest {
     }
 
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void stopElasticMQ() {
         sqsServer.stop();
         elasticNode.shutdown();
