@@ -33,7 +33,7 @@
         <!-- For creating temporary requests in SQSTaskTimerBean -->
         <dependency>
            <groupId>org.jboss.weld.servlet</groupId>
-           <artifactId>weld-servlet</artifactId>
+           <artifactId>weld-servlet-core</artifactId>
            <scope>provided</scope>
        </dependency>
 
@@ -62,7 +62,32 @@
 			<artifactId>httpclient</artifactId>
 		</dependency>
 
-		<!-- mock smtp -->
+        <!-- ElasticMQ for testing -->
+        <dependency>
+            <groupId>org.elasticmq</groupId>
+            <artifactId>elasticmq-core_2.9.1</artifactId>
+            <version>0.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticmq</groupId>
+            <artifactId>elasticmq-rest-sqs_2.9.1</artifactId>
+            <version>0.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+        </dependency>
+
+
+        <!-- mock smtp -->
 		<dependency>
 			<groupId>dumbster</groupId>
 			<artifactId>dumbster</artifactId>

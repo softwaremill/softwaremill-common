@@ -1,5 +1,7 @@
 package pl.softwaremill.common.sqs;
 
+import com.amazonaws.Protocol;
+import com.google.common.base.Objects;
 import pl.softwaremill.common.sqs.util.Base64Coder;
 
 import java.io.*;
@@ -16,7 +18,7 @@ class Util { /* Package-private visibility, do not escalate, refactor if you nee
         /* this class should not be instantiated */
     }
 
-    public static String serializeToBase64(Serializable object) throws IOException {
+    static String serializeToBase64(Serializable object) throws IOException {
         checkNotNull(object);
 
         ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
@@ -31,7 +33,7 @@ class Util { /* Package-private visibility, do not escalate, refactor if you nee
         }
     }
 
-    public static Object deserializeFromBase64(String data) throws IOException, ClassNotFoundException {
+    static Object deserializeFromBase64(String data) throws IOException, ClassNotFoundException {
         checkNotNull(data);
 
         ByteArrayInputStream byteArrayStream = new ByteArrayInputStream(Base64Coder.decode(data));
@@ -44,5 +46,29 @@ class Util { /* Package-private visibility, do not escalate, refactor if you nee
             if (objectStream != null)
                 objectStream.close();
         }
+    }
+
+    static Protocol determineProtocol(String server) {
+        checkNotNull(server);
+
+        String[] splitServer = server.split(":");
+
+        Protocol protocol = Protocol.HTTPS;
+        if (splitServer.length > 1) {
+            String port = splitServer[1];
+            String protocolInTheUrl = splitServer[0].toLowerCase();
+            if (splitServer[1].startsWith("//")) {
+                if (Objects.equal(protocolInTheUrl, "http"))
+                    return Protocol.HTTP;
+                else if (Objects.equal(protocolInTheUrl, "https"))
+                    return Protocol.HTTPS;
+                port = splitServer[2];
+            }
+            if (!"443".equals(port)) {
+                protocol = Protocol.HTTP;
+            }
+        }
+
+        return protocol;
     }
 }

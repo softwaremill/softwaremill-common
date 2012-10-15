@@ -2,7 +2,6 @@ package pl.softwaremill.common.sqs;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
-import com.amazonaws.Protocol;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
@@ -28,7 +27,7 @@ public class SQS {
 
     public SQS() {
         AmazonSQSClient sqsClient = new AmazonSQSClient(new BasicAWSCredentials(AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID),
-                new ClientConfiguration().withProtocol(determineProtocol(SQS_SERVER)));
+                new ClientConfiguration().withProtocol(Util.determineProtocol(SQS_SERVER)));
         sqsClient.setEndpoint(SQS_SERVER);
 
         this.sqsClient = sqsClient;
@@ -36,24 +35,10 @@ public class SQS {
 
     public SQS(String server, String accessKey, String secretKey) {
         AmazonSQSClient sqsClient = new AmazonSQSClient(new BasicAWSCredentials(accessKey, secretKey),
-                new ClientConfiguration().withProtocol(determineProtocol(server)));
+                new ClientConfiguration().withProtocol(Util.determineProtocol(server)));
         sqsClient.setEndpoint(server);
 
         this.sqsClient = sqsClient;
-    }
-
-    private static Protocol determineProtocol(String server) {
-        String[] splitServer = server.split(":");
-
-        Protocol protocol = Protocol.HTTPS;
-        if (splitServer.length > 1) {
-            String port = splitServer[1];
-            if (!"443".equals(port)) {
-                protocol = Protocol.HTTP;
-            }
-        }
-
-        return protocol;
     }
 
     public Queue getQueueByName(String queueName) {
