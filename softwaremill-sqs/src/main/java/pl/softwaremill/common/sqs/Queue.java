@@ -30,6 +30,14 @@ public class Queue {
     private final String url;
     private final AmazonSQS sqsClient;
 
+    @SuppressWarnings("UnusedDeclaration")
+    public Queue() {
+        LOG.error("Don't use this constructor. It's here only to make CDI happy.");
+        this.name = null;
+        this.url = null;
+        this.sqsClient = null;
+    }
+
     public Queue(String name, String url, AmazonSQS sqsClient) {
         this.name = name;
         this.url = checkNotNull(url);
