@@ -1,7 +1,7 @@
 package pl.softwaremill.common.sqs;
 
+import com.amazonaws.AmazonServiceException;
 import com.google.common.base.Optional;
-import com.xerox.amazonws.sqs2.SQSException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class SQSEmptor {
         this.queueName = queueName;
     }
 
-    public void emptyQueue() throws SQSException {
+    public void emptyQueue() throws AmazonServiceException {
         Queue queue = new SQS(serverName, accessKeyId, secretAccessKey).getQueueByName(queueName);
         Optional<ReceivedMessage> message;
         do {
@@ -37,7 +37,7 @@ public class SQSEmptor {
         System.out.println("Queue emptied");
     }
 
-    public static void main(String[] args) throws IOException, SQSException {
+    public static void main(String[] args) throws IOException, AmazonServiceException {
         BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Server name (return for queue.amazonaws.com):");
