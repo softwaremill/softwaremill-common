@@ -5,12 +5,12 @@
   <parent>
     <artifactId>softwaremill-common-parent</artifactId>
     <groupId>pl.softwaremill.common</groupId>
-    <version>68</version>
+    <version>69-SNAPSHOT</version>
   </parent>
 
   <groupId>pl.softwaremill.common</groupId>
   <artifactId>softwaremill-paypal</artifactId>
-  <version>68</version>
+  <version>69-SNAPSHOT</version>
   <name>SoftwareMill Paypal Integration</name>
   <url>http://maven.apache.org</url>
 
