@@ -37,30 +37,11 @@
            <scope>provided</scope>
        </dependency>
 
-		<!-- typica -->
-		<dependency>
-			<groupId>com.google.code.typica</groupId>
-			<artifactId>typica</artifactId>
-		</dependency>
-
         <!-- AWS -->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
         </dependency>
-
-		<dependency>
-			<artifactId>commons-logging</artifactId>
-			<groupId>commons-logging</groupId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-		</dependency>
 
         <!-- ElasticMQ for testing -->
         <dependency>
