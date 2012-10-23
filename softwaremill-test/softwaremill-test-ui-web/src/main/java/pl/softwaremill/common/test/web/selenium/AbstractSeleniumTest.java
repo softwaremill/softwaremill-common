@@ -37,6 +37,8 @@ public abstract class AbstractSeleniumTest {
 
     private static boolean debug;
 
+    private static int seleniumTimeout;
+
     static {
         seleniumHost = System.getProperty("selenium.server", "127.0.0.1");
         seleniumServerPort = Integer.parseInt(System.getProperty("selenium.server.port", "14444"));
@@ -44,6 +46,8 @@ public abstract class AbstractSeleniumTest {
 		String testServerUrl = System.getProperty("selenium.testserver.url", "http://localhost");
 		String browserCommand = System.getProperty("selenium.browser.command", "*firefox");
         debug = Boolean.parseBoolean(System.getProperty("selenium.debug.enabled", "true"));
+
+        seleniumTimeout = Integer.parseInt(System.getProperty("selenium.timeout", "120"));
 
         browserProperties = new SeleniumBrowserProperties(browserCommand, testServerUrl, testServerPort);
     }
@@ -66,7 +70,7 @@ public abstract class AbstractSeleniumTest {
 		System.out.println("--- Starting selenium server with debug set to " + debug);
 
 		RemoteControlConfiguration rcc = new RemoteControlConfiguration();
-		rcc.setTimeoutInSeconds(60);
+		rcc.setTimeoutInSeconds(seleniumTimeout);
 		rcc.setPort(seleniumServerPort);
 		//rcc.setMultiWindow(true);
 		rcc.setSingleWindow(false);
