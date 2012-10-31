@@ -2,6 +2,8 @@ package pl.softwaremill.common.test.util.fest;
 
 import org.fest.assertions.GenericAssert;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 
 import static java.lang.String.format;
 
@@ -11,6 +13,10 @@ public class TimeAssertions {
 
     public static DateAssert assertTime(DateTime date) {
         return new DateAssert(DateAssert.class, date);
+    }
+
+    public static LocalDateTimeAssert assertTime(LocalDateTime localDateTime) {
+        return new LocalDateTimeAssert(LocalDateTimeAssert.class, localDateTime);
     }
 
     public static class DateAssert extends GenericAssert<DateAssert, DateTime> {
@@ -57,4 +63,35 @@ public class TimeAssertions {
             return this;
         }
     }
+
+    public static class LocalDateTimeAssert extends GenericAssert<LocalDateTimeAssert, LocalDateTime> {
+
+        private final DateAssert delegate;
+
+        protected LocalDateTimeAssert(Class<LocalDateTimeAssert> selfType, LocalDateTime actual) {
+            super(selfType, actual);
+            delegate = new DateAssert(DateAssert.class, actual.toDateTime(DateTimeZone.UTC));
+        }
+
+        public LocalDateTimeAssert isBefore(LocalDateTime moment) {
+            delegate.isBefore(moment.toDateTime(DateTimeZone.UTC));
+            return this;
+        }
+
+        public LocalDateTimeAssert isBeforeOrAt(LocalDateTime moment) {
+            delegate.isBeforeOrAt(moment.toDateTime(DateTimeZone.UTC));
+            return this;
+        }
+
+        public LocalDateTimeAssert isAfterOrAt(LocalDateTime moment) {
+            delegate.isAfterOrAt(moment.toDateTime(DateTimeZone.UTC));
+            return this;
+        }
+
+        public LocalDateTimeAssert isAfter(LocalDateTime moment) {
+            delegate.isAfter(moment.toDateTime(DateTimeZone.UTC));
+            return this;
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package pl.softwaremill.common.test.util.fest;
 import org.joda.time.DateTime;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pl.softwaremill.common.test.util.AssertException;
 
 import static pl.softwaremill.common.test.util.fest.TimeAssertions.assertTime;
 
@@ -10,97 +11,127 @@ public class TimeAssertionsTest {
 
     //Test isBefore
 
-    @Test(dataProvider = "isBeforeProvider")
-    public void isBeforeShouldAssertThatTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isBefore(reference);
-    }
+    @Test(dataProvider = "referenceBeforeAfterProvider")
+    public void isBeforeShouldAssertThatTimeIsBefore(final DateTime reference, DateTime before, final DateTime after) {
+        assertTime(before).isBefore(reference);
+        assertTime(before.toLocalDateTime()).isBefore(reference.toLocalDateTime());
 
-    @Test(dataProvider = "isAfterProvider", expectedExceptions = AssertionError.class)
-    public void isBeforeShouldFailForTimeThatIsNotBefore(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isBefore(reference);
-    }
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(reference).isBefore(reference);
+            }
+        });
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(reference.toLocalDateTime()).isBefore(reference.toLocalDateTime());
+            }
+        });
 
-    @Test(dataProvider = "isEqualProvider", expectedExceptions = AssertionError.class)
-    public void isBeforeShouldFailForTimeThatIsEqual(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isBefore(reference);
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(after).isBefore(reference);
+            }
+        });
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(after.toLocalDateTime()).isBefore(reference.toLocalDateTime());
+            }
+        });
     }
 
 
     //Test isBeforeOrAt
 
-    @Test(dataProvider = "isBeforeProvider")
-    public void isBeforeOrAtShouldAssertThatTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isBeforeOrAt(reference);
-    }
+    @Test(dataProvider = "referenceBeforeAfterProvider")
+    public void isBeforeOrAtShouldAssertThatTimeIsBeforeOrEqual(final DateTime reference, DateTime before, final DateTime after) {
+        assertTime(before).isBeforeOrAt(reference);
+        assertTime(before.toLocalDateTime()).isBeforeOrAt(reference.toLocalDateTime());
 
-    @Test(dataProvider = "isEqualProvider")
-    public void isBeforeOrAtShouldAssertThatTimeIsEqual(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isBeforeOrAt(reference);
-    }
+        assertTime(reference).isBeforeOrAt(reference);
+        assertTime(reference.toLocalDateTime()).isBeforeOrAt(reference.toLocalDateTime());
 
-    @Test(dataProvider = "isAfterProvider", expectedExceptions = AssertionError.class)
-    public void isBeforeOrAtShouldFailWhenTimeIsAfter(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isBeforeOrAt(reference);
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(after).isBeforeOrAt(reference);
+            }
+        });
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(after.toLocalDateTime()).isBeforeOrAt(reference.toLocalDateTime());
+            }
+        });
     }
 
 
     //Test isAfter
 
-    @Test(dataProvider = "isBeforeProvider", expectedExceptions = AssertionError.class)
-    public void isAfterShouldFailWhenTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isAfter(reference);
-    }
+    @Test(dataProvider = "referenceBeforeAfterProvider")
+    public void isAfterShouldAssertThatTimeIsAfter(final DateTime reference, final DateTime before, final DateTime after) {
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(before).isAfter(reference);
+            }
+        });
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(before.toLocalDateTime()).isAfter(reference.toLocalDateTime());
+            }
+        });
 
-    @Test(dataProvider = "isEqualProvider", expectedExceptions = AssertionError.class)
-    public void isAfterShouldFailWhenTimeIsEqual(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isAfter(reference);
-    }
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(reference).isAfter(reference);
+            }
+        });
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(reference.toLocalDateTime()).isAfter(reference.toLocalDateTime());
+            }
+        });
 
-    @Test(dataProvider = "isAfterProvider")
-    public void isAfterShouldAssertThatTimeIsAfter(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isAfter(reference);
+        assertTime(after).isAfter(reference);
+        assertTime(after.toLocalDateTime()).isAfter(reference.toLocalDateTime());
     }
 
 
     //Test isAfterOrAt
+    @Test(dataProvider = "referenceBeforeAfterProvider")
+    public void isAfterOrAtShouldAssertThatTimeIsAfterOrEqual(final DateTime reference, final DateTime before, final DateTime after) {
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(before).isAfterOrAt(reference);
+            }
+        });
+        AssertException.thrown(AssertionError.class, new Runnable() {
+            @Override
+            public void run() {
+                assertTime(before.toLocalDateTime()).isAfterOrAt(reference.toLocalDateTime());
+            }
+        });
 
-    @Test(dataProvider = "isBeforeProvider", expectedExceptions = AssertionError.class)
-    public void isAfterOrAtShouldFailWhenTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isAfterOrAt(reference);
-    }
+        assertTime(reference).isAfterOrAt(reference);
+        assertTime(reference.toLocalDateTime()).isAfterOrAt(reference.toLocalDateTime());
 
-    @Test(dataProvider = "isEqualProvider")
-    public void isAfterOrAtShouldFailWhenTimeIsEqual(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isAfterOrAt(reference);
-    }
-
-    @Test(dataProvider = "isAfterProvider")
-    public void isAfterOrAtShouldAssertThatTimeIsAfter(DateTime dateToCheck, DateTime reference) {
-        assertTime(dateToCheck).isAfterOrAt(reference);
-    }
-
-
-    @DataProvider
-    public Object[][] isBeforeProvider() {
-        return new Object[][] {
-                new Object[] { new DateTime(2000, 12, 13, 22, 15, 15, 876), new DateTime(2000, 12, 14, 0, 0, 0) },
-                new Object[] { new DateTime(1900, 1, 1, 23, 59, 59, 999), new DateTime(1900, 1, 2, 0, 0, 0) },
-        };
+        assertTime(after).isAfterOrAt(reference);
+        assertTime(after.toLocalDateTime()).isAfterOrAt(reference.toLocalDateTime());
     }
 
     @DataProvider
-    public Object[][] isAfterProvider() {
+    public Object[][] referenceBeforeAfterProvider() {
         return new Object[][] {
-                new Object[] { new DateTime(2000, 12, 14, 22, 15, 15, 876), new DateTime(2000, 12, 14, 22, 15, 15, 875) },
-                new Object[] { new DateTime(1900, 1, 2, 0, 0, 0, 1), new DateTime(1900, 1, 2, 0, 0, 0) },
-        };
-    }
-
-    @DataProvider
-    public Object[][] isEqualProvider() {
-        return new Object[][] {
-                new Object[] { new DateTime(2000, 12, 14, 22, 15, 15, 876), new DateTime(2000, 12, 14, 22, 15, 15, 876) },
-                new Object[] { new DateTime(1900, 1, 2, 0, 0, 0, 0), new DateTime(1900, 1, 2, 0, 0, 0, 0) },
+                new Object[] { new DateTime(2000, 12, 14, 0, 0), new DateTime(2000, 12, 13, 23, 59, 59, 999), new DateTime(2000, 12, 14, 0, 0, 0, 1) },
+                new Object[] { new DateTime(2000, 12, 14, 22, 15, 15, 875), new DateTime(2000, 12, 14, 22, 15, 15, 874), new DateTime(2000, 12, 14, 22, 15, 15, 876) },
         };
     }
 
