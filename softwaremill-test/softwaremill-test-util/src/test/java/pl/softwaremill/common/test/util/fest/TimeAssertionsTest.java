@@ -4,23 +4,25 @@ import org.joda.time.DateTime;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static pl.softwaremill.common.test.util.fest.TimeAssertions.assertTime;
+
 public class TimeAssertionsTest {
 
     //Test isBefore
 
     @Test(dataProvider = "isBeforeProvider")
     public void isBeforeShouldAssertThatTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isBefore(reference);
+        assertTime(dateToCheck).isBefore(reference);
     }
 
     @Test(dataProvider = "isAfterProvider", expectedExceptions = AssertionError.class)
     public void isBeforeShouldFailForTimeThatIsNotBefore(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isBefore(reference);
+        assertTime(dateToCheck).isBefore(reference);
     }
 
     @Test(dataProvider = "isEqualProvider", expectedExceptions = AssertionError.class)
     public void isBeforeShouldFailForTimeThatIsEqual(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isBefore(reference);
+        assertTime(dateToCheck).isBefore(reference);
     }
 
 
@@ -28,17 +30,17 @@ public class TimeAssertionsTest {
 
     @Test(dataProvider = "isBeforeProvider")
     public void isBeforeOrAtShouldAssertThatTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isBeforeOrAt(reference);
+        assertTime(dateToCheck).isBeforeOrAt(reference);
     }
 
     @Test(dataProvider = "isEqualProvider")
     public void isBeforeOrAtShouldAssertThatTimeIsEqual(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isBeforeOrAt(reference);
+        assertTime(dateToCheck).isBeforeOrAt(reference);
     }
 
     @Test(dataProvider = "isAfterProvider", expectedExceptions = AssertionError.class)
     public void isBeforeOrAtShouldFailWhenTimeIsAfter(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isBeforeOrAt(reference);
+        assertTime(dateToCheck).isBeforeOrAt(reference);
     }
 
 
@@ -46,17 +48,17 @@ public class TimeAssertionsTest {
 
     @Test(dataProvider = "isBeforeProvider", expectedExceptions = AssertionError.class)
     public void isAfterShouldFailWhenTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isAfter(reference);
+        assertTime(dateToCheck).isAfter(reference);
     }
 
     @Test(dataProvider = "isEqualProvider", expectedExceptions = AssertionError.class)
     public void isAfterShouldFailWhenTimeIsEqual(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isAfter(reference);
+        assertTime(dateToCheck).isAfter(reference);
     }
 
     @Test(dataProvider = "isAfterProvider")
     public void isAfterShouldAssertThatTimeIsAfter(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isAfter(reference);
+        assertTime(dateToCheck).isAfter(reference);
     }
 
 
@@ -64,17 +66,17 @@ public class TimeAssertionsTest {
 
     @Test(dataProvider = "isBeforeProvider", expectedExceptions = AssertionError.class)
     public void isAfterOrAtShouldFailWhenTimeIsBefore(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isAfterOrAt(reference);
+        assertTime(dateToCheck).isAfterOrAt(reference);
     }
 
     @Test(dataProvider = "isEqualProvider")
     public void isAfterOrAtShouldFailWhenTimeIsEqual(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isAfterOrAt(reference);
+        assertTime(dateToCheck).isAfterOrAt(reference);
     }
 
     @Test(dataProvider = "isAfterProvider")
     public void isAfterOrAtShouldAssertThatTimeIsAfter(DateTime dateToCheck, DateTime reference) {
-        TimeAssertions.assertThat(dateToCheck).isAfterOrAt(reference);
+        assertTime(dateToCheck).isAfterOrAt(reference);
     }
 
 

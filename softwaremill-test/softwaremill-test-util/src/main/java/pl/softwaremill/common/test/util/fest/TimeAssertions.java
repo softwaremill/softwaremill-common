@@ -9,7 +9,7 @@ public class TimeAssertions {
 
     public static final String PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
 
-    public static DateAssert assertThat(DateTime date) {
+    public static DateAssert assertTime(DateTime date) {
         return new DateAssert(DateAssert.class, date);
     }
 
