@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
+import java.util.Date;
+
 import static java.lang.String.format;
 
 public class TimeAssertions {
@@ -13,6 +15,10 @@ public class TimeAssertions {
 
     public static DateTimeAssert assertTime(DateTime date) {
         return new DateTimeAssert(DateTimeAssert.class, date);
+    }
+
+    public static DateTimeAssert assertTime(Date date) {
+        return new DateTimeAssert(DateTimeAssert.class, new DateTime(date.getTime()));
     }
 
     public static LocalDateTimeAssert assertTime(LocalDateTime localDateTime) {
@@ -39,9 +45,25 @@ public class TimeAssertions {
             return this;
         }
 
+        public DateTimeAssert isBefore(Date moment) {
+            if (!actual.isBefore(new DateTime(moment))) {
+                fail(format("Moment %s is not before %s", actual.toString(PATTERN), new DateTime(moment).toString(PATTERN)));
+            }
+
+            return this;
+        }
+
         public DateTimeAssert isBeforeOrAt(DateTime moment) {
             if (actual.isAfter(moment)) {
                 fail(format("Moment %s is not before %s nor at the same time.", actual.toString(PATTERN), moment.toString(PATTERN)));
+            }
+
+            return this;
+        }
+
+        public DateTimeAssert isBeforeOrAt(Date moment) {
+            if (actual.isAfter(new DateTime(moment))) {
+                fail(format("Moment %s is not before %s nor at the same time.", actual.toString(PATTERN), new DateTime(moment).toString(PATTERN)));
             }
 
             return this;
@@ -55,9 +77,25 @@ public class TimeAssertions {
             return this;
         }
 
+        public DateTimeAssert isAfterOrAt(Date moment) {
+            if (actual.isBefore(new DateTime(moment))) {
+                fail(format("Moment %s is not after %s nor at the same time", actual.toString(PATTERN), new DateTime(moment).toString(PATTERN)));
+            }
+
+            return this;
+        }
+
         public DateTimeAssert isAfter(DateTime moment) {
             if (!actual.isAfter(moment)) {
                 fail(format("Moment %s is not after %s", actual.toString(PATTERN), moment.toString(PATTERN)));
+            }
+
+            return this;
+        }
+
+        public DateTimeAssert isAfter(Date moment) {
+            if (!actual.isAfter(new DateTime(moment))) {
+                fail(format("Moment %s is not after %s", actual.toString(PATTERN), new DateTime(moment).toString(PATTERN)));
             }
 
             return this;
