@@ -11,15 +11,15 @@ public class TimeAssertions {
 
     public static final String PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
 
-    public static DateAssert assertTime(DateTime date) {
-        return new DateAssert(DateAssert.class, date);
+    public static DateTimeAssert assertTime(DateTime date) {
+        return new DateTimeAssert(DateTimeAssert.class, date);
     }
 
     public static LocalDateTimeAssert assertTime(LocalDateTime localDateTime) {
         return new LocalDateTimeAssert(LocalDateTimeAssert.class, localDateTime);
     }
 
-    public static class DateAssert extends GenericAssert<DateAssert, DateTime> {
+    public static class DateTimeAssert extends GenericAssert<DateTimeAssert, DateTime> {
 
         /**
          * Creates a new <code>{@link org.fest.assertions.GenericAssert}</code>.
@@ -27,11 +27,11 @@ public class TimeAssertions {
          * @param selfType the "self type"
          * @param actual   the actual value to verify.
          */
-        protected DateAssert(Class<DateAssert> selfType, DateTime actual) {
+        protected DateTimeAssert(Class<DateTimeAssert> selfType, DateTime actual) {
             super(selfType, actual);
         }
 
-        public DateAssert isBefore(DateTime moment) {
+        public DateTimeAssert isBefore(DateTime moment) {
             if (!actual.isBefore(moment)) {
                 fail(format("Moment %s is not before %s", actual.toString(PATTERN), moment.toString(PATTERN)));
             }
@@ -39,7 +39,7 @@ public class TimeAssertions {
             return this;
         }
 
-        public DateAssert isBeforeOrAt(DateTime moment) {
+        public DateTimeAssert isBeforeOrAt(DateTime moment) {
             if (actual.isAfter(moment)) {
                 fail(format("Moment %s is not before %s nor at the same time.", actual.toString(PATTERN), moment.toString(PATTERN)));
             }
@@ -47,7 +47,7 @@ public class TimeAssertions {
             return this;
         }
 
-        public DateAssert isAfterOrAt(DateTime moment) {
+        public DateTimeAssert isAfterOrAt(DateTime moment) {
             if (actual.isBefore(moment)) {
                 fail(format("Moment %s is not after %s nor at the same time", actual.toString(PATTERN), moment.toString(PATTERN)));
             }
@@ -55,7 +55,7 @@ public class TimeAssertions {
             return this;
         }
 
-        public DateAssert isAfter(DateTime moment) {
+        public DateTimeAssert isAfter(DateTime moment) {
             if (!actual.isAfter(moment)) {
                 fail(format("Moment %s is not after %s", actual.toString(PATTERN), moment.toString(PATTERN)));
             }
@@ -66,11 +66,11 @@ public class TimeAssertions {
 
     public static class LocalDateTimeAssert extends GenericAssert<LocalDateTimeAssert, LocalDateTime> {
 
-        private final DateAssert delegate;
+        private final DateTimeAssert delegate;
 
         protected LocalDateTimeAssert(Class<LocalDateTimeAssert> selfType, LocalDateTime actual) {
             super(selfType, actual);
-            delegate = new DateAssert(DateAssert.class, actual.toDateTime(DateTimeZone.UTC));
+            delegate = new DateTimeAssert(DateTimeAssert.class, actual.toDateTime(DateTimeZone.UTC));
         }
 
         public LocalDateTimeAssert isBefore(LocalDateTime moment) {
