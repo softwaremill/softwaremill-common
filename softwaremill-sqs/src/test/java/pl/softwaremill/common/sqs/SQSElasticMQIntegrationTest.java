@@ -11,7 +11,7 @@ import org.elasticmq.Node;
 import org.elasticmq.NodeAddress;
 import org.elasticmq.NodeBuilder;
 import org.elasticmq.rest.RestServer;
-import org.elasticmq.rest.sqs.SQSRestServerFactory;
+import org.elasticmq.rest.sqs.SQSRestServerBuilder;
 import org.elasticmq.storage.inmemory.InMemoryStorage;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -43,8 +43,8 @@ public class SQSElasticMQIntegrationTest {
     @BeforeClass
     public void setupElasticMQ() {
         elasticNode = NodeBuilder.withStorage(new InMemoryStorage());
-        sqsServer = SQSRestServerFactory.start(elasticNode.nativeClient(), ELASTIMQ_PORT,
-                new NodeAddress("http", "localhost", ELASTIMQ_PORT, ""));
+        sqsServer = new SQSRestServerBuilder(elasticNode.nativeClient(), ELASTIMQ_PORT,
+                new NodeAddress("http", "localhost", ELASTIMQ_PORT, "")).start();
     }
 
     private AmazonSQS createDefaultSQSClient() {

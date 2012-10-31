@@ -47,13 +47,13 @@
         <dependency>
             <groupId>org.elasticmq</groupId>
             <artifactId>elasticmq-core_2.9.1</artifactId>
-            <version>0.5</version>
+            <version>0.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.elasticmq</groupId>
             <artifactId>elasticmq-rest-sqs_2.9.1</artifactId>
-            <version>0.5</version>
+            <version>0.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>
