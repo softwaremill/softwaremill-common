@@ -31,7 +31,7 @@ public class TimeAssertions {
          * Creates a new <code>{@link org.fest.assertions.GenericAssert}</code>.
          *
          * @param selfType the "self type"
-         * @param actual   the actual value to verify.
+         * @param actual   the actual value to verify
          */
         protected DateTimeAssert(Class<DateTimeAssert> selfType, DateTime actual) {
             super(selfType, actual);
