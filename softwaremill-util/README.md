@@ -3,7 +3,7 @@ Maven dependency:
     <dependency>
         <groupId>pl.softwaremill.common</groupId>
         <artifactId>softwaremill-util</artifactId>
-        <version>13</version>
+        <version>[VERSION]</version>
     </dependency>
 
 ## CDIInjector
