@@ -61,6 +61,8 @@ Lets you run tests that use a database.
 
 ### [Selenium+JBoss UI testing utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-test/softwaremill-test-ui-web/)
 
+### [FEST Assert for joda time classes](/softwaremill/softwaremill-common/tree/master/softwaremill-test/softwaremill-test-util/)
+
 ## [Java utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-util/)
 
 ## [Backup utilities](/softwaremill/softwaremill-common/tree/master/softwaremill-backup/)
