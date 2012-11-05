@@ -34,9 +34,11 @@ public abstract class AbstractJBossAS implements JBossAS {
 	abstract String startedLogMessage();
 
 	protected Process startServer() throws Exception {
-		log.info("Starting JBoss server");
+        String[] startCommand = startCommand();
 
-		jbossProcess = Runtime.getRuntime().exec(startCommand());
+		log.info("Starting JBoss server with command: " + startCommand);
+
+        jbossProcess = Runtime.getRuntime().exec(startCommand);
 
 		new MessageWaiter(jbossProcess).waitFor(startedLogMessage());
 
