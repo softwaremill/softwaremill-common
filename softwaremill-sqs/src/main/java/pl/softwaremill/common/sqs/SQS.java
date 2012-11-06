@@ -26,7 +26,7 @@ public class SQS {
     }
 
     public SQS() {
-        AmazonSQSClient sqsClient = new AmazonSQSClient(new BasicAWSCredentials(AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID),
+        AmazonSQSClient sqsClient = new AmazonSQSClient(new BasicAWSCredentials(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY),
                 new ClientConfiguration().withProtocol(Util.determineProtocol(SQS_SERVER)));
         sqsClient.setEndpoint(SQS_SERVER);
 
