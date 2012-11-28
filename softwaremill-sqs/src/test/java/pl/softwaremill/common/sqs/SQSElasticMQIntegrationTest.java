@@ -13,9 +13,7 @@ import org.elasticmq.NodeBuilder;
 import org.elasticmq.rest.RestServer;
 import org.elasticmq.rest.sqs.SQSRestServerBuilder;
 import org.elasticmq.storage.inmemory.InMemoryStorage;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
+import org.hamcrest.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -26,6 +24,8 @@ import java.util.concurrent.TimeUnit;
 import static com.jayway.awaitility.Awaitility.await;
 import static java.lang.String.format;
 import static org.fest.assertions.Assertions.assertThat;
+import static org.joda.time.Duration.standardMinutes;
+import static org.joda.time.Duration.standardSeconds;
 
 /**
  * @author Maciej Bilas
@@ -107,7 +107,7 @@ public class SQSElasticMQIntegrationTest {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("No message received.");
+                description.appendText(expected.toString());
             }
         };
     }
@@ -146,8 +146,49 @@ public class SQSElasticMQIntegrationTest {
         await().atMost(new Duration(1500 - (System.currentTimeMillis() - beforeReceivingTheMessage),
                 TimeUnit.MILLISECONDS)).until(receivedMessageCallable(queue), noMessageFound()); // .5s tolerance
 
-        // Finally delete the message;
+        // Finally delete the message
         await().until(receivedMessageCallable(queue), receivedMessageMatcher(queue, testMessage, true));
+    }
+
+    @Test/* Then */(expectedExceptions = IllegalArgumentException.class)
+    public void shouldFailIfDelayedMessageSentWithATimeoutGreaterThan15Minutes() throws Exception {
+        // Given
+        Queue queue = obtainTestQueue();
+        String testMessage = "Bazinga!";
+
+        // When
+        queue.sendSerializableDelayed(testMessage, standardMinutes(16));
+    }
+
+    @Test/* Then */(expectedExceptions = NullPointerException.class)
+    public void shouldThrowNPEIfDelayedMessageDelayIfNotProvided() {
+        // Given
+        Queue queue = obtainTestQueue();
+        String testMessage = "It's not what it looks like";
+
+        // When
+        queue.sendSerializableDelayed(testMessage, null);
+    }
+
+    @Test
+    public void shouldNotReceiveTheMessageFasterThanTheDelaySpecified() throws Exception {
+        // Given
+        final Queue queue = obtainTestQueue();
+        String testMessage = "I'm not insane, my mother had me tested!";
+
+        // When
+        long beforeSendingTheMessage = System.currentTimeMillis();
+        queue.sendSerializableDelayed(testMessage, standardSeconds(2));
+
+        // Then
+
+        // Assert that the message is not available in the queue for at least 1.5 seconds
+        Thread.sleep(1500 - (System.currentTimeMillis() - beforeSendingTheMessage));
+        MatcherAssert.assertThat(receivedMessageCallable(queue).call(), noMessageFound());
+
+        // Try to obtain the message
+        await().atMost(new Duration(1000, TimeUnit.MILLISECONDS)).until(receivedMessageCallable(queue),
+                receivedMessageMatcher(queue, testMessage, true));
     }
 
     private Callable<Optional<ReceivedMessage>> receivedMessageCallable(final Queue queue) {

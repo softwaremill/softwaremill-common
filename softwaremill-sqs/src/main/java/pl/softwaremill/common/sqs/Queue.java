@@ -5,6 +5,7 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.*;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
+import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
@@ -48,9 +49,7 @@ public class Queue {
         return url;
     }
 
-    public MessageId sendSerializable(Serializable object) {
-        checkNotNull(object);
-
+    private MessageId sendSerializableInternal(Serializable object, Optional<Duration> duration) {
         String encodedMessage;
         try {
             encodedMessage = Util.serializeToBase64(object);
@@ -63,6 +62,9 @@ public class Queue {
         LOG.debug("Serialized Message: " + encodedMessage);
 
         SendMessageRequest request = new SendMessageRequest(url, encodedMessage);
+        if (duration.isPresent()) {
+            request.withDelaySeconds((int) duration.get().getStandardSeconds());
+        }
 
         for (int i = 0; i < DELIVERY_RETRY_LIMIT; ++i) {
             try {
@@ -79,6 +81,30 @@ public class Queue {
             }
         }
         throw new SQSRuntimeException("Exceeded redelivery value: " + DELIVERY_RETRY_LIMIT + "; message not sent!");
+    }
+
+    public MessageId sendSerializable(Serializable object) {
+        checkNotNull(object);
+
+        return sendSerializableInternal(object, Optional.<Duration>absent());
+    }
+
+    public MessageId sendSerializableDelayed(Serializable object, Duration duration) {
+        checkNotNull(object);
+        checkNotNull(duration);
+        checkArgument(duration.getStandardSeconds() < 15 * 60,
+                "SQS messages can only be delayed for a maximum of 15 minutes.");
+
+        long droppedMillis = duration.getMillis() % 1000;
+        if (droppedMillis != 0)
+            LOG.warn(format("SQS delayed messages have a precision of 1s, milliseconds will be stripped. " +
+                    "Object to send: %s Millis: %s", object.toString(), duration.getMillis()));
+
+        if (duration.getMillis() < 1000) {
+            return sendSerializable(object);
+        } else {
+            return sendSerializableInternal(object, Optional.of(duration));
+        }
     }
 
     public Optional<ReceivedMessage> receiveSingleMessage() {
