@@ -178,4 +178,9 @@ public class Queue {
         sqsClient.changeMessageVisibility(new ChangeMessageVisibilityRequest(url,
                 message.getReceiptHandle().get(), timeout));
     }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public String getName() {
+        return name;
+    }
 }
