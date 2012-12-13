@@ -8,12 +8,12 @@ Jars and sources are available in our Maven repositories:
     <repository>
         <id>softwaremill-snapshots</id>
         <name>SoftwareMill Snapshots</name>
-        <url>http://tools.softwaremill.pl/nexus/content/repositories/snapshots</url>
+        <url>http://nexus.softwaremill.com/content/repositories/snapshots</url>
     </repository>
     <repository>
         <id>softwaremill-releases</id>
         <name>SoftwareMill Releases</name>
-        <url>http://tools.softwaremill.pl/nexus/content/repositories/releases</url>
+        <url>http://nexus.softwaremill.com/content/repositories/releases</url>
     </repository>
 
 To use SoftwareMill Common in a project define a parent section in the main pom of the project:

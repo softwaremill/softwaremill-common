@@ -117,7 +117,7 @@
         <repository>
             <id>smlcommon-repos</id>
             <name>Softwaremill Common Repository Group</name>
-            <url>http://tools.softwaremill.pl/nexus/content/groups/smlcommon-repos/</url>
+            <url>http://nexus.softwaremill.com/content/groups/smlcommon-repos/</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
