@@ -179,6 +179,17 @@ public class Queue {
                 message.getReceiptHandle().get(), timeout));
     }
 
+    /**
+     * @param waitTimeInSeconds wait time for message in seconds, allowed values 0-20. Values > 0 allows longer message pooling
+     */
+    public void setReceiveMessageWaitTime(int waitTimeInSeconds) {
+        checkArgument(waitTimeInSeconds >= 0);
+        checkArgument(waitTimeInSeconds <= 20);
+
+        sqsClient.setQueueAttributes(new SetQueueAttributesRequest(url,
+                ImmutableMap.of("ReceiveMessageWaitTimeSeconds", Integer.toString(waitTimeInSeconds))));
+    }
+
     @SuppressWarnings("UnusedDeclaration")
     public String getName() {
         return name;

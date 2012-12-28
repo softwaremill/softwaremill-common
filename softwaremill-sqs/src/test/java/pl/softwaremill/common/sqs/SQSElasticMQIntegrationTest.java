@@ -17,6 +17,7 @@ import org.hamcrest.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pl.softwaremill.common.util.Sleeper;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -189,6 +190,46 @@ public class SQSElasticMQIntegrationTest {
         // Try to obtain the message
         await().atMost(new Duration(1000, TimeUnit.MILLISECONDS)).until(receivedMessageCallable(queue),
                 receivedMessageMatcher(queue, testMessage, true));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void shouldThrowExceptionOnTooLowReceiveMessageWaitTimeValue() {
+        // Given
+        int receiveMessageWaitTime = -1;
+
+        // When
+        Queue queue = obtainTestQueue();
+        queue.setReceiveMessageWaitTime(receiveMessageWaitTime);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void shouldThrowExceptionOnTooHighReceiveMessageWaitTimeValue() {
+        // Given
+        int receiveMessageWaitTime = 21;
+
+        // When
+        Queue queue = obtainTestQueue();
+        queue.setReceiveMessageWaitTime(receiveMessageWaitTime);
+    }
+
+    @Test(enabled = false) // TomekD: enable this once ElasticMQ starts supporting ReceiveMessageWaitTimeSeconds parameter
+    public void shouldWaitUntilNewMessageAppears() {
+        // Given
+        Queue queue = obtainTestQueue();
+        queue.setReceiveMessageWaitTime(20);
+        String testMessage = "Message sent after queue was asked for new stuff";
+
+        // When
+        queue.sendSerializableDelayed(testMessage, standardSeconds(15));
+        Optional<ReceivedMessage> messageOptional = queue.receiveSingleMessage();
+
+        // Then
+
+        // Even if we requested message before it was actually sent, we should receive it because of long (20secs) message polling
+        assertThat(messageOptional.isPresent()).isTrue();
+        assertThat(testMessage.equals(messageOptional.get().getMessage())).isTrue();
+
+        queue.deleteMessage(messageOptional.get());
     }
 
     private Callable<Optional<ReceivedMessage>> receivedMessageCallable(final Queue queue) {
