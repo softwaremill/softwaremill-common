@@ -1,5 +1,6 @@
 package pl.softwaremill.common.util;
 
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.CharacterIterator;
@@ -38,7 +39,7 @@ public class RichString {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
 
-            md.update(wrapped.getBytes());
+            md.update(wrapped.getBytes(Charset.defaultCharset()));
             return new RichHexString(md.digest()).unwrap();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -113,6 +114,7 @@ public class RichString {
 					case 'Ś': replaced = 'S'; break;
 					case 'Ż': replaced = 'Z'; break;
 					case 'Ź': replaced = 'Z'; break;
+                    default:
 				}
 			}
 

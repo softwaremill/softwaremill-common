@@ -6,6 +6,7 @@ import com.google.common.io.CharStreams;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 /**
  * A wrapped {@link java.io.InputStream} providing additional method.
@@ -24,7 +25,7 @@ public class RichStream {
      */
     public String asString() {
         try {
-            return CharStreams.toString(new InputStreamReader(inputStream));
+            return CharStreams.toString(new InputStreamReader(inputStream, Charset.defaultCharset()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {

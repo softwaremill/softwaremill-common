@@ -1,5 +1,6 @@
 package pl.softwaremill.common.conf.encoding.server;
 
+import com.google.common.base.Charsets;
 import pl.softwaremill.common.conf.encoding.MasterPasswordStore;
 
 import java.io.BufferedReader;
@@ -43,7 +44,7 @@ public class MasterPasswordSetterServer implements Runnable {
     }
 
     private void readPassword(Socket clientSocket) throws IOException {
-        String password = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())).readLine();
+        String password = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), Charsets.UTF_8)).readLine();
         MasterPasswordStore.setMasterPassword(password);
         System.out.println("Master password read and set successfully");
     }

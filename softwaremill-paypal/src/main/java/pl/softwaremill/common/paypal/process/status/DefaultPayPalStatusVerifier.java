@@ -1,11 +1,9 @@
 package pl.softwaremill.common.paypal.process.status;
 
+import com.google.common.base.Charsets;
 import pl.softwaremill.common.paypal.process.RequestParameters;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -23,11 +21,11 @@ public class DefaultPayPalStatusVerifier implements PayPalStatusVerifier {
             URLConnection uc = new URL(url).openConnection();
             uc.setDoOutput(true);
             uc.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            PrintWriter pw = new PrintWriter(uc.getOutputStream());
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(uc.getOutputStream(), Charsets.UTF_8));
             pw.println(buildRequestString(requestParameters).toString());
             pw.close();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream(), Charsets.UTF_8));
             PayPalStatus status = new PayPalStatus(in.readLine());
             in.close();
             return status;

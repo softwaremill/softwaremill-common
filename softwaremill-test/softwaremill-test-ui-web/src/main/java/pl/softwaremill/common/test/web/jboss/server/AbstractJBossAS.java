@@ -1,11 +1,14 @@
 package pl.softwaremill.common.test.web.jboss.server;
 
+import com.google.common.base.Charsets;
 import pl.softwaremill.common.test.util.MessageWaiter;
 import pl.softwaremill.common.test.web.jboss.SysoutLog;
 import pl.softwaremill.common.test.web.selenium.ServerProperties;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)
@@ -36,7 +39,7 @@ public abstract class AbstractJBossAS implements JBossAS {
 	protected Process startServer() throws Exception {
         String[] startCommand = startCommand();
 
-		log.info("Starting JBoss server with command: " + startCommand);
+		log.info("Starting JBoss server with command: " + Arrays.toString(startCommand));
 
         jbossProcess = Runtime.getRuntime().exec(startCommand);
 
@@ -66,7 +69,7 @@ public abstract class AbstractJBossAS implements JBossAS {
 		final Process shutdownProcess = Runtime.getRuntime().exec(shutdownCommand());
 
 		if (winSystem()) {
-			PrintWriter writer = new PrintWriter(shutdownProcess.getOutputStream());
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(shutdownProcess.getOutputStream(), Charsets.UTF_8));
 			try {
 				//On windows, user needs to press any key on the console
 				//for the process to exit. Wait a bit for message "Press any key"

@@ -1,6 +1,7 @@
 package pl.softwaremill.common.sqs;
 
 import com.amazonaws.AmazonServiceException;
+import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
 
 import java.io.BufferedReader;
@@ -38,7 +39,7 @@ public class SQSEmptor {
     }
 
     public static void main(String[] args) throws IOException, AmazonServiceException {
-        BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in, Charsets.UTF_8));
 
         System.out.println("Server name (return for queue.amazonaws.com):");
         String serverName = rdr.readLine().trim();

@@ -1,5 +1,6 @@
 package pl.softwaremill.common.dbtest;
 
+import com.google.common.base.Charsets;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
@@ -23,7 +24,7 @@ public abstract class ArchiveConfigurator {
         beansXmlBuilder.append("</beans>");
 
         ar = ar.addAsManifestResource(
-                new ByteArrayAsset(beansXmlBuilder.toString().getBytes()),
+                new ByteArrayAsset(beansXmlBuilder.toString().getBytes(Charsets.UTF_8)),
                 ArchivePaths.create("beans.xml"));
 
         return ar;

@@ -42,7 +42,22 @@
 	<Match>
        	<Class name="pl.softwaremill.common.util.InfiniteSleeper" />
 		<Method name="sleepInfinitely"/>
-       	<Bug code="UW"/>
+       	<Bug code="UW, Wa"/>
+    </Match>
+    <Match>
+        <Class name="pl.softwaremill.common.cdi.security.SecurityExtension" />
+        <Field name="interceptSecureForMethods"/>
+        <Bug code="Se"/>
+    </Match>
+    <Match>
+        <Class name="pl.softwaremill.common.faces.messages.FacesMessages" />
+        <Field name="elEvaluator"/>
+        <Bug code="Se"/>
+    </Match>
+    <Match>
+        <Class name="pl.softwaremill.common.faces.messages.FacesMessages" />
+        <Field name="messages"/>
+        <Bug code="Se"/>
     </Match>
 
 </FindBugsFilter>

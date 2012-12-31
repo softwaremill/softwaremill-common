@@ -1,5 +1,7 @@
 package pl.softwaremill.common.test.util;
 
+import com.google.common.base.Charsets;
+
 import java.io.InputStream;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -22,7 +24,7 @@ public class MessageWaiter {
 
     public void waitFor(String message) {
 		System.out.println("Waiting for message: [" + message + "]");
-		final Scanner scanner = new Scanner(inputStream).useDelimiter(Pattern.quote(message));
+		final Scanner scanner = new Scanner(inputStream, Charsets.UTF_8.name()).useDelimiter(Pattern.quote(message));
 		scanner.next();
 	}
 

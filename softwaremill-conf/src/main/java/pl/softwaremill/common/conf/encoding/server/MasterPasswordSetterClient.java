@@ -1,6 +1,9 @@
 package pl.softwaremill.common.conf.encoding.server;
 
+import com.google.common.base.Charsets;
+
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -13,8 +16,7 @@ public class MasterPasswordSetterClient {
 
         System.out.println("Please enter the master password:");
         String password = System.console().readLine();
-
-        new PrintWriter(socket.getOutputStream(), true).write(password);
+        new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), Charsets.UTF_8), true).write(password);
 
         System.out.println("Password sent");
 

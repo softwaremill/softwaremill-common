@@ -22,7 +22,7 @@ class FileNameBuilder {
         if (className.indexOf(".") != -1) {
             prefix = className.substring(className.lastIndexOf(".") + 1);
         }
-        String fileName = tmpFolder + prefix + "-" + Math.abs(random.nextLong()) + ".png";
+        String fileName = tmpFolder + prefix + "-" + random.nextInt(Integer.MAX_VALUE) + ".png";
         LOG.debug("Created temporary file name [" + fileName + "]");
         return fileName;
     }

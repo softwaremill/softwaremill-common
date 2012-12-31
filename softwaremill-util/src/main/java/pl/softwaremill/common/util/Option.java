@@ -1,5 +1,7 @@
 package pl.softwaremill.common.util;
 
+import java.util.Arrays;
+
 /**
  * @author Adam Warski (adam at warski dot org)
  */
@@ -60,7 +62,7 @@ public class Option<T> {
     }
 
     public Object[] getErrorParams() {
-        return errorParams;
+        return errorParams != null ? Arrays.copyOf(errorParams, errorParams.length) : null;
     }
 }
 

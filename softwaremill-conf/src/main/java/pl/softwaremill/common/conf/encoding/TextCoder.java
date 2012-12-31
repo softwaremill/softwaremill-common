@@ -1,5 +1,7 @@
 package pl.softwaremill.common.conf.encoding;
 
+import com.google.common.base.Charsets;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -21,7 +23,7 @@ public class TextCoder {
     // Don't change! Any changes will cause all already encrypted values to by undecryptable using these methods.
     private final static String ALGORITHM = "PBEWithMD5AndTripleDES";
     private final static int ITERATION_COUNT = 20;
-    private final static byte[] SALT = "9ak12av8".getBytes();
+    private final static byte[] SALT = "9ak12av8".getBytes(Charsets.UTF_8);
 
     public String encode(String text) {
         try {

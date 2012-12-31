@@ -1,9 +1,11 @@
 package pl.softwaremill.common.backup;
 
+import com.google.common.base.Charsets;
 import com.xerox.amazonws.simpledb.SDBException;
 import com.xerox.amazonws.simpledb.SimpleDB;
 
 import java.io.*;
+import java.nio.charset.Charset;
 
 /**
  * @author Adam Warski (adam at warski dot org)
@@ -22,7 +24,8 @@ public class RunRestore {
     }
 
     public void run() throws SDBException, IOException {
-        new DomainRestore(simpleDB.getDomain(domainName), new BufferedReader(new FileReader(fileName))).restore();
+        new DomainRestore(simpleDB.getDomain(domainName), new BufferedReader(
+                new InputStreamReader(new FileInputStream(fileName), Charsets.UTF_8))).restore();
         System.out.println("Restore complete");
     }
 

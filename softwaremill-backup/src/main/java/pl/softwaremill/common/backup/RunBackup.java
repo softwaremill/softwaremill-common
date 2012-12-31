@@ -1,5 +1,6 @@
 package pl.softwaremill.common.backup;
 
+import com.google.common.base.Charsets;
 import com.xerox.amazonws.simpledb.Domain;
 import com.xerox.amazonws.simpledb.SDBException;
 import com.xerox.amazonws.simpledb.SimpleDB;
@@ -51,7 +52,7 @@ public class RunBackup {
         String date = dateOnly.print(new DateTime());
 
         File file = new File("simpledb_backup_" + domainName + "_on_" + date + ".txt");
-        Writer writer = new BufferedWriter(new FileWriter(file));
+        Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8));
         new DomainBackup(simpleDB.getDomain(domainName), writer).backup();
 
         System.out.println("Written backup for: '" + domainName + "' into file: " + file.getAbsolutePath());

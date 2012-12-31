@@ -1,5 +1,6 @@
 package pl.softwaremill.common.test.web.selenium;
 
+import com.google.common.base.Charsets;
 import com.thoughtworks.selenium.Selenium;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.server.RemoteControlConfiguration;
@@ -75,7 +76,7 @@ public abstract class AbstractSeleniumTest {
 		//rcc.setMultiWindow(true);
 		rcc.setSingleWindow(false);
 		PrintStream ps = System.out; // backup
-		System.setOut(new PrintStream(new FileOutputStream("logfile")));
+		System.setOut(new PrintStream(new FileOutputStream("logfile"), false, Charsets.UTF_8.name()));
 		rcc.setDebugMode(debug);
 		server = new SeleniumServer(false, rcc);
 		System.setOut(ps); // restore
