@@ -454,12 +454,12 @@
         <repository>
             <id>softwaremill-public-releases</id>
             <name>SoftwareMill Public Releases</name>
-            <url>http://nexus.softwaremill.com/content/repositories/releases/</url>
+            <url>https://nexus.softwaremill.com/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>softwaremill-public-snapshots</id>
             <name>SoftwareMill Public Snapshots</name>
-            <url>http://nexus.softwaremill.com/content/repositories/snapshots/</url>
+            <url>https://nexus.softwaremill.com/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -541,7 +541,7 @@
         <repository>
             <id>smlcommon-repos</id>
             <name>Softwaremill Common Repository Group</name>
-            <url>http://nexus.softwaremill.com/content/groups/smlcommon-repos/</url>
+            <url>https://nexus.softwaremill.com/content/groups/smlcommon-repos/</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
