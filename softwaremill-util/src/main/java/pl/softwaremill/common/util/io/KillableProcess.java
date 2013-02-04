@@ -32,7 +32,7 @@ public class KillableProcess {
     }
     
     public void sendSigInt() throws IOException, InterruptedException {
-        sendSig(1);
+        sendSig(2);
     }
     
     public void sendSigKill() throws IOException, InterruptedException {
