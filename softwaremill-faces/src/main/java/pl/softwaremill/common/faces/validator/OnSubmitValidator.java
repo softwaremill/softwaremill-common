@@ -14,48 +14,66 @@ import java.util.Set;
 
 /**
  * Validator that will only perform validation if f:param performValidation is set to "true".
- *
+ * 
  * You can pass validatorId and/or required = true
  */
 @FacesValidator("onSubmitValidator")
 public class OnSubmitValidator extends AbstractDelgatingValidator {
 
-    private static final String PERFORM_VALIDATION  = "performValidation";
+    private static final String PERFORM_VALIDATION = "performValidation";
     private static final String REQUIRED = "onSubmitRequired";
+    private static final String REQUIRED_MESSAGE = "onSubmitRequiredMessage";
     private static final String TRUE = "true";
+
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if (TRUE.equals(
-                ((HttpServletRequest) context.getExternalContext().getRequest()).getParameter(PERFORM_VALIDATION))) {
+        if (!performValidationParameterSet(context)) {
+            return;
+        }
 
-            Set<FacesMessage> messages = new HashSet<FacesMessage>();
+        Set<FacesMessage> messages = new HashSet<FacesMessage>();
 
-            if (TRUE.equals(component.getAttributes().get(REQUIRED))) {
-                // make it just required
-                if (value == null || (value instanceof String && Strings.isNullOrEmpty((String)value)) ||
-                        (value instanceof Collection && ((Collection)value).isEmpty())) {
-                    FacesMessage message = new FacesMessage("Value is required !");
-                    message.setSeverity(FacesMessage.SEVERITY_ERROR);
-
-                    messages.add(message);
+        if (TRUE.equals(component.getAttributes().get(REQUIRED))) {
+            // make it just required
+            if (valueIsEmpty(value)) {
+                String requiredMessage = "Value is required !";
+                if (component.getAttributes().get(REQUIRED_MESSAGE) != null) {
+                    requiredMessage = component.getAttributes().get(REQUIRED_MESSAGE).toString();
                 }
-            }
+                FacesMessage message = new FacesMessage(requiredMessage);
 
-            if (component.getAttributes().get(VALIDATOR_ID) != null) {
-                // otherwise call the validator
-                try {
-                    super.validate(context, component, value);
-                } catch (ValidatorException e) {
-                    // retrieve messages
-                    messages.addAll(e.getFacesMessages());
-                }
-            }
-
-            // if there are any messages - throw validation exception
-            if (!messages.isEmpty()) {
-                throw new ValidatorException(messages);
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                messages.add(message);
             }
         }
+
+        if (component.getAttributes().get(VALIDATOR_ID) != null) {
+            // otherwise call the validator
+            try {
+                super.validate(context, component, value);
+            } catch (ValidatorException e) {
+                // retrieve messages
+                messages.addAll(e.getFacesMessages());
+            }
+        }
+
+        // if there are any messages - throw validation exception
+        if (!messages.isEmpty()) {
+            throw new ValidatorException(messages);
+        }
     }
+
+
+    private boolean performValidationParameterSet(FacesContext context) {
+        return TRUE.equals(
+                   ((HttpServletRequest) context.getExternalContext().getRequest()).getParameter(PERFORM_VALIDATION));
+    }
+
+
+    private boolean valueIsEmpty(Object value) {
+        return value == null || (value instanceof String && Strings.isNullOrEmpty((String) value)) ||
+               (value instanceof Collection && ((Collection) value).isEmpty());
+    }
+
 }
