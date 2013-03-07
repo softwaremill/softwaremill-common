@@ -21,7 +21,8 @@
         <module>softwaremill-test-ui-web</module>
         <module>softwaremill-test-ui-swing</module>
         <module>softwaremill-test-arquillian</module>
-  </modules>
+        <module>softwaremill-test-server</module>
+    </modules>
 
     <dependencies>
         <dependency>
