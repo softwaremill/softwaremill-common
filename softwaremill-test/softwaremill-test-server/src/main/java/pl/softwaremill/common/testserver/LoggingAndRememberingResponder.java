@@ -1,18 +1,14 @@
 package pl.softwaremill.common.testserver;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,7 +19,7 @@ public class LoggingAndRememberingResponder implements Responder {
 
     private static final Logger log = LoggerFactory.getLogger(LoggingAndRememberingResponder.class);
 
-    private List<WeakReference<RequestInfo>> requestsReceived = new ArrayList<WeakReference<RequestInfo>>();
+    private List<RequestInfo> requestsReceived = new ArrayList<RequestInfo>();
 
     @Override
     public boolean canRespond(HttpServletRequest request) {
@@ -34,7 +30,7 @@ public class LoggingAndRememberingResponder implements Responder {
     public void respond(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RequestInfo info = new RequestInfo(request);
 
-        requestsReceived.add(new WeakReference<RequestInfo>(info));
+        requestsReceived.add(info);
         log.info(info.toString());
 
         sendResponse(response);
@@ -48,12 +44,7 @@ public class LoggingAndRememberingResponder implements Responder {
     }
 
     public List<RequestInfo> getRequestsReceived() {
-        return Lists.transform(requestsReceived, new Function<WeakReference<RequestInfo>, RequestInfo>() {
-            @Override
-            public RequestInfo apply(@Nullable WeakReference<RequestInfo> input) {
-                return input.get();
-            }
-        });
+        return requestsReceived;
     }
 
     public class RequestInfo {
