@@ -47,6 +47,10 @@ public class LoggingAndRememberingResponder implements Responder {
         return requestsReceived;
     }
 
+    public void reset() {
+        requestsReceived.clear();
+    }
+
     public class RequestInfo {
 
         private final String method;
