@@ -14,8 +14,11 @@ import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -236,6 +239,39 @@ public class TestServerTest {
         }
     }
 
+    @Test(dataProvider = "orderedResponders")
+    public void shouldRunRespondersInOrderTheyWereAdded(TestServer serverWithResponders, String expectedContent) throws Exception {
+        // Given
+        serverWithResponders.start();
+
+        try {
+            // When
+            HttpResponse response = callUrl("http://localhost:18182");
+            String content = IOUtils.toString(response.getEntity().getContent());
+
+            // Then
+            assertThat(content).isEqualTo(expectedContent);
+        } finally {
+            serverWithResponders.stop();
+        }
+    }
+
+    @DataProvider
+    public Object[][] orderedResponders() {
+        TestServer serverMaryFirst = new TestServer();
+        serverMaryFirst.addResponder(new MaryResponder());
+        serverMaryFirst.addResponder(new JohnResponder());
+
+        TestServer serverJohnFirst = new TestServer();
+        serverJohnFirst.addResponder(new JohnResponder());
+        serverJohnFirst.addResponder(new MaryResponder());
+
+        return new Object[][]{
+                { serverMaryFirst, "Mary" },
+                { serverJohnFirst, "John" },
+        };
+    }
+
     private HttpResponse callUrl(String url) throws IOException {
         HttpClient client = new DefaultHttpClient();
         HttpGet get = new HttpGet(url);
@@ -280,6 +316,38 @@ public class TestServerTest {
         registry.register(new Scheme("https", sslPort, sf));
 
         return registry;
+    }
+
+    private class MaryResponder implements Responder {
+
+        @Override
+        public boolean canRespond(HttpServletRequest request) {
+            return true;
+        }
+
+        @Override
+        public void respond(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            response.setContentType("text/plain");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().print("Mary");
+            response.getWriter().close();
+        }
+    }
+
+    private class JohnResponder implements Responder {
+
+        @Override
+        public boolean canRespond(HttpServletRequest request) {
+            return true;
+        }
+
+        @Override
+        public void respond(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            response.setContentType("text/plain");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().print("John");
+            response.getWriter().close();
+        }
     }
 
 }
