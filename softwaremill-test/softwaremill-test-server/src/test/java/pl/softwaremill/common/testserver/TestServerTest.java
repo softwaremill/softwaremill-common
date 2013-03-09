@@ -256,6 +256,28 @@ public class TestServerTest {
         }
     }
 
+    @Test
+    public void shouldClearResponders() throws Exception {
+        // Given
+        TestServer server = new TestServer();
+        server.addResponder(new LoggingAndRememberingResponder());
+        server.start();
+
+        try {
+            // When
+            server.clearResponders();
+
+            // Then
+            HttpResponse response = callUrl("http://localhost:18182");
+
+            assertThat(response.getStatusLine().getStatusCode()).isEqualTo(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            String content = IOUtils.toString(response.getEntity().getContent());
+            assertThat(content).isEqualTo("No responder could handle this request");
+        } finally {
+            server.stop();
+        }
+    }
+
     @DataProvider
     public Object[][] orderedResponders() {
         TestServer serverMaryFirst = new TestServer();

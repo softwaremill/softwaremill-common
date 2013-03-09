@@ -144,4 +144,7 @@ public class TestServer {
         server.stop();
     }
 
+    public void clearResponders() {
+        responders.clear();
+    }
 }
