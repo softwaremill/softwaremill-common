@@ -96,7 +96,8 @@ public class TestServer {
 
                 response.setContentType("text/plain;charset=utf-8");
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                response.getWriter().println("No responder could handle this request");
+                response.getWriter().print("No responder could handle this request");
+                response.getWriter().close();
             }
         };
 
