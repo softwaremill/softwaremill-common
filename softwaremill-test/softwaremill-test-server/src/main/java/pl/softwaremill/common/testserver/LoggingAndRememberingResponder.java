@@ -38,7 +38,7 @@ public class LoggingAndRememberingResponder implements Responder {
         sendResponse(response);
     }
 
-    private void sendResponse(HttpServletResponse response) throws IOException {
+    protected void sendResponse(HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().print("OK");
