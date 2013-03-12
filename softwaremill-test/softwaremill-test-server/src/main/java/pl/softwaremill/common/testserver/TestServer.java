@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,8 +97,13 @@ public class TestServer {
 
                 response.setContentType("text/plain;charset=utf-8");
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                response.getWriter().print("No responder could handle this request");
-                response.getWriter().close();
+
+                PrintWriter responseWriter = response.getWriter();
+                try {
+                    responseWriter.print("No responder could handle this request");
+                } finally {
+                    responseWriter.close();
+                }
             }
         };
 
