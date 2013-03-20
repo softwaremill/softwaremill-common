@@ -40,7 +40,7 @@ public class TestServerTest {
         server.start();
 
         try {
-            LoggingAndRememberingResponder responder = new LoggingAndRememberingResponder();
+            LogAndStoreRequestResponder responder = new LogAndStoreRequestResponder();
             server.addResponder(responder);
 
             // When
@@ -52,9 +52,9 @@ public class TestServerTest {
             // Then
             assertResponseOk(response);
 
-            List<LoggingAndRememberingResponder.RequestInfo> requestsReceived = responder.getRequestsReceived();
+            List<LogAndStoreRequestResponder.RequestInfo> requestsReceived = responder.getRequestsReceived();
             assertThat(requestsReceived).hasSize(1);
-            LoggingAndRememberingResponder.RequestInfo request = requestsReceived.get(0);
+            LogAndStoreRequestResponder.RequestInfo request = requestsReceived.get(0);
 
             assertThat(request.getMethod()).isEqualTo("GET");
 
@@ -81,7 +81,7 @@ public class TestServerTest {
         server.start();
 
         try {
-            LoggingAndRememberingResponder responder = new LoggingAndRememberingResponder();
+            LogAndStoreRequestResponder responder = new LogAndStoreRequestResponder();
             server.addResponder(responder);
 
             // When
@@ -98,9 +98,9 @@ public class TestServerTest {
             // Then
             assertResponseOk(response);
 
-            List<LoggingAndRememberingResponder.RequestInfo> requestsReceived = responder.getRequestsReceived();
+            List<LogAndStoreRequestResponder.RequestInfo> requestsReceived = responder.getRequestsReceived();
             assertThat(requestsReceived).hasSize(1);
-            LoggingAndRememberingResponder.RequestInfo request = requestsReceived.get(0);
+            LogAndStoreRequestResponder.RequestInfo request = requestsReceived.get(0);
 
             assertThat(request.getMethod()).isEqualTo("POST");
 
@@ -260,7 +260,7 @@ public class TestServerTest {
     public void shouldClearResponders() throws Exception {
         // Given
         TestServer server = new TestServer();
-        server.addResponder(new LoggingAndRememberingResponder());
+        server.addResponder(new LogAndStoreRequestResponder());
         server.start();
 
         try {
@@ -312,7 +312,7 @@ public class TestServerTest {
     }
 
     private void addResponderAndStartServer(TestServer server) throws Exception {
-        server.addResponder(new LoggingAndRememberingResponder());
+        server.addResponder(new LogAndStoreRequestResponder());
         server.start();
     }
 

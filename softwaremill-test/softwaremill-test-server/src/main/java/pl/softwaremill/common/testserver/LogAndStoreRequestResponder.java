@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 @NotThreadSafe
-public class LoggingAndRememberingResponder implements Responder {
+public class LogAndStoreRequestResponder implements Responder {
 
-    private static final Logger log = LoggerFactory.getLogger(LoggingAndRememberingResponder.class);
+    private static final Logger log = LoggerFactory.getLogger(LogAndStoreRequestResponder.class);
 
     private List<RequestInfo> requestsReceived = new ArrayList<RequestInfo>();
 
