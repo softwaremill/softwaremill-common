@@ -26,9 +26,7 @@ To use SoftwareMill Common in a project define a parent section in the main pom 
 
 where [VERSION] is the version you want to use in your project.
 
-**Important Note**
-
-Since version 74 SoftwareMill Common uses *com.softwaremill* package names instead of *pl.softwaremill* that were present in version 73 and earlier.
+**Important Note:** Since version 74 SoftwareMill Common uses *com.softwaremill* package names instead of *pl.softwaremill* that were present in version 73 and earlier.
 
 # Modules overview
 
