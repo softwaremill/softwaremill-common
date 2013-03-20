@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.transaction;
+package com.softwaremill.common.cdi.transaction;
 
 import javax.annotation.Resource;
 import javax.interceptor.AroundInvoke;

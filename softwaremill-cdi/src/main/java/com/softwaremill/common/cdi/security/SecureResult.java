@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.security;
+package com.softwaremill.common.cdi.security;
 
 import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;

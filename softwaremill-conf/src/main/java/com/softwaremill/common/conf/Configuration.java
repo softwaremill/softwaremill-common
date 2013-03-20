@@ -1,9 +1,9 @@
-package pl.softwaremill.common.conf;
+package com.softwaremill.common.conf;
 
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.conf.encoding.ConfigurationValueCoder;
+import com.softwaremill.common.conf.encoding.ConfigurationValueCoder;
 
 import java.io.File;
 import java.io.FileNotFoundException;

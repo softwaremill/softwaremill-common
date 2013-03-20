@@ -1,9 +1,9 @@
-package pl.softwaremill.common.util.dependency;
+package com.softwaremill.common.util.dependency;
 
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.util.ClassUtil;
+import com.softwaremill.common.util.ClassUtil;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

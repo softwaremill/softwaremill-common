@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.button;
+package com.softwaremill.common.paypal.button;
 
 import java.util.ArrayList;
 import java.util.Arrays;

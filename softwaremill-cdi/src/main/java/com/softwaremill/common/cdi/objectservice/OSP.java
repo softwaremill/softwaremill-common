@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.objectservice;
+package com.softwaremill.common.cdi.objectservice;
 
 import java.io.Serializable;
 

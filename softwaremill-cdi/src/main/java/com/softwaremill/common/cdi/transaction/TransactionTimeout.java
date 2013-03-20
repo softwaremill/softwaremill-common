@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.transaction;
+package com.softwaremill.common.cdi.transaction;
 
 import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;

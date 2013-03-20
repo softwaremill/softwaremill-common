@@ -1,4 +1,4 @@
-package pl.softwaremill.common.conf.encoding;
+package com.softwaremill.common.conf.encoding;
 
 import java.io.IOException;
 

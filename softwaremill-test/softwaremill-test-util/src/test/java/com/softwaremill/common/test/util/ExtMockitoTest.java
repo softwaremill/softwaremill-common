@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util;
+package com.softwaremill.common.test.util;
 
 import org.testng.annotations.Test;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static pl.softwaremill.common.test.util.ExtMockito.isAMock;
+import static com.softwaremill.common.test.util.ExtMockito.isAMock;
 
 /**
  * @author Maciej Bilas

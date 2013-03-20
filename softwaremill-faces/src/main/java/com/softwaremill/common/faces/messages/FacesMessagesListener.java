@@ -1,6 +1,6 @@
-package pl.softwaremill.common.faces.messages;
+package com.softwaremill.common.faces.messages;
 
-import pl.softwaremill.common.cdi.util.BeanInject;
+import com.softwaremill.common.cdi.util.BeanInject;
 
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.SystemEvent;

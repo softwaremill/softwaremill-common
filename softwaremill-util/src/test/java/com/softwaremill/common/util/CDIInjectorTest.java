@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import org.testng.annotations.Test;
 
@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import static org.fest.assertions.Assertions.*;
-import static pl.softwaremill.common.util.CDIInjector.*;
+import static com.softwaremill.common.util.CDIInjector.*;
 
 /**
  * @author Adam Warski (adam at warski dot org)

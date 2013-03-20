@@ -1,4 +1,4 @@
-package pl.softwaremill.common.arquillian;
+package com.softwaremill.common.arquillian;
 
 import com.google.common.base.Charsets;
 import org.jboss.shrinkwrap.api.Archive;

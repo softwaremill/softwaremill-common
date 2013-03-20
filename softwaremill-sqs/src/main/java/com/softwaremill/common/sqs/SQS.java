@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
@@ -8,10 +8,10 @@ import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.GetQueueUrlRequest;
 import com.amazonaws.services.sqs.model.GetQueueUrlResult;
 import com.amazonaws.services.sqs.model.QueueDoesNotExistException;
-import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
+import com.softwaremill.common.sqs.exception.SQSRuntimeException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static pl.softwaremill.common.sqs.SQSConfiguration.*;
+import static com.softwaremill.common.sqs.SQSConfiguration.*;
 
 /**
  * @author Maciej Bilas

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.button;
+package com.softwaremill.common.paypal.button;
 
 import org.testng.annotations.Test;
 

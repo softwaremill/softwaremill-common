@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

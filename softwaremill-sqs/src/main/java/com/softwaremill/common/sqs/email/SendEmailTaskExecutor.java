@@ -1,10 +1,10 @@
-package pl.softwaremill.common.sqs.email;
+package com.softwaremill.common.sqs.email;
 
-import pl.softwaremill.common.task.TaskExecutor;
+import com.softwaremill.common.task.TaskExecutor;
 
 import javax.mail.MessagingException;
 
-import static pl.softwaremill.common.sqs.SQSConfiguration.*;
+import static com.softwaremill.common.sqs.SQSConfiguration.*;
 
 /**
  * @author Adam Warski (adam at warski dot org)

@@ -1,6 +1,6 @@
-package pl.softwaremill.common.paypal.process;
+package com.softwaremill.common.paypal.process;
 
-import pl.softwaremill.common.paypal.process.processors.PayPalProcessor;
+import com.softwaremill.common.paypal.process.processors.PayPalProcessor;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.backup;
+package com.softwaremill.common.backup;
 
 import com.google.common.collect.ImmutableMap;
 import com.xerox.amazonws.simpledb.Domain;
@@ -6,7 +6,7 @@ import com.xerox.amazonws.simpledb.SDBException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.util.RichString;
+import com.softwaremill.common.util.RichString;
 
 import java.io.BufferedReader;
 import java.io.IOException;

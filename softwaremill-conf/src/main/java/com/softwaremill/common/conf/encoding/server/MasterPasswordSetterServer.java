@@ -1,7 +1,7 @@
-package pl.softwaremill.common.conf.encoding.server;
+package com.softwaremill.common.conf.encoding.server;
 
 import com.google.common.base.Charsets;
-import pl.softwaremill.common.conf.encoding.MasterPasswordStore;
+import com.softwaremill.common.conf.encoding.MasterPasswordStore;
 
 import java.io.BufferedReader;
 import java.io.IOException;

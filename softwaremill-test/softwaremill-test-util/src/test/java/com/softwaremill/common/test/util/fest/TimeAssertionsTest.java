@@ -1,14 +1,14 @@
-package pl.softwaremill.common.test.util.fest;
+package com.softwaremill.common.test.util.fest;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.test.util.AssertException;
+import com.softwaremill.common.test.util.AssertException;
 
 import java.util.Date;
 
-import static pl.softwaremill.common.test.util.fest.TimeAssertions.assertTime;
+import static com.softwaremill.common.test.util.fest.TimeAssertions.assertTime;
 
 public class TimeAssertionsTest {
 

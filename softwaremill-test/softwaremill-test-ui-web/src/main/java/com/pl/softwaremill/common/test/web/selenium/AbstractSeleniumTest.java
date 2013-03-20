@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.selenium;
+package com.softwaremill.common.test.web.selenium;
 
 import com.google.common.base.Charsets;
 import com.thoughtworks.selenium.Selenium;
@@ -11,8 +11,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
-import pl.softwaremill.common.test.web.selenium.screenshots.FailureTestListener;
-import pl.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
+import com.softwaremill.common.test.web.selenium.screenshots.FailureTestListener;
+import com.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
 
 import java.io.File;
 import java.io.FileOutputStream;

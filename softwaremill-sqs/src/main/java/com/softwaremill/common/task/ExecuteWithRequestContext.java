@@ -1,7 +1,7 @@
-package pl.softwaremill.common.task;
+package com.softwaremill.common.task;
 
 import org.jboss.weld.context.bound.BoundRequestContext;
-import pl.softwaremill.common.util.dependency.D;
+import com.softwaremill.common.util.dependency.D;
 
 import java.util.HashMap;
 import java.util.Map;

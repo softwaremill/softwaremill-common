@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.autofactory.extension;
+package com.softwaremill.common.cdi.autofactory.extension;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;

@@ -1,8 +1,8 @@
-package pl.softwaremill.common.test.util;
+package com.softwaremill.common.test.util;
 
 import org.testng.Assert;
 
-import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_CLASS_MUST_EQUAL;
+import static com.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_CLASS_MUST_EQUAL;
 
 /**
  * Allows expecting and intercepting exceptions in a nice way.

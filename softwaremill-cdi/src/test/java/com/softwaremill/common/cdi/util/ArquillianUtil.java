@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.util;
+package com.softwaremill.common.cdi.util;
 
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePaths;
@@ -13,8 +13,8 @@ public class ArquillianUtil {
         StringBuilder beansXmlBuilder = new StringBuilder();
         beansXmlBuilder.append("<beans>");
         beansXmlBuilder.append("<interceptors>");
-        beansXmlBuilder.append("<class>pl.softwaremill.common.cdi.security.SecurityInterceptor</class>");
-        beansXmlBuilder.append("<class>pl.softwaremill.common.cdi.security.SecurityResultInterceptor</class>");
+        beansXmlBuilder.append("<class>com.softwaremill.common.cdi.security.SecurityInterceptor</class>");
+        beansXmlBuilder.append("<class>com.softwaremill.common.cdi.security.SecurityResultInterceptor</class>");
         beansXmlBuilder.append("</interceptors>");
         beansXmlBuilder.append("</beans>");
 

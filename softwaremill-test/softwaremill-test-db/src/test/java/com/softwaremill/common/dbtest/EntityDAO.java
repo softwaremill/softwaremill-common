@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 /**
  * @author Maciej Bilas

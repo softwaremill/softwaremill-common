@@ -1,4 +1,4 @@
-package pl.softwaremill.common.testserver;
+package com.softwaremill.common.testserver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.util;
+package com.softwaremill.common.sqs.util;
 
 /**
  * Wrapper class for message received from a SQS queue and converted to an object

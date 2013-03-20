@@ -1,10 +1,10 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
 import com.amazonaws.Protocol;
 import org.testng.annotations.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static pl.softwaremill.common.sqs.Util.determineProtocol;
+import static com.softwaremill.common.sqs.Util.determineProtocol;
 
 /**
  * @author Maciej Bilas

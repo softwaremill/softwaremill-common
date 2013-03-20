@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.templates;
+package com.softwaremill.common.util.templates;
 
 import com.google.common.io.Resources;
 

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;

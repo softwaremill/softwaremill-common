@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.stringsorting;
+package com.softwaremill.common.util.stringsorting;
 
 /**
  * @author Adam Warski (adam at warski dot org)

@@ -1,10 +1,10 @@
-package pl.softwaremill.common.paypal.servlet;
+package com.softwaremill.common.paypal.servlet;
 
-import pl.softwaremill.common.paypal.process.PayPalErrorHandler;
-import pl.softwaremill.common.paypal.process.RequestParameters;
-import pl.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
-import pl.softwaremill.common.paypal.process.status.PayPalStatus;
-import pl.softwaremill.common.paypal.service.PayPalVerificationService;
+import com.softwaremill.common.paypal.process.PayPalErrorHandler;
+import com.softwaremill.common.paypal.process.RequestParameters;
+import com.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
+import com.softwaremill.common.paypal.process.status.PayPalStatus;
+import com.softwaremill.common.paypal.service.PayPalVerificationService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

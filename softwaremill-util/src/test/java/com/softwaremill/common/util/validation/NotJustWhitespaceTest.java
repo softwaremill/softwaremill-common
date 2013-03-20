@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.validation;
+package com.softwaremill.common.util.validation;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

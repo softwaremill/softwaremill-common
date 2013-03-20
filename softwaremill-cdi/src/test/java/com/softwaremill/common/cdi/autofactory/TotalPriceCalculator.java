@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.autofactory;
+package com.softwaremill.common.cdi.autofactory;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.autofactory.producer;
+package com.softwaremill.common.cdi.autofactory.producer;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;

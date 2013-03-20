@@ -1,8 +1,8 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.dbtest.util.DbMode;
+import com.softwaremill.common.dbtest.util.DbMode;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

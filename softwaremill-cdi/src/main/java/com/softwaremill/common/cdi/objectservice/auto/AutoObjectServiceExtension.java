@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.objectservice.auto;
+package com.softwaremill.common.cdi.objectservice.auto;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;

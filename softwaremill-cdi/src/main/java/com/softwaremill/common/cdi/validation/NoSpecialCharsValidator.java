@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.validation;
+package com.softwaremill.common.cdi.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

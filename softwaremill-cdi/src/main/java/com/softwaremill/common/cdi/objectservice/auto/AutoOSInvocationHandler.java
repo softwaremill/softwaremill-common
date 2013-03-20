@@ -1,7 +1,7 @@
-package pl.softwaremill.common.cdi.objectservice.auto;
+package com.softwaremill.common.cdi.objectservice.auto;
 
-import pl.softwaremill.common.cdi.objectservice.extension.ObjectServiceSpecification;
-import pl.softwaremill.common.util.dependency.BeanManagerDependencyProvider;
+import com.softwaremill.common.cdi.objectservice.extension.ObjectServiceSpecification;
+import com.softwaremill.common.util.dependency.BeanManagerDependencyProvider;
 
 import javax.enterprise.inject.spi.BeanManager;
 import java.lang.reflect.InvocationHandler;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.config;
+package com.softwaremill.common.cdi.config;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

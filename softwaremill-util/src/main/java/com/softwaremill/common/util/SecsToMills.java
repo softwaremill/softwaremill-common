@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 /**
  * Constants to avoid code comments like

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.validator;
+package com.softwaremill.common.faces.validator;
 
 import com.google.common.base.Strings;
 

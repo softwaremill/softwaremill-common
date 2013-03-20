@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.security;
+package com.softwaremill.common.cdi.security;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.i18n;
+package com.softwaremill.common.faces.i18n;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;

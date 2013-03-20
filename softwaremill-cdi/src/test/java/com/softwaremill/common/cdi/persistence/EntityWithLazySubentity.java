@@ -1,6 +1,6 @@
-package pl.softwaremill.common.cdi.persistence;
+package com.softwaremill.common.cdi.persistence;
 
-import pl.softwaremill.common.util.persistance.Identifiable;
+import com.softwaremill.common.util.persistance.Identifiable;
 
 import javax.persistence.*;
 

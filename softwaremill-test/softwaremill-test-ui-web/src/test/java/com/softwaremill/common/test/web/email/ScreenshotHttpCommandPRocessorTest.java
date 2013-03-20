@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.email;
+package com.softwaremill.common.test.web.email;
 
 import com.thoughtworks.selenium.CommandProcessor;
 import org.mockito.Matchers;
@@ -6,8 +6,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.test.web.selenium.screenshots.ScreenshotHttpCommandProcessor;
-import pl.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
+import com.softwaremill.common.test.web.selenium.screenshots.ScreenshotHttpCommandProcessor;
+import com.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;

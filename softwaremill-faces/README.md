@@ -3,7 +3,7 @@
 Maven dependency:
 
     <dependency>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-faces</artifactId>
         <version>8</version>
     </dependency>
@@ -16,7 +16,7 @@ CurrentLocale.setCurrentLocale method.
 To enable, add to `faces-config.xml`:
 
     <application>
-        <view-handler>pl.softwaremill.common.faces.i18n.CurrentLocaleViewHandler</view-handler>
+        <view-handler>com.softwaremill.common.faces.i18n.CurrentLocaleViewHandler</view-handler>
     </application>
 
 ## Transaction JSF phase listeners
@@ -27,7 +27,7 @@ and a second one for rendering the response.
 To enable, add to `faces-config.xml`:
 
     <lifecycle>
-        <phase-listener>pl.softwaremill.common.faces.transaction.TransactionPhaseListener</phase-listener>
+        <phase-listener>com.softwaremill.common.faces.transaction.TransactionPhaseListener</phase-listener>
     </lifecycle>
 
 ## Fields equal validator
@@ -46,7 +46,7 @@ To enable, add to `faces-config.xml`:
 
     <validator>
         <validator-id>fieldsEqual</validator-id>
-        <validator-class>pl.softwaremill.common.faces.validator.FieldsEqualValidator</validator-class>
+        <validator-class>com.softwaremill.common.faces.validator.FieldsEqualValidator</validator-class>
     </validator>
 
 ## Faces messages
@@ -61,7 +61,7 @@ To enable, add to `faces-config.xml`:
     <application>
         <system-event-listener>
             <system-event-class>javax.faces.event.PreRenderViewEvent</system-event-class>
-            <system-event-listener-class>pl.softwaremill.common.faces.messages.FacesMessagesListener</system-event-listener-class>
+            <system-event-listener-class>com.softwaremill.common.faces.messages.FacesMessagesListener</system-event-listener-class>
         </system-event-listener>
     </application>
 
@@ -77,7 +77,7 @@ attribute, as it interferes with `<f:ajax>` (don't ask me why ... ;) ).
 To enable, add to `faces-config.xml`:
 
     <lifecycle>
-        <phase-listener>pl.softwaremill.common.faces.navigation.RequiredViewParameterPhaseListener</phase-listener>
+        <phase-listener>com.softwaremill.common.faces.navigation.RequiredViewParameterPhaseListener</phase-listener>
     </lifecycle>
 
 ## Restricting pages to logged in users only
@@ -89,7 +89,7 @@ login page if a user isn't logged in.
 To enable, add to `faces-config.xml`:
 
     <lifecycle>
-        <phase-listener>pl.softwaremill.common.faces.security.SecurityPhaseListener</phase-listener>
+        <phase-listener>com.softwaremill.common.faces.security.SecurityPhaseListener</phase-listener>
     </lifecycle>
 
 ## Navigation
@@ -123,7 +123,7 @@ Enclose `UIInput` components for cross-field validation in `multiValidator` tag.
 
     <html xmlns="http://www.w3.org/1999/xhtml"
           xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:v="http://pl.softwaremill.common.faces/components">
+          xmlns:v="http://com.softwaremill.common.faces/components">
 
       <v:multiValidator id="atLeastOne" validator="#{bean.validateAtLeastOne}">
         <h:selectBooleanCheckbox value="#{debtorBean.check1}"/>
@@ -234,6 +234,6 @@ The simpliest form with file upload:
 
 It is also necessary to add namespace:
 
-    xmlns:sml="http://pl.softwaremill.common.faces/components"
+    xmlns:sml="http://com.softwaremill.common.faces/components"
 
 `file` property of the `bean` is of type java.io.File. `sml:fileUpload` renders to &lt;input type="file"&gt;. After form submit, file is in the bean.

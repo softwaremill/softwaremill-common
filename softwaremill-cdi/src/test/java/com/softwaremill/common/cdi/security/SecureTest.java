@@ -1,12 +1,12 @@
-package pl.softwaremill.common.cdi.security;
+package com.softwaremill.common.cdi.security;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.el.ELEvaluator;
-import pl.softwaremill.common.cdi.util.ArquillianUtil;
+import com.softwaremill.common.cdi.el.ELEvaluator;
+import com.softwaremill.common.cdi.util.ArquillianUtil;
 
 import javax.inject.Inject;
 

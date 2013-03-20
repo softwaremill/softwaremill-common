@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.selenium;
+package com.softwaremill.common.test.web.selenium;
 
 /**
  * Properties for selenium browser

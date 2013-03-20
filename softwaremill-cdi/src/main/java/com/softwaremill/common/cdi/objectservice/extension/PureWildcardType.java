@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.objectservice.extension;
+package com.softwaremill.common.cdi.objectservice.extension;
 
 import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.sysprops;
+package com.softwaremill.common.cdi.sysprops;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
@@ -10,7 +10,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static pl.softwaremill.common.cdi.sysprops.SystemProperty.NOT_SET;
+import static com.softwaremill.common.cdi.sysprops.SystemProperty.NOT_SET;
 
 /**
  * @author Maciej Bilas

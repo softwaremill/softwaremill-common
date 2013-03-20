@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.sqs.AmazonSQS;
@@ -8,14 +8,14 @@ import com.google.common.collect.ImmutableMap;
 import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.sqs.exception.SQSRuntimeException;
+import com.softwaremill.common.sqs.exception.SQSRuntimeException;
 
 import java.io.IOException;
 import java.io.Serializable;
 
 import static com.google.common.base.Preconditions.*;
 import static java.lang.String.format;
-import static pl.softwaremill.common.sqs.Util.deserializeFromBase64;
+import static com.softwaremill.common.sqs.Util.deserializeFromBase64;
 
 /**
  * @author Maciej Bilas

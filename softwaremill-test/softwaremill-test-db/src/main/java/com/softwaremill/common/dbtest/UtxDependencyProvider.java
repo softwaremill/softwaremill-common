@@ -1,7 +1,7 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import bitronix.tm.TransactionManagerServices;
-import pl.softwaremill.common.util.dependency.DependencyProvider;
+import com.softwaremill.common.util.dependency.DependencyProvider;
 
 import javax.transaction.UserTransaction;
 import java.lang.annotation.Annotation;

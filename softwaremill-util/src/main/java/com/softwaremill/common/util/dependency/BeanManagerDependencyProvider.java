@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.dependency;
+package com.softwaremill.common.util.dependency;
 
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;

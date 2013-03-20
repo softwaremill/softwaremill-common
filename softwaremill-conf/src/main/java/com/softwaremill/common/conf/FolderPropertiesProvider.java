@@ -1,4 +1,4 @@
-package pl.softwaremill.common.conf;
+package com.softwaremill.common.conf;
 
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;

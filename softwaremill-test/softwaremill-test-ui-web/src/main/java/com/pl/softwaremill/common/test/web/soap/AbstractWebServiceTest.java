@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.soap;
+package com.softwaremill.common.test.web.soap;
 
 import com.eviware.soapui.impl.wsdl.WsdlProject;
 import com.eviware.soapui.model.support.PropertiesMap;

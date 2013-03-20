@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.time;
+package com.softwaremill.common.util.time;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

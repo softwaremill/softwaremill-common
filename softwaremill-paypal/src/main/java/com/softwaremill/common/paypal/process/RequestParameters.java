@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.process;
+package com.softwaremill.common.paypal.process;
 
 import javax.servlet.ServletRequest;
 import java.io.UnsupportedEncodingException;

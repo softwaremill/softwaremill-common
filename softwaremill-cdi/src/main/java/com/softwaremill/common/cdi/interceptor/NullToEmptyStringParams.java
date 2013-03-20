@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.interceptor;
+package com.softwaremill.common.cdi.interceptor;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.Retention;

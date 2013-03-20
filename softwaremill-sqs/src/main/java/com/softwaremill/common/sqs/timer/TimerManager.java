@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.timer;
+package com.softwaremill.common.sqs.timer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

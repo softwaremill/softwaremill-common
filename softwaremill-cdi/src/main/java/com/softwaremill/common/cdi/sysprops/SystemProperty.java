@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.sysprops;
+package com.softwaremill.common.cdi.sysprops;
 
 import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;

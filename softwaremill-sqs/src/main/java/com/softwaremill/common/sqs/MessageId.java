@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
 /**
  * A wrapper object around an SQS MessageID.

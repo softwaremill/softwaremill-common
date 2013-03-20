@@ -1,4 +1,4 @@
-package pl.softwaremill.common.testserver;
+package com.softwaremill.common.testserver;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;

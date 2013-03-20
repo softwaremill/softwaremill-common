@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.validation;
+package com.softwaremill.common.util.validation;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 @NotEmpty
 @Pattern(regexp = "(?s).*?\\S+.*") // (?s) makes . match all - also newlines
 public @interface NotJustWhitespace {
-    String message() default "{pl.softwaremill.common.validator.NotJustWhitespace.message}";
+    String message() default "{com.softwaremill.common.validator.NotJustWhitespace.message}";
 
     Class<?>[] groups() default { };
 

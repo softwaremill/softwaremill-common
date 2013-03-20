@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

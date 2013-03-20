@@ -1,6 +1,6 @@
-package pl.softwaremill.common.cdi.autofactory.extension;
+package com.softwaremill.common.cdi.autofactory.extension;
 
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
+import com.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
 
 import javax.enterprise.inject.spi.AnnotatedConstructor;
 import javax.enterprise.inject.spi.InjectionTarget;

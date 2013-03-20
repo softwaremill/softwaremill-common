@@ -1,11 +1,11 @@
-package pl.softwaremill.common.test.util.fest;
+package com.softwaremill.common.test.util.fest;
 
 import com.google.common.base.Optional;
 import org.testng.annotations.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static pl.softwaremill.common.test.util.fest.OptionalConditions.absent;
-import static pl.softwaremill.common.test.util.fest.OptionalConditions.present;
+import static com.softwaremill.common.test.util.fest.OptionalConditions.absent;
+import static com.softwaremill.common.test.util.fest.OptionalConditions.present;
 
 /**
  * @author Maciej Bilas

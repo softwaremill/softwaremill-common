@@ -1,8 +1,8 @@
-package pl.softwaremill.common.conf;
+package com.softwaremill.common.conf;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.conf.encoding.MasterPasswordStore;
+import com.softwaremill.common.conf.encoding.MasterPasswordStore;
 
 import java.util.Map;
 

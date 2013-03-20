@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.email;
+package com.softwaremill.common.test.web.email;
 
 import com.dumbster.smtp.SmtpMessage;
 import org.apache.commons.codec.DecoderException;

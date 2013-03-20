@@ -1,9 +1,9 @@
-package pl.softwaremill.common.cdi.autofactory.qualifier;
+package com.softwaremill.common.cdi.autofactory.qualifier;
 
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.autofactory.FactoryParameter;
-import pl.softwaremill.common.cdi.autofactory.PriceCalculator;
-import pl.softwaremill.common.cdi.autofactory.Product;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.FactoryParameter;
+import com.softwaremill.common.cdi.autofactory.PriceCalculator;
+import com.softwaremill.common.cdi.autofactory.Product;
 
 import javax.inject.Inject;
 

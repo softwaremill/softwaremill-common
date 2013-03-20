@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.email;
+package com.softwaremill.common.test.web.email;
 
 /**
  * Most common headers available in email

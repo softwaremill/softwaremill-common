@@ -1,4 +1,4 @@
-package pl.softwaremill.test.swing;
+package com.softwaremill.test.swing;
 
 import org.fest.swing.testng.listener.AbstractTestListener;
 import org.testng.ITestResult;

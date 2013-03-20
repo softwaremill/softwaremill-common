@@ -1,10 +1,10 @@
-package pl.softwaremill.common.test.web.selenium.screenshots;
+package com.softwaremill.common.test.web.selenium.screenshots;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest;
+import com.softwaremill.common.test.web.selenium.AbstractSeleniumTest;
 
 import java.util.HashSet;
 import java.util.Set;

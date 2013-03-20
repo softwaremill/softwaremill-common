@@ -19,7 +19,7 @@ Jars and sources are available in our Maven repositories:
 To use SoftwareMill Common in a project define a parent section in the main pom of the project:
 
     <parent>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-parent</artifactId>
         <version>[VERSION]</version>
     </parent>

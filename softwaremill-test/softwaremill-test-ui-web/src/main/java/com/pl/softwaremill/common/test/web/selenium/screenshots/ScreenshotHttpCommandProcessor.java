@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.selenium.screenshots;
+package com.softwaremill.common.test.web.selenium.screenshots;
 
 import com.thoughtworks.selenium.CommandProcessor;
 import com.thoughtworks.selenium.HttpCommandProcessor;

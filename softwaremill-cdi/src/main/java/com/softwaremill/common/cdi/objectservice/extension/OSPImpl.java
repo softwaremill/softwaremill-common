@@ -1,7 +1,7 @@
-package pl.softwaremill.common.cdi.objectservice.extension;
+package com.softwaremill.common.cdi.objectservice.extension;
 
-import pl.softwaremill.common.cdi.objectservice.OS;
-import pl.softwaremill.common.cdi.objectservice.OSP;
+import com.softwaremill.common.cdi.objectservice.OS;
+import com.softwaremill.common.cdi.objectservice.OSP;
 
 /**
  * @author Adam Warski (adam at warski dot org)

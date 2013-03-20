@@ -1,6 +1,6 @@
-package pl.softwaremill.common.cdi.el;
+package com.softwaremill.common.cdi.el;
 
-import pl.softwaremill.common.util.ClassUtil;
+import com.softwaremill.common.util.ClassUtil;
 
 import javax.el.*;
 import javax.enterprise.inject.spi.BeanManager;

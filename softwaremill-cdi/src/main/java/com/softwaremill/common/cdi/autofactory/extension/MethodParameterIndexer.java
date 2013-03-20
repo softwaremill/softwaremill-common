@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.autofactory.extension;
+package com.softwaremill.common.cdi.autofactory.extension;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;

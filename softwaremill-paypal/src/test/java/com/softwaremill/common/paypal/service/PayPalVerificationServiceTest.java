@@ -1,13 +1,13 @@
-package pl.softwaremill.common.paypal.service;
+package com.softwaremill.common.paypal.service;
 
 import org.testng.annotations.Test;
-import pl.softwaremill.common.paypal.process.RequestParameters;
-import pl.softwaremill.common.paypal.process.TestErrorHandler;
-import pl.softwaremill.common.paypal.process.processors.MockVerifiedPayPalProcessor;
-import pl.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
-import pl.softwaremill.common.paypal.process.status.MockStatusVerifier;
-import pl.softwaremill.common.paypal.process.status.PayPalStatus;
-import pl.softwaremill.common.paypal.process.status.PayPalStatusVerifier;
+import com.softwaremill.common.paypal.process.RequestParameters;
+import com.softwaremill.common.paypal.process.TestErrorHandler;
+import com.softwaremill.common.paypal.process.processors.MockVerifiedPayPalProcessor;
+import com.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
+import com.softwaremill.common.paypal.process.status.MockStatusVerifier;
+import com.softwaremill.common.paypal.process.status.PayPalStatus;
+import com.softwaremill.common.paypal.process.status.PayPalStatusVerifier;
 
 import java.util.HashMap;
 import java.util.logging.Logger;

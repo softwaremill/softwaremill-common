@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.selenium;
+package com.softwaremill.common.test.web.selenium;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;

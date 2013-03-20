@@ -1,11 +1,11 @@
-package pl.softwaremill.common.test.util;
+package com.softwaremill.common.test.util;
 
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
-import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_CLASS_AND_MESSAGE_MUST_EQUAL;
-import static pl.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_MAY_BE_SUBCLASS_OF;
+import static com.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_CLASS_AND_MESSAGE_MUST_EQUAL;
+import static com.softwaremill.common.test.util.AssertException.ExceptionMatch.EXCEPTION_MAY_BE_SUBCLASS_OF;
 
 /**
  * Ironic test in which we check the "better way" of checking exceptions

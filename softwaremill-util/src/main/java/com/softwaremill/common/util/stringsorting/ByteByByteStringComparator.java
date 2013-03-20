@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.stringsorting;
+package com.softwaremill.common.util.stringsorting;
 
 import com.google.common.primitives.UnsignedBytes;
 

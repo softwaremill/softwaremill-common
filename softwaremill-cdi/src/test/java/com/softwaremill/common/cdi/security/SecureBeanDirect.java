@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.security;
+package com.softwaremill.common.cdi.security;
 
 /**
  * @author Adam Warski (adam at warski dot org)

@@ -1,4 +1,4 @@
-package pl.softwaremill.test.swing;
+package com.softwaremill.test.swing;
 
 import org.fest.swing.image.ImageException;
 import org.fest.swing.image.ScreenshotTaker;

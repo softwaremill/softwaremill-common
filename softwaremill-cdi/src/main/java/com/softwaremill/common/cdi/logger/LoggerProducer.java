@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.logger;
+package com.softwaremill.common.cdi.logger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

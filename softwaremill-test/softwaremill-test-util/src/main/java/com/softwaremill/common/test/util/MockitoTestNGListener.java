@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util;
+package com.softwaremill.common.test.util;
 
 import org.mockito.MockitoAnnotations;
 import org.testng.IInvokedMethod;

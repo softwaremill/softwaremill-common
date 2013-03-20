@@ -1,4 +1,4 @@
-package pl.softwaremill.common.conf;
+package com.softwaremill.common.conf;
 
 import org.jboss.mx.util.MBeanServerLocator;
 import org.slf4j.Logger;

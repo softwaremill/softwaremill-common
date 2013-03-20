@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
@@ -17,7 +17,7 @@ import org.hamcrest.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.util.Sleeper;
+import com.softwaremill.common.util.Sleeper;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;

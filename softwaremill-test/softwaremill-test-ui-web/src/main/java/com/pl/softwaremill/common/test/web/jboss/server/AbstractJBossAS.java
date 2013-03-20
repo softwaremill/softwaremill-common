@@ -1,9 +1,9 @@
-package pl.softwaremill.common.test.web.jboss.server;
+package com.softwaremill.common.test.web.jboss.server;
 
 import com.google.common.base.Charsets;
-import pl.softwaremill.common.test.util.MessageWaiter;
-import pl.softwaremill.common.test.web.jboss.SysoutLog;
-import pl.softwaremill.common.test.web.selenium.ServerProperties;
+import com.softwaremill.common.test.util.MessageWaiter;
+import com.softwaremill.common.test.web.jboss.SysoutLog;
+import com.softwaremill.common.test.web.selenium.ServerProperties;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

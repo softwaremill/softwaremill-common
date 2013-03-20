@@ -1,9 +1,9 @@
-package pl.softwaremill.common.cdi.autofactory.field;
+package com.softwaremill.common.cdi.autofactory.field;
 
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.autofactory.Discounts;
-import pl.softwaremill.common.cdi.autofactory.PriceCalculator;
-import pl.softwaremill.common.cdi.autofactory.Product;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.Discounts;
+import com.softwaremill.common.cdi.autofactory.PriceCalculator;
+import com.softwaremill.common.cdi.autofactory.Product;
 
 import javax.inject.Inject;
 

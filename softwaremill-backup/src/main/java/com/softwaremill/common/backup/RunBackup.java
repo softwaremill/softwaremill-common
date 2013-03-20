@@ -1,4 +1,4 @@
-package pl.softwaremill.common.backup;
+package com.softwaremill.common.backup;
 
 import com.google.common.base.Charsets;
 import com.xerox.amazonws.simpledb.Domain;
@@ -7,7 +7,7 @@ import com.xerox.amazonws.simpledb.SimpleDB;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
-import pl.softwaremill.common.util.RichString;
+import com.softwaremill.common.util.RichString;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
-import pl.softwaremill.common.util.persistance.Identifiable;
+import com.softwaremill.common.util.persistance.Identifiable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

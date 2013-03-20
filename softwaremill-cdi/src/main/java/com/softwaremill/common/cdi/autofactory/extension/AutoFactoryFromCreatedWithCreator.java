@@ -1,15 +1,15 @@
-package pl.softwaremill.common.cdi.autofactory.extension;
+package com.softwaremill.common.cdi.autofactory.extension;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import org.jboss.weld.manager.BeanManagerImpl;
 import org.jboss.weld.manager.SimpleInjectionTarget;
 import org.jboss.weld.resources.ClassTransformer;
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.ConstructorToParameterValuesConverter;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.FactoryParameterOnlyConstructorConverter;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.converter.MixedConstructorConverter;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
+import com.softwaremill.common.cdi.autofactory.extension.parameter.converter.ConstructorToParameterValuesConverter;
+import com.softwaremill.common.cdi.autofactory.extension.parameter.converter.FactoryParameterOnlyConstructorConverter;
+import com.softwaremill.common.cdi.autofactory.extension.parameter.converter.MixedConstructorConverter;
 
 import javax.annotation.Nullable;
 import javax.enterprise.inject.spi.*;

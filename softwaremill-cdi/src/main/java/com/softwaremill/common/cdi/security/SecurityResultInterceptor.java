@@ -1,7 +1,7 @@
-package pl.softwaremill.common.cdi.security;
+package com.softwaremill.common.cdi.security;
 
 import com.google.common.collect.ImmutableMap;
-import pl.softwaremill.common.cdi.el.ELEvaluator;
+import com.softwaremill.common.cdi.el.ELEvaluator;
 
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;

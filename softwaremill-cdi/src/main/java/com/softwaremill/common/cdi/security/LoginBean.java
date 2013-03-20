@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.security;
+package com.softwaremill.common.cdi.security;
 
 /**
  * Should be implemented by the bean which controls the logged-in status of the user.

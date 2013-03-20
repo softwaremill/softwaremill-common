@@ -1,5 +1,5 @@
-pl.softwaremill.common.cdi.security.SecurityExtension
-pl.softwaremill.common.cdi.config.ConfigExtension
-pl.softwaremill.common.cdi.objectservice.extension.ObjectServiceExtension
-pl.softwaremill.common.cdi.autofactory.extension.AutoFactoryExtension
-pl.softwaremill.common.cdi.objectservice.auto.AutoObjectServiceExtension
+com.softwaremill.common.cdi.security.SecurityExtension
+com.softwaremill.common.cdi.config.ConfigExtension
+com.softwaremill.common.cdi.objectservice.extension.ObjectServiceExtension
+com.softwaremill.common.cdi.autofactory.extension.AutoFactoryExtension
+com.softwaremill.common.cdi.objectservice.auto.AutoObjectServiceExtension

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.debug.timing;
+package com.softwaremill.common.debug.timing;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;

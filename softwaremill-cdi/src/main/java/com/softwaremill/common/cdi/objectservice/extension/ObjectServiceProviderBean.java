@@ -1,8 +1,8 @@
-package pl.softwaremill.common.cdi.objectservice.extension;
+package com.softwaremill.common.cdi.objectservice.extension;
 
 import org.jboss.weld.literal.DefaultLiteral;
 import org.jboss.weld.util.reflection.ParameterizedTypeImpl;
-import pl.softwaremill.common.cdi.objectservice.OSP;
+import com.softwaremill.common.cdi.objectservice.OSP;
 
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.spi.CreationalContext;

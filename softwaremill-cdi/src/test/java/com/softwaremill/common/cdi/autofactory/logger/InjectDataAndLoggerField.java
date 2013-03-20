@@ -1,7 +1,7 @@
-package pl.softwaremill.common.cdi.autofactory.logger;
+package com.softwaremill.common.cdi.autofactory.logger;
 
 import org.slf4j.Logger;
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
 
 import javax.inject.Inject;
 

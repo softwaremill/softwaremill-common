@@ -1,10 +1,10 @@
-package pl.softwaremill.common.cdi.autofactory.extension.parameter;
+package com.softwaremill.common.cdi.autofactory.extension.parameter;
 
 import org.jboss.weld.Container;
 import org.jboss.weld.injection.ConstructorInjectionPoint;
 import org.jboss.weld.injection.CurrentInjectionPoint;
 import org.jboss.weld.injection.ParameterInjectionPoint;
-import pl.softwaremill.common.cdi.util.BeanInject;
+import com.softwaremill.common.cdi.util.BeanInject;
 
 import javax.enterprise.inject.spi.BeanManager;
 import java.lang.annotation.Annotation;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import bitronix.tm.BitronixTransactionManager;
 import bitronix.tm.TransactionManagerServices;
@@ -19,11 +19,11 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import pl.softwaremill.common.arquillian.BetterArquillian;
-import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
-import pl.softwaremill.common.dbtest.util.DbMode;
-import pl.softwaremill.common.util.dependency.BeanManagerDependencyProvider;
-import pl.softwaremill.common.util.dependency.D;
+import com.softwaremill.common.arquillian.BetterArquillian;
+import com.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
+import com.softwaremill.common.dbtest.util.DbMode;
+import com.softwaremill.common.util.dependency.BeanManagerDependencyProvider;
+import com.softwaremill.common.util.dependency.D;
 
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;

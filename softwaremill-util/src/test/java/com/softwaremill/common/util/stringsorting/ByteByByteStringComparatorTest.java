@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.stringsorting;
+package com.softwaremill.common.util.stringsorting;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

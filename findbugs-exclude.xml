@@ -4,58 +4,58 @@
     <!-- Bug codes and descriptions: http://findbugs.sourceforge.net/bugDescriptions.html-->
 
 	<Match>
-       	<Class name="pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest" />
+       	<Class name="com.softwaremill.common.test.web.selenium.AbstractSeleniumTest" />
 		<Mehtod name="setupBrowser"/>
        	<Bug code="ST"/>
     </Match>
 
 	<Match>
-       	<Class name="pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest" />
+       	<Class name="com.softwaremill.common.test.web.selenium.AbstractSeleniumTest" />
 		<Field name="selenium"/>
        	<Bug code="MS"/>
     </Match>
     <Match>
-       	<Class name="pl.softwaremill.common.sqs.util.EmailDescription" />
+       	<Class name="com.softwaremill.common.sqs.util.EmailDescription" />
 		<Field name="emails"/>
        	<Bug code="EI2"/>
     </Match>
     <Match>
-       	<Class name="pl.softwaremill.common.sqs.util.EmailDescription" />
+       	<Class name="com.softwaremill.common.sqs.util.EmailDescription" />
 		<Method name="getEmails"/>
        	<Bug code="EI"/>
     </Match>
     <Match>
-       	<Class name="pl.softwaremill.common.sqs.util.EmailDescription" />
+       	<Class name="com.softwaremill.common.sqs.util.EmailDescription" />
 		<Field name="replyToEmails"/>
        	<Bug code="EI2"/>
     </Match>
     <Match>
-       	<Class name="pl.softwaremill.common.sqs.util.EmailDescription" />
+       	<Class name="com.softwaremill.common.sqs.util.EmailDescription" />
 		<Method name="getReplyToEmails"/>
        	<Bug code="EI"/>
     </Match>
     <Match>
-       	<Class name="pl.softwaremill.common.sqs.SQSEmptor" />
+       	<Class name="com.softwaremill.common.sqs.SQSEmptor" />
 		<Method name="main"/>
        	<Bug code="NP"/>
     </Match>
 	<Match>
-       	<Class name="pl.softwaremill.common.util.InfiniteSleeper" />
+       	<Class name="com.softwaremill.common.util.InfiniteSleeper" />
 		<Method name="sleepInfinitely"/>
        	<Bug code="UW, Wa"/>
     </Match>
     <Match>
-        <Class name="pl.softwaremill.common.cdi.security.SecurityExtension" />
+        <Class name="com.softwaremill.common.cdi.security.SecurityExtension" />
         <Field name="interceptSecureForMethods"/>
         <Bug code="Se"/>
     </Match>
     <Match>
-        <Class name="pl.softwaremill.common.faces.messages.FacesMessages" />
+        <Class name="com.softwaremill.common.faces.messages.FacesMessages" />
         <Field name="elEvaluator"/>
         <Bug code="Se"/>
     </Match>
     <Match>
-        <Class name="pl.softwaremill.common.faces.messages.FacesMessages" />
+        <Class name="com.softwaremill.common.faces.messages.FacesMessages" />
         <Field name="messages"/>
         <Bug code="Se"/>
     </Match>

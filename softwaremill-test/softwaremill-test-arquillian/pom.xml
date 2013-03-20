@@ -4,7 +4,7 @@
     <name>Softwaremill Arqullian Test Util</name>
 
     <parent>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-test</artifactId>
         <version>74-SNAPSHOT</version>
     </parent>

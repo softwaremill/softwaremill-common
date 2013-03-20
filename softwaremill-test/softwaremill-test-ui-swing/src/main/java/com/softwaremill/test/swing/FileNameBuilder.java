@@ -1,4 +1,4 @@
-package pl.softwaremill.test.swing;
+package com.softwaremill.test.swing;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

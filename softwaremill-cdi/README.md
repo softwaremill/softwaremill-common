@@ -3,7 +3,7 @@
 Maven dependency:
 
     <dependency>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-cdi</artifactId>
         <version>VERSION</version>
     </dependency>
@@ -46,8 +46,8 @@ the `@AllowWithFlag` annotation. To run code in the privileged, "flagged" mode d
 To use, add to your beans.xml the following:
 
     <interceptors>
-        <class>pl.softwaremill.common.cdi.security.SecurityInterceptor</class>
-        <class>pl.softwaremill.common.cdi.security.SecurityResultInterceptor</class>
+        <class>com.softwaremill.common.cdi.security.SecurityInterceptor</class>
+        <class>com.softwaremill.common.cdi.security.SecurityResultInterceptor</class>
     </interceptors>
 
 Blog links:
@@ -180,7 +180,7 @@ scope of a JSF request, and the TX isn't managed by the container (e.g. remoting
 To enable, add to beans.xml:
 
     <interceptors>
-        <class>pl.softwaremill.common.cdi.transaction.TransactionalInterceptor</class>
+        <class>com.softwaremill.common.cdi.transaction.TransactionalInterceptor</class>
     </interceptors>
 
 ## TransactionTimeout interceptor
@@ -191,7 +191,7 @@ Use the `@TransactionTimeout(timeout = SECONDS)` on a method or type to prolong 
 To enable, add to beans.xml:
 
     <interceptors>
-        <class>pl.softwaremill.common.cdi.transaction.TransactionTimeoutInterceptor</class>
+        <class>com.softwaremill.common.cdi.transaction.TransactionTimeoutInterceptor</class>
     </interceptors>
 
 Because the tx timeout must be specified *before* the transaction is started, make sure to specify the

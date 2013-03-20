@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.config;
+package com.softwaremill.common.cdi.config;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.event.Observes;

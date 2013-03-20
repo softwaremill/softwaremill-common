@@ -1,9 +1,9 @@
-package pl.softwaremill.common.cdi.validator;
+package com.softwaremill.common.cdi.validator;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.validation.NoSpecialChars;
-import pl.softwaremill.common.cdi.validation.NoSpecialCharsValidator;
+import com.softwaremill.common.cdi.validation.NoSpecialChars;
+import com.softwaremill.common.cdi.validation.NoSpecialCharsValidator;
 
 /**
  * Created by amorfis on Dec 3, 2010 1:40:58 PM

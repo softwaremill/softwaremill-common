@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;

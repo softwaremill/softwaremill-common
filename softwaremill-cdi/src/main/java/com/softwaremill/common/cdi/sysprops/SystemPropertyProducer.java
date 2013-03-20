@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.sysprops;
+package com.softwaremill.common.cdi.sysprops;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import org.testng.annotations.Test;
 
@@ -6,7 +6,7 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.*;
-import static pl.softwaremill.common.dbtest.MockitoPersistence.*;
+import static com.softwaremill.common.dbtest.MockitoPersistence.*;
 
 /**
  * @author Maciej Bilas

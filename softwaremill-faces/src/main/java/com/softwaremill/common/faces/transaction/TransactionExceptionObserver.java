@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.transaction;
+package com.softwaremill.common.faces.transaction;
 
 import javax.annotation.Resource;
 import javax.enterprise.event.Observes;

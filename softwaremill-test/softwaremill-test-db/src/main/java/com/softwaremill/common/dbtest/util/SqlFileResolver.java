@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest.util;
+package com.softwaremill.common.dbtest.util;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)

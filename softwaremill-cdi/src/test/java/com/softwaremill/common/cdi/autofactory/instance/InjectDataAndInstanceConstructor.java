@@ -1,7 +1,7 @@
-package pl.softwaremill.common.cdi.autofactory.instance;
+package com.softwaremill.common.cdi.autofactory.instance;
 
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.autofactory.FactoryParameter;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.FactoryParameter;
 
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;

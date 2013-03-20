@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.objectservice;
+package com.softwaremill.common.cdi.objectservice;
 
 /**
  * A marker interface for services for particular type of objects.

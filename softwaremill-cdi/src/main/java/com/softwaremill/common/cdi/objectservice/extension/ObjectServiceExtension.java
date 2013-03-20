@@ -1,8 +1,8 @@
-package pl.softwaremill.common.cdi.objectservice.extension;
+package com.softwaremill.common.cdi.objectservice.extension;
 
 import org.jboss.weld.util.reflection.HierarchyDiscovery;
 import org.jboss.weld.util.reflection.ParameterizedTypeImpl;
-import pl.softwaremill.common.cdi.objectservice.OS;
+import com.softwaremill.common.cdi.objectservice.OS;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.*;
@@ -59,7 +59,7 @@ public class ObjectServiceExtension implements Serializable, Extension {
     }
 
     /**
-     * Looks for the type parameter of the given annotated type, which has a raw type {@link pl.softwaremill.common.cdi.objectservice.OS}.
+     * Looks for the type parameter of the given annotated type, which has a raw type {@link com.softwaremill.common.cdi.objectservice.OS}.
      * @param at The class on which to look for the type parameter.
      * @return The type parameter or {@code null}, if no type parameter is specified.
      */

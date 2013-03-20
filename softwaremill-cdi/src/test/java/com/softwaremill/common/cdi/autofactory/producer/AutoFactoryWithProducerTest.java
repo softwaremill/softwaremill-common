@@ -1,15 +1,15 @@
-package pl.softwaremill.common.cdi.autofactory.producer;
+package com.softwaremill.common.cdi.autofactory.producer;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.arquillian.ManifestUtil;
-import pl.softwaremill.common.cdi.autofactory.AbstractAutoFactoryTest;
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.autofactory.PriceCalculator;
-import pl.softwaremill.common.cdi.autofactory.mixed.PriceCalculatorMixedConstructorImpl;
-import pl.softwaremill.common.cdi.autofactory.mixed.TotalPriceCalculatorMixedConstructorImpl;
+import com.softwaremill.common.arquillian.ManifestUtil;
+import com.softwaremill.common.cdi.autofactory.AbstractAutoFactoryTest;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.PriceCalculator;
+import com.softwaremill.common.cdi.autofactory.mixed.PriceCalculatorMixedConstructorImpl;
+import com.softwaremill.common.cdi.autofactory.mixed.TotalPriceCalculatorMixedConstructorImpl;
 
 import javax.inject.Inject;
 

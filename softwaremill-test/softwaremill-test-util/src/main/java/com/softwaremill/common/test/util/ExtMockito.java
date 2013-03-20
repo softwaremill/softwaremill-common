@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util;
+package com.softwaremill.common.test.util;
 
 import org.mockito.cglib.proxy.Factory;
 

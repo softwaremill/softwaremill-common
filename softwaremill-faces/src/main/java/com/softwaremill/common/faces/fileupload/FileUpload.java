@@ -15,7 +15,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package pl.softwaremill.common.faces.fileupload;
+package com.softwaremill.common.faces.fileupload;
 
 import javax.faces.component.FacesComponent;
 import javax.faces.component.html.HtmlInputText;

@@ -1,11 +1,11 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import org.hibernate.cfg.Environment;
 import org.hibernate.ejb.AvailableSettings;
 import org.hibernate.ejb.Ejb3Configuration;
 import org.hibernate.testing.tm.ConnectionProviderImpl;
 import org.hibernate.testing.tm.TransactionManagerLookupImpl;
-import pl.softwaremill.common.dbtest.util.DbMode;
+import com.softwaremill.common.dbtest.util.DbMode;
 
 import javax.persistence.EntityManagerFactory;
 

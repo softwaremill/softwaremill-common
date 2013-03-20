@@ -1,7 +1,7 @@
 Maven dependency:
 
     <dependency>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-util</artifactId>
         <version>[VERSION]</version>
     </dependency>
@@ -14,7 +14,7 @@ Mainly a test utility, makes it easier to test beans which use field injection. 
 of fields (having to provide the field name), it is enough to provide the target of the injection and the objects
 to be injected. For example:
 
-    import static pl.softwaremill.common.util.CDIInjector.*;
+    import static com.softwaremill.common.util.CDIInjector.*;
 
     @Test
     public void testSomething() {

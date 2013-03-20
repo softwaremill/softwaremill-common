@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 /**
  * Wrapps a string that represents byte array in hex codes

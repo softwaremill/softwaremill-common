@@ -1,4 +1,4 @@
-package pl.softwaremill.test.swing;
+package com.softwaremill.test.swing;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

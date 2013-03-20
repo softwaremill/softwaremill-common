@@ -1,7 +1,7 @@
-package pl.softwaremill.common.paypal.process.status;
+package com.softwaremill.common.paypal.process.status;
 
 import com.google.common.base.Charsets;
-import pl.softwaremill.common.paypal.process.RequestParameters;
+import com.softwaremill.common.paypal.process.RequestParameters;
 
 import java.io.*;
 import java.net.URL;

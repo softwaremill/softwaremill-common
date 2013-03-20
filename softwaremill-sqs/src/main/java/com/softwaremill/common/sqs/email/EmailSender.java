@@ -1,9 +1,9 @@
-package pl.softwaremill.common.sqs.email;
+package com.softwaremill.common.sqs.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.sqs.util.AttachmentDescription;
-import pl.softwaremill.common.sqs.util.EmailDescription;
+import com.softwaremill.common.sqs.util.AttachmentDescription;
+import com.softwaremill.common.sqs.util.EmailDescription;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;

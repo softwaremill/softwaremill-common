@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.dependency;
+package com.softwaremill.common.util.dependency;
 
 import java.lang.annotation.Annotation;
 

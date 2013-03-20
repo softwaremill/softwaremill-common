@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.conf;
+package com.softwaremill.common.cdi.conf;
 
 import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;

@@ -1,11 +1,11 @@
-package pl.softwaremill.common.paypal.service;
+package com.softwaremill.common.paypal.service;
 
-import pl.softwaremill.common.paypal.process.*;
-import pl.softwaremill.common.paypal.process.processors.PayPalProcessor;
-import pl.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
-import pl.softwaremill.common.paypal.process.status.DefaultPayPalStatusVerifier;
-import pl.softwaremill.common.paypal.process.status.PayPalStatus;
-import pl.softwaremill.common.paypal.process.status.PayPalStatusVerifier;
+import com.softwaremill.common.paypal.process.*;
+import com.softwaremill.common.paypal.process.processors.PayPalProcessor;
+import com.softwaremill.common.paypal.process.processors.PayPalProcessorsFactory;
+import com.softwaremill.common.paypal.process.status.DefaultPayPalStatusVerifier;
+import com.softwaremill.common.paypal.process.status.PayPalStatus;
+import com.softwaremill.common.paypal.process.status.PayPalStatusVerifier;
 
 /**
  * @Author: lukasz.zuchowski at gmail dot com

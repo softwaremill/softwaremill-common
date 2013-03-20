@@ -1,6 +1,6 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
-import pl.softwaremill.common.conf.Configuration;
+import com.softwaremill.common.conf.Configuration;
 
 import java.util.Map;
 
@@ -40,7 +40,7 @@ public class SQSConfiguration {
 
     static {
         // Can be set e.g. by Selenium tests as an argument when starting up JBoss
-        discardMessagesSentBefore = Long.parseLong(System.getProperty("pl.softwaremill.common.sqs.discard_messages_sent_before", "0"));
+        discardMessagesSentBefore = Long.parseLong(System.getProperty("com.softwaremill.common.sqs.discard_messages_sent_before", "0"));
         System.out.println("--- Discard SQS messages sent before = " + discardMessagesSentBefore);
     }
 

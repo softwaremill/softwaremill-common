@@ -1,4 +1,4 @@
-package pl.softwaremill.common.backup;
+package com.softwaremill.common.backup;
 
 import com.google.common.collect.ImmutableMap;
 import com.xerox.amazonws.simpledb.Domain;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.tuples;
+package com.softwaremill.common.util.tuples;
 
 import com.google.common.collect.Ordering;
 

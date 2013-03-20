@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.transaction;
+package com.softwaremill.common.faces.transaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

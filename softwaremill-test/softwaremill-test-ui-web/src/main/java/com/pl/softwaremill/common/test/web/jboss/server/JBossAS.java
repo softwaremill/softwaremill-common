@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.jboss.server;
+package com.softwaremill.common.test.web.jboss.server;
 
 import java.io.IOException;
 

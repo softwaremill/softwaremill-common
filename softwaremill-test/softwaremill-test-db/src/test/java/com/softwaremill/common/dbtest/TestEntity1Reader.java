@@ -1,6 +1,6 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
-import pl.softwaremill.common.cdi.persistence.ReadOnly;
+import com.softwaremill.common.cdi.persistence.ReadOnly;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

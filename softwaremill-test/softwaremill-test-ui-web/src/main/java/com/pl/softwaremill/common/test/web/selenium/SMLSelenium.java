@@ -1,8 +1,8 @@
-package pl.softwaremill.common.test.web.selenium;
+package com.softwaremill.common.test.web.selenium;
 
 import com.thoughtworks.selenium.DefaultSelenium;
-import pl.softwaremill.common.test.web.selenium.screenshots.ScreenshotHttpCommandProcessor;
-import pl.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
+import com.softwaremill.common.test.web.selenium.screenshots.ScreenshotHttpCommandProcessor;
+import com.softwaremill.common.test.web.selenium.screenshots.Screenshotter;
 
 /**
  * Selenium capable of doing screenshots

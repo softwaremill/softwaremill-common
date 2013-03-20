@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;

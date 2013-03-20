@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import org.hibernate.ejb.Ejb3Configuration;
 import org.jboss.arquillian.container.test.api.Deployment;

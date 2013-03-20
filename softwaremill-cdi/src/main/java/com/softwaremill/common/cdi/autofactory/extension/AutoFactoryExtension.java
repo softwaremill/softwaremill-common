@@ -1,6 +1,6 @@
-package pl.softwaremill.common.cdi.autofactory.extension;
+package com.softwaremill.common.cdi.autofactory.extension;
 
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.*;

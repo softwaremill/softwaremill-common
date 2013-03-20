@@ -1,6 +1,6 @@
-package pl.softwaremill.common.paypal.process.status;
+package com.softwaremill.common.paypal.process.status;
 
-import pl.softwaremill.common.paypal.process.RequestParameters;
+import com.softwaremill.common.paypal.process.RequestParameters;
 
 /**
  * @Author: lukasz.zuchowski at gmail dot com

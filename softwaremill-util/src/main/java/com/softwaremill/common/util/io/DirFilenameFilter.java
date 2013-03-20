@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.io;
+package com.softwaremill.common.util.io;
 
 import java.io.File;
 import java.io.FilenameFilter;

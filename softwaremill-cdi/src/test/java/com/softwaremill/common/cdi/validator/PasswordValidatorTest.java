@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.validator;
+package com.softwaremill.common.cdi.validator;
 
 import org.mockito.Mockito;
 import org.testng.annotations.AfterMethod;
@@ -7,8 +7,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.validation.Password;
-import pl.softwaremill.common.cdi.validation.PasswordValidator;
+import com.softwaremill.common.cdi.validation.Password;
+import com.softwaremill.common.cdi.validation.PasswordValidator;
 
 import javax.validation.ConstraintValidatorContext;
 

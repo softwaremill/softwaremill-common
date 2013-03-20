@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.interceptor;
+package com.softwaremill.common.cdi.interceptor;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
@@ -64,7 +64,7 @@ public class NullToEmptyStringParamsTest extends Arquillian {
 		StringBuilder beansXmlBuilder = new StringBuilder();
 		beansXmlBuilder.append("<beans>");
 		beansXmlBuilder.append("<interceptors>");
-		beansXmlBuilder.append("<class>pl.softwaremill.common.cdi.interceptor.NullToEmptyStringParamsInterceptor</class>");
+		beansXmlBuilder.append("<class>com.softwaremill.common.cdi.interceptor.NullToEmptyStringParamsInterceptor</class>");
 		beansXmlBuilder.append("</interceptors>");
 		beansXmlBuilder.append("</beans>");
 

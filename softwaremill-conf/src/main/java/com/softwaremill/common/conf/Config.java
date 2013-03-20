@@ -1,4 +1,4 @@
-package pl.softwaremill.common.conf;
+package com.softwaremill.common.conf;
 
 import java.util.Map;
 

@@ -1,10 +1,10 @@
-package pl.softwaremill.common.test.util;
+package com.softwaremill.common.test.util;
 
 import org.mockito.Mock;
 import org.mockito.internal.util.MockUtil;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.test.util.MockitoTestNGListener;
+import com.softwaremill.common.test.util.MockitoTestNGListener;
 
 import static org.fest.assertions.Assertions.assertThat;
 

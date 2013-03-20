@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util.fest;
+package com.softwaremill.common.test.util.fest;
 
 import org.fest.assertions.GenericAssert;
 import org.joda.time.DateTime;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.process.processors;
+package com.softwaremill.common.paypal.process.processors;
 
 import java.util.ArrayList;
 import java.util.HashSet;

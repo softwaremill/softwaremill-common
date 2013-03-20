@@ -1,8 +1,8 @@
-package pl.softwaremill.common.cdi.autofactory.extension.parameter.converter;
+package com.softwaremill.common.cdi.autofactory.extension.parameter.converter;
 
-import pl.softwaremill.common.cdi.autofactory.extension.MethodParameterIndexer;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.FactoryParameterParameterValue;
-import pl.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
+import com.softwaremill.common.cdi.autofactory.extension.MethodParameterIndexer;
+import com.softwaremill.common.cdi.autofactory.extension.parameter.FactoryParameterParameterValue;
+import com.softwaremill.common.cdi.autofactory.extension.parameter.ParameterValue;
 
 import javax.enterprise.inject.spi.AnnotatedConstructor;
 import javax.enterprise.inject.spi.AnnotatedParameter;

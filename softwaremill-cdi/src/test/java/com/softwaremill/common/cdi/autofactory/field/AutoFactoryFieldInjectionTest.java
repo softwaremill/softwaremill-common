@@ -1,11 +1,11 @@
-package pl.softwaremill.common.cdi.autofactory.field;
+package com.softwaremill.common.cdi.autofactory.field;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import pl.softwaremill.common.arquillian.ManifestUtil;
-import pl.softwaremill.common.cdi.autofactory.AbstractAutoFactoryTest;
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.arquillian.ManifestUtil;
+import com.softwaremill.common.cdi.autofactory.AbstractAutoFactoryTest;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
 
 /**
  * @author Adam Warski (adam at warski dot org)

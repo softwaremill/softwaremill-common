@@ -6,19 +6,19 @@
 	<name>Softwaremill SQS support</name>
 
 	<parent>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
         <version>74-SNAPSHOT</version>
     </parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>pl.softwaremill.common</groupId>
+			<groupId>com.softwaremill.common</groupId>
 			<artifactId>softwaremill-conf</artifactId>
             <version>${version}</version>
 		</dependency>
 		<dependency>
-			<groupId>pl.softwaremill.common</groupId>
+			<groupId>com.softwaremill.common</groupId>
 			<artifactId>softwaremill-util</artifactId>
             <version>${version}</version>
 		</dependency>

@@ -1,9 +1,9 @@
-package pl.softwaremill.common.test.web.email;
+package com.softwaremill.common.test.web.email;
 
 import com.dumbster.smtp.SimpleSmtpServer;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import pl.softwaremill.common.test.util.SimpleSmtpServerStarter;
+import com.softwaremill.common.test.util.SimpleSmtpServerStarter;
 
 
 /**

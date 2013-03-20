@@ -1,4 +1,4 @@
-package pl.softwaremill.common.conf.encoding.server;
+package com.softwaremill.common.conf.encoding.server;
 
 import com.google.common.base.Charsets;
 

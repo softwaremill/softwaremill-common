@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.exception;
+package com.softwaremill.common.sqs.exception;
 
 /**
  * Runtime Exception wrapping SQS exceptions

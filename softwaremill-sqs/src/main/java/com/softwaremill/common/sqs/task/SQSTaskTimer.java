@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.task;
+package com.softwaremill.common.sqs.task;
 
 import javax.ejb.Local;
 import javax.ejb.Timer;

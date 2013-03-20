@@ -4,7 +4,7 @@
     <name>Softwaremill Web UI Test</name>
 
     <parent>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-test</artifactId>
         <version>74-SNAPSHOT</version>
     </parent>
@@ -16,12 +16,12 @@
         </dependency>
 
         <dependency>
-            <groupId>pl.softwaremill.common</groupId>
+            <groupId>com.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
             <version>${version}</version>
         </dependency>
         <dependency>
-            <groupId>pl.softwaremill.common</groupId>
+            <groupId>com.softwaremill.common</groupId>
             <artifactId>softwaremill-test-util</artifactId>
             <version>${version}</version>
         </dependency>

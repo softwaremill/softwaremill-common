@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.service;
+package com.softwaremill.common.paypal.service;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;

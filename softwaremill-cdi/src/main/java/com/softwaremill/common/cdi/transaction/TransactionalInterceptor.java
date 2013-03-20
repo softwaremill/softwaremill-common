@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.transaction;
+package com.softwaremill.common.cdi.transaction;
 
 import org.slf4j.Logger;
 
@@ -12,7 +12,7 @@ import javax.transaction.UserTransaction;
 import java.io.Serializable;
 
 /**
- * An interceptor for the {@link pl.softwaremill.common.cdi.transaction.Transactional} annotation.
+ * An interceptor for the {@link com.softwaremill.common.cdi.transaction.Transactional} annotation.
  *
  * @author Adam Warski (adam at warski dot org)
  * @link http://smokeandice.blogspot.com/2009/12/cdi-and-declarative-transactions.html

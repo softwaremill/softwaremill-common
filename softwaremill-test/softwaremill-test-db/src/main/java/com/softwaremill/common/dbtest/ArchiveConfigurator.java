@@ -1,12 +1,12 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import com.google.common.base.Charsets;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import pl.softwaremill.common.cdi.persistence.EntityWriter;
-import pl.softwaremill.common.cdi.transaction.TransactionalInterceptor;
+import com.softwaremill.common.cdi.persistence.EntityWriter;
+import com.softwaremill.common.cdi.transaction.TransactionalInterceptor;
 
 /**
  * @author Adam Warski (adam at warski dot org)

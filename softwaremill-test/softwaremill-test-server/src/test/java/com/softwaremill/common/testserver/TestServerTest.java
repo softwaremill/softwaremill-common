@@ -1,4 +1,4 @@
-package pl.softwaremill.common.testserver;
+package com.softwaremill.common.testserver;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;

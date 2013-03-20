@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.system;
+package com.softwaremill.common.util.system;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

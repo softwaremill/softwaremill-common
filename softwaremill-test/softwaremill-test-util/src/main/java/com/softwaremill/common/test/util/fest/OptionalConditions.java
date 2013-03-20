@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util.fest;
+package com.softwaremill.common.test.util.fest;
 
 import com.google.common.base.Optional;
 import org.fest.assertions.Condition;

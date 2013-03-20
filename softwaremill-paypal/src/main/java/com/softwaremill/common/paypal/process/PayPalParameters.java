@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.process;
+package com.softwaremill.common.paypal.process;
 
 public class PayPalParameters {
 

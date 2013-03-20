@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.persistence;
+package com.softwaremill.common.cdi.persistence;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;

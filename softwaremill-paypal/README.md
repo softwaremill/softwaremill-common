@@ -5,7 +5,7 @@
 To enable your application supporting paypal requests, you need to extend the abstract
 
 ```java
-pl.softwaremill.common.paypal.servlet.IPNServlet
+com.softwaremill.common.paypal.servlet.IPNServlet
 ```
 
 And provide an implementation of two things - PayPalErrorHandler and an instance of PayPalProcessorsFactory that will

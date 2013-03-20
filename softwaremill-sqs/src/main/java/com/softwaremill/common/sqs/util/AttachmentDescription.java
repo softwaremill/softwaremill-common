@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.util;
+package com.softwaremill.common.sqs.util;
 
 /**
  * @author Adam Warski (adam at warski dot org)

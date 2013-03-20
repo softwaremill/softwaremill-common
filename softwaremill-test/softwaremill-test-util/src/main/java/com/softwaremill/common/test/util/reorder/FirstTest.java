@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util.reorder;
+package com.softwaremill.common.test.util.reorder;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

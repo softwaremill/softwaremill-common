@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.autofactory;
+package com.softwaremill.common.cdi.autofactory;
 
 /**
  * @author Adam Warski (adam at warski dot org)

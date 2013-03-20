@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.transaction;
+package com.softwaremill.common.cdi.transaction;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.*;

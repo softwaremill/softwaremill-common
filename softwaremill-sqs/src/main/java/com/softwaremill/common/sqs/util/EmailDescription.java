@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.util;
+package com.softwaremill.common.sqs.util;
 
 import java.io.Serializable;
 

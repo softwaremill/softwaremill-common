@@ -1,19 +1,19 @@
-package pl.softwaremill.common.sqs.task;
+package com.softwaremill.common.sqs.task;
 
 import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.sqs.Queue;
-import pl.softwaremill.common.sqs.ReceivedMessage;
-import pl.softwaremill.common.sqs.SQS;
-import pl.softwaremill.common.sqs.timer.TimerManager;
-import pl.softwaremill.common.task.ExecuteWithRequestContext;
-import pl.softwaremill.common.task.OneTimeTask;
+import com.softwaremill.common.sqs.Queue;
+import com.softwaremill.common.sqs.ReceivedMessage;
+import com.softwaremill.common.sqs.SQS;
+import com.softwaremill.common.sqs.timer.TimerManager;
+import com.softwaremill.common.task.ExecuteWithRequestContext;
+import com.softwaremill.common.task.OneTimeTask;
 
 import javax.ejb.Timeout;
 import javax.inject.Inject;
 
-import static pl.softwaremill.common.sqs.SQSConfiguration.TASK_SQS_QUEUE;
+import static com.softwaremill.common.sqs.SQSConfiguration.TASK_SQS_QUEUE;
 
 /**
  * Receiver polling Amazon's SQS queue and executing tasks.

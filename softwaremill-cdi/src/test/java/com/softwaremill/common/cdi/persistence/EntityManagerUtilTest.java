@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.persistence;
+package com.softwaremill.common.cdi.persistence;
 
 import org.hibernate.ejb.Ejb3Configuration;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -6,7 +6,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.arquillian.ManifestUtil;
+import com.softwaremill.common.arquillian.ManifestUtil;
 
 import javax.persistence.EntityManager;
 

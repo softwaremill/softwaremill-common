@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.io;
+package com.softwaremill.common.util.io;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

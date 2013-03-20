@@ -1,4 +1,4 @@
-package pl.softwaremill.common.conf.encoding.server;
+package com.softwaremill.common.conf.encoding.server;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;

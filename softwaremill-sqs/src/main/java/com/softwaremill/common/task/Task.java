@@ -1,4 +1,4 @@
-package pl.softwaremill.common.task;
+package com.softwaremill.common.task;
 
 import java.io.Serializable;
 

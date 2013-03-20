@@ -1,4 +1,4 @@
-package pl.softwaremill.common.sqs.task;
+package com.softwaremill.common.sqs.task;
 
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQSClient;
@@ -15,20 +15,20 @@ import org.jboss.weld.context.bound.BoundRequestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.conf.Configuration;
-import pl.softwaremill.common.sqs.SQS;
-import pl.softwaremill.common.sqs.email.SendEmailTask;
-import pl.softwaremill.common.sqs.email.SendEmailTaskExecutor;
-import pl.softwaremill.common.sqs.util.EmailDescription;
-import pl.softwaremill.common.util.dependency.D;
+import com.softwaremill.common.conf.Configuration;
+import com.softwaremill.common.sqs.SQS;
+import com.softwaremill.common.sqs.email.SendEmailTask;
+import com.softwaremill.common.sqs.email.SendEmailTaskExecutor;
+import com.softwaremill.common.sqs.util.EmailDescription;
+import com.softwaremill.common.util.dependency.D;
 
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static pl.softwaremill.common.sqs.SQSConfiguration.EMAIL_FROM;
-import static pl.softwaremill.common.sqs.SQSConfiguration.EMAIL_SMTP_PORT;
+import static com.softwaremill.common.sqs.SQSConfiguration.EMAIL_FROM;
+import static com.softwaremill.common.sqs.SQSConfiguration.EMAIL_SMTP_PORT;
 
 /**
  * @author Maciej Bilas

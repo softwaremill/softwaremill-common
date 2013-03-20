@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util;
+package com.softwaremill.common.test.util;
 
 /**
  * Used in tests to get exception thrown by the closure provided in the <code>execute</code> method.

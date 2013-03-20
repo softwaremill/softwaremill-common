@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.objectservice;
+package com.softwaremill.common.cdi.objectservice;
 
 /**
  * @author Adam Warski (adam at warski dot org)

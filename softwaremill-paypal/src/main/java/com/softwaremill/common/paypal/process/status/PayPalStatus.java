@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.process.status;
+package com.softwaremill.common.paypal.process.status;
 
 public class PayPalStatus {
 

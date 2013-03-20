@@ -3,7 +3,7 @@
 Maven dependency:
 
     <dependency>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-test-util</artifactId>
         <version>70</version>
     </dependency>

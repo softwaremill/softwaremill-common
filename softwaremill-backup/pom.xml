@@ -6,7 +6,7 @@
 	<name>Softwaremill backup utilities</name>
 
 	<parent>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
         <version>74-SNAPSHOT</version>
     </parent>
@@ -40,13 +40,13 @@
         </dependency>
 
 		<dependency>
-			<groupId>pl.softwaremill.common</groupId>
+			<groupId>com.softwaremill.common</groupId>
 			<artifactId>softwaremill-conf</artifactId>
             <scope>test</scope>
             <version>${project.version}</version>
 		</dependency>
         <dependency>
-			<groupId>pl.softwaremill.common</groupId>
+			<groupId>com.softwaremill.common</groupId>
 			<artifactId>softwaremill-util</artifactId>
             <version>${project.version}</version>
 		</dependency>
@@ -82,7 +82,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>pl.softwaremill.common.backup.RunBackup</mainClass>
+                            <mainClass>com.softwaremill.common.backup.RunBackup</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

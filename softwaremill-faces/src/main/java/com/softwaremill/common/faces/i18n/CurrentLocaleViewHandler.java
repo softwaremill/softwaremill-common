@@ -1,6 +1,6 @@
-package pl.softwaremill.common.faces.i18n;
+package com.softwaremill.common.faces.i18n;
 
-import pl.softwaremill.common.cdi.util.BeanInject;
+import com.softwaremill.common.cdi.util.BeanInject;
 
 import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;

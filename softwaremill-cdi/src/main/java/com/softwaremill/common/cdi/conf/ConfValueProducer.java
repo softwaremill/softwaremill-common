@@ -1,6 +1,6 @@
-package pl.softwaremill.common.cdi.conf;
+package com.softwaremill.common.cdi.conf;
 
-import pl.softwaremill.common.conf.Configuration;
+import com.softwaremill.common.conf.Configuration;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;

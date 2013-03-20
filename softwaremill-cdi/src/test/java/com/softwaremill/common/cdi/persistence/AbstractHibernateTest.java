@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.persistence;
+package com.softwaremill.common.cdi.persistence;
 
 import org.hibernate.ejb.Ejb3Configuration;
 import org.jboss.arquillian.testng.Arquillian;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.el;
+package com.softwaremill.common.cdi.el;
 
 import java.util.Map;
 

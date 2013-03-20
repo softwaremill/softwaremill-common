@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import org.mockito.cglib.proxy.Factory;
 import org.mockito.invocation.InvocationOnMock;

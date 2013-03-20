@@ -1,10 +1,10 @@
-package pl.softwaremill.common.test.web.selenium.screenshots;
+package com.softwaremill.common.test.web.selenium.screenshots;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
-import pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest;
+import com.softwaremill.common.test.web.selenium.AbstractSeleniumTest;
 
 /**
  * It isn't a real test class, it's used in {@link FailureTestListenerTest}

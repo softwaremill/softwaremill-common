@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.objectservice;
+package com.softwaremill.common.cdi.objectservice;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
@@ -6,8 +6,8 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.arquillian.ManifestUtil;
-import pl.softwaremill.common.cdi.objectservice.extension.ObjectServiceExtension;
+import com.softwaremill.common.arquillian.ManifestUtil;
+import com.softwaremill.common.cdi.objectservice.extension.ObjectServiceExtension;
 
 import javax.inject.Inject;
 

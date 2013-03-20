@@ -1,9 +1,9 @@
-package pl.softwaremill.common.cdi.autofactory.multipleconstructors;
+package com.softwaremill.common.cdi.autofactory.multipleconstructors;
 
-import pl.softwaremill.common.cdi.autofactory.CreatedWith;
-import pl.softwaremill.common.cdi.autofactory.Discounts;
-import pl.softwaremill.common.cdi.autofactory.FactoryParameter;
-import pl.softwaremill.common.cdi.autofactory.Product;
+import com.softwaremill.common.cdi.autofactory.CreatedWith;
+import com.softwaremill.common.cdi.autofactory.Discounts;
+import com.softwaremill.common.cdi.autofactory.FactoryParameter;
+import com.softwaremill.common.cdi.autofactory.Product;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package pl.softwaremill.test.swing;
+package com.softwaremill.test.swing;
 
 import org.fest.swing.annotation.GUITest;
 import org.testng.annotations.Listeners;

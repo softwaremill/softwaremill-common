@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import org.apache.http.NameValuePair;
 import org.testng.annotations.Test;

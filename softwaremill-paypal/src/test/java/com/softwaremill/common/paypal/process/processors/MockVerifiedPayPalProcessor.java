@@ -1,8 +1,8 @@
-package pl.softwaremill.common.paypal.process.processors;
+package com.softwaremill.common.paypal.process.processors;
 
-import pl.softwaremill.common.paypal.process.PayPalParameters;
-import pl.softwaremill.common.paypal.process.status.PayPalStatus;
-import pl.softwaremill.common.paypal.service.PayPalVerificationServiceTest;
+import com.softwaremill.common.paypal.process.PayPalParameters;
+import com.softwaremill.common.paypal.process.status.PayPalStatus;
+import com.softwaremill.common.paypal.service.PayPalVerificationServiceTest;
 
 import java.util.logging.Logger;
 

@@ -1,9 +1,9 @@
-package pl.softwaremill.common.test.web.jboss.server;
+package com.softwaremill.common.test.web.jboss.server;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.test.util.Execution;
-import pl.softwaremill.common.test.web.selenium.ServerProperties;
+import com.softwaremill.common.test.util.Execution;
+import com.softwaremill.common.test.web.selenium.ServerProperties;
 
 import java.util.Arrays;
 

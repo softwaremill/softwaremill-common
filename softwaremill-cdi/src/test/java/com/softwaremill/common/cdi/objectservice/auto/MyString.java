@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.objectservice.auto;
+package com.softwaremill.common.cdi.objectservice.auto;
 
 /**
  * String wrapper

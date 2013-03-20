@@ -1,8 +1,8 @@
-package pl.softwaremill.common.dbtest.util;
+package com.softwaremill.common.dbtest.util;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.dbtest.AbstractDBTest;
+import com.softwaremill.common.dbtest.AbstractDBTest;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -20,8 +20,8 @@ public class SqlFileResolverTest {
 	@DataProvider
 	public Object[][] getClasses() {
 	    return new Object[][] {
-	        {AbstractDBTest.class, "pl/softwaremill/common/dbtest/AbstractDBTest.sql"},
-	        {SqlFileResolverTest.class, "pl/softwaremill/common/dbtest/util/SqlFileResolverTest.sql"},
+	        {AbstractDBTest.class, "com/softwaremill/common/dbtest/AbstractDBTest.sql"},
+	        {SqlFileResolverTest.class, "com/softwaremill/common/dbtest/util/SqlFileResolverTest.sql"},
 	    };
 	} 
 }

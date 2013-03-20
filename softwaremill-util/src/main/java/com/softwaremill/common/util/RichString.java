@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 import java.nio.charset.Charset;
 import java.security.MessageDigest;

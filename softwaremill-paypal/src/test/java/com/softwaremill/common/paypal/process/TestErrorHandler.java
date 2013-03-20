@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.process;
+package com.softwaremill.common.paypal.process;
 
 import java.util.logging.Logger;
 

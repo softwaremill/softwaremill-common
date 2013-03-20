@@ -1,7 +1,7 @@
-package pl.softwaremill.common.cdi.autofactory.producer;
+package com.softwaremill.common.cdi.autofactory.producer;
 
-import pl.softwaremill.common.cdi.autofactory.PriceCalculator;
-import pl.softwaremill.common.cdi.autofactory.Product;
+import com.softwaremill.common.cdi.autofactory.PriceCalculator;
+import com.softwaremill.common.cdi.autofactory.Product;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;

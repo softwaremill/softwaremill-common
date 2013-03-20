@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.autofactory.qualifier;
+package com.softwaremill.common.cdi.autofactory.qualifier;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;

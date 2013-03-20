@@ -1,11 +1,11 @@
-package pl.softwaremill.common.cdi.validator;
+package com.softwaremill.common.cdi.validator;
 
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.validation.Length;
-import pl.softwaremill.common.cdi.validation.LengthValidator;
+import com.softwaremill.common.cdi.validation.Length;
+import com.softwaremill.common.cdi.validation.LengthValidator;
 
 import javax.validation.ConstraintValidatorContext;
 

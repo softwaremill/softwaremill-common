@@ -1,7 +1,7 @@
-package pl.softwaremill.common.faces.navigation;
+package com.softwaremill.common.faces.navigation;
 
-import pl.softwaremill.common.cdi.util.BeanInject;
-import pl.softwaremill.common.faces.messages.FacesMessages;
+import com.softwaremill.common.cdi.util.BeanInject;
+import com.softwaremill.common.faces.messages.FacesMessages;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.util;
+package com.softwaremill.common.cdi.util;
 
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;

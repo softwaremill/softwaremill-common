@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import com.google.common.io.Resources;
 import org.apache.log4j.BasicConfigurator;
@@ -15,10 +15,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import pl.softwaremill.common.arquillian.BetterArquillian;
-import pl.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
-import pl.softwaremill.common.dbtest.util.DbMode;
-import pl.softwaremill.common.dbtest.util.SqlFileResolver;
+import com.softwaremill.common.arquillian.BetterArquillian;
+import com.softwaremill.common.cdi.persistence.EntityManagerFactoryProducer;
+import com.softwaremill.common.dbtest.util.DbMode;
+import com.softwaremill.common.dbtest.util.SqlFileResolver;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -1,8 +1,8 @@
-package pl.softwaremill.common.sqs;
+package com.softwaremill.common.sqs;
 
 import com.amazonaws.Protocol;
 import com.google.common.base.Objects;
-import pl.softwaremill.common.sqs.util.Base64Coder;
+import com.softwaremill.common.sqs.util.Base64Coder;
 
 import java.io.*;
 

@@ -1,6 +1,6 @@
-package pl.softwaremill.common.cdi.autofactory.mixed;
+package com.softwaremill.common.cdi.autofactory.mixed;
 
-import pl.softwaremill.common.cdi.autofactory.*;
+import com.softwaremill.common.cdi.autofactory.*;
 
 import javax.inject.Inject;
 import java.util.List;

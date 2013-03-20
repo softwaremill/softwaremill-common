@@ -1,6 +1,6 @@
-package pl.softwaremill.common.paypal.process.processors;
+package com.softwaremill.common.paypal.process.processors;
 
-import pl.softwaremill.common.paypal.process.status.PayPalStatus;
+import com.softwaremill.common.paypal.process.status.PayPalStatus;
 
 public abstract class VerifiedPayPalProcessor extends AbstractPayPalProcessor {
 

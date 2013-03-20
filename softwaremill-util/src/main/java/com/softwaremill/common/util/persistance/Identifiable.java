@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.persistance;
+package com.softwaremill.common.util.persistance;
 
 /**
  * @author Adam Warski (adam at warski dot org)

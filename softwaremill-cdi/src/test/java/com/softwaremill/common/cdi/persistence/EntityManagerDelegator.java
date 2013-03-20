@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.persistence;
+package com.softwaremill.common.cdi.persistence;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;

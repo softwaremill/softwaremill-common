@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 public class Sleeper {
     public static void sleepFor(long millis) {

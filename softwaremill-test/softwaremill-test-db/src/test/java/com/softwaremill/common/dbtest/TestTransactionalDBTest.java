@@ -1,12 +1,12 @@
-package pl.softwaremill.common.dbtest;
+package com.softwaremill.common.dbtest;
 
 import org.hibernate.ejb.Ejb3Configuration;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.cdi.persistence.EntityWriter;
-import pl.softwaremill.common.cdi.persistence.ReadOnly;
-import pl.softwaremill.common.util.dependency.D;
+import com.softwaremill.common.cdi.persistence.EntityWriter;
+import com.softwaremill.common.cdi.persistence.ReadOnly;
+import com.softwaremill.common.util.dependency.D;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

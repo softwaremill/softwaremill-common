@@ -1,12 +1,12 @@
-package pl.softwaremill.common.test.web.jboss;
+package com.softwaremill.common.test.web.jboss;
 
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import pl.softwaremill.common.test.util.MessageWaiter;
-import pl.softwaremill.common.test.web.jboss.server.JBossAS;
-import pl.softwaremill.common.test.web.jboss.server.JBossASProvider;
-import pl.softwaremill.common.test.web.selenium.ServerProperties;
+import com.softwaremill.common.test.util.MessageWaiter;
+import com.softwaremill.common.test.web.jboss.server.JBossAS;
+import com.softwaremill.common.test.web.jboss.server.JBossASProvider;
+import com.softwaremill.common.test.web.selenium.ServerProperties;
 
 import java.io.File;
 import java.io.IOException;

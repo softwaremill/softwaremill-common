@@ -1,12 +1,12 @@
-package pl.softwaremill.common.faces.security;
+package com.softwaremill.common.faces.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.cdi.el.ELEvaluator;
-import pl.softwaremill.common.cdi.security.LoginBean;
-import pl.softwaremill.common.cdi.util.BeanInject;
-import pl.softwaremill.common.faces.navigation.NavBase;
-import pl.softwaremill.common.faces.navigation.Page;
+import com.softwaremill.common.cdi.el.ELEvaluator;
+import com.softwaremill.common.cdi.security.LoginBean;
+import com.softwaremill.common.cdi.util.BeanInject;
+import com.softwaremill.common.faces.navigation.NavBase;
+import com.softwaremill.common.faces.navigation.Page;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;

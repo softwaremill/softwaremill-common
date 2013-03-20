@@ -1,4 +1,4 @@
-package pl.softwaremill.common.arquillian;
+package com.softwaremill.common.arquillian;
 
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.IHookCallBack;

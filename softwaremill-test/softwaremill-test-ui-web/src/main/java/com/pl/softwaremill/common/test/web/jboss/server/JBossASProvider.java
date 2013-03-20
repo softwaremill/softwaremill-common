@@ -1,6 +1,6 @@
-package pl.softwaremill.common.test.web.jboss.server;
+package com.softwaremill.common.test.web.jboss.server;
 
-import pl.softwaremill.common.test.web.selenium.ServerProperties;
+import com.softwaremill.common.test.web.selenium.ServerProperties;
 
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)

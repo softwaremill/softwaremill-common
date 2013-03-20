@@ -5,7 +5,7 @@
     <name>Softwaremill Debugging utilities</name>
 
     <parent>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
         <version>74-SNAPSHOT</version>
     </parent>
@@ -13,7 +13,7 @@
     <dependencies>
         <!-- Inter-modules dependencies -->
         <dependency>
-            <groupId>pl.softwaremill.common</groupId>
+            <groupId>com.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -1,4 +1,4 @@
-package pl.softwaremill.common.testserver;
+package com.softwaremill.common.testserver;
 
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;

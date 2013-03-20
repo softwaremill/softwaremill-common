@@ -1,9 +1,9 @@
-package pl.softwaremill.common.faces.messages;
+package com.softwaremill.common.faces.messages;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.softwaremill.common.cdi.el.ELEvaluator;
-import pl.softwaremill.common.faces.i18n.CurrentLocale;
+import com.softwaremill.common.cdi.el.ELEvaluator;
+import com.softwaremill.common.faces.i18n.CurrentLocale;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;

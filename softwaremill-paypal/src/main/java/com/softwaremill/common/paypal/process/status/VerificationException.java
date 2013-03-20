@@ -1,4 +1,4 @@
-package pl.softwaremill.common.paypal.process.status;
+package com.softwaremill.common.paypal.process.status;
 
 /**
  * @Author: lukasz.zuchowski at gmail dot com

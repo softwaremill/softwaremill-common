@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.selenium.screenshots;
+package com.softwaremill.common.test.web.selenium.screenshots;
 
 /**
  * Screenshotter

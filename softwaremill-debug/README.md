@@ -3,7 +3,7 @@
 Maven dependency:
 
     <dependency>
-        <groupId>pl.softwaremill.common</groupId>
+        <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-debug</artifactId>
     </dependency>
 
@@ -18,7 +18,7 @@ Times method calls. The results can be displayed using the filter or printed man
 To enable, annotate desired classes/methdods with `@Timed` and enable the interceptor in `beans.xml`:
 
     <interceptors>
-        <class>pl.softwaremill.common.debug.timing.TimingInterceptor</class>
+        <class>com.softwaremill.common.debug.timing.TimingInterceptor</class>
     </interceptors>
 
 ## Timing proxy
@@ -48,7 +48,7 @@ To enable, add to `web.xml`:
 
     <filter>
         <filter-name>Debug</filter-name>
-        <filter-class>pl.softwaremill.common.debug.timing.TimingOutputFilter</filter-class>
+        <filter-class>com.softwaremill.common.debug.timing.TimingOutputFilter</filter-class>
     </filter>
 
     <filter-mapping>

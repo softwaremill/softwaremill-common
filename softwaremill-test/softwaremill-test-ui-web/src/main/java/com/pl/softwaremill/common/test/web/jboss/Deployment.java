@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.jboss;
+package com.softwaremill.common.test.web.jboss;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)

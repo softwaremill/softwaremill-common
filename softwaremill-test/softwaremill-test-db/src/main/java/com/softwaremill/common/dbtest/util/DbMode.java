@@ -1,4 +1,4 @@
-package pl.softwaremill.common.dbtest.util;
+package com.softwaremill.common.dbtest.util;
 
 /**
  * Created by Pawel Stawicki on Mar 31, 2011 9:38:46 PM

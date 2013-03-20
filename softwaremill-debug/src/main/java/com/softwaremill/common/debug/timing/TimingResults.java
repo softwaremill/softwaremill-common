@@ -1,4 +1,4 @@
-package pl.softwaremill.common.debug.timing;
+package com.softwaremill.common.debug.timing;
 
 import javax.interceptor.InvocationContext;
 import java.lang.reflect.Method;

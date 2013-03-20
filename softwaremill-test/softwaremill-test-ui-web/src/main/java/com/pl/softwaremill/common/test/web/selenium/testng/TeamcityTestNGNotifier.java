@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.web.selenium.testng;
+package com.softwaremill.common.test.web.selenium.testng;
 
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;

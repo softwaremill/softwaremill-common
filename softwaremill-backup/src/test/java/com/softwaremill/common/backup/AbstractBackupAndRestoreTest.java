@@ -1,8 +1,8 @@
-package pl.softwaremill.common.backup;
+package com.softwaremill.common.backup;
 
 import com.xerox.amazonws.simpledb.*;
 import org.testng.annotations.BeforeClass;
-import pl.softwaremill.common.conf.Configuration;
+import com.softwaremill.common.conf.Configuration;
 
 import java.util.Map;
 import java.util.Set;

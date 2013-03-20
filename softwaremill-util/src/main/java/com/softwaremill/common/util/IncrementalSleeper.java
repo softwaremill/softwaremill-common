@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util;
+package com.softwaremill.common.util;
 
 /**
  * Suspends the current thread for exponentially increasing intervals of time, until the maximum sleep interval is

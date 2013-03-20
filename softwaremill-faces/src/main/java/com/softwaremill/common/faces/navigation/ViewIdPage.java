@@ -1,4 +1,4 @@
-package pl.softwaremill.common.faces.navigation;
+package com.softwaremill.common.faces.navigation;
 
 import java.util.Map;
 

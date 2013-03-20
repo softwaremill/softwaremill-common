@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.collect;
+package com.softwaremill.common.util.collect;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
@@ -6,7 +6,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.testng.annotations.Test;
-import pl.softwaremill.common.util.tuples.Pair;
+import com.softwaremill.common.util.tuples.Pair;
 
 import java.util.*;
 
@@ -14,8 +14,8 @@ import static com.google.common.base.Predicates.alwaysFalse;
 import static com.google.common.base.Predicates.alwaysTrue;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.testng.Assert.*;
-import static pl.softwaremill.common.util.collect.Collections3.maxNullSafe;
-import static pl.softwaremill.common.util.collect.Collections3.partition;
+import static com.softwaremill.common.util.collect.Collections3.maxNullSafe;
+import static com.softwaremill.common.util.collect.Collections3.partition;
 
 /**
  * @author Maciej Biłas

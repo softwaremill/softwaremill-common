@@ -1,10 +1,10 @@
-package pl.softwaremill.common.test.web.selenium;
+package com.softwaremill.common.test.web.selenium;
 
 import org.testng.Assert;
 
 import java.util.Calendar;
 
-import static pl.softwaremill.common.test.web.selenium.AbstractSeleniumTest.selenium;
+import static com.softwaremill.common.test.web.selenium.AbstractSeleniumTest.selenium;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)

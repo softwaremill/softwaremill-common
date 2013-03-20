@@ -1,4 +1,4 @@
-package pl.softwaremill.common.test.util.reorder;
+package com.softwaremill.common.test.util.reorder;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;

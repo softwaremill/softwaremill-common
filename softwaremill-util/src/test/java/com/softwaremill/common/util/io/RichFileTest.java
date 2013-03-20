@@ -1,4 +1,4 @@
-package pl.softwaremill.common.util.io;
+package com.softwaremill.common.util.io;
 
 import org.testng.annotations.Test;
 

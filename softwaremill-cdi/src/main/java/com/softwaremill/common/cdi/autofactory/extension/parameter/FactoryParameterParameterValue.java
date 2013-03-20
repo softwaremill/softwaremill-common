@@ -1,4 +1,4 @@
-package pl.softwaremill.common.cdi.autofactory.extension.parameter;
+package com.softwaremill.common.cdi.autofactory.extension.parameter;
 
 import javax.enterprise.inject.spi.BeanManager;
 
