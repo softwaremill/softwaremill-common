@@ -65,6 +65,10 @@ Lets you run tests that use a database.
 
 ### [FEST Assert for joda time classes](/softwaremill-test/softwaremill-test-util/)
 
+### [Test server](/softwaremill-test/softwaremill-test-server/)
+
+For testing of requests sent to server
+
 ## [Java utilities](/softwaremill-util/)
 
 ## [Backup utilities](/softwaremill-backup/)
