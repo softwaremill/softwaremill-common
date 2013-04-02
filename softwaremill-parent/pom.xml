@@ -44,6 +44,11 @@
             </dependency>
             <dependency>
                 <groupId>com.softwaremill.common</groupId>
+                <artifactId>softwaremill-test-server</artifactId>
+                <version>${softwaremill.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.softwaremill.common</groupId>
                 <artifactId>softwaremill-test-ui-swing</artifactId>
                 <version>${softwaremill.common.version}</version>
             </dependency>
