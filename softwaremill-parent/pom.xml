@@ -7,11 +7,11 @@
     <parent>
         <groupId>com.softwaremill.common</groupId>
         <artifactId>softwaremill-common-parent</artifactId>
-        <version>76-SNAPSHOT</version>
+        <version>76</version>
     </parent>
 
     <properties>
-        <softwaremill.common.version>76-SNAPSHOT</softwaremill.common.version>
+        <softwaremill.common.version>76</softwaremill.common.version>
     </properties>
 
     <dependencyManagement>
