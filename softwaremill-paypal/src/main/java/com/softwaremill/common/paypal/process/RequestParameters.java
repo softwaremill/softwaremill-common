@@ -73,11 +73,15 @@ public class RequestParameters {
         }
     }
 
-    private String fixTheParameterForIPN(String parameter) {
+    private static String fixTheParameterForIPN(String parameter) {
         // hack from http://www.hebtech.co.uk/blog/paypal-ipn-invalid-on-live-server-but-valid-on-test-server-fixed/
 
         Matcher matcher = HACKY_PARAMS.matcher(parameter);
         StringBuffer s = new StringBuffer();
+
+        if (!matcher.matches()) {
+            return parameter;
+        }
 
         while (matcher.find()) {
             matcher.appendReplacement(s, matcher.group(1) + "%0D%0A");
