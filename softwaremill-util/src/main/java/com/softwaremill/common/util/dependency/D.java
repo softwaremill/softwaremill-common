@@ -1,18 +1,13 @@
 package com.softwaremill.common.util.dependency;
 
 import com.google.common.collect.ImmutableList;
+import com.softwaremill.common.util.ClassUtil;
+import org.jboss.weld.context.bound.BoundRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.softwaremill.common.util.ClassUtil;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -26,6 +21,7 @@ public class D {
 
     /**
      * Try to find the given dependency in the registered providers.
+     *
      * @throws RuntimeException If the dependency is not found in any provider.
      */
     public static <T> T inject(Class<T> cls, Annotation... qualifiers) {
@@ -41,7 +37,7 @@ public class D {
 
     /**
      * @param provider A new dependency provider to add. The provider will be checked first when looking for
-     * dependencies.
+     *                 dependencies.
      */
     public static void register(DependencyProvider provider) {
         log.debug("Registering " + provider);
@@ -89,4 +85,22 @@ public class D {
     static Set<Annotation> createKeyForAnnotations(Annotation[] annotations) {
         return new HashSet<Annotation>(Arrays.asList(annotations));
     }
+
+    public static void inRequestContext(final Runnable function) {
+        inRequestContext(new HashMap<String, Object>(), function);
+    }
+
+    public static void inRequestContext(final Map<String, Object> context, final Runnable function) {
+        final BoundRequestContext requestContext = D.inject(BoundRequestContext.class);
+        try {
+            requestContext.associate(context);
+            requestContext.activate();
+            function.run();
+        } finally {
+            requestContext.invalidate();
+            requestContext.deactivate();
+            requestContext.dissociate(context);
+        }
+    }
+
 }

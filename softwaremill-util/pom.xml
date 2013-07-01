@@ -53,5 +53,21 @@
             <artifactId>httpclient</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- For creating temporary requests in D.inRequestContext -->
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- to test D.inRequestContext -->
+        <dependency>
+            <groupId>com.softwaremill.common</groupId>
+            <artifactId>softwaremill-test-arquillian</artifactId>
+            <scope>test</scope>
+            <version>${version}</version>
+        </dependency>
+
     </dependencies>
 </project>
