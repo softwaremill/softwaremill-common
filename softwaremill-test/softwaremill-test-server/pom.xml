@@ -3,7 +3,7 @@
     <parent>
         <artifactId>softwaremill-test</artifactId>
         <groupId>com.softwaremill.common</groupId>
-        <version>78-SNAPSHOT</version>
+        <version>78</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
