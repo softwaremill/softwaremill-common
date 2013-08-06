@@ -5,7 +5,7 @@
   <parent>
     <artifactId>softwaremill-common-parent</artifactId>
     <groupId>com.softwaremill.common</groupId>
-    <version>78</version>
+    <version>78-SNAPSHOT</version>
   </parent>
 
   <artifactId>softwaremill-paypal</artifactId>
