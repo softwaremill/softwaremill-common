@@ -1,10 +1,12 @@
 package com.softwaremill.common.util.io;
 
+import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class KillableProcess {
     private static final Logger log = LoggerFactory.getLogger(KillableProcess.class);
@@ -24,10 +26,19 @@ public class KillableProcess {
     }
     
     public Process start() throws IOException {
-        process = new ProcessBuilder("sh",
-                "-c",
-                shellCommand).start();
-        
+        return startWithEnvironment(ImmutableMap.<String, String>of());
+    }
+
+    public Process startWithEnvironmentVar(String name, String value) throws IOException {
+        return startWithEnvironment(ImmutableMap.of(name, value));
+    }
+
+    public Process startWithEnvironment(Map<String, String> env) throws IOException {
+        ProcessBuilder processBuilder = new ProcessBuilder("sh", "-c", shellCommand);
+        processBuilder.environment().putAll(env);
+
+        process = processBuilder.start();
+
         return process;
     }
     
