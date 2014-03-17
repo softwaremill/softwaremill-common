@@ -18,12 +18,12 @@
         <dependency>
             <groupId>com.softwaremill.common</groupId>
             <artifactId>softwaremill-util</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.softwaremill.common</groupId>
             <artifactId>softwaremill-test-util</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>

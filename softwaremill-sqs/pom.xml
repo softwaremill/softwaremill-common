@@ -15,12 +15,12 @@
 		<dependency>
 			<groupId>com.softwaremill.common</groupId>
 			<artifactId>softwaremill-conf</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.softwaremill.common</groupId>
 			<artifactId>softwaremill-util</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
 		</dependency>
 
 		<dependency>
@@ -94,8 +94,9 @@
 		</testResources>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
 				<configuration>
 					<skipTests>${softwaremill.common.skipIntegrationTests}</skipTests>
 				</configuration>
