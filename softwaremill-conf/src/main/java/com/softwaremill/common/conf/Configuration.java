@@ -111,6 +111,7 @@ public class Configuration {
     }
 
     static ImmutableMap<String, String> loadFromURL(URL url) {
+        log.info("Loading configuration from URL: " + url);
         Properties props = new Properties();
         try {
             InputStream is = url.openStream();
