@@ -4,7 +4,7 @@
     <parent>
         <artifactId>softwaremill-test</artifactId>
         <groupId>com.softwaremill.common</groupId>
-        <version>79</version>
+        <version>80-SNAPSHOT</version>
     </parent>
 
     <artifactId>softwaremill-test-ui-swing</artifactId>
