@@ -1,14 +1,17 @@
 package com.softwaremill.common.conf;
 
+import com.softwaremill.common.conf.encoding.MasterPasswordStore;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.softwaremill.common.conf.encoding.MasterPasswordStore;
 
 import java.util.Map;
 
-import static org.fest.assertions.Assertions.*;
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
+ * If this test fails with java.security.InvalidKeyException: Illegal key size
+ * Take a look at comment on com.softwaremill.common.conf.encoding.TextCoder
+ *
  * @author Adam Warski (adam at warski dot org)
  */
 public class ConfigurationTest {
