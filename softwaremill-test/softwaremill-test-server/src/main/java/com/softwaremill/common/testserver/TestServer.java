@@ -1,15 +1,17 @@
 package com.softwaremill.common.testserver;
 
+import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
 import org.eclipse.jetty.security.HashLoginService;
 import org.eclipse.jetty.security.authentication.BasicAuthenticator;
 import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
-import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.security.Credential;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
@@ -40,8 +42,6 @@ public class TestServer {
     private ConstraintSecurityHandler securityHandler = null;
     private List<Responder> responders = new ArrayList<Responder>();
 
-    private SslSelectChannelConnector sslConnector = null;
-
     public TestServer() {
         this(JETTY_PORT, JETTY_HTTPS_PORT);
     }
@@ -67,19 +67,25 @@ public class TestServer {
         securityHandler.setHandler(createRespondersHandler());
         server.setHandler(securityHandler);
 
-        sslConnector = createSslConnector();
+        ServerConnector sslConnector = createSslConnector();
         server.addConnector(sslConnector);
 
         server.start();
     }
 
-    private SslSelectChannelConnector createSslConnector() {
-        SslContextFactory contextFactory = new SslContextFactory();
-        contextFactory.setKeyStoreResource(Resource.newClassPathResource("dummy.keystore"));
-        contextFactory.setKeyStorePassword("qwerty");
-        SslSelectChannelConnector selectChannelConnector = new SslSelectChannelConnector(contextFactory);
-        selectChannelConnector.setPort(httpsPort);
-        return selectChannelConnector;
+    private ServerConnector createSslConnector() {
+        SslContextFactory sslContextFactory = new SslContextFactory();
+        sslContextFactory.setKeyStorePath(getClass().getResource("/dummy.keystore").toExternalForm());
+        sslContextFactory.setKeyStorePassword("qwerty");
+        sslContextFactory.setKeyManagerPassword("qwerty");
+
+        SslConnectionFactory sslConnectionFactory = new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString());
+        HttpConnectionFactory httpConnectionFactory = new HttpConnectionFactory();
+
+        ServerConnector connector = new ServerConnector(server, sslConnectionFactory, httpConnectionFactory);
+        connector.setPort(httpsPort);
+
+        return connector;
     }
 
     private Handler createRespondersHandler() {
