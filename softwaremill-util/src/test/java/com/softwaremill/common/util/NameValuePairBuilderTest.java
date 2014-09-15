@@ -37,10 +37,20 @@ public class NameValuePairBuilderTest {
         // Then
         assertThat(nameValuePairs).hasSize(2);
 
-        assertThat(nameValuePairs[0].getName()).isEqualTo("name1");
-        assertThat(nameValuePairs[0].getValue()).isEqualTo("value1");
+        assertThat(nameValuePairs).onProperty("name").contains("name1", "name2");
 
-        assertThat(nameValuePairs[1].getName()).isEqualTo("name2");
-        assertThat(nameValuePairs[1].getValue()).isEqualTo("value2");
+        int indexOfName1 = 0;
+        int indexOfName2 = 1;
+
+        if (nameValuePairs[0].getName().equals("name2")) {
+            indexOfName1 = 1;
+            indexOfName2 = 0;
+        }
+
+        assertThat(nameValuePairs[indexOfName1].getName()).isEqualTo("name1");
+        assertThat(nameValuePairs[indexOfName1].getValue()).isEqualTo("value1");
+
+        assertThat(nameValuePairs[indexOfName2].getName()).isEqualTo("name2");
+        assertThat(nameValuePairs[indexOfName2].getValue()).isEqualTo("value2");
     }
 }
