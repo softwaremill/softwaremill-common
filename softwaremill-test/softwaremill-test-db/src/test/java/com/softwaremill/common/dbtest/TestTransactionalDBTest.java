@@ -18,7 +18,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * Simple test to demonstrate how to use TransactionalDBTest
  */
-@Test
+@Test(dependsOnGroups = "TestOfDbTest")
 public class TestTransactionalDBTest extends TransactionalDBTest {
 
     @Inject

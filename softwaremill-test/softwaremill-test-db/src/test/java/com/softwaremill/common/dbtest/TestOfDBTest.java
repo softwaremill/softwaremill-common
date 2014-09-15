@@ -12,6 +12,7 @@ import java.util.Arrays;
 /**
  * @author Adam Warski (adam at warski dot org)
  */
+@Test(groups = "TestOfDbTest")
 public class TestOfDBTest extends AbstractDBTest {
     @Override
     public void configureEntities(Ejb3Configuration cfg) {
