@@ -1,9 +1,10 @@
 package com.softwaremill.test.swing;
 
-import org.fest.swing.testng.listener.AbstractTestListener;
+import org.assertj.swing.testng.listener.AbstractTestListener;
+import org.testng.ITestNGListener;
 import org.testng.ITestResult;
 
-class TeamCityScreenShotOnFailureListener extends AbstractTestListener {
+class TeamCityScreenShotOnFailureListener extends AbstractTestListener implements ITestNGListener {
 
     private GuiScreenShotTaker screenshot;
 

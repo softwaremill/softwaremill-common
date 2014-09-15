@@ -12,7 +12,7 @@ import com.softwaremill.common.arquillian.ManifestUtil;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertNull;
 
 /**

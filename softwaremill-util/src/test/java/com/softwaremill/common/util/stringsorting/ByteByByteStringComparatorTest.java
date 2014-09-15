@@ -3,7 +3,7 @@ package com.softwaremill.common.util.stringsorting;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Adam Warski (adam at warski dot org)

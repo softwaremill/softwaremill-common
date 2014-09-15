@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 import static com.googlecode.catchexception.CatchException.catchException;
 import static com.googlecode.catchexception.CatchException.caughtException;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class NameValuePairBuilderTest {
 
@@ -37,7 +37,7 @@ public class NameValuePairBuilderTest {
         // Then
         assertThat(nameValuePairs).hasSize(2);
 
-        assertThat(nameValuePairs).onProperty("name").contains("name1", "name2");
+        assertThat(nameValuePairs).extracting("name").contains("name1", "name2");
 
         int indexOfName1 = 0;
         int indexOfName2 = 1;

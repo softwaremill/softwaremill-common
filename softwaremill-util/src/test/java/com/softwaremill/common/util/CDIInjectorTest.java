@@ -9,8 +9,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static org.fest.assertions.Assertions.*;
 import static com.softwaremill.common.util.CDIInjector.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Adam Warski (adam at warski dot org)

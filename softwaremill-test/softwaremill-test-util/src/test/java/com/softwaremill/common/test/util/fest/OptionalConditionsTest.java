@@ -3,7 +3,7 @@ package com.softwaremill.common.test.util.fest;
 import com.google.common.base.Optional;
 import org.testng.annotations.Test;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static com.softwaremill.common.test.util.fest.OptionalConditions.absent;
 import static com.softwaremill.common.test.util.fest.OptionalConditions.present;
 

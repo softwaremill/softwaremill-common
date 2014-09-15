@@ -1,6 +1,6 @@
 package com.softwaremill.common.test.util.fest;
 
-import org.fest.assertions.GenericAssert;
+import org.assertj.core.api.AbstractAssert;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
@@ -8,6 +8,7 @@ import org.joda.time.LocalDateTime;
 import java.util.Date;
 
 import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.fail;
 
 public class TimeAssertions {
 
@@ -25,16 +26,14 @@ public class TimeAssertions {
         return new LocalDateTimeAssert(LocalDateTimeAssert.class, localDateTime);
     }
 
-    public static class DateTimeAssert extends GenericAssert<DateTimeAssert, DateTime> {
+    public static class DateTimeAssert extends AbstractAssert<DateTimeAssert, DateTime> {
 
         /**
-         * Creates a new <code>{@link org.fest.assertions.GenericAssert}</code>.
-         *
          * @param selfType the "self type"
          * @param actual   the actual value to verify
          */
         protected DateTimeAssert(Class<DateTimeAssert> selfType, DateTime actual) {
-            super(selfType, actual);
+            super(actual, selfType);
         }
 
         public DateTimeAssert isBefore(DateTime moment) {
@@ -102,12 +101,12 @@ public class TimeAssertions {
         }
     }
 
-    public static class LocalDateTimeAssert extends GenericAssert<LocalDateTimeAssert, LocalDateTime> {
+    public static class LocalDateTimeAssert extends AbstractAssert<LocalDateTimeAssert, LocalDateTime> {
 
         private final DateTimeAssert delegate;
 
         protected LocalDateTimeAssert(Class<LocalDateTimeAssert> selfType, LocalDateTime actual) {
-            super(selfType, actual);
+            super(actual, selfType);
             delegate = new DateTimeAssert(DateTimeAssert.class, actual.toDateTime(DateTimeZone.UTC));
         }
 

@@ -16,8 +16,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-swing-testng</artifactId>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-swing-testng</artifactId>
         </dependency>
     </dependencies>
 

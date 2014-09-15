@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import javax.inject.Inject;
 import java.util.Arrays;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Adam Warski (adam at warski dot org)

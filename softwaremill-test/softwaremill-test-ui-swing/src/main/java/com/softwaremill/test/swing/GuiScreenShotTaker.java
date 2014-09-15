@@ -1,7 +1,7 @@
 package com.softwaremill.test.swing;
 
-import org.fest.swing.image.ImageException;
-import org.fest.swing.image.ScreenshotTaker;
+import org.assertj.swing.image.ImageException;
+import org.assertj.swing.image.ScreenshotTaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

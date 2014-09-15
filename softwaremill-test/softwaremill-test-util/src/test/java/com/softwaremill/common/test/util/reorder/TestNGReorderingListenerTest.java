@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -230,7 +230,7 @@ public class TestNGReorderingListenerTest {
 
 
         // then
-        assertThat(reorderedMethods).onProperty("method.methodName").containsExactly(
+        assertThat(reorderedMethods).extracting("method.methodName").containsExactly(
                 ClassWithMethodsToTest.WITHOUT_ANNOTATIONS,
                 ClassWithMethodsToTest.METHOD_DEPENDANT_UPON_OTHER_METHODS);
 
@@ -249,7 +249,7 @@ public class TestNGReorderingListenerTest {
         List<IMethodInstance> reorderedMethods = listener.reorder(listener.distributeMethodsByClass(methods));
 
         // then
-        assertThat(reorderedMethods).onProperty("method.methodName").containsExactly(
+        assertThat(reorderedMethods).extracting("method.methodName").containsExactly(
                 ClassWithMethodsToTest.WITH_FIRST_TEST_ANNOTATION,
                 ClassWithMethodsToTest.WITHOUT_ANNOTATIONS,
                 ClassWithMethodsToTest.WITHOUT_ANNOTATIONS);
@@ -269,7 +269,7 @@ public class TestNGReorderingListenerTest {
         List<IMethodInstance> reorderedMethods = listener.reorder(listener.distributeMethodsByClass(methods));
 
         // then
-        assertThat(reorderedMethods).onProperty("method.methodName").containsExactly(
+        assertThat(reorderedMethods).extracting("method.methodName").containsExactly(
                 ClassWithMethodsToTest.WITHOUT_ANNOTATIONS,
                 ClassWithMethodsToTest.WITHOUT_ANNOTATIONS,
                 ClassWithMethodsToTest.WITH_LAST_TEST_ANNOTATION);
@@ -293,7 +293,7 @@ public class TestNGReorderingListenerTest {
         List<IMethodInstance> reorderedMethods = listener.reorder(listener.distributeMethodsByClass(methods));
 
         // then
-        assertThat(reorderedMethods).onProperty("method.methodName").containsExactly(
+        assertThat(reorderedMethods).extracting("method.methodName").containsExactly(
                 ClassWithMethodsToTest.WITH_FIRST_TEST_ANNOTATION,
                 ClassWithMethodsToTest.WITH_TEST_ORDER_ONE,
                 ClassWithMethodsToTest.WITH_TEST_ORDER_TEN,
@@ -316,7 +316,7 @@ public class TestNGReorderingListenerTest {
         List<IMethodInstance> reorderedMethods = listener.reorder(listener.distributeMethodsByClass(methods));
 
         // then
-        assertThat(reorderedMethods).onProperty("method.methodName").containsExactly(
+        assertThat(reorderedMethods).extracting("method.methodName").containsExactly(
                 ClassWithMethodsToTest.WITH_TEST_ORDER_ONE,
                 ClassWithMethodsToTest.WITH_TEST_ORDER_TEN);
 
@@ -335,7 +335,7 @@ public class TestNGReorderingListenerTest {
         List<IMethodInstance> reorderedMethods = listener.reorder(listener.distributeMethodsByClass(methods));
 
         // then
-        assertThat(reorderedMethods).onProperty("method.realClass.simpleName").containsExactly(
+        assertThat(reorderedMethods).extracting("method.realClass.simpleName").containsExactly(
                 FirstTestAnnotatedClassNumberOne.class.getSimpleName(),
                 ClassWithMethodsToTest.class.getSimpleName(),
                 ClassWithMethodsToTest.class.getSimpleName());

@@ -12,8 +12,7 @@ import com.softwaremill.common.cdi.autofactory.Product;
 
 import javax.inject.Inject;
 
-import static org.fest.assertions.Assertions.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AutoFactoryWithDependencyQualifierTest extends Arquillian {
     @Deployment

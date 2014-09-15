@@ -12,7 +12,7 @@ import java.util.*;
 
 import static com.google.common.base.Predicates.alwaysFalse;
 import static com.google.common.base.Predicates.alwaysTrue;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.*;
 import static com.softwaremill.common.util.collect.Collections3.maxNullSafe;
 import static com.softwaremill.common.util.collect.Collections3.partition;

@@ -1,13 +1,12 @@
 package com.softwaremill.common.test.web.jboss.server;
 
+import com.softwaremill.common.test.web.selenium.ServerProperties;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import com.softwaremill.common.test.util.Execution;
-import com.softwaremill.common.test.web.selenium.ServerProperties;
 
 import java.util.Arrays;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)

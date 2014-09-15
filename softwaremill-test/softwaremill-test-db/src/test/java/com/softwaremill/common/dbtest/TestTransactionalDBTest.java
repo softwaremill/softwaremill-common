@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
 import java.util.List;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Simple test to demonstrate how to use TransactionalDBTest

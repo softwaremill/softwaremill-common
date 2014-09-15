@@ -1,6 +1,6 @@
 package com.softwaremill.test.swing;
 
-import org.fest.swing.annotation.GUITest;
+import org.assertj.swing.annotation.GUITest;
 import org.testng.annotations.Listeners;
 
 @GUITest

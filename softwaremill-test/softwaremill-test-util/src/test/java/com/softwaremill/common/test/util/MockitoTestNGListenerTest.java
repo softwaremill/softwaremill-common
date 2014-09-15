@@ -4,9 +4,8 @@ import org.mockito.Mock;
 import org.mockito.internal.util.MockUtil;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import com.softwaremill.common.test.util.MockitoTestNGListener;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Pawel Wrzeszcz (pawel . wrzeszcz [at] gmail . com)

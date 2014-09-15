@@ -9,7 +9,7 @@ import com.softwaremill.common.arquillian.ManifestUtil;
 
 import javax.inject.Inject;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfValueTest extends Arquillian {
     @Deployment

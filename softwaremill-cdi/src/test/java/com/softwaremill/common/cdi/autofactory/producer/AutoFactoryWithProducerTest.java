@@ -13,7 +13,7 @@ import com.softwaremill.common.cdi.autofactory.mixed.TotalPriceCalculatorMixedCo
 
 import javax.inject.Inject;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Adam Warski (adam at warski dot org)

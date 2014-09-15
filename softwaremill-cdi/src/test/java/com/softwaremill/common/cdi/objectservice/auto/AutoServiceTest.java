@@ -10,7 +10,7 @@ import com.softwaremill.common.arquillian.ManifestUtil;
 import javax.inject.Inject;
 import java.net.MalformedURLException;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test for auto object services

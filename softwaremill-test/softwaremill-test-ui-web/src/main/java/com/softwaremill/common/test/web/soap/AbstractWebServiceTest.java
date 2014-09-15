@@ -8,7 +8,7 @@ import com.eviware.soapui.model.testsuite.TestSuite;
 
 import java.util.List;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Base class used to create web service test base on soapUI Test Suites

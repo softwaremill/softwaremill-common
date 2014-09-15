@@ -12,7 +12,7 @@ import com.softwaremill.common.paypal.process.status.PayPalStatusVerifier;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @Author: lukasz.zuchowski at gmail dot com

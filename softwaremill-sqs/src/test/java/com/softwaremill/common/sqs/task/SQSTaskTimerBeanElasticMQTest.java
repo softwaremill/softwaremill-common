@@ -25,7 +25,7 @@ import com.softwaremill.common.util.dependency.D;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static com.softwaremill.common.sqs.SQSConfiguration.EMAIL_FROM;
 import static com.softwaremill.common.sqs.SQSConfiguration.EMAIL_SMTP_PORT;

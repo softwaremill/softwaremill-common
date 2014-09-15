@@ -1,7 +1,7 @@
 package com.softwaremill.common.test.util.fest;
 
 import com.google.common.base.Optional;
-import org.fest.assertions.Condition;
+import org.assertj.core.api.Condition;
 
 import static com.google.common.base.Preconditions.checkArgument;
 

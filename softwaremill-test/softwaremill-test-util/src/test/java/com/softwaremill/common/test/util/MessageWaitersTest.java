@@ -10,7 +10,7 @@ import java.io.PipedOutputStream;
 import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MessageWaitersTest {
     @Test

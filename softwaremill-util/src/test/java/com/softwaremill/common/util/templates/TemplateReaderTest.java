@@ -2,7 +2,7 @@ package com.softwaremill.common.util.templates;
 
 import org.testng.annotations.Test;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author maciek

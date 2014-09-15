@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Pawel Wrzeszcz (pawel [at] softwaremill . com)

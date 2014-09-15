@@ -7,7 +7,7 @@ import com.softwaremill.common.dbtest.util.DbMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Pawel Stawicki

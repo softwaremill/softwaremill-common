@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import javax.enterprise.inject.spi.Annotated;
 import javax.enterprise.inject.spi.InjectionPoint;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static com.softwaremill.common.cdi.sysprops.SystemProperty.NOT_SET;
