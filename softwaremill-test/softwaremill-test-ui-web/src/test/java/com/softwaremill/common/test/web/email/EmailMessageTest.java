@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class EmailMessageTest {
 
     @Test(dataProvider = "getMessages")
-	public void shouldFindLinksInEmail(String message, String... expectedLinks) {
+	public void shouldFindLinksInEmail(String message, String[] expectedLinks) {
         // Given
         EmailMessage email = new EmailMessage(getMockEmail(message));
 
@@ -41,7 +41,7 @@ public class EmailMessageTest {
 	}
 
     @Test(dataProvider = "getMessagesWithSpecialLinks")
-	public void shouldFindSpecialLinksInEmail(String message, String urlPart, String... expectedLinks) {
+	public void shouldFindSpecialLinksInEmail(String message, String urlPart, String[] expectedLinks) {
         // Given
         EmailMessage email = new EmailMessage(getMockEmail(message));
 
