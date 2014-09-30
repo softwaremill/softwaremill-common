@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.softwaremill.common</groupId>
     <artifactId>softwaremill-common-parent</artifactId>
-    <version>81-SNAPSHOT</version>
+    <version>80-SNAPSHOT</version>
     <name>Softwaremill Common Parent</name>
     <packaging>pom</packaging>
 
