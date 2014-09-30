@@ -1,14 +1,12 @@
 package com.softwaremill.common.testserver;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import static java.lang.String.format;
 
 public class TestServerPerformanceTest {
 
-    @Test
-    @Ignore // Run manually when you need it.
+    @Test(enabled = false, description = "Run manually when you need it.")
     public void measureHowFastTestServerIs() throws Exception {
         long count = 0;
         double avrCreation = 0;
